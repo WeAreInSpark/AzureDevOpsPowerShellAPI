@@ -1,20 +1,23 @@
 function New-AzDoPipeline {
     <#
 .SYNOPSIS
-    This script creates a variable group with at least 1 variable in a given project.
+    Creates an Azure Pipeline
 .DESCRIPTION
-    This script creates a variable group with at least 1 variable in a given project. When used in a pipeline, you can use the pre defined CollectionUri,
-    ProjectName and AccessToken (PAT) variables.
+    Creates an Azure Pipeline
 .EXAMPLE
-    New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
-    -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+    $newAzDoPipelineSplat = @{
+        CollectionUri = "https://dev.azure.com/contoso"
+        PAT = "***"
+        Name = "Pipeline 1"
+        RepoName = "Repo 1"
+        ProjectName = "Project 1"
+    }
 
-    To create a variable group 'test' with one variable:
+    New-AzDoPipeline @newAzDoPipelineSplat
 .INPUTS
-    New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-    [<CommonParameters>]
+    New-AzDoPipeline [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-RepoName] <String>
 .OUTPUTS
-    New variable group with at least 1 variable in a given project.
+    PSobject containing Project information
 .NOTES
 #>
     [CmdletBinding(SupportsShouldProcess)]

@@ -13,7 +13,7 @@ function New-AadAppRegistrationSecret {
 
     New-AadAppRegistrationSecret @newAadAppRegistrationSecretSplat
 .INPUTS
-    New-AppRegistrationSecret -ObjectID <String> -ClientSecretName <String> -EndDate <String>
+    New-AppRegistrationSecret [-ObjectID] <String> [-ClientSecretName] <String> [-EndDate] <String>
 .OUTPUTS
     The Appsecret
 .NOTES

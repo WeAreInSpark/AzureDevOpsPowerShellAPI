@@ -7,7 +7,7 @@ function New-AadGroup {
 .EXAMPLE
     New-AadGroup -Name $ProjectName -MailNickname $ProjectName
 .INPUTS
-    New-AadGroup -Name <String> -MailNickName <String> -MailEnabled <String>
+    New-AadGroup [-Name] <String> [-MailNickName] <String> [-MailEnabled] <String>
 .OUTPUTS
     PSobject containing the display name, ID and description.
 .NOTES

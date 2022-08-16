@@ -11,7 +11,8 @@ function Get-AzDoRepo {
         ProjectName = "Project 1"
         Name "Repo 1"
     }
-    Get-AzDoRepo @Params
+    
+    Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1" -Name "Repo 1"
 .INPUTS
     Get-AzDoRepo [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string>
 .OUTPUTS

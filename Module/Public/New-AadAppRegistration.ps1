@@ -7,7 +7,7 @@ function New-AadAppRegistration {
 .EXAMPLE
     New-AadAppRegistration -Name $ProjectName
 .INPUTS
-    New-AppRegistration -Name <String>
+    New-AppRegistration [-Name] <String>
 .OUTPUTS
     PSobject with the object ID and application ID of the App registration
 .NOTES
