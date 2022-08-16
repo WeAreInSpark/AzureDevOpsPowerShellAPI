@@ -1,22 +1,18 @@
 function New-AadGroup {
     <#
 .SYNOPSIS
-    This script creates a new app registration with a certificate or secret.
+    Creates an Azure AD group.
 .DESCRIPTION
-    This script creates a new app registration with a certificate or secret.
+    Creates an Azure AD group. It defaults to an Office 365 group with a mail address.
 .EXAMPLE
-    To create an app registration with a secret that lasts 1 year, choose a name for $AppRegName, a name for $ClientSecretName and set $ClientSecretDuration to 1.
+    New-AadGroup -Name $ProjectName -MailNickname $ProjectName
 .INPUTS
-    New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
-    [<CommonParameters>]
-
-    New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
-    <String>] [<CommonParameters>]
+    New-AadGroup -Name <String> -MailNickName <String> -MailEnabled <String>
 .OUTPUTS
-    New app registration with credentials, and variables with the ID and secret.
+    PSobject containing the display name, ID and description.
 .NOTES
 #>
-    [CmdletBinding(DefaultParameterSetName = 'ByDate')]
+    [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'ByDate')]
     param (
         # Name of the app registration
         [Parameter(Mandatory)]
@@ -40,7 +36,7 @@ function New-AadGroup {
         exit
     }
     else {
-        $Group = New-MgGroup -DisplayName $Name -MailEnabled:$MailEnabled -MailNickname $MailNickName -SecurityEnabled:$true -Visibility 'private' -GroupTypes 'Unified'
+        $Group = New-MgGroup -DisplayName $Name -MailEnabled:$MailEnabled -MailNickname $MailNickName -SecurityEnabled:$true -Visibility 'private' -GroupTypes 'Unified' -WhatIf:$WhatIfPreference
 
         [PSCustomObject]@{
             DisplayName = $Group.DisplayName

@@ -13,7 +13,7 @@ This script creates a new certificate or secret for an existing app registration
 ## SYNTAX
 
 ```
-New-AadAppRegistrationSecret -ClientSecretName <String> -ObjectID <String> -EndDate <String>
+New-AadAppRegistrationSecret -ObjectID <String> -ClientSecretName <String> -EndDate <String>
  [<CommonParameters>]
 ```
 
@@ -30,8 +30,8 @@ $ClientSecretDuration to 1.
 
 ## PARAMETERS
 
-### -ClientSecretName
-Display name of the secret
+### -ObjectID
+Application (client) ID of the app registration
 
 ```yaml
 Type: String
@@ -45,8 +45,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ObjectID
-Application (client) ID of the app registration
+### -ClientSecretName
+Display name of the secret
 
 ```yaml
 Type: String

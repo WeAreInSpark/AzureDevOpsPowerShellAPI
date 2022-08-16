@@ -2,6 +2,8 @@ function New-AzDoServiceConnection {
     <#
     .SYNOPSIS
         Function to create a service connection in Azure DevOps
+    .DESCRIPTION
+        Function to create a service connection in Azure DevOps
     .NOTES
         When you are using Azure DevOps with Build service Access token, make sure the setting 'Protect access to repositories in YAML pipelin' is off.
     .EXAMPLE
@@ -31,7 +33,7 @@ function New-AzDoServiceConnection {
         Service connection with key
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Name of the service connection.
         [Parameter(Mandatory)]
@@ -115,6 +117,7 @@ function New-AzDoServiceConnection {
         [string]
         $KeyVaultName,
 
+        # Name of the certificate
         [Parameter(Mandatory = $false)]
         [string]
         $CertName
@@ -220,7 +223,8 @@ function New-AzDoServiceConnection {
         body        = $Body | ConvertTo-Json -Depth 99
         ContentType = 'application/json'
     }
-    try {
+
+    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
         $Response = Invoke-RestMethod @Params
 
         [PSCustomObject]@{
@@ -230,7 +234,8 @@ function New-AzDoServiceConnection {
             SubscriptionId   = $Response.data.subscriptionId
         }
     }
-    catch {
-        $_
+    else {
+        Write-Output $Body | format-list
+        return
     }
 }

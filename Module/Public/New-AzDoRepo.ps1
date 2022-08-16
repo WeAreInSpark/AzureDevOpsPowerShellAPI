@@ -16,7 +16,7 @@ function New-AzDoRepo {
     New variable group with at least 1 variable in a given project.
 .NOTES
 #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
         [Parameter(Mandatory)]
@@ -54,5 +54,11 @@ function New-AzDoRepo {
         ContentType = 'application/json'
     }
 
-    Invoke-RestMethod @params
+    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+        Invoke-RestMethod @params
+    }
+    else {
+        Write-Output $Body | format-list
+        return
+    }
 }

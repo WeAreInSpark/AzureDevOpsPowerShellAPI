@@ -1,30 +1,31 @@
 function New-AadAppRegistrationCertificate {
     <#
 .SYNOPSIS
-    This script creates a new certificate or secret for an existing app registration.
+    Creates a Certificate and uploads it to the App registration.
 .DESCRIPTION
-    This script creates a new certificate or secret for an existing app registration.
+    Creates a Certificate and uploads it to the App registration. The certificate will also be saves to an Azure KeyVault.
 .EXAMPLE
-    To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
-    $ClientSecretDuration to 1.
-.INPUTS
-    New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
-    [-KeyVaultName <String>] [<CommonParameters>]
+    $newAadAppRegistrationCertificateSplat = @{
+        ObjectID = "00000-00000-00000-00000"
+        CertName = "cert01"
+        KeyVaultName = "kv01"
+        SubjectName = "contoso.com"
+    }
 
-    New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
-    <String>] [<CommonParameters>]
+    New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
+.INPUTS
+    New-AadAppRegistrationCertificate -ObjectId <String> -CertName <String> -KeyVaultName <String> -SubjectName <String> -ValidityInMonths <Int32>
 .OUTPUTS
-    New credentials in an app registration, and a variable with the secret.
+    PSobject containing thumbprint of certificate and 2 dates when the certificate is valid.
 .NOTES
 #>
     [CmdletBinding()]
     param (
 
-
-        # Application (client) ID of the app registration
+        # Object Id of the App registration
         [Parameter(Mandatory)]
         [string]
-        $ObjectID,
+        $ObjectId,
 
         # Name of the certificate
         [Parameter()]
@@ -36,13 +37,15 @@ function New-AadAppRegistrationCertificate {
         [string]
         $KeyVaultName,
 
+        # CN for the certificate
         [Parameter()]
         [string]
         $SubjectName,
 
+        # Amount of months the certificate must be valid
         [Parameter()]
-        [string]
-        $ExpiresAfterMonths = 6
+        [int]
+        $ValidityInMonths = 6
     )
     Test-MgGraphConnection
     $CertName = ($CertName -replace " ", "")

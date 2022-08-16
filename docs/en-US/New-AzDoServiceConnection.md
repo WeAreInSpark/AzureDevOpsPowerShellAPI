@@ -17,7 +17,8 @@ Function to create a service connection in Azure DevOps
 New-AzDoServiceConnection -Name <String> -CollectionUri <String> -PAT <String> -ProjectName <String>
  -ProjectID <String> [-Description <String>] [-ScopeLevel <String>] -SubscriptionId <String>
  -SubscriptionName <String> -Tenantid <String> -Serviceprincipalid <String> [-AuthenticationType <String>]
- [-Serviceprincipalkey <String>] [-KeyVaultName <String>] [-CertName <String>] [<CommonParameters>]
+ [-Serviceprincipalkey <String>] [-KeyVaultName <String>] [-CertName <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### ManagementGroup
@@ -25,7 +26,8 @@ New-AzDoServiceConnection -Name <String> -CollectionUri <String> -PAT <String> -
 New-AzDoServiceConnection -Name <String> -CollectionUri <String> -PAT <String> -ProjectName <String>
  -ProjectID <String> [-Description <String>] [-ScopeLevel <String>] -ManagementGroupId <String>
  -ManagementGroupName <String> -Tenantid <String> -Serviceprincipalid <String> [-AuthenticationType <String>]
- [-Serviceprincipalkey <String>] [-KeyVaultName <String>] [-CertName <String>] [<CommonParameters>]
+ [-Serviceprincipalkey <String>] [-KeyVaultName <String>] [-CertName <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -315,6 +317,36 @@ Accept wildcard characters: False
 Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
 
 Required: False
 Position: Named

@@ -9,7 +9,7 @@ function New-AzDoProject {
     .EXAMPLE
         New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName -Visibility 'public'
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection URI. e.g. https://dev.azure.com/contoso.
         # Azure Pipelines has a predefined variable for this.
@@ -69,12 +69,12 @@ function New-AzDoProject {
                 ErrorAction = 'Stop'
             }
 
-            try {
-                Invoke-RestMethod @params > $null
+            if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+                Invoke-RestMethod @params
             }
-            catch {
-                Write-Error $_
-                exit
+            else {
+                Write-Output $Body | format-list
+                return
             }
 
             do {

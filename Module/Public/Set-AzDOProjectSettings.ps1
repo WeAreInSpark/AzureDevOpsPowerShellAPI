@@ -1,5 +1,5 @@
 function Set-AzDOProjectSettings {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Parameter help description
         [Parameter(Mandatory)]
@@ -64,5 +64,11 @@ function Set-AzDOProjectSettings {
         ContentType = 'application/json'
     }
 
-    Invoke-RestMethod @params
+    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+        Invoke-RestMethod @params
+    }
+    else {
+        Write-Output $Body | format-list
+        return
+    }
 }
