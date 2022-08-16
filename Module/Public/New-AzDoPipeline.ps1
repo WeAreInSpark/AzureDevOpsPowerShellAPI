@@ -12,7 +12,6 @@ function New-AzDoPipeline {
         RepoName = "Repo 1"
         ProjectName = "Project 1"
     }
-
     New-AzDoPipeline @newAzDoPipelineSplat
 .OUTPUTS
     PSobject containing Project information

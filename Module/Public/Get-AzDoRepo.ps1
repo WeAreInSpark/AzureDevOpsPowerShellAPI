@@ -11,7 +11,6 @@ function Get-AzDoRepo {
         ProjectName = "Project 1"
         Name "Repo 1"
     }
-
     Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1" -Name "Repo 1"
 .OUTPUTS
     PSObject with repo(s).

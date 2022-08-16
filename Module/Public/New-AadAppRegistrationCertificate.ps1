@@ -11,7 +11,6 @@ function New-AadAppRegistrationCertificate {
         KeyVaultName = "kv01"
         SubjectName = "contoso.com"
     }
-
     New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
 .OUTPUTS
     PSobject containing thumbprint of certificate and 2 dates when the certificate is valid.

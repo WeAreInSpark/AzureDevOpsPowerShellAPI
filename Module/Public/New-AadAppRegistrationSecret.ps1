@@ -10,7 +10,6 @@ function New-AadAppRegistrationSecret {
         ClientSecretName = "Secret 1"
         EndDate = "2022-01-01"
     }
-
     New-AadAppRegistrationSecret @newAadAppRegistrationSecretSplat
 .OUTPUTS
     The Appsecret
