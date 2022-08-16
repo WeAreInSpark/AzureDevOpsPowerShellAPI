@@ -57,5 +57,4 @@ function Get-AzDoRepo {
 
         Invoke-RestMethod @params
     }
-    
 }

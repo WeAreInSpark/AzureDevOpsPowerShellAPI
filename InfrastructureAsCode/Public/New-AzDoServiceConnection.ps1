@@ -166,14 +166,14 @@ function New-AzDoServiceConnection {
         $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
         $SecretValueText = ''
         $SsPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secret.SecretValue)
-    
+
         try {
             $secretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SsPtr)
         }
         finally {
             [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($SsPtr)
         }
-    
+
         $SecretByte = [Convert]::FromBase64String($secretValueText)
         $Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
 

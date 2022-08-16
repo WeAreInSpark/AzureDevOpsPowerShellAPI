@@ -71,5 +71,4 @@ function New-AzDoPipeline {
             Invoke-RestMethod @params
         }
     }
-    
 }

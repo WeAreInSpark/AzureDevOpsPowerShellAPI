@@ -11,7 +11,7 @@ function New-AzDoProject {
     #>
     [CmdletBinding()]
     param (
-        # Collection URI. e.g. https://dev.azure.com/contoso. 
+        # Collection URI. e.g. https://dev.azure.com/contoso.
         # Azure Pipelines has a predefined variable for this.
         [Parameter(Mandatory)]
         [string]
@@ -68,7 +68,7 @@ function New-AzDoProject {
                 ContentType = 'application/json'
                 ErrorAction = 'Stop'
             }
-    
+
             try {
                 Invoke-RestMethod @params > $null
             }

@@ -42,17 +42,17 @@ function New-AzDoRepoClone {
         [Parameter(Mandatory)]
         [string]
         $DestinationOrganizationName,
-        
+
         # PAT to authentice with the organization
         [Parameter(Mandatory)]
         [string]
         $DestinationPAT,
-        
+
         # Project where the variable group has to be created
         [Parameter(Mandatory)]
         [string]
         $DestinationRepoName,
-        
+
         # Project where the variable group has to be created
         [Parameter(Mandatory)]
         [string]
