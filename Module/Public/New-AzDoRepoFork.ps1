@@ -22,8 +22,7 @@ function New-AzDoRepoFork {
 
         New-AzDoRepoFork @newAzDoRepoForkSplat
     .INPUTS
-        New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-TeamProject] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-        [<CommonParameters>]
+        New-AzDoRepoFork [-CollectionUri] <String> [[-PAT] <String>] [-ProjectId] <String> [-ForkName] <String> [-SourceProjectId] <String> [-SourceRepo] <String> [[-CopyBranch] <Boolean>] [[-ToBeForkedBranch] <String>] [<CommonParameters>]
     .OUTPUTS
         PSCustomObject
 #>
