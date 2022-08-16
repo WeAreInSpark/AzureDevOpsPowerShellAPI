@@ -6,8 +6,6 @@ function New-AadGroup {
     Creates an Azure AD group. It defaults to an Office 365 group with a mail address.
 .EXAMPLE
     New-AadGroup -Name $ProjectName -MailNickname $ProjectName
-.INPUTS
-    New-AadGroup [-Name] <String> [-MailNickName] <String> [-MailEnabled] <String>
 .OUTPUTS
     PSobject containing the display name, ID and description.
 .NOTES

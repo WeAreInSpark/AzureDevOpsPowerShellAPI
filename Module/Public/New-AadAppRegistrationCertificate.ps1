@@ -13,8 +13,6 @@ function New-AadAppRegistrationCertificate {
     }
 
     New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
-.INPUTS
-    New-AadAppRegistrationCertificate [-ObjectId] <String> [-CertName] <String> [-KeyVaultName] <String> [-SubjectName] <String> [-ValidityInMonths] <Int32>
 .OUTPUTS
     PSobject containing thumbprint of certificate and 2 dates when the certificate is valid.
 .NOTES

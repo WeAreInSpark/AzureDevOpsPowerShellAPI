@@ -14,8 +14,6 @@ function New-AzDoPipeline {
     }
 
     New-AzDoPipeline @newAzDoPipelineSplat
-.INPUTS
-    New-AzDoPipeline [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-RepoName] <String>
 .OUTPUTS
     PSobject containing Project information
 .NOTES
