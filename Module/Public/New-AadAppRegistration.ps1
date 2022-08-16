@@ -16,7 +16,7 @@ function New-AadAppRegistration {
     New app registration with credentials, and variables with the ID and secret.
 .NOTES
 #>
-    [CmdletBinding(DefaultParameterSetName = 'ByDate')]
+    [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'ByDate')]
     param (
         # Name of the app registration
         [Parameter(Mandatory)]

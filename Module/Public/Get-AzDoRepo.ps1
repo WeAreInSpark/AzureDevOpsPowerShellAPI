@@ -18,7 +18,7 @@ function Get-AzDoRepo {
     PSObject with repo(s).
 .NOTES
 #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
         [Parameter(Mandatory)]
