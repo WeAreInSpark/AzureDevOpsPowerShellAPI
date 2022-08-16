@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AadGroup
 
 ## SYNOPSIS
-This script creates a new app registration with a certificate or secret.
+Creates an Azure AD group.
 
 ## SYNTAX
 
@@ -18,13 +18,14 @@ New-AadGroup [-Name] <String> [-MailNickName] <String> [[-MailEnabled] <Boolean>
 ```
 
 ## DESCRIPTION
-This script creates a new app registration with a certificate or secret.
+Creates an Azure AD group.
+It defaults to an Office 365 group with a mail address.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To create an app registration with a secret that lasts 1 year, choose a name for $AppRegName, a name for $ClientSecretName and set $ClientSecretDuration to 1.
+New-AadGroup -Name $ProjectName -MailNickname $ProjectName
 ```
 
 ## PARAMETERS
@@ -75,7 +76,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -109,13 +111,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
-### [<CommonParameters>]
-### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
-### <String>] [<CommonParameters>]
 ## OUTPUTS
 
-### New app registration with credentials, and variables with the ID and secret.
+### PSobject containing the display name, ID and description.
 ## NOTES
 
 ## RELATED LINKS

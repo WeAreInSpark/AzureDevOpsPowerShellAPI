@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AzDoPipeline
 
 ## SYNOPSIS
-This script creates a variable group with at least 1 variable in a given project.
+Creates an Azure Pipeline
 
 ## SYNTAX
 
@@ -18,18 +18,22 @@ New-AzDoPipeline [-CollectionUri] <String> [-PAT] <String> [-Name] <String[]> [-
 ```
 
 ## DESCRIPTION
-This script creates a variable group with at least 1 variable in a given project.
-When used in a pipeline, you can use the pre defined CollectionUri,
-ProjectName and AccessToken (PAT) variables.
+Creates an Azure Pipeline
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To create a variable group 'test' with one variable:
-New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
--Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+$newAzDoPipelineSplat = @{
+    CollectionUri = "https://dev.azure.com/contoso"
+    PAT = "***"
+    Name = "Pipeline 1"
+    RepoName = "Repo 1"
+    ProjectName = "Project 1"
+}
 ```
+
+New-AzDoPipeline @newAzDoPipelineSplat
 
 ## PARAMETERS
 
@@ -109,7 +113,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -143,11 +148,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-### [<CommonParameters>]
 ## OUTPUTS
 
-### New variable group with at least 1 variable in a given project.
+### PSobject containing Project information
 ## NOTES
 
 ## RELATED LINKS

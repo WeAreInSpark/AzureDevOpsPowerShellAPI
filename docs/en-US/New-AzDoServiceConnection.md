@@ -31,7 +31,7 @@ New-AzDoServiceConnection -Name <String> -CollectionUri <String> -PAT <String> -
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Function to create a service connection in Azure DevOps
 
 ## EXAMPLES
 
@@ -311,7 +311,7 @@ Accept wildcard characters: False
 ```
 
 ### -CertName
-{{ Fill CertName Description }}
+Name of the certificate
 
 ```yaml
 Type: String
@@ -326,7 +326,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter

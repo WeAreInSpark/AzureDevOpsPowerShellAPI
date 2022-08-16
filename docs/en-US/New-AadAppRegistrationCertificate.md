@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AadAppRegistrationCertificate
 
 ## SYNOPSIS
-This script creates a new certificate or secret for an existing app registration.
+Creates a Certificate and uploads it to the App registration.
 
 ## SYNTAX
 
@@ -18,20 +18,27 @@ New-AadAppRegistrationCertificate [-ObjectId] <String> [[-CertName] <String>] [[
 ```
 
 ## DESCRIPTION
-This script creates a new certificate or secret for an existing app registration.
+Creates a Certificate and uploads it to the App registration.
+The certificate will also be saves to an Azure KeyVault.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
-$ClientSecretDuration to 1.
+$newAadAppRegistrationCertificateSplat = @{
+    ObjectID = "00000-00000-00000-00000"
+    CertName = "cert01"
+    KeyVaultName = "kv01"
+    SubjectName = "contoso.com"
+}
 ```
+
+New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
 
 ## PARAMETERS
 
 ### -ObjectId
-Application (client) ID of the app registration
+Object Id of the App registration
 
 ```yaml
 Type: String
@@ -76,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -SubjectName
-{{ Fill SubjectName Description }}
+CN for the certificate
 
 ```yaml
 Type: String
@@ -91,7 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -ValidityInMonths
-{{ Fill ValidityInMonths Description }}
+Amount of months the certificate must be valid
 
 ```yaml
 Type: Int32
@@ -110,13 +117,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
-### [-KeyVaultName <String>] [<CommonParameters>]
-### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
-### <String>] [<CommonParameters>]
 ## OUTPUTS
 
-### New credentials in an app registration, and a variable with the secret.
+### PSobject containing thumbprint of certificate and 2 dates when the certificate is valid.
 ## NOTES
 
 ## RELATED LINKS

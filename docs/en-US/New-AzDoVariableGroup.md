@@ -26,10 +26,11 @@ ProjectName and AccessToken (PAT) variables.
 
 ### EXAMPLE 1
 ```
-To create a variable group 'test' with one variable:
 New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
 -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
 ```
+
+To create a variable group 'test' with one variable
 
 ## PARAMETERS
 
@@ -124,7 +125,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter

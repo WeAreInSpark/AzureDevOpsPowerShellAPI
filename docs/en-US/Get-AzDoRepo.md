@@ -31,8 +31,9 @@ $Params = @{
     ProjectName = "Project 1"
     Name "Repo 1"
 }
-Get-AzDoRepo @Params
 ```
+
+Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1" -Name "Repo 1"
 
 ## PARAMETERS
 
@@ -101,7 +102,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### Get-AzDoRepo [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string>
 ## OUTPUTS
 
 ### PSObject with repo(s).
