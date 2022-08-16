@@ -31,9 +31,8 @@ $newAzDoPipelineSplat = @{
     RepoName = "Repo 1"
     ProjectName = "Project 1"
 }
-```
-
 New-AzDoPipeline @newAzDoPipelineSplat
+```
 
 ## PARAMETERS
 

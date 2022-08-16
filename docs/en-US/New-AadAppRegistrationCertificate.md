@@ -31,9 +31,8 @@ $newAadAppRegistrationCertificateSplat = @{
     KeyVaultName = "kv01"
     SubjectName = "contoso.com"
 }
-```
-
 New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
+```
 
 ## PARAMETERS
 
