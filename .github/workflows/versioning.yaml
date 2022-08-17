@@ -13,4 +13,4 @@ jobs:
       - name: Test
         shell: pwsh
         run: |
-          Update-ModuleManifest -ModuleVersion "${{ steps.semver-tag.outputs.semver_tag }}"  -Path c:\Users\DylanPrins\Github\Work\BRC\BRC.PS.InfrastructureAsCode\Module\Module.psd1
+          Update-ModuleManifest -ModuleVersion "${{ steps.semver-tag.outputs.semver_tag }}" -Path "${{ github.workspace }}/Module/Module.psd1"
