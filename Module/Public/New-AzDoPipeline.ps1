@@ -40,7 +40,7 @@ function New-AzDoPipeline {
         [Parameter(Mandatory)]
         $RepoName,
 
-        # Project where the variable group has to be created.
+        # Project where the variable group has to be created
         [Parameter(Mandatory)]
         [string]
         $ProjectName
