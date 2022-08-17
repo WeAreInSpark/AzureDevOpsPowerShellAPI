@@ -26,11 +26,18 @@ ProjectName and AccessToken (PAT) variables.
 
 ### EXAMPLE 1
 ```
-New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
--Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+$params = @{
+    Collectionuri = 'https://dev.azure.com/weareinspark/'
+    PAT = '*******************'
+    ProjectName = 'Project 1'
+    Name = 'VariableGroup1'
+    Variables = @{ test = @{ value = 'test' } }
+    Description = 'This is a test'
+}
+New-AzDoVariableGroup @params
 ```
 
-To create a variable group 'test' with one variable
+This example creates a new Variable Group with a variable "test = test".
 
 ## PARAMETERS
 
@@ -160,11 +167,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-### [<CommonParameters>]
 ## OUTPUTS
 
-### New variable group with at least 1 variable in a given project.
+### PSobject
 ## NOTES
 
 ## RELATED LINKS

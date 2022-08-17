@@ -8,35 +8,43 @@ schema: 2.0.0
 # New-AzDoRepoMirror
 
 ## SYNOPSIS
-This script creates a variable group with at least 1 variable in a given project.
+Clones all branches and tags to a new location
 
 ## SYNTAX
 
 ```
-New-AzDoRepoMirror [-SourceOrganizationName] <String> [[-SourcePAT] <String>] [-SourceRepoName] <String>
- [-SourceProjectName] <String> [-DestinationOrganizationName] <String> [-DestinationPAT] <String>
- [-DestinationRepoName] <String> [-DestinationProjectName] <String> [<CommonParameters>]
+New-AzDoRepoMirror [-SourceOrganizationName] <String> [-SourceProjectName] <String> [-SourceRepoName] <String>
+ [[-SourcePAT] <String>] [-DestinationOrganizationName] <String> [-DestinationProjectName] <String>
+ [-DestinationRepoName] <String> [-DestinationPAT] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This script creates a variable group with at least 1 variable in a given project.
-When used in a pipeline, you can use the pre defined CollectionUri,
-ProjectName and AccessToken (PAT) variables.
+Clones all branches and tags to a new location.
+pull request will not be copied.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
--Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+$params = @{
+    SourceOrganizationName      = "contoso"
+    SourceProjectName           = "project1"
+    SourcePAT                   = "***"
+    SourceRepoName              = "repo1"
+    DestinationOrganizationName = "New Contoso"
+    DestinationProjectName      = "Project1"
+    DestinationPAT              = "***"
+    DestinationRepoName         = "repo1"
+}
+New-AzDoRepoMirror @params
 ```
 
-To create a variable group 'test' with one variable
+This example mirrors a repo to another organization with te same project and repo name.
 
 ## PARAMETERS
 
 ### -SourceOrganizationName
-Collection Uri of the organization
+Collection Uri of the organization where the source repo is located
 
 ```yaml
 Type: String
@@ -50,23 +58,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SourcePAT
-PAT to authentice with the organization
+### -SourceProjectName
+Name of the project where the source repo is located
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 2
-Default value: $env:SYSTEM_ACCESSTOKEN
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -SourceRepoName
-Project where the variable group has to be created
+Name of the repo that has to be copied.
 
 ```yaml
 Type: String
@@ -80,23 +88,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SourceProjectName
-Project where the variable group has to be created
+### -SourcePAT
+PAT to authentice with the source organization.
+Defaults to azure pipeline token.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 4
-Default value: None
+Default value: $env:SYSTEM_ACCESSTOKEN
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -DestinationOrganizationName
-Collection Uri of the organization
+Collection Uri of the organization where the repo needs to be copied to
 
 ```yaml
 Type: String
@@ -110,8 +119,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DestinationPAT
-PAT to authentice with the organization
+### -DestinationProjectName
+Project where the repo needs to be copied to
 
 ```yaml
 Type: String
@@ -126,7 +135,8 @@ Accept wildcard characters: False
 ```
 
 ### -DestinationRepoName
-Project where the variable group has to be created
+Name of the repo in the destination project.
+if empty it will be the same as the source repo name.
 
 ```yaml
 Type: String
@@ -140,8 +150,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DestinationProjectName
-Project where the variable group has to be created
+### -DestinationPAT
+PAT to authentice with the destination organization.
+Defaults to azure pipeline token.
 
 ```yaml
 Type: String
@@ -150,7 +161,7 @@ Aliases:
 
 Required: True
 Position: 8
-Default value: None
+Default value: $env:SYSTEM_ACCESSTOKEN
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -160,11 +171,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-### [<CommonParameters>]
 ## OUTPUTS
 
-### New variable group with at least 1 variable in a given project.
+### PSobject
 ## NOTES
 
 ## RELATED LINKS

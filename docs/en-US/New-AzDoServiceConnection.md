@@ -37,34 +37,24 @@ Function to create a service connection in Azure DevOps
 
 ### EXAMPLE 1
 ```
-New-AzDoServiceConnection -CollectionUri $CollectionUri `
-    -PAT $PAT `
-    -ProjectName "Project 1" `
-    -SubscriptionId "00000-00000-00000-00000-00000" `
-    -SubscriptionName "Subscription 1" `
-    -Tenantid "11111-11111-11111-11111-11111" `
-    -Serviceprincipalid "1c03163f-7e4e-4fab-8b41-6f040a8361b9" `
-    -ServicePrincipalCertificate $ServicePrincipalCertificate `
-    -AuthenticationType 'spnCertificate' `
-    -ProjectID '1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2' `
-    -Name 'Project 1'
+$params = @{
+    CollectionUri               = "https://dev.azure.com/contoso"
+    PAT                         = "***"
+    ProjectName                 = "Project 1"
+    SubscriptionId              = "00000-00000-00000-00000-00000"
+    SubscriptionName            = "Subscription 1"
+    Tenantid                    = "11111-11111-11111-11111-11111"
+    Serviceprincipalid          = "1c03163f-7e4e-4fab-8b41-6f040a8361b9"
+    KeyVaultName                = "kv01"
+    CertName                    = "Cert01"
+    AuthenticationType          = "spnCertificate"
+    ProjectID                   = "1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2"
+    Name                        = "Project 1"
+}
+New-AzDoServiceConnection @params
 ```
 
-Service connection with certificate
-
-### EXAMPLE 2
-```
-New-AzDoServiceConnection -CollectionUri $CollectionUri `
-    -PAT $PAT `
-    -ProjectName "Project 1" `
-    -SubscriptionId "00000-00000-00000-00000-00000" `
-    -SubscriptionName "Subscription 1" `
-    -Tenantid "11111-11111-11111-11111-11111" `
-    -Serviceprincipalid "1c03163f-7e4e-4fab-8b41-6f040a8361b9" `
-    -Serviceprincipalkey $Serviceprincipalkey
-```
-
-Service connection with key
+This example creates a new Azure DevOps service connection with a Certificate from a KeyVault in Azure.
 
 ## PARAMETERS
 
@@ -296,7 +286,7 @@ Accept wildcard characters: False
 ```
 
 ### -KeyVaultName
-Certificate of the App registration in .PEM format.
+KeyVault name where the certificate is stored.
 
 ```yaml
 Type: String

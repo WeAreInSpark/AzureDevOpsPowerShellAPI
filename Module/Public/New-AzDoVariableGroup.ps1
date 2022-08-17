@@ -1,22 +1,26 @@
 function New-AzDoVariableGroup {
     <#
-.SYNOPSIS
-    This script creates a variable group with at least 1 variable in a given project.
-.DESCRIPTION
-    This script creates a variable group with at least 1 variable in a given project. When used in a pipeline, you can use the pre defined CollectionUri,
-    ProjectName and AccessToken (PAT) variables.
-.EXAMPLE
-    New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
-    -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+    .SYNOPSIS
+        This script creates a variable group with at least 1 variable in a given project.
+    .DESCRIPTION
+        This script creates a variable group with at least 1 variable in a given project. When used in a pipeline, you can use the pre defined CollectionUri,
+        ProjectName and AccessToken (PAT) variables.
+    .EXAMPLE
+        $params = @{
+            Collectionuri = 'https://dev.azure.com/weareinspark/'
+            PAT = '*******************'
+            ProjectName = 'Project 1'
+            Name = 'VariableGroup1'
+            Variables = @{ test = @{ value = 'test' } }
+            Description = 'This is a test'
+        }
+        New-AzDoVariableGroup @params
 
-    To create a variable group 'test' with one variable
-.INPUTS
-    New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-    [<CommonParameters>]
-.OUTPUTS
-    New variable group with at least 1 variable in a given project.
-.NOTES
-#>
+        This example creates a new Variable Group with a variable "test = test".
+    .OUTPUTS
+        PSobject
+    .NOTES
+    #>
     [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization

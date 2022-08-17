@@ -5,7 +5,9 @@ function New-AadGroup {
 .DESCRIPTION
     Creates an Azure AD group. It defaults to an Office 365 group with a mail address.
 .EXAMPLE
-    New-AadGroup -Name $ProjectName -MailNickname $ProjectName
+    New-AadGroup -Name "AD group 1" -MailNickname "AdGroup1"
+
+    This example will create a new Azure AD group with a specific mail address.
 .OUTPUTS
     PSobject containing the display name, ID and description.
 .NOTES
@@ -17,10 +19,12 @@ function New-AadGroup {
         [string]
         $Name,
 
+        # Provide nickname for the email. this cannot have spaces in it.
         [Parameter(Mandatory)]
         [string]
         $MailNickName,
 
+        # Enable mail on the Azure AD group
         [Parameter(Mandatory = $false)]
         [bool]
         $MailEnabled = $true

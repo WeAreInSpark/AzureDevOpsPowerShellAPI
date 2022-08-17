@@ -5,7 +5,9 @@ function New-AadAppRegistration {
 .DESCRIPTION
     Creates an App regestration in Azure AD when no App registration with the same name exists.
 .EXAMPLE
-    New-AadAppRegistration -Name $ProjectName
+    New-AadAppRegistration -Name "App 1"
+
+    This Example will create a new App registration with the name 'App 1'
 .OUTPUTS
     PSobject with the object ID and application ID of the App registration
 .NOTES

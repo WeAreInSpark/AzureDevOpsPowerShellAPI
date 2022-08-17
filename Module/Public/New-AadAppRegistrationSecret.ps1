@@ -11,11 +11,13 @@ function New-AadAppRegistrationSecret {
         EndDate = "2022-01-01"
     }
     New-AadAppRegistrationSecret @newAadAppRegistrationSecretSplat
+
+    This example will create a new secret for the app registration.
 .OUTPUTS
     The Appsecret
 .NOTES
 #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
 
         # Application (client) ID of the app registration
@@ -34,12 +36,16 @@ function New-AadAppRegistrationSecret {
         $EndDate
     )
 
+    Test-MgGraphConnection
+
     $PasswordCredential = @{
         endDateTime = $EndDate
         displayName = $ClientSecretName
     }
-
-    $clientSecret = (Add-MgApplicationPassword -ApplicationId $ObjectID -PasswordCredential $PasswordCredential).SecretText
-
-    ConvertTo-SecureString -String $ClientSecret
+    if ($PSCmdlet.ShouldProcess()) {
+        Add-MgApplicationPassword -ApplicationId $ObjectID -PasswordCredential $PasswordCredential | Select-Object SecretText | ConvertTo-SecureString -String $_
+    }
+    else {
+        Add-MgApplicationPassword -ApplicationId $ObjectID -PasswordCredential $PasswordCredential -WhatIf
+    }
 }

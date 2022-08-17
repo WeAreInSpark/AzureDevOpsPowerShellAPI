@@ -34,6 +34,8 @@ $Params = @{
 Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1" -Name "Repo 1"
 ```
 
+This example will fetch information about the repo with the name 'Repo 1'.
+
 ## PARAMETERS
 
 ### -CollectionUri

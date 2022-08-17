@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AzDoRepo
 
 ## SYNOPSIS
-This script creates a variable group with at least 1 variable in a given project.
+Creates a repo in Azure DevOps.
 
 ## SYNTAX
 
@@ -18,18 +18,22 @@ New-AzDoRepo [-CollectionUri] <String> [-PAT] <String> [-Name] <String> [-Projec
 ```
 
 ## DESCRIPTION
-This script creates a variable group with at least 1 variable in a given project.
-When used in a pipeline, you can use the pre defined CollectionUri,
-ProjectName and AccessToken (PAT) variables.
+Creates a repo in Azure DevOps.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To create a variable group 'test' with one variable:
-New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
--Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+$params = @{
+    CollectionUri = "https://dev.azure.com/contoso"
+    PAT           = "***"
+    Name          = "Repo 1"
+    ProjectId     = "00000-00000-00000-00000-00000"
+}
+New-AzDoRepo @params
 ```
+
+This example creates a new Azure DevOps repo
 
 ## PARAMETERS
 
@@ -129,11 +133,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-### [<CommonParameters>]
 ## OUTPUTS
 
-### New variable group with at least 1 variable in a given project.
+### PSObject
+### Containg the repo information
 ## NOTES
 
 ## RELATED LINKS

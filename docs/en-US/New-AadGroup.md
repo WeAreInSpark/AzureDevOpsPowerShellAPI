@@ -25,8 +25,10 @@ It defaults to an Office 365 group with a mail address.
 
 ### EXAMPLE 1
 ```
-New-AadGroup -Name $ProjectName -MailNickname $ProjectName
+New-AadGroup -Name "AD group 1" -MailNickname "AdGroup1"
 ```
+
+This example will create a new Azure AD group with a specific mail address.
 
 ## PARAMETERS
 
@@ -46,7 +48,8 @@ Accept wildcard characters: False
 ```
 
 ### -MailNickName
-{{ Fill MailNickName Description }}
+Provide nickname for the email.
+this cannot have spaces in it.
 
 ```yaml
 Type: String
@@ -61,7 +64,7 @@ Accept wildcard characters: False
 ```
 
 ### -MailEnabled
-{{ Fill MailEnabled Description }}
+Enable mail on the Azure AD group
 
 ```yaml
 Type: Boolean

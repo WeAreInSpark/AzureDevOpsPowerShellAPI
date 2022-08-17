@@ -23,8 +23,10 @@ Creates an App regestration in Azure AD when no App registration with the same n
 
 ### EXAMPLE 1
 ```
-New-AadAppRegistration -Name $ProjectName
+New-AadAppRegistration -Name "App 1"
 ```
+
+This Example will create a new App registration with the name 'App 1'
 
 ## PARAMETERS
 

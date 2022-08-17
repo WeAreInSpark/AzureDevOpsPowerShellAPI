@@ -13,6 +13,8 @@ function New-AzDoPipeline {
         ProjectName = "Project 1"
     }
     New-AzDoPipeline @newAzDoPipelineSplat
+
+    This example creates a new Azure Pipeline
 .OUTPUTS
     PSobject containing Project information
 .NOTES

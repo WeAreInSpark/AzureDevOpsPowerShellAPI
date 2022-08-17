@@ -13,8 +13,8 @@ Creates a secret for the App registration
 ## SYNTAX
 
 ```
-New-AadAppRegistrationSecret -ObjectID <String> -ClientSecretName <String> -EndDate <String>
- [<CommonParameters>]
+New-AadAppRegistrationSecret -ObjectID <String> -ClientSecretName <String> -EndDate <String> [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,6 +32,8 @@ $newAadAppRegistrationSecretSplat = @{
 }
 New-AadAppRegistrationSecret @newAadAppRegistrationSecretSplat
 ```
+
+This example will create a new secret for the app registration.
 
 ## PARAMETERS
 
@@ -74,6 +76,36 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

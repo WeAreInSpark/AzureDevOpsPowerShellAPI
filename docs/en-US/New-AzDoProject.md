@@ -18,19 +18,23 @@ New-AzDoProject [-CollectionUri] <String> [-PAT] <String> [-Name] <String[]> [[-
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Function to create an Azure DevOps project
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName
+New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
 ```
+
+This example creates a new private Azure DevOps project
 
 ### EXAMPLE 2
 ```
-New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName -Visibility 'public'
+New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
 ```
+
+This example creates a new public Azure DevOps project
 
 ## PARAMETERS
 

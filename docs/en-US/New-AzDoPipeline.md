@@ -34,6 +34,8 @@ $newAzDoPipelineSplat = @{
 New-AzDoPipeline @newAzDoPipelineSplat
 ```
 
+This example creates a new Azure Pipeline
+
 ## PARAMETERS
 
 ### -CollectionUri

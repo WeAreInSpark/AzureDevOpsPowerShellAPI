@@ -7,30 +7,23 @@ function New-AzDoServiceConnection {
     .NOTES
         When you are using Azure DevOps with Build service Access token, make sure the setting 'Protect access to repositories in YAML pipelin' is off.
     .EXAMPLE
-        New-AzDoServiceConnection -CollectionUri $CollectionUri `
-            -PAT $PAT `
-            -ProjectName "Project 1" `
-            -SubscriptionId "00000-00000-00000-00000-00000" `
-            -SubscriptionName "Subscription 1" `
-            -Tenantid "11111-11111-11111-11111-11111" `
-            -Serviceprincipalid "1c03163f-7e4e-4fab-8b41-6f040a8361b9" `
-            -ServicePrincipalCertificate $ServicePrincipalCertificate `
-            -AuthenticationType 'spnCertificate' `
-            -ProjectID '1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2' `
-            -Name 'Project 1'
+        $params = @{
+            CollectionUri               = "https://dev.azure.com/contoso"
+            PAT                         = "***"
+            ProjectName                 = "Project 1"
+            SubscriptionId              = "00000-00000-00000-00000-00000"
+            SubscriptionName            = "Subscription 1"
+            Tenantid                    = "11111-11111-11111-11111-11111"
+            Serviceprincipalid          = "1c03163f-7e4e-4fab-8b41-6f040a8361b9"
+            KeyVaultName                = "kv01"
+            CertName                    = "Cert01"
+            AuthenticationType          = "spnCertificate"
+            ProjectID                   = "1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2"
+            Name                        = "Project 1"
+        }
+        New-AzDoServiceConnection @params
 
-        Service connection with certificate
-    .EXAMPLE
-        New-AzDoServiceConnection -CollectionUri $CollectionUri `
-            -PAT $PAT `
-            -ProjectName "Project 1" `
-            -SubscriptionId "00000-00000-00000-00000-00000" `
-            -SubscriptionName "Subscription 1" `
-            -Tenantid "11111-11111-11111-11111-11111" `
-            -Serviceprincipalid "1c03163f-7e4e-4fab-8b41-6f040a8361b9" `
-            -Serviceprincipalkey $Serviceprincipalkey
-
-        Service connection with key
+        This example creates a new Azure DevOps service connection with a Certificate from a KeyVault in Azure.
     #>
 
     [CmdletBinding(SupportsShouldProcess)]
@@ -112,7 +105,7 @@ function New-AzDoServiceConnection {
         [string]
         $Serviceprincipalkey,
 
-        # Certificate of the App registration in .PEM format.
+        # KeyVault name where the certificate is stored.
         [Parameter(Mandatory = $false)]
         [string]
         $KeyVaultName,
