@@ -1,0 +1,16 @@
+name: Versioning
+on: [pull_request]
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: semver-tag
+        uses: gandarez/semver-action@v1.0.1
+        with:
+          main_branch_name: "main"
+      - name: Test
+        shell: pwsh
+        run: |
+          Update-ModuleManifest -ModuleVersion "${{ steps.semver-tag.outputs.semver_tag }}"  -Path c:\Users\DylanPrins\Github\Work\BRC\BRC.PS.InfrastructureAsCode\Module\Module.psd1
