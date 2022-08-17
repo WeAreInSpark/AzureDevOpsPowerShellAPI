@@ -8,11 +8,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: "feature/test"
-      - id: semver-tag
-        uses: gandarez/semver-action@v1.0.1
-        with:
-          main_branch_name: "main"
+      # - id: semver-tag
+      #   uses: gandarez/semver-action@v1.0.1
+      #   with:
+      #     main_branch_name: "main"
       - name: Test
         shell: pwsh
         run: |
-          Update-ModuleManifest -ModuleVersion "${{ steps.semver-tag.outputs.semver_tag }}" -Path "${{ github.workspace }}/Module/Module.psd1"
+          #Update-ModuleManifest -ModuleVersion "${{ steps.semver-tag.outputs.semver_tag }}" -Path "${{ github.workspace }}/Module/Module.psd1"
+          write-output ${{ github.ref_name }}
