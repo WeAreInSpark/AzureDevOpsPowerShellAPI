@@ -33,7 +33,7 @@
     Description       = 'Powershell module for API to DevOps services'
 
     # Minimum version of the PowerShell engine required by this module
-    # PowerShellVersion = ''   
+    # PowerShellVersion = ''
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
