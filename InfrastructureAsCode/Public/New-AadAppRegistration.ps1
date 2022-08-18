@@ -1,44 +1,47 @@
 function New-AadAppRegistration {
     <#
 .SYNOPSIS
-    This script creates a new app registration with a certificate or secret.
+    Creates an App registration in Azure AD.
 .DESCRIPTION
-    This script creates a new app registration with a certificate or secret.
+    Creates an App regestration in Azure AD when no App registration with the same name exists.
 .EXAMPLE
-    To create an app registration with a secret that lasts 1 year, choose a name for $AppRegName, a name for $ClientSecretName and set $ClientSecretDuration to 1.
-.INPUTS
-    New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
-    [<CommonParameters>]
+    New-AadAppRegistration -Name "App 1"
 
-    New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
-    <String>] [<CommonParameters>]
+    This Example will create a new App registration with the name 'App 1'
 .OUTPUTS
-    New app registration with credentials, and variables with the ID and secret.
+    PSobject with the object ID and application ID of the App registration.
 .NOTES
 #>
-    [CmdletBinding(DefaultParameterSetName = 'ByDate')]
+    [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'ByDate')]
     param (
-        # Name of the app registration
+        # Name of the App registration
         [Parameter(Mandatory)]
         [string]
         $Name
     )
-    Test-MgGraphConnection
-    $ExistingApplication = Get-MgApplication | Where-Object { $_.DisplayName -eq $Name }
 
+    Test-MgGraphConnection
+
+    $ExistingApplication = Get-MgApplication | Where-Object { $_.DisplayName -eq $Name }
     if ($ExistingApplication) {
         Write-Error 'This Application already exists!'
         exit
     }
     else {
-        $Application = New-MgApplication -DisplayName $Name
+        if ($PSCmdlet.ShouldProcess()) {
+            $Application = New-MgApplication -DisplayName $Name
 
-        ###Create an AAD service principal
-        New-MgServicePrincipal -AppId $Application.AppId > $null
-    }
+            ###Create an AAD service principal
+            New-MgServicePrincipal -AppId $Application.AppId > $null
 
-    [PSCustomObject]@{
-        AppId = $Application.AppId
-        Id    = $Application.Id
+            [PSCustomObject]@{
+                AppId = $Application.AppId
+                Id    = $Application.Id
+            }
+        }
+        else {
+            New-MgApplication -DisplayName $Name -WhatIf
+            New-MgServicePrincipal -AppId $Application.AppId -WhatIf
+        }
     }
 }

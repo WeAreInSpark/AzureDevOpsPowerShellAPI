@@ -1,22 +1,22 @@
 function Set-AzDoTeamMember {
     <#
-.SYNOPSIS
-    This script creates a variable group with at least 1 variable in a given project.
-.DESCRIPTION
-    This script creates a variable group with at least 1 variable in a given project. When used in a pipeline, you can use the pre defined CollectionUri,
-    ProjectName and AccessToken (PAT) variables.
-.EXAMPLE
-    To create a variable group 'test' with one variable:
-    New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
-    -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
-.INPUTS
-    New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-    [<CommonParameters>]
-.OUTPUTS
-    New variable group with at least 1 variable in a given project.
-.NOTES
-#>
-    [CmdletBinding()]
+    .SYNOPSIS
+        Adds a Azure Group to a default team in an Azure DevOps project.
+    .DESCRIPTION
+        Adds a Azure Group to a default team in an Azure DevOps project.
+    .EXAMPLE
+        New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+        -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+
+        To create a variable group 'test' with one variable
+    .INPUTS
+        New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+        [<CommonParameters>]
+    .OUTPUTS
+        New variable group with at least 1 variable in a given project.
+    .NOTES
+    #>
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
         [Parameter(Mandatory)]
@@ -58,11 +58,17 @@ function Set-AzDoTeamMember {
         ContentType = 'application/json'
     }
 
-    $Response = Invoke-RestMethod @params
+    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+        $Response = Invoke-RestMethod @params
 
-    [PSCustomObject]@{
-        PrincipalName = $Response.principalName
-        MailAddress   = $Response.mailAddress
-        Origin        = $Response.origin
+        [PSCustomObject]@{
+            PrincipalName = $Response.principalName
+            MailAddress   = $Response.mailAddress
+            Origin        = $Response.origin
+        }
+    }
+    else {
+        Write-Output $Body | format-list
+        return
     }
 }

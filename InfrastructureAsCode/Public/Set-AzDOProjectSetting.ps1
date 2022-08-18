@@ -1,7 +1,31 @@
-function Set-AzDOProjectSettings {
-    [CmdletBinding()]
+function Set-AzDoProjectSetting {
+    <#
+    .SYNOPSIS
+        Sets the project settings for the given project.
+    .DESCRIPTION
+        Sets the project settings for the given project.
+    .EXAMPLE
+        $params = @{
+            CollectionUri = "https://dev.azure.com/contoso"
+            PAT = "***"
+            ProjectName = "Project01"
+            EnforceJobAuthScope = $true
+            EnforceJobAuthScopeForReleases = $true
+            EnforceReferencedRepoScopedToken = $true
+            EnforceSettableVar = $true
+            PublishPipelineMetadata = $true
+            StatusBadgesArePrivate = $true
+        }
+        Set-AzDOProjectSettings
+
+        This example sets all the settings available to true.
+    .OUTPUTS
+        PSobject
+    .NOTES
+    #>
+    [CmdletBinding(SupportsShouldProcess)]
     param (
-        # Parameter help description
+        # Collection uri of the organization. Can be set with the predefined variable from Azure DevOps.
         [Parameter(Mandatory)]
         [string]
         $CollectionUri,
@@ -64,5 +88,11 @@ function Set-AzDOProjectSettings {
         ContentType = 'application/json'
     }
 
-    Invoke-RestMethod @params
+    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+        Invoke-RestMethod @params
+    }
+    else {
+        Write-Output $Body | format-list
+        return
+    }
 }

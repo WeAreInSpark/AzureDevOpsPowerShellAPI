@@ -2,16 +2,22 @@ function New-AzDoProject {
     <#
     .SYNOPSIS
         Function to create an Azure DevOps project
+    .DESCRIPTION
+        Function to create an Azure DevOps project
     .NOTES
         When you are using Azure DevOps with Build service Access token, make sure the setting 'Protect access to repositories in YAML pipelin' is off.
     .EXAMPLE
-        New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName
+        New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
+
+        This example creates a new private Azure DevOps project
     .EXAMPLE
-        New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName -Visibility 'public'
+        New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
+
+        This example creates a new public Azure DevOps project
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
-        # Collection URI. e.g. https://dev.azure.com/contoso. 
+        # Collection URI. e.g. https://dev.azure.com/contoso.
         # Azure Pipelines has a predefined variable for this.
         [Parameter(Mandatory)]
         [string]
@@ -68,13 +74,13 @@ function New-AzDoProject {
                 ContentType = 'application/json'
                 ErrorAction = 'Stop'
             }
-    
-            try {
-                Invoke-RestMethod @params > $null
+
+            if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+                Invoke-RestMethod @params
             }
-            catch {
-                Write-Error $_
-                exit
+            else {
+                Write-Output $Body | format-list
+                return
             }
 
             do {

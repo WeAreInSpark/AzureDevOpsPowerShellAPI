@@ -1,43 +1,56 @@
 function New-AzDoRepo {
     <#
 .SYNOPSIS
-    This script creates a variable group with at least 1 variable in a given project.
+    Creates a repo in Azure DevOps.
 .DESCRIPTION
-    This script creates a variable group with at least 1 variable in a given project. When used in a pipeline, you can use the pre defined CollectionUri,
-    ProjectName and AccessToken (PAT) variables.
+    Creates a repo in Azure DevOps.
 .EXAMPLE
-    To create a variable group 'test' with one variable:
-    New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
-    -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
-.INPUTS
-    New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-    [<CommonParameters>]
+    $params = @{
+        CollectionUri = "https://dev.azure.com/contoso"
+        PAT           = "***"
+        Name          = "Repo 1"
+        ProjectName   = "RandomProject"
+    }
+    New-AzDoRepo @params
+
+    This example creates a new Azure DevOps repo
 .OUTPUTS
-    New variable group with at least 1 variable in a given project.
+    PSObject
+    Containg the repo information
 .NOTES
 #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
         [Parameter(Mandatory)]
         [string]
         $CollectionUri,
 
-        # PAT to authentice with the organization
+        # PAT to authenticate with the organization
         [Parameter(Mandatory)]
         [string]
         $PAT,
 
-        # Project where the variable group has to be created
+        # Name of the new repository
         [Parameter(Mandatory)]
         [string]
         $Name,
 
-        # Project where the variable group has to be created
+        # Name of the project where the new repository has to be created
         [Parameter(Mandatory)]
         [string]
-        $ProjectId
+        $ProjectName
     )
+
+    $params = @{
+        uri         = "$CollectionUri/_apis/projects?api-version=6.0"
+        Method      = 'GET'
+        Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+        ContentType = 'application/json'
+    }
+
+    $Projects = Invoke-RestMethod @params
+    $ProjectId = ($Projects.value | Where-Object name -EQ $ProjectName).id
 
     $Body = @{
         name    = $Name
@@ -47,12 +60,17 @@ function New-AzDoRepo {
     }
 
     $params = @{
-        uri         = "$CollectionUri/$OrganizationName/$ProjectId/_apis/git/repositories?api-version=7.1-preview.1"
+        uri         = "$CollectionUri/$ProjectId/_apis/git/repositories?api-version=7.1-preview.1"
         Method      = 'POST'
         Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
         body        = $Body | ConvertTo-Json -Depth 99
         ContentType = 'application/json'
     }
 
-    Invoke-RestMethod @params
+    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+        Invoke-RestMethod @params
+    } else {
+        Write-Output $Body | Format-List
+        return
+    }
 }

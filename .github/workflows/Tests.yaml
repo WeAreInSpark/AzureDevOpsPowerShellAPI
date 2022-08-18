@@ -1,5 +1,5 @@
-name: CI
-on: [push, pull_request]
+name: Tests
+on: [pull_request]
 jobs:
   test:
     name: Run Tests
@@ -9,8 +9,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
-    - uses: actions/checkout@v1
-    - name: Test
-      shell: pwsh
-      run: ./build.ps1 -Task Test -Bootstrap
-
+      - uses: actions/checkout@v1
+      - name: Test
+        shell: pwsh
+        run: ./build.ps1 -Task Test -Bootstrap

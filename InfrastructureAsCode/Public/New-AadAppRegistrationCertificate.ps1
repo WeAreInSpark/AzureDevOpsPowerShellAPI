@@ -1,30 +1,30 @@
 function New-AadAppRegistrationCertificate {
     <#
 .SYNOPSIS
-    This script creates a new certificate or secret for an existing app registration.
+    Creates a Certificate and uploads it to the App registration.
 .DESCRIPTION
-    This script creates a new certificate or secret for an existing app registration.
+    Creates a Certificate and uploads it to the App registration. The certificate will also be saves to an Azure KeyVault.
 .EXAMPLE
-    To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
-    $ClientSecretDuration to 1.
-.INPUTS
-    New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
-    [-KeyVaultName <String>] [<CommonParameters>]
+    $newAadAppRegistrationCertificateSplat = @{
+        ObjectID = "00000-00000-00000-00000"
+        CertName = "cert01"
+        KeyVaultName = "kv01"
+        SubjectName = "contoso.com"
+    }
+    New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
 
-    New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
-    <String>] [<CommonParameters>]
+    This example will create a new certificate for the app registration.
 .OUTPUTS
-    New credentials in an app registration, and a variable with the secret.
+    PSobject containing thumbprint of certificate and 2 dates when the certificate is valid.
 .NOTES
 #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
 
-
-        # Application (client) ID of the app registration
+        # Object Id of the App registration
         [Parameter(Mandatory)]
         [string]
-        $ObjectID,
+        $ObjectId,
 
         # Name of the certificate
         [Parameter()]
@@ -36,56 +36,61 @@ function New-AadAppRegistrationCertificate {
         [string]
         $KeyVaultName,
 
+        # CN for the certificate
         [Parameter()]
         [string]
         $SubjectName,
 
+        # Amount of months the certificate must be valid
         [Parameter()]
-        [string]
-        $ExpiresAfterMonths = 6
+        [int]
+        $ValidityInMonths = 6
     )
     Test-MgGraphConnection
+
     $CertName = ($CertName -replace " ", "")
     $SubjectName = ($SubjectName -replace " ", "")
-
     $Policy = New-AzKeyVaultCertificatePolicy -SecretContentType "application/x-pkcs12" -SubjectName "CN=$SubjectName" -IssuerName "Self" -ValidityInMonths $ValidityInMonths -ReuseKeyOnRenewal
-    Add-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName -CertificatePolicy $Policy >> $null
 
-    do {
-        $Response = Get-AzKeyVaultCertificateOperation -VaultName $KeyVaultName -Name $CertName
-    } while (
-        $Response.Status -ne 'completed'
-    )
+    if ($PSCmdlet.ShouldProcess($ObjectId)) {
+        Add-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName -CertificatePolicy $Policy >> $null
 
-    $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
-    $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
-    $SecretValueText = ''
-    $SsPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secret.SecretValue)
+        do {
+            $Response = Get-AzKeyVaultCertificateOperation -VaultName $KeyVaultName -Name $CertName
+        } while (
+            $Response.Status -ne 'completed'
+        )
 
-    try {
-        $SecretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SsPtr)
-    }
-    finally {
-        [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ssPtr)
-    }
+        $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
+        $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
+        $SecretValueText = ''
+        $SsPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secret.SecretValue)
 
-    $SecretByte = [Convert]::FromBase64String($secretValueText)
-    $Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
+        try {
+            $SecretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SsPtr)
+        }
+        finally {
+            [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ssPtr)
+        }
 
-    $KeyCredential = @{
-        Type                = 'AsymmetricX509Cert'
-        Usage               = 'Verify'
-        Key                 = $cert.RawData
-        CustomKeyIdentifier = $cert.GetCertHash()
-        EndDateTime         = $cert.NotAfter
-        DisplayName         = $ClientSecretName
-    }
+        $SecretByte = [Convert]::FromBase64String($secretValueText)
+        $Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
 
-    Update-MgApplication -ApplicationId $ObjectID -KeyCredential $KeyCredential
+        $KeyCredential = @{
+            Type                = 'AsymmetricX509Cert'
+            Usage               = 'Verify'
+            Key                 = $cert.RawData
+            CustomKeyIdentifier = $cert.GetCertHash()
+            EndDateTime         = $cert.NotAfter
+            DisplayName         = $ClientSecretName
+        }
 
-    [PSCustomObject]@{
-        Thumbprint = $Cert.Thumbprint
-        NotBefore  = $Cert.NotBefore
-        NotAfter   = $Cert.NotAfter
+        Update-MgApplication -ApplicationId $ObjectID -KeyCredential $KeyCredential
+
+        [PSCustomObject]@{
+            Thumbprint = $Cert.Thumbprint
+            NotBefore  = $Cert.NotBefore
+            NotAfter   = $Cert.NotAfter
+        }
     }
 }
