@@ -1,0 +1,36 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get version from Manifest
+        shell: pwsh
+        run: |
+          $env:Version = Get-ManifestValue -Path "${{ github.workspace }}/InfrastructureAsCode/InfrastructureAsCode.psd1" -PropertyName ModuleVersion
+          echo "Version=$env:Version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+
+      - uses: 8BitJonny/gh-get-current-pr@2.1.1
+        id: PR
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ env.Version }}
+          release_name: Release ${{ env.Version }}
+          body: ${{ steps.PR.outputs.pr_body }}
+          draft: false
+          prerelease: false
+
+      - name: Release pipeline to Azure Artifact
+        shell: pwsh
+        run: ./build.ps1 -Task Publishing

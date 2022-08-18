@@ -1,6 +1,6 @@
 ---
-external help file: Module-help.xml
-Module Name: Module
+external help file: InfrastructureAsCode-help.xml
+Module Name: InfrastructureAsCode
 online version:
 schema: 2.0.0
 ---
