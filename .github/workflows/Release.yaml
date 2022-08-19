@@ -1,0 +1,76 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "InfrastructureAsCode/**"
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get Previous tag
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 0.1.0
+
+      - name: Calculate version
+        id: CalcVersion
+        shell: pwsh
+        run: |
+          $Uri = "https://api.github.com/repos/Dylan-Prins/AutomateReleases/pulls?state=closed"
+          $PR = curl -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.Github_Token }}" $uri | ConvertFrom-Json | Where-Object {$_.merge_commit_sha -eq "${{ github.sha }}"}
+          Write-Output $PR | Select-Object labels
+
+          $LatestTag = "${{ steps.previoustag.outputs.tag }}"
+          [int]$Major = $LatestTag.split('.')[0]
+          [int]$Minor = $LatestTag.split('.')[1]
+          [int]$Patch = $LatestTag.split('.')[2]
+
+          if ($pr.labels -match "patch") {
+            $Patch++
+          }
+          elseif ($PR.labels -match "minor") {
+            $Minor++
+            $Patch = 0
+          }
+          elseif ($pr.labels -match "major") {
+            $Major++
+            $Minor = 0
+            $Patch = 0
+          }
+          else {
+            Write-Error "No labels found"
+            exit 1
+          }
+          [string]$env:NewVersion = "$Major.$Minor.$Patch"
+          Write-Output "New version is: $env:NewVersion"
+          Write-Output "::set-output name=Version::$env:NewVersion"
+
+          Update-ModuleManifest -Path "${{ github.workspace }}/InfrastructureAsCode/InfrastructureAsCode.psd1" -ModuleVersion $env:NewVersion
+
+      - name: Create github release
+        uses: actions/github-script@v5.1.1
+        with:
+          github-token: ${{ secrets.Github_Token }}
+          script: |
+            await github.request('POST /repos/${{ github.repository }}/releases', {
+              tag_name: "${{ steps.CalcVersion.outputs.Version }}",
+              generate_release_notes: true })
+
+      - name: Release pipeline to Azure Artifact
+        shell: pwsh
+        run: |
+          $parameters = @{
+            "Version"  = "${{ steps.CalcVersion.outputs.Version }}";
+            "Username" = "${{ secrets.Username }}";
+            "PAT" = "${{ secrets.PAT }}"
+            "FeedName" = "Powershell"
+          }
+          ./build.ps1 -Task Test, Publishing -Bootstrap -parameters $parameters
