@@ -7,6 +7,9 @@ param(
     # Bootstrap dependencies
     [switch]$Bootstrap,
 
+    # Calculate version
+    [switch]$CalculateVersion,
+
     # List available build tasks
     [parameter(ParameterSetName = 'Help')]
     [switch]$Help,
@@ -17,7 +20,7 @@ param(
     # Optional parameters to pass to psake
     [hashtable]$Parameters
 )
-
+ 
 $ErrorActionPreference = 'Stop'
 
 # Bootstrap dependencies
@@ -30,7 +33,8 @@ if ($Bootstrap.IsPresent) {
         }
         Import-Module -Name PSDepend -Verbose:$false
         Invoke-PSDepend -Path './requirements.psd1' -Install -Import -Force -WarningAction SilentlyContinue
-    } else {
+    }
+    else {
         Write-Warning 'No [requirements.psd1] found. Skipping build dependency installation.'
     }
 }
@@ -39,8 +43,9 @@ if ($Bootstrap.IsPresent) {
 $psakeFile = './psakeFile.ps1'
 if ($PSCmdlet.ParameterSetName -eq 'Help') {
     Get-PSakeScriptTasks -buildFile $psakeFile |
-        Format-Table -Property Name, Description, Alias, DependsOn
-} else {
+    Format-Table -Property Name, Description, Alias, DependsOn
+}
+else {
     Set-BuildEnvironment -Force
     Invoke-psake -buildFile $psakeFile -taskList $Task -nologo -properties $Properties -parameters $Parameters
     exit ([int](-not $psake.build_success))

@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "InfrastructureAsCode/**"
 jobs:
   test:
     name: Run Tests
@@ -71,6 +69,6 @@ jobs:
             "Version"  = "${{ steps.CalcVersion.outputs.Version }}";
             "Username" = "${{ secrets.Username }}";
             "PAT" = "${{ secrets.PAT }}"
-            "FeedName" = "Powershell"
+            "FeedName" = "DylanTest"
           }
           ./build.ps1 -Task Test, Publishing -Bootstrap -parameters $parameters

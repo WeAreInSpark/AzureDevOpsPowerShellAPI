@@ -1,5 +1,5 @@
-name: CI
-on: [push, pull_request]
+name: Tests
+on: [pull_request]
 jobs:
   test:
     name: Run Tests
@@ -28,4 +28,4 @@ jobs:
         name: Check Label PRs
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-          valid-labels: "patch, minor, major"
+          valid-labels: "patch, minor, major, no-release"
