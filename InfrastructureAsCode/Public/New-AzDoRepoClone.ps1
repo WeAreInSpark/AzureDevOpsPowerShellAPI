@@ -1,65 +1,102 @@
 function New-AzDoRepoClone {
     <#
 .SYNOPSIS
-    This script creates a variable group with at least 1 variable in a given project.
+    Clones the main branch to a new location
 .DESCRIPTION
-    This script creates a variable group with at least 1 variable in a given project. When used in a pipeline, you can use the pre defined CollectionUri,
-    ProjectName and AccessToken (PAT) variables.
+    Clones the main branch to a new location
 .EXAMPLE
-    To create a variable group 'test' with one variable:
-    New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
-    -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
-.INPUTS
-    New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-    [<CommonParameters>]
+    $params = @{
+        SourceOrganizationName      = "contoso"
+        SourceProjectName           = "project1"
+        SourcePAT                   = "***"
+        SourceRepoName              = "repo1"
+        DestinationOrganizationName = "New Contoso"
+        DestinationProjectName      = "Project1"
+        DestinationPAT              = "***"
+        DestinationRepoName         = "repo1"
+    }
+    New-AzDoRepoClone @params
+
+    This example Clones the main branch to another organization with the same project and repo name.
 .OUTPUTS
-    New variable group with at least 1 variable in a given project.
+    PSobject
 .NOTES
 #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
         [Parameter(Mandatory)]
         [string]
         $SourceOrganizationName,
 
-        # PAT to authentice with the organization
-        [Parameter()]
+        # Project where the variable group has to be created
+        [Parameter(Mandatory)]
         [string]
-        $SourcePAT = $env:SYSTEM_ACCESSTOKEN,
+        $SourceProjectName,
 
         # Project where the variable group has to be created
         [Parameter(Mandatory)]
         [string]
         $SourceRepoName,
 
-        # Project where the variable group has to be created
-        [Parameter(Mandatory)]
+        # PAT to authentice with the organization
+        [Parameter()]
         [string]
-        $SourceProjectName,
+        $SourcePAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Collection Uri of the organization
         [Parameter(Mandatory)]
         [string]
         $DestinationOrganizationName,
-        
-        # PAT to authentice with the organization
+
+        # Project where the variable group has to be created
         [Parameter(Mandatory)]
         [string]
-        $DestinationPAT,
-        
+        $DestinationProjectName,
+
         # Project where the variable group has to be created
         [Parameter(Mandatory)]
         [string]
         $DestinationRepoName,
-        
-        # Project where the variable group has to be created
+
+        # PAT to authentice with the organization
         [Parameter(Mandatory)]
         [string]
-        $DestinationProjectName
-    )
+        $DestinationPAT,
 
-    git clone "https://$SourcePAT@dev.azure.com/$SourceOrganizationName/$SourceProjectName/_git/$SourceRepoName"
-    Set-Location $SourceRepoName
-    git push "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
+        # Switch to enable mirroring the repo
+        [Parameter()]
+        [switch]
+        $Mirror,
+
+        # Creates a new repo if $true
+        [Parameter()]
+        [switch]
+        $NewRepo
+    )
+    if ($PSCmdlet.ShouldProcess($DestinationOrganizationName)) {
+        if ($NewRepo) {
+            New-AzDoRepo -CollectionUri "https://dev.azure.com/$DestinationOrganizationName" -PAT $DestinationPAT -Name $DestinationRepoName -ProjectName $DestinationProjectName
+        }
+
+        if ($mirror) {
+            git clone --mirror=$Mirror "https://$SourcePAT@dev.azure.com/$SourceOrganizationName/$SourceProjectName/_git/$SourceRepoName"
+            Set-Location "$SourceRepoName.git"
+
+            if ($Env:OS -match "Windows") {
+                git show-ref | Where-Object { $_ -match 'pull' } | ForEach-Object {
+                    git update-ref -d $_.split(' ')[1]
+                }
+            } else {
+                git show-ref | cut -d' ' -f2 | grep 'pull' | xargs -r -L1 git update-ref -d
+            }
+
+            git push --mirror "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
+        } else {
+
+            git clone "https://$SourcePAT@dev.azure.com/$SourceOrganizationName/$SourceProjectName/_git/$SourceRepoName" --branch main
+            Set-Location $SourceRepoName
+            git push "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
+        }
+    }
 }

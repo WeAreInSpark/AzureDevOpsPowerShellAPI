@@ -3,7 +3,7 @@ function Get-AzDoRepo {
 .SYNOPSIS
     Get information about a repo in Azure DevOps.
 .DESCRIPTION
-    Get information about 1 repo if the parameter $Name is filled in. Otherwise it will get all the repo's
+    Get information about 1 repo if the parameter $Name is filled in. Otherwise it will get all the repo's.
 .EXAMPLE
     $Params = @{
         CollectionUri = "https://dev.azure.com/contoso"
@@ -11,9 +11,9 @@ function Get-AzDoRepo {
         ProjectName = "Project 1"
         Name "Repo 1"
     }
-    Get-AzDoRepo @Params
-.INPUTS
-    Get-AzDoRepo [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string>
+    Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1" -Name "Repo 1"
+
+    This example will fetch information about the repo with the name 'Repo 1'.
 .OUTPUTS
     PSObject with repo(s).
 .NOTES
@@ -57,5 +57,4 @@ function Get-AzDoRepo {
 
         Invoke-RestMethod @params
     }
-    
 }

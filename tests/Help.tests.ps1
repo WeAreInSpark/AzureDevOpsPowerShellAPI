@@ -2,7 +2,7 @@
 
 BeforeDiscovery {
 
-    function script:FilterOutCommonParams {
+    function global:FilterOutCommonParams {
         param ($Params)
         $commonParams = @(
             'Debug', 'ErrorAction', 'ErrorVariable', 'InformationAction', 'InformationVariable',
@@ -12,10 +12,10 @@ BeforeDiscovery {
         $params | Where-Object { $_.Name -notin $commonParams } | Sort-Object -Property Name -Unique
     }
 
-    $manifest             = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
-    $outputDir            = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
-    $outputModDir         = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
-    $outputModVerDir      = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
+    $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
+    $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
+    $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
     $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
 
     # Get module commands
@@ -39,22 +39,22 @@ Describe "Test help for <_.Name>" -ForEach $commands {
 
     BeforeDiscovery {
         # Get command help, parameters, and links
-        $command               = $_
-        $commandHelp           = Get-Help $command.Name -ErrorAction SilentlyContinue
-        $commandParameters     = script:FilterOutCommonParams -Params $command.ParameterSets.Parameters
+        $command = $_
+        $commandHelp = Get-Help $command.Name -ErrorAction SilentlyContinue
+        $commandParameters = global:FilterOutCommonParams  -Params $command.ParameterSets.Parameters
         $commandParameterNames = $commandParameters.Name
-        $helpLinks             = $commandHelp.relatedLinks.navigationLink.uri
+        $helpLinks = $commandHelp.relatedLinks.navigationLink.uri
     }
 
     BeforeAll {
         # These vars are needed in both discovery and test phases so we need to duplicate them here
-        $command                = $_
-        $commandName            = $_.Name
-        $commandHelp            = Get-Help $command.Name -ErrorAction SilentlyContinue
-        $commandParameters      = script:FilterOutCommonParams -Params $command.ParameterSets.Parameters
-        $commandParameterNames  = $commandParameters.Name
-        $helpParameters         = script:FilterOutCommonParams -Params $commandHelp.Parameters.Parameter
-        $helpParameterNames     = $helpParameters.Name
+        $command = $_
+        $commandName = $_.Name
+        $commandHelp = Get-Help $command.Name -ErrorAction SilentlyContinue
+        $commandParameters = global:FilterOutCommonParams  -Params $command.ParameterSets.Parameters
+        $commandParameterNames = $commandParameters.Name
+        $helpParameters = global:FilterOutCommonParams  -Params $commandHelp.Parameters.Parameter
+        $helpParameterNames = $helpParameters.Name
     }
 
     # If help is not found, synopsis in auto-generated help is the syntax diagram
@@ -84,9 +84,9 @@ Describe "Test help for <_.Name>" -ForEach $commands {
     Context "Parameter <_.Name>" -Foreach $commandParameters {
 
         BeforeAll {
-            $parameter         = $_
-            $parameterName     = $parameter.Name
-            $parameterHelp     = $commandHelp.parameters.parameter | Where-Object Name -eq $parameterName
+            $parameter = $_
+            $parameterName = $parameter.Name
+            $parameterHelp = $commandHelp.parameters.parameter | Where-Object Name -eq $parameterName
             $parameterHelpType = if ($parameterHelp.ParameterValue) { $parameterHelp.ParameterValue.Trim() }
         }
 

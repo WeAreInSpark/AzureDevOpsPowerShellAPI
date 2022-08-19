@@ -1,22 +1,25 @@
 function New-AzDoPipeline {
     <#
 .SYNOPSIS
-    This script creates a variable group with at least 1 variable in a given project.
+    Creates an Azure Pipeline
 .DESCRIPTION
-    This script creates a variable group with at least 1 variable in a given project. When used in a pipeline, you can use the pre defined CollectionUri,
-    ProjectName and AccessToken (PAT) variables.
+    Creates an Azure Pipeline
 .EXAMPLE
-    To create a variable group 'test' with one variable:
-    New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
-    -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
-.INPUTS
-    New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-    [<CommonParameters>]
+    $newAzDoPipelineSplat = @{
+        CollectionUri = "https://dev.azure.com/contoso"
+        PAT = "***"
+        Name = "Pipeline 1"
+        RepoName = "Repo 1"
+        ProjectName = "Project 1"
+    }
+    New-AzDoPipeline @newAzDoPipelineSplat
+
+    This example creates a new Azure Pipeline
 .OUTPUTS
-    New variable group with at least 1 variable in a given project.
+    PSobject containing Project information
 .NOTES
 #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
         [Parameter(Mandatory)]
@@ -37,7 +40,7 @@ function New-AzDoPipeline {
         [Parameter(Mandatory)]
         $RepoName,
 
-        # Project where the variable group has to be created
+        # Project where the variable group has to be created.
         [Parameter(Mandatory)]
         [string]
         $ProjectName
@@ -67,9 +70,13 @@ function New-AzDoPipeline {
                 body        = $Body | ConvertTo-Json -Depth 99
                 ContentType = 'application/json'
             }
-
-            Invoke-RestMethod @params
+            if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+                Invoke-RestMethod @params
+            }
+            else {
+                Write-Output $Body | format-list
+                return
+            }
         }
     }
-    
 }
