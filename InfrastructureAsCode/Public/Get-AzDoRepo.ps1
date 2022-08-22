@@ -43,16 +43,16 @@ function Get-AzDoRepo {
     Begin {
         if ($Name) {
             $Uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($Name)?api-version=7.1-preview.1"
-        }
-        else {
+        } else {
             $Uri = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
         }
     }
     Process {
         $params = @{
-            uri     = $Uri
-            Method  = 'GET'
-            Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+            uri         = $Uri
+            Method      = 'GET'
+            Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+            ContentType = 'application/json'
         }
 
         Invoke-RestMethod @params
