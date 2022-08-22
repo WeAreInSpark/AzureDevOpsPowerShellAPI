@@ -50,6 +50,7 @@ function New-AzDoPipeline {
     }
     Process {
         foreach ($n in $Name) {
+            Write-Host -ForegroundColor Yellow "##[section]Creating pipeline in project $DestinationProjectName with name $n."
             $Body = @{
                 name          = $n
                 folder        = $null
@@ -72,9 +73,8 @@ function New-AzDoPipeline {
             }
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
                 Invoke-RestMethod @params
-            }
-            else {
-                Write-Output $Body | format-list
+            } else {
+                Write-Output $Body | Format-List
                 return
             }
         }
