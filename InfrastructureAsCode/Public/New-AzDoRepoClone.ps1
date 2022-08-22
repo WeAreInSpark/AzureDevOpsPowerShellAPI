@@ -69,19 +69,25 @@ function New-AzDoRepoClone {
         [switch]
         $Mirror,
 
-        # Creates a new repo if $true
+        # Switch to create a new repo
         [Parameter()]
         [switch]
         $NewRepo
     )
     if ($PSCmdlet.ShouldProcess($DestinationOrganizationName)) {
+        Write-Host -ForegroundColor Yellow "##[section]Cloning $SourceRepoName into project $DestinationProjectName with name $DestinationRepoName."
         if ($NewRepo) {
-            New-AzDoRepo -CollectionUri "https://dev.azure.com/$DestinationOrganizationName" -PAT $DestinationPAT -Name $DestinationRepoName -ProjectName $DestinationProjectName
+            $newAzDoRepoSplat = @{
+                CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
+                PAT           = $DestinationPAT
+                Name          = $DestinationRepoName
+                ProjectName   = $DestinationProjectName
+            }
+            $Repo = New-AzDoRepo @newAzDoRepoSplat
         }
 
         if ($mirror) {
             git clone --mirror=$Mirror "https://$SourcePAT@dev.azure.com/$SourceOrganizationName/$SourceProjectName/_git/$SourceRepoName"
-            Set-Location "$SourceRepoName.git"
 
             if ($Env:OS -match "Windows") {
                 git show-ref | Where-Object { $_ -match 'pull' } | ForEach-Object {
@@ -93,10 +99,25 @@ function New-AzDoRepoClone {
 
             git push --mirror "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
         } else {
+            New-Item -Path (Split-Path -Parent -Path $PSScriptRoot) -Name BRCTemplates -ItemType Directory
+            Set-Location (Join-Path -ChildPath 'BRCTemplates' -Path (Split-Path -Parent -Path $PSScriptRoot))
 
             git clone "https://$SourcePAT@dev.azure.com/$SourceOrganizationName/$SourceProjectName/_git/$SourceRepoName" --branch main
             Set-Location $SourceRepoName
             git push "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
+
+            Set-Location $PSScriptRoot
+            Remove-Item -r -Force (Join-Path -ChildPath 'BRCTemplates' -Path (Split-Path -Parent -Path $PSScriptRoot))
         }
+
+        $getAzDoRepoSplat = @{
+            CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
+            Name          = $DestinationRepoName
+            ProjectName   = $DestinationProjectName
+            PAT           = $DestinationPAT
+        }
+        $Repo = Get-AzDoRepo @getAzDoRepoSplat
+        $Repo
+        $global:RepoId = $Repo.id
     }
 }
