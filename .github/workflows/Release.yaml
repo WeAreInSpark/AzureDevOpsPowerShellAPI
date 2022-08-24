@@ -80,9 +80,9 @@ jobs:
         shell: pwsh
         env:
           PAT: ${{ secrets.PAT }}
-          VSS_NUGET_EXTERNAL_FEED_ENDPOINTS: '{"endpointCredentials": [{"endpoint":"https://pkgs.dev.azure.com/weareinspark/_packaging/dylantest/nuget/v2", "username":"${{ secrets.Username }}", "password":"${{ secrets.PAT }}"}]}'
+          VSS_NUGET_EXTERNAL_FEED_ENDPOINTS: '{"endpointCredentials": [{"endpoint":"https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2", "username":"${{ secrets.Username }}", "password":"${{ secrets.PAT }}"}]}'
         run: |
-          Register-PSRepository -Name "InSpark" -SourceLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/dylantest/nuget/v2" -PublishLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/dylantest/nuget/v2" -InstallationPolicy Trusted
+          Register-PSRepository -Name "InSpark" -SourceLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2" -PublishLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2" -InstallationPolicy Trusted
 
           $Parameters = @{
             "PSRepository" = 'InSpark'

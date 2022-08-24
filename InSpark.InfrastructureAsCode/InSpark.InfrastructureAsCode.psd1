@@ -12,7 +12,7 @@
     RootModule        = 'InSpark.InfrastructureAsCode.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '6.1.3'
+    ModuleVersion     = '0.1.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -21,13 +21,13 @@
     GUID              = 'b9f88665-969d-4670-849a-407cfc372831'
 
     # Author of this module
-    Author            = 'Dylan Prins'
+    Author            = 'Business Ready Cloud'
 
     # Company or vendor of this module
     CompanyName       = 'Unknown'
 
     # Copyright statement for this module
-    Copyright         = '(c) Dylan Prins. All rights reserved.'
+    Copyright         = '(c) Business Ready Cloud. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description       = 'Powershell module for API to DevOps services'
