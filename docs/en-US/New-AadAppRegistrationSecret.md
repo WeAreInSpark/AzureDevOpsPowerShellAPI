@@ -1,6 +1,6 @@
 ---
-external help file: InfrastructureAsCode-help.xml
-Module Name: InfrastructureAsCode
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
 online version:
 schema: 2.0.0
 ---
@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AadAppRegistrationSecret
 
 ## SYNOPSIS
-Creates a secret for the App registration
+This script creates a new certificate or secret for an existing app registration.
 
 ## SYNTAX
 
@@ -18,22 +18,15 @@ New-AadAppRegistrationSecret -ObjectID <String> -ClientSecretName <String> -EndD
 ```
 
 ## DESCRIPTION
-Creates a secret for the App registration.
-The secret will get uploaded to an Azure KeyVault.
+This script creates a new certificate or secret for an existing app registration.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$newAadAppRegistrationSecretSplat = @{
-    ObjectID = "00000-00000-00000-00000-00000"
-    ClientSecretName = "Secret 1"
-    EndDate = "2022-01-01"
-}
-New-AadAppRegistrationSecret @newAadAppRegistrationSecretSplat
+To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
+$ClientSecretDuration to 1.
 ```
-
-This example will create a new secret for the app registration.
 
 ## PARAMETERS
 
@@ -117,9 +110,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
+### [-KeyVaultName <String>] [<CommonParameters>]
+### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
+### <String>] [<CommonParameters>]
 ## OUTPUTS
 
-### The Appsecret
+### New credentials in an app registration, and a variable with the secret.
 ## NOTES
 
 ## RELATED LINKS

@@ -27,9 +27,9 @@ function New-AzDoRepo {
         $CollectionUri,
 
         # PAT to authenticate with the organization
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $false)]
         [string]
-        $PAT,
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Name of the new repository
         [Parameter(Mandatory)]

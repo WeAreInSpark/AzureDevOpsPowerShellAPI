@@ -1,0 +1,3 @@
+feature: feature/*
+patch: patch/*
+breaking: breaking/*

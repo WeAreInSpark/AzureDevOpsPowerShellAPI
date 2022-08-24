@@ -11,7 +11,7 @@ function New-AzDoRepoFork {
     .EXAMPLE
         This example forks a repo from one project to another and forks a single branch ('main'), the forked repo is called 'ForkedRepo'.
         $newAzDoRepoForkSplat = @{
-            CollectionUri    = 'https://dev.azure.com/ChristianPiet0452'
+            CollectionUri    = 'https://dev.azure.com/contoso'
             ProjectId        = "15bca695-6260-498a-8b4c-38e53097906c"
             SourceProjectId  = "15bca695-6260-498a-8b4c-38e53097906c"
             SourceRepo       = 'b050b2de-2d6c-4357-8a03-3c14c1ccb3f5'
@@ -26,7 +26,7 @@ function New-AzDoRepoFork {
     .OUTPUTS
         PSCustomObject
 #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
         [Parameter(Mandatory)]
@@ -34,9 +34,9 @@ function New-AzDoRepoFork {
         $CollectionUri,
 
         # PAT to authenticate with the organization
-        [Parameter()]
+        [Parameter(Mandatory = $false)]
         [String]
-        $PAT = (Read-Host -MaskInput -Prompt 'Azure DevOps PAT: '),
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Project where the variable group has to be created
         [Parameter(Mandatory)]
@@ -92,6 +92,7 @@ function New-AzDoRepoFork {
         body        = $Body | ConvertTo-Json -Depth 99
         ContentType = 'application/json'
     }
-
-    Invoke-RestMethod @params
+    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+        Invoke-RestMethod @params
+    }
 }

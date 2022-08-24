@@ -24,9 +24,9 @@ function Set-AzDoTeamMember {
         $OrganizationName,
 
         # PAT to authentice with the organization
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $false)]
         [string]
-        $PAT,
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Project where the variable group has to be created
         [Parameter(Mandatory)]
@@ -66,9 +66,8 @@ function Set-AzDoTeamMember {
             MailAddress   = $Response.mailAddress
             Origin        = $Response.origin
         }
-    }
-    else {
-        Write-Output $Body | format-list
+    } else {
+        Write-Output $Body | Format-List
         return
     }
 }

@@ -40,7 +40,7 @@ function New-AzDoRepoClone {
         $SourceRepoName,
 
         # PAT to authentice with the organization
-        [Parameter()]
+        [Parameter(Mandatory = $false)]
         [string]
         $SourcePAT = $env:SYSTEM_ACCESSTOKEN,
 

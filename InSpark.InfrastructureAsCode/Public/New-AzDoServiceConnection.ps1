@@ -39,9 +39,9 @@ function New-AzDoServiceConnection {
         $CollectionUri,
 
         # PAT to get access to Azure DevOps.
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $false)]
         [string]
-        $PAT,
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Name of the project.
         [Parameter(Mandatory)]
@@ -134,8 +134,7 @@ function New-AzDoServiceConnection {
             scopeLevel       = $scopeLevel
             creationMode     = 'Manual'
         }
-    }
-    else {
+    } else {
         $Data = @{
             managementGroupId   = $ManagementGroupId
             managementGroupName = $ManagementGroupName
@@ -155,8 +154,7 @@ function New-AzDoServiceConnection {
             }
             scheme     = 'ServicePrincipal'
         }
-    }
-    else {
+    } else {
         $CertName = ($CertName -replace " ", "")
         $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
         $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
@@ -165,15 +163,14 @@ function New-AzDoServiceConnection {
 
         try {
             $secretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SsPtr)
-        }
-        finally {
+        } finally {
             [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($SsPtr)
         }
 
         $SecretByte = [Convert]::FromBase64String($secretValueText)
-        $Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
+        $Cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
 
-        $Pem = new-object System.Text.StringBuilder
+        $Pem = New-Object System.Text.StringBuilder
         $Pem.AppendLine("-----BEGIN CERTIFICATE-----") > $null
         $Pem.AppendLine([System.Convert]::ToBase64String($cert.RawData, 1)) > $null
         $Pem.AppendLine("-----END CERTIFICATE-----") > $null
@@ -226,9 +223,8 @@ function New-AzDoServiceConnection {
             SubscriptionName = $Response.data.subscriptionName
             SubscriptionId   = $Response.data.subscriptionId
         }
-    }
-    else {
-        Write-Output $Body | format-list
+    } else {
+        Write-Output $Body | Format-List
         return
     }
 }

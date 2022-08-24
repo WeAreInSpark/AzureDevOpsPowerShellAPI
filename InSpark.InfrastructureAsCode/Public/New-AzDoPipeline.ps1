@@ -27,9 +27,9 @@ function New-AzDoPipeline {
         $CollectionUri,
 
         # PAT to authentice with the organization
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $false)]
         [string]
-        $PAT,
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Project where the variable group has to be created
         [Parameter(Mandatory)]
@@ -72,9 +72,8 @@ function New-AzDoPipeline {
             }
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
                 Invoke-RestMethod @params
-            }
-            else {
-                Write-Output $Body | format-list
+            } else {
+                Write-Output $Body | Format-List
                 return
             }
         }

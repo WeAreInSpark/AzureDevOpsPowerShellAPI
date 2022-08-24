@@ -1,39 +1,93 @@
-name: ReleaseModule
+name: CI
 on:
   push:
     branches:
       - main
-    paths:
-      - "InfrastructureAsCode/**"
 jobs:
   test:
     name: Release module
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: Get version from Manifest
+      - name: Get Previous tag
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 0.0.0
+
+      - name: Calculate version
+        id: CalcVersion
         shell: pwsh
         run: |
-          Install-Module BuildHelpers -force
-          $env:Version = Get-Metadata -Path .\InfrastructureAsCode\InfrastructureAsCode.psd1 -PropertyName ModuleVersion
-          echo "Version=$env:Version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          $Uri = "https://api.github.com/repos/weareinspark/DNA.AutomateRelease/pulls?state=closed"
+          $PR = curl -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.Github_Token }}" $uri | ConvertFrom-Json | Where-Object {$_.merge_commit_sha -eq "${{ github.sha }}"}
+          $Title = $PR.title
 
-      - uses: 8BitJonny/gh-get-current-pr@2.1.1
-        id: PR
+          $LatestTag = "${{ steps.previoustag.outputs.tag }}"
+          [int]$Major = $LatestTag.split('.')[0]
+          [int]$Minor = $LatestTag.split('.')[1]
+          [int]$Patch = $LatestTag.split('.')[2]
 
-      - name: Create github Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          if ($pr.labels -match "patch") {
+            $Patch++
+          }
+          elseif ($PR.labels -match "minor") {
+            $Minor++
+            $Patch = 0
+          }
+          elseif ($pr.labels -match "major") {
+            $Major++
+            $Minor = 0
+            $Patch = 0
+          }
+          else {
+            Write-Error "No labels found"
+            exit 1
+          }
+          [string]$env:NewVersion = "$Major.$Minor.$Patch"
+          Write-Output "New version is: $env:NewVersion"
+          Write-Output "::set-output name=Version::$env:NewVersion"
+
+          Install-Module -Name Microsoft.Graph.Applications -Force
+          Install-Module -Name Az.Accounts -Force
+          Install-Module -Name Az.KeyVault -Force
+
+          $Parms = @{
+            Path = "${{ github.workspace }}/InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psd1"
+            ModuleVersion = $env:NewVersion
+            PrivateData = @{
+              PSData = @{
+                ProjectUri = ("${{ github.repositoryUrl }}").Replace(0,6)
+                ReleaseNotes = $Title
+              }
+            }
+          }
+          Update-ModuleManifest -Path "${{ github.workspace }}/InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psd1" -ModuleVersion $env:NewVersion
+
+      - name: Create github release
+        uses: actions/github-script@v5.1.1
         with:
-          tag_name: ${{ env.Version }}
-          release_name: Release ${{ env.Version }}
-          body: ${{ steps.PR.outputs.pr_body }}
-          draft: false
-          prerelease: false
+          github-token: ${{ secrets.Github_Token }}
+          script: |
+            await github.request('POST /repos/${{ github.repository }}/releases', {
+              tag_name: "${{ steps.CalcVersion.outputs.Version }}",
+              generate_release_notes: true })
 
-      - name: Release module to Azure Artifact
+      - name: Release pipeline to Azure Artifact
         shell: pwsh
-        run: ./build.ps1 -Task Test, Publishing -Bootstrap
+        env:
+          PAT: ${{ secrets.PAT }}
+          VSS_NUGET_EXTERNAL_FEED_ENDPOINTS: '{"endpointCredentials": [{"endpoint":"https://pkgs.dev.azure.com/weareinspark/_packaging/dylantest/nuget/v2", "username":"${{ secrets.Username }}", "password":"${{ secrets.PAT }}"}]}'
+        run: |
+          Register-PSRepository -Name "InSpark" -SourceLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/dylantest/nuget/v2" -PublishLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/dylantest/nuget/v2" -InstallationPolicy Trusted
+
+          $Parameters = @{
+            "PSRepository" = 'InSpark'
+            "PSRepositoryApiKey" = '$env:PAT'
+            "ScriptAnalysisEnabled" = $true
+            "TestEnabled" = $false
+          }
+          ./build.ps1 -Task Init,Publish -Bootstrap -parameters $Parameters

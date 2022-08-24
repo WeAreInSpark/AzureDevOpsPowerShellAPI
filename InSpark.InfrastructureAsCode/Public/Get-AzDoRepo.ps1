@@ -26,9 +26,9 @@ function Get-AzDoRepo {
         $CollectionUri,
 
         # PAT to authentice with the organization
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $false)]
         [string]
-        $PAT,
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Project where the variable group has to be created
         [Parameter(Mandatory = $false)]
@@ -43,8 +43,7 @@ function Get-AzDoRepo {
     Begin {
         if ($Name) {
             $Uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($Name)?api-version=7.1-preview.1"
-        }
-        else {
+        } else {
             $Uri = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
         }
     }

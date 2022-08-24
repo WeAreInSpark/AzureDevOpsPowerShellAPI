@@ -36,14 +36,15 @@ function New-AadGroup {
     if ($ExistingGroup) {
         Write-Error 'This Group already exists!'
         exit
-    }
-    else {
-        $Group = New-MgGroup -DisplayName $Name -MailEnabled:$MailEnabled -MailNickname $MailNickName -SecurityEnabled:$true -Visibility 'private' -GroupTypes 'Unified' -WhatIf:$WhatIfPreference
+    } else {
+        if ($PSCmdlet.ShouldProcess($Name)) {
+            $Group = New-MgGroup -DisplayName $Name -MailEnabled:$MailEnabled -MailNickname $MailNickName -SecurityEnabled:$true -Visibility 'private' -GroupTypes 'Unified' -WhatIf:$WhatIfPreference
 
-        [PSCustomObject]@{
-            DisplayName = $Group.DisplayName
-            Id          = $Group.Id
-            Description = $Group.Description
+            [PSCustomObject]@{
+                DisplayName = $Group.DisplayName
+                Id          = $Group.Id
+                Description = $Group.Description
+            }
         }
     }
 }

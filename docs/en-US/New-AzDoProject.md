@@ -1,6 +1,6 @@
 ---
-external help file: InfrastructureAsCode-help.xml
-Module Name: InfrastructureAsCode
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
 online version:
 schema: 2.0.0
 ---
@@ -13,35 +13,31 @@ Function to create an Azure DevOps project
 ## SYNTAX
 
 ```
-New-AzDoProject [-CollectionUri] <String> [-PAT] <String> [-Name] <String[]> [[-Description] <String>]
+New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [[-Description] <String>]
  [[-SourceControlType] <String>] [[-Visibility] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Function to create an Azure DevOps project
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
+New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName
 ```
-
-This example creates a new private Azure DevOps project
 
 ### EXAMPLE 2
 ```
-New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
+New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName -Visibility 'public'
 ```
-
-This example creates a new public Azure DevOps project
 
 ## PARAMETERS
 
 ### -CollectionUri
 Collection URI.
 e.g.
-https://dev.azure.com/contoso.
+https://dev.azure.com/contoso. 
 Azure Pipelines has a predefined variable for this.
 
 ```yaml
@@ -64,7 +60,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 2
 Default value: None
 Accept pipeline input: False
@@ -132,8 +128,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter

@@ -1,6 +1,6 @@
 ---
-external help file: InfrastructureAsCode-help.xml
-Module Name: InfrastructureAsCode
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
 online version:
 schema: 2.0.0
 ---
@@ -8,33 +8,28 @@ schema: 2.0.0
 # New-AzDoPipeline
 
 ## SYNOPSIS
-Creates an Azure Pipeline
+This script creates a variable group with at least 1 variable in a given project.
 
 ## SYNTAX
 
 ```
-New-AzDoPipeline [-CollectionUri] <String> [-PAT] <String> [-Name] <String[]> [-RepoName] <Object>
+New-AzDoPipeline [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [-RepoName] <Object>
  [-ProjectName] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates an Azure Pipeline
+This script creates a variable group with at least 1 variable in a given project.
+When used in a pipeline, you can use the pre defined CollectionUri,
+ProjectName and AccessToken (PAT) variables.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$newAzDoPipelineSplat = @{
-    CollectionUri = "https://dev.azure.com/contoso"
-    PAT = "***"
-    Name = "Pipeline 1"
-    RepoName = "Repo 1"
-    ProjectName = "Project 1"
-}
-New-AzDoPipeline @newAzDoPipelineSplat
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
 ```
-
-This example creates a new Azure Pipeline
 
 ## PARAMETERS
 
@@ -61,7 +56,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 2
 Default value: None
 Accept pipeline input: False
@@ -114,8 +109,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -149,9 +143,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
 ## OUTPUTS
 
-### PSobject containing Project information
+### New variable group with at least 1 variable in a given project.
 ## NOTES
 
 ## RELATED LINKS
