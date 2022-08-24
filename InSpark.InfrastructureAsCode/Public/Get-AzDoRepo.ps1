@@ -49,9 +49,10 @@ function Get-AzDoRepo {
     }
     Process {
         $params = @{
-            uri     = $Uri
-            Method  = 'GET'
-            Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+            uri         = $Uri
+            Method      = 'GET'
+            Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+            ContentType = 'application/json'
         }
 
         Invoke-RestMethod @params
