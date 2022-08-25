@@ -3,7 +3,7 @@ changelog:
     - title: Breaking Changes 🛠
       labels:
         - major
-    - title: Exciting New Features 🎉
+    - title: New Features 🎉
       labels:
         - minor
     - title: Fixes
