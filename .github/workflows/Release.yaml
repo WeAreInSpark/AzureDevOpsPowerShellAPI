@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "InSpark.InfrastructureAsCode/**"
 jobs:
   test:
     name: Release module
