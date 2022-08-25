@@ -14,20 +14,7 @@
   "powershell.codeFormatting.useCorrectCasing": true,
   "powershell.pester.useLegacyCodeLens": false,
   "powershell.codeFormatting.preset": "OTBS",
-  "indentRainbow.ignoreErrorLanguages": ["markdown"],
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "ms-azure-devops.azure-pipelines"
-  },
   "[PowerShell]": {
-    "files.trimTrailingWhitespace": false
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    "files.trimTrailingWhitespace": true
   }
 }
