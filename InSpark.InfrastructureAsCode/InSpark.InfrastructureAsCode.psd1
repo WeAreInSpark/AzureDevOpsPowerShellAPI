@@ -24,13 +24,13 @@
     Author            = 'Business Ready Cloud'
 
     # Company or vendor of this module
-    CompanyName       = 'Unknown'
+    CompanyName       = 'InSpark B.V.'
 
     # Copyright statement for this module
-    Copyright         = '(c) Business Ready Cloud. All rights reserved.'
+    Copyright         = '(c) InSpark. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description       = 'Powershell module for API to DevOps services'
+    Description       = 'PowerShell module to deploy and adjust services on Azure DevOps and Azure AD'
 
     # Minimum version of the PowerShell engine required by this module
     # PowerShellVersion = ''
