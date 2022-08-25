@@ -16,6 +16,7 @@ function New-AzDoRepoClone {
         DestinationRepoName         = "repo1"
     }
     New-AzDoRepoClone @params
+    
     This example Clones the main branch to another organization with the same project and repo name.
 .OUTPUTS
     PSobject
