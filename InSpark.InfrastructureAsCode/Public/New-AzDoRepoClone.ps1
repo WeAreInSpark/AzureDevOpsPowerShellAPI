@@ -1,34 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@Dylan-Prins 
-WeAreInSpark
-/
-BRC.PS.InfrastructureAsCode
-Internal
-Code
-Issues
-Pull requests
-3
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-BRC.PS.InfrastructureAsCode/InfrastructureAsCode/Public/New-AzDoRepoClone.ps1
-@Lucas-c-B
-Lucas-c-B Fixed script
-Latest commit 6ca11dd 2 days ago
-history
-2 contributors
-@Dylan-Prins@Lucas-c-B
-123 lines (107 sloc)  4.39 KB
-
 function New-AzDoRepoClone {
     <#
 .SYNOPSIS
