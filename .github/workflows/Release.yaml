@@ -16,7 +16,7 @@ jobs:
 
       - name: Get Previous tag
         id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        uses: "WyriHaximus/github-action-get-previous-tag@8a0e045f02c0a3a04e1452df58b90fc7e555e950"
         with:
           fallback: 0.0.0
 
@@ -57,7 +57,7 @@ jobs:
           Install-Module -Name Az.Accounts -Force
           Install-Module -Name Az.KeyVault -Force
 
-          $Parms = @{
+          $Params = @{
             Path = "${{ github.workspace }}/InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psd1"
             ModuleVersion = $env:NewVersion
             PrivateData = @{
@@ -67,7 +67,7 @@ jobs:
               }
             }
           }
-          Update-ModuleManifest -Path "${{ github.workspace }}/InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psd1" -ModuleVersion $env:NewVersion
+          Update-ModuleManifest @Params
 
       - name: Create github release
         uses: actions/github-script@v5.1.1
