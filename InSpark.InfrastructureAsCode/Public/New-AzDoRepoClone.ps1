@@ -16,7 +16,7 @@ function New-AzDoRepoClone {
         DestinationRepoName         = "repo1"
     }
     New-AzDoRepoClone @params
-    
+
     This example Clones the main branch to another organization with the same project and repo name.
 .OUTPUTS
     PSobject
@@ -75,7 +75,6 @@ function New-AzDoRepoClone {
         $NewRepo
     )
     if ($PSCmdlet.ShouldProcess($DestinationOrganizationName)) {
-        Write-Host -ForegroundColor Yellow "##[section]Cloning $SourceRepoName into project $DestinationProjectName with name $DestinationRepoName."
         if ($NewRepo) {
             $newAzDoRepoSplat = @{
                 CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
