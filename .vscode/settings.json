@@ -16,5 +16,6 @@
   "powershell.codeFormatting.preset": "OTBS",
   "[PowerShell]": {
     "files.trimTrailingWhitespace": true
-  }
+  },
+  "powershell.scriptAnalysis.settingsPath": "tests/ScriptAnalyzerSettings.psd1"
 }

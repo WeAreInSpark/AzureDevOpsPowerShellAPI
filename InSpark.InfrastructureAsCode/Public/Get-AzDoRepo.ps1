@@ -1,9 +1,19 @@
 function Get-AzDoRepo {
     <#
 .SYNOPSIS
-    Get information about a repo in Azure DevOps.
+    Gets information about a repo in Azure DevOps.
 .DESCRIPTION
-    Get information about 1 repo if the parameter $Name is filled in. Otherwise it will get all the repo's.
+    Gets information about 1 repo if the parameter $Name is filled in. Otherwise it will list all the repo's.
+.EXAMPLE
+    $Params = @{
+        CollectionUri = "https://dev.azure.com/contoso"
+        PAT = "***"
+        ProjectName = "Project 1"
+        Name "Repo 1"
+    }
+    Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1"
+
+    This example will list all the repo's contained in 'Project 1'.
 .EXAMPLE
     $Params = @{
         CollectionUri = "https://dev.azure.com/contoso"
@@ -25,31 +35,31 @@ function Get-AzDoRepo {
         [string]
         $CollectionUri,
 
-        # PAT to authentice with the organization
+        # PAT to authenticate with the organization
         [Parameter()]
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
-        # Project where the variable group has to be created
+        # Name of the Repo to get information about
         [Parameter()]
         [string]
         $Name,
 
-        # Project where the variable group has to be created
+        # Project where the Repos are contained
         [Parameter(Mandatory)]
         [string]
         $ProjectName
     )
     Begin {
         if ($Name) {
-            $Uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($Name)?api-version=7.1-preview.1"
+            $uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($Name)?api-version=7.1-preview.1"
         } else {
-            $Uri = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
+            $uri = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
         }
     }
     Process {
         $params = @{
-            uri         = $Uri
+            uri         = $uri
             Method      = 'GET'
             Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
             ContentType = 'application/json'

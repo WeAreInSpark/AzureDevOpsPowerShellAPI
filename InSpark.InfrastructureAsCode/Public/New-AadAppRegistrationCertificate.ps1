@@ -1,9 +1,9 @@
 function New-AadAppRegistrationCertificate {
     <#
 .SYNOPSIS
-    Creates a Certificate and uploads it to the App registration.
+    Creates a X.509 certificate and uploads it to the App registration in Azure AD.
 .DESCRIPTION
-    Creates a Certificate and uploads it to the App registration. The certificate will also be saves to an Azure KeyVault.
+    Creates a X.509 certificate and uploads it as an authentication factor to the App registration in Azure AD. The certificate will also be uploaded to an Azure KeyVault.
 .EXAMPLE
     $newAadAppRegistrationCertificateSplat = @{
         ObjectID = "00000-00000-00000-00000"
@@ -13,9 +13,9 @@ function New-AadAppRegistrationCertificate {
     }
     New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
 
-    This example will create a new certificate for the app registration.
+    This example will create a new certificate for the app registration, upload it to the Application Registration in Azure AD and upload it to Azure KeyVault.
 .OUTPUTS
-    PSobject containing thumbprint of certificate and 2 dates when the certificate is valid.
+    PSObject containing the thumbprint of the certificate and 2 dates when the certificate is valid.
 .NOTES
 #>
     [CmdletBinding(SupportsShouldProcess)]
@@ -31,7 +31,7 @@ function New-AadAppRegistrationCertificate {
         [string]
         $CertName,
 
-        # Name of the keyvault to store the certificate
+        # Name of the Azure Key Vault to store the certificate
         [Parameter()]
         [string]
         $KeyVaultName,
@@ -48,33 +48,43 @@ function New-AadAppRegistrationCertificate {
     )
     Test-MgGraphConnection
 
-    $CertName = ($CertName -replace " ", "")
-    $SubjectName = ($SubjectName -replace " ", "")
-    $Policy = New-AzKeyVaultCertificatePolicy -SecretContentType "application/x-pkcs12" -SubjectName "CN=$SubjectName" -IssuerName "Self" -ValidityInMonths $ValidityInMonths -ReuseKeyOnRenewal
+    # Replace spaces in the certificate name and subjectname
+    $certNameTrimmed = ($CertName -replace " ", "")
+    $subjectNameTrimmed = ($SubjectName -replace " ", "")
+
+    # Create an Azure KeyVault Certificate Policy
+    $policy = New-AzKeyVaultCertificatePolicy -SecretContentType "application/x-pkcs12" -SubjectName "CN=$subjectNameTrimmed" -IssuerName "Self" -ValidityInMonths $ValidityInMonths -ReuseKeyOnRenewal
 
     if ($PSCmdlet.ShouldProcess($ObjectId)) {
-        Add-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName -CertificatePolicy $Policy >> $null
+        Add-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $certNameTrimmed -CertificatePolicy $policy | Out-Null
 
+        # Wait until the certificate is added
         do {
-            $Response = Get-AzKeyVaultCertificateOperation -VaultName $KeyVaultName -Name $CertName
+            $Response = Get-AzKeyVaultCertificateOperation -VaultName $KeyVaultName -Name $certNameTrimmed
         } while (
             $Response.Status -ne 'completed'
         )
 
-        $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
-        $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
-        $SecretValueText = ''
-        $SsPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secret.SecretValue)
+        $keyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $certNameTrimmed
+        $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $keyVaultCert.Name
+        $secretValueText = ''
+
+        # This part decrypts the secure string and places it in unmanaged memory (unmanaged from the dotnet perspective).
+        # It then reads that unmanaged memory to a string (making it managed), and finally frees the unmanaged bit that's still remaining
+
+        # Allocates an unmanaged binary string (BSTR) and copies the contents of a managed SecureString object into it.
+        $ssPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secret.SecretValue)
 
         try {
-            $SecretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SsPtr)
-        }
-        finally {
+            # Allocates a managed String and copies a binary string (BSTR) stored in unmanaged memory into it.
+            $secretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($ssPtr)
+        } finally {
+            # Frees a BSTR pointer that was allocated using the SecureStringToBSTR(SecureString) method.
             [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ssPtr)
         }
 
-        $SecretByte = [Convert]::FromBase64String($secretValueText)
-        $Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
+        $secretByte = [Convert]::FromBase64String($secretValueText)
+        $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($secretByte, "", "Exportable,PersistKeySet")
 
         $KeyCredential = @{
             Type                = 'AsymmetricX509Cert'
@@ -82,7 +92,7 @@ function New-AadAppRegistrationCertificate {
             Key                 = $cert.RawData
             CustomKeyIdentifier = $cert.GetCertHash()
             EndDateTime         = $cert.NotAfter
-            DisplayName         = $ClientSecretName
+            DisplayName         = $certNameTrimmed
         }
 
         Update-MgApplication -ApplicationId $ObjectID -KeyCredential $KeyCredential

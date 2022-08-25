@@ -13,7 +13,7 @@ This script creates a new certificate or secret for an existing app registration
 ## SYNTAX
 
 ```
-New-AadAppRegistrationSecret -ObjectID <String> -ClientSecretName <String> -EndDate <String> [-WhatIf]
+New-AadAppRegistrationSecret [-ObjectID] <String> [-ClientSecretName] <String> [-EndDate] <String> [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
@@ -39,7 +39,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -54,7 +54,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -69,7 +69,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -1,9 +1,9 @@
 function New-AadAppRegistrationSecret {
     <#
 .SYNOPSIS
-    Creates a secret for the App registration.
+    Creates a secret and set it to the App registration in Azure AD.
 .DESCRIPTION
-    Creates a secret for the App registration. The secret will get uploaded to an Azure KeyVault.
+    Creates a secret and uploads it as an authentication factor to the App registration in Azure AD. The secret will also be uploaded to an Azure KeyVault.
 .EXAMPLE
     $newAadAppRegistrationSecretSplat = @{
         ObjectID = "00000-00000-00000-00000-00000"
@@ -12,7 +12,7 @@ function New-AadAppRegistrationSecret {
     }
     New-AadAppRegistrationSecret @newAadAppRegistrationSecretSplat
 
-    This example will create a new secret for the app registration.
+    This example will create a new secret for the app registration, upload it to the Azure KeyVault and add it to the Application Registration in Azure AD.
 .OUTPUTS
     The Appsecret
 .NOTES
@@ -30,8 +30,8 @@ function New-AadAppRegistrationSecret {
         [string]
         $ClientSecretName,
 
-        # Duration of the secret until this date
-        [Parameter(Mandatory, ParameterSetName = 'ByDate')]
+        # Enddate of validity of the secret
+        [Parameter(Mandatory)]
         [string]
         $EndDate
     )
@@ -43,9 +43,8 @@ function New-AadAppRegistrationSecret {
         displayName = $ClientSecretName
     }
     if ($PSCmdlet.ShouldProcess()) {
-        Add-MgApplicationPassword -ApplicationId $ObjectID -PasswordCredential $PasswordCredential | Select-Object SecretText | ConvertTo-SecureString -String $_
-    }
-    else {
+        Add-MgApplicationPassword -ApplicationId $ObjectID -PasswordCredential $PasswordCredential | Select-Object SecretText | ConvertTo-SecureString -String $_ -AsPlainText
+    } else {
         Add-MgApplicationPassword -ApplicationId $ObjectID -PasswordCredential $PasswordCredential -WhatIf
     }
 }
