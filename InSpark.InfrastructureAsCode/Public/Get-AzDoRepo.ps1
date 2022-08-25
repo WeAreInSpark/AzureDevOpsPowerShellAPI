@@ -31,7 +31,7 @@ function Get-AzDoRepo {
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Project where the variable group has to be created
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $Name,
 
