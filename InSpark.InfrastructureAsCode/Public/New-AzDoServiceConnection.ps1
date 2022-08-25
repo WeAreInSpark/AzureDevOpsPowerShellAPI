@@ -39,7 +39,7 @@ function New-AzDoServiceConnection {
         $CollectionUri,
 
         # PAT to get access to Azure DevOps.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 

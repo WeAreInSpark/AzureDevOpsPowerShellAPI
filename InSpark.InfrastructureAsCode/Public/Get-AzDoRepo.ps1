@@ -26,12 +26,12 @@ function Get-AzDoRepo {
         $CollectionUri,
 
         # PAT to authentice with the organization
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Project where the variable group has to be created
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $Name,
 

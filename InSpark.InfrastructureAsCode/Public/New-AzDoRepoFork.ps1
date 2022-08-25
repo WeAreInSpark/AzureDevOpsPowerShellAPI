@@ -34,7 +34,7 @@ function New-AzDoRepoFork {
         $CollectionUri,
 
         # PAT to authenticate with the organization
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [String]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
