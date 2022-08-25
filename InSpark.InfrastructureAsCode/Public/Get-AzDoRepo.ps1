@@ -26,7 +26,7 @@ function Get-AzDoRepo {
         $CollectionUri,
 
         # PAT to authentice with the organization
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
