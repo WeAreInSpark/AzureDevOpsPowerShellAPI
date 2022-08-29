@@ -106,5 +106,3 @@ function Get-AzDoRepo {
         }
     }
 }
-
-Get-AzDoProject -PAT $PAT -CollectionUri $collectionURI -ProjectName DitProject | Get-AzDoRepo -PAT $PAT
