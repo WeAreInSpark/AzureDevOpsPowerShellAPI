@@ -46,7 +46,7 @@ function New-AadAppRegistrationCertificate {
         [int]
         $ValidityInMonths = 6
     )
-    Test-MgGraphConnection
+    Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
 
     # Replace spaces in the certificate name and subjectname
     $certNameTrimmed = ($CertName -replace " ", "")

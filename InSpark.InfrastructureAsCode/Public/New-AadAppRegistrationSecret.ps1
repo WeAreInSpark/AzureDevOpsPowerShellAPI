@@ -36,7 +36,7 @@ function New-AadAppRegistrationSecret {
         $EndDate
     )
 
-    Test-MgGraphConnection
+    Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
 
     $PasswordCredential = @{
         endDateTime = $EndDate

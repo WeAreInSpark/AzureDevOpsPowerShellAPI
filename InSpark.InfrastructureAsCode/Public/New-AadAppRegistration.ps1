@@ -20,7 +20,7 @@ function New-AadAppRegistration {
         $Name
     )
 
-    Test-MgGraphConnection
+    Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
 
     $ExistingApplication = Get-MgApplication | Where-Object { $_.DisplayName -eq $Name }
     if ($ExistingApplication) {
