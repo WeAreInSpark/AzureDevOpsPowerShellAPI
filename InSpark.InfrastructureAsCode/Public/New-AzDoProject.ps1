@@ -19,7 +19,7 @@ function New-AzDoProject {
     param (
         # Collection URI. e.g. https://dev.azure.com/contoso.
         # Azure Pipelines has a predefined variable for this.
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
         $CollectionUri,
 
@@ -29,31 +29,31 @@ function New-AzDoProject {
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Name of the project.
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
         [string[]]
-        $Name,
+        $ProjectName,
 
         # Description of the project
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $Description = '',
 
         # Type of source control.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $SourceControlType = 'GIT',
 
         # Visibility of the project (private or public).
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [ValidateSet('private', 'public')]
         [string]
         $Visibility = 'private'
     )
     Process {
-        foreach ($n in $Name) {
+        foreach ($name in $ProjectName) {
 
             $Body = @{
-                name         = $n
+                name         = $name
                 description  = $Description
                 visibility   = $Visibility
                 capabilities = @{
@@ -78,7 +78,7 @@ function New-AzDoProject {
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
                 Invoke-RestMethod @params
             } else {
-                Write-Output $Body | Format-List
+                $Body | Format-List
                 return
             }
 
@@ -89,7 +89,7 @@ function New-AzDoProject {
                     Method  = 'GET'
                     Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$PAT")) }
                 }
-                $Response = (Invoke-RestMethod @params).value | Where-Object { $_.name -eq $n }
+                $Response = (Invoke-RestMethod @params).value | Where-Object { $_.name -eq $name }
                 Write-Verbose "Trying to invoke rest method"
             } while (
                 $Response.state -ne 'wellFormed'
