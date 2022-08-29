@@ -22,7 +22,7 @@ function New-AzDoRepo {
     [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
         $CollectionUri,
 
@@ -32,45 +32,50 @@ function New-AzDoRepo {
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Name of the new repository
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
         [string]
-        $Name,
+        $RepoName,
 
         # Name of the project where the new repository has to be created
         [Parameter(Mandatory)]
         [string]
         $ProjectName
     )
+    process {
+        $Projects = Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT
+        $ProjectId = ($Projects | Where-Object ProjectName -EQ $ProjectName).Projectid
 
-    $params = @{
-        uri         = "$CollectionUri/_apis/projects?api-version=6.0"
-        Method      = 'GET'
-        Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
-        ContentType = 'application/json'
-    }
-
-    $Projects = Invoke-RestMethod @params
-    $ProjectId = ($Projects.value | Where-Object name -EQ $ProjectName).id
-
-    $Body = @{
-        name    = $Name
-        project = @{
-            id = $ProjectId
+        $Body = @{
+            name    = $RepoName
+            project = @{
+                id = $ProjectId
+            }
         }
-    }
 
-    $params = @{
-        uri         = "$CollectionUri/$ProjectId/_apis/git/repositories?api-version=7.1-preview.1"
-        Method      = 'POST'
-        Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
-        body        = $Body | ConvertTo-Json -Depth 99
-        ContentType = 'application/json'
-    }
+        $params = @{
+            uri         = "$CollectionUri/$ProjectId/_apis/git/repositories?api-version=7.1-preview.1"
+            Method      = 'POST'
+            Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+            body        = $Body | ConvertTo-Json -Depth 99
+            ContentType = 'application/json'
+        }
 
-    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-        Invoke-RestMethod @params
-    } else {
-        Write-Output $Body | Format-List
-        return
+        if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+            Invoke-RestMethod @params | ForEach-Object {
+                [PSCustomObject]@{
+                    RepoName      = $_.name
+                    RepoId        = $_.id
+                    RepoURL       = $_.url
+                    ProjectName   = $ProjectName
+                    WebUrl        = $_.webUrl
+                    HttpsUrl      = $_.remoteUrl
+                    SshUrl        = $_.sshUrl
+                    CollectionURI = $CollectionUri
+                }
+            }
+        } else {
+            $Body | Format-List
+            return
+        }
     }
 }
