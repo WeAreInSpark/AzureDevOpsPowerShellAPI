@@ -52,7 +52,7 @@ function Get-AzDoRepo {
         # Name of the Repo to get information about
         [Parameter(ParameterSetName = 'Get')]
         [string]
-        $Name,
+        $RepoName,
 
         # Project where the Repos are contained
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
@@ -60,8 +60,8 @@ function Get-AzDoRepo {
         $ProjectName
     )
     Process {
-        if ($Name) {
-            $uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($Name)?api-version=7.1-preview.1"
+        if ($RepoName) {
+            $uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($RepoName)?api-version=7.1-preview.1"
         } else {
             $uri = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
         }
@@ -73,11 +73,11 @@ function Get-AzDoRepo {
             ContentType = 'application/json'
         }
 
-        if ($name) {
+        if ($RepoName) {
         (Invoke-RestMethod @params) | ForEach-Object {
                 [PSCustomObject]@{
                     RepoName      = $_.name
-                    RepoID        = $_.id
+                    RepoId        = $_.id
                     RepoURL       = $_.url
                     ProjectName   = $ProjectName
                     DefaultBranch = $_.defaultBranch
@@ -92,7 +92,7 @@ function Get-AzDoRepo {
             (Invoke-RestMethod @params).value | ForEach-Object {
                 [PSCustomObject]@{
                     RepoName      = $_.name
-                    RepoID        = $_.id
+                    RepoId        = $_.id
                     RepoURL       = $_.url
                     ProjectName   = $ProjectName
                     DefaultBranch = $_.defaultBranch
