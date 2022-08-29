@@ -1,4 +1,5 @@
 @{
+    ExcludeRules   = @( "UseSyntacticallyCorrectExamples" )
     CustomRulePath = @(
         'tests/Indented.ScriptAnalyzerRules/Indented.ScriptAnalyzerRules.psm1'
     )
