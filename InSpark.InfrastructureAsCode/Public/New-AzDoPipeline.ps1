@@ -22,40 +22,44 @@ function New-AzDoPipeline {
     [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
         $CollectionUri,
+
+        # Project where the pipeline will be created.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+        [string]
+        $ProjectName,
 
         # PAT to authentice with the organization
         [Parameter()]
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
-        # Project where the variable group has to be created
-        [Parameter(Mandatory)]
+        # Name of the Pipeline
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string[]]
-        $Name,
+        $PipelineName,
 
-        # Project where the variable group has to be created
-        [Parameter(Mandatory)]
+        # Name of the Repository containing the YAML-sourcecode
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         $RepoName,
 
-        # Project where the variable group has to be created.
-        [Parameter(Mandatory)]
+        # Path of the YAML-sourcecode in the Repository
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]
-        $ProjectName
+        $Path = '/main.yaml'
     )
-    Begin {
-        $RepoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -Name $RepoName).Id
-    }
     Process {
-        foreach ($n in $Name) {
+        $RepoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -RepoName $RepoName).RepoId
+
+        foreach ($Pipeline in $PipelineName) {
             $Body = @{
-                name          = $n
+                name          = $Pipeline
                 folder        = $null
                 configuration = @{
                     type       = "yaml"
-                    path       = "/main.yaml"
+                    path       = $Path
                     repository = @{
                         id   = $RepoId
                         type = "azureReposGit"
@@ -71,11 +75,18 @@ function New-AzDoPipeline {
                 ContentType = 'application/json'
             }
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-                Invoke-RestMethod @params
+                Invoke-RestMethod @params | ForEach-Object {
+                    [PSCustomObject]@{
+                        Name   = $_.name
+                        Folder = $_.folder
+                        Url    = $_.url
+                    }
+                }
             } else {
-                Write-Output $Body | Format-List
+                $Body | Format-List
                 return
             }
         }
     }
 }
+
