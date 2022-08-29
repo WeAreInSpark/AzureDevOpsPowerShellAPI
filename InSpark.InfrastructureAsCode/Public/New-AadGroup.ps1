@@ -12,38 +12,63 @@ function New-AadGroup {
     PSobject containing the display name, ID and description.
 .NOTES
 #>
-    [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'ByDate')]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
-        # Name of the app registration
-        [Parameter(Mandatory)]
+        # Name of the Azure AD Group
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
-        $Name,
+        $GroupName,
 
-        # Provide nickname for the email. this cannot have spaces in it.
-        [Parameter(Mandatory)]
+        # Provide nickname/alias for the email.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
         $MailNickName,
 
         # Enable mail on the Azure AD group
-        [Parameter(Mandatory = $false)]
-        [bool]
-        $MailEnabled = $true
+        [Parameter()]
+        [switch]
+        $MailEnabled = $true,
+
+        # Provide a description for the group.
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]
+        $Description
     )
-    Test-MgGraphConnection
-    $MailNickName = ($MailNickName -replace " ", "")
-    $ExistingGroup = Get-MgGroup | Where-Object { $_.DisplayName -eq $Name }
+    begin {
+        try {
+            Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
+        } catch {
+            throw $_
+        }
+    }
+    process {
+        $MailNickName = ($MailNickName -replace " ", "")
+        $ExistingGroup = Get-MgGroup -All | Where-Object { $_.DisplayName -eq $GroupName }
 
-    if ($ExistingGroup) {
-        Write-Error 'This Group already exists!'
-        exit
-    } else {
-        if ($PSCmdlet.ShouldProcess($Name)) {
-            $Group = New-MgGroup -DisplayName $Name -MailEnabled:$MailEnabled -MailNickname $MailNickName -SecurityEnabled:$true -Visibility 'private' -GroupTypes 'Unified' -WhatIf:$WhatIfPreference
+        if ($ExistingGroup) {
+            Write-Error 'This Group already exists!'
+            return $ExistingGroup
 
-            [PSCustomObject]@{
-                DisplayName = $Group.DisplayName
-                Id          = $Group.Id
-                Description = $Group.Description
+        } else {
+            if ($PSCmdlet.ShouldProcess($GroupName)) {
+                $newMgGroupSplat = @{
+                    DisplayName     = $GroupName
+                    MailEnabled     = $MailEnabled
+                    MailNickname    = $MailNickName
+                    SecurityEnabled = $true
+                    Description     = $Description
+                    Visibility      = 'private'
+                    GroupTypes      = 'Unified'
+                    WhatIf          = $WhatIfPreference
+                }
+
+                New-MgGroup @newMgGroupSplat | ForEach-Object {
+                    [PSCustomObject]@{
+                        DisplayName = $_.DisplayName
+                        GroupId     = $_.Id
+                        Description = $Description
+                    }
+                }
             }
         }
     }
