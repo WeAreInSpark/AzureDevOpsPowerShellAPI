@@ -39,7 +39,7 @@ function New-AzDoRepoClone {
         [string]
         $SourceRepoName,
 
-        # PAT to authentice with the organization
+        # PAT to authenticate with the organization
         [Parameter()]
         [string]
         $SourcePAT = $env:SYSTEM_ACCESSTOKEN,
@@ -59,7 +59,7 @@ function New-AzDoRepoClone {
         [string]
         $DestinationRepoName,
 
-        # PAT to authentice with the organization
+        # PAT to authenticate with the organization
         [Parameter(Mandatory)]
         [string]
         $DestinationPAT,
@@ -79,10 +79,10 @@ function New-AzDoRepoClone {
             $newAzDoRepoSplat = @{
                 CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
                 PAT           = $DestinationPAT
-                Name          = $DestinationRepoName
+                RepoName      = $DestinationRepoName
                 ProjectName   = $DestinationProjectName
             }
-            New-AzDoRepo @newAzDoRepoSplat > $null
+            New-AzDoRepo @newAzDoRepoSplat | Out-Null
         }
 
         if ($mirror) {
@@ -106,12 +106,12 @@ function New-AzDoRepoClone {
             git push "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
 
             Set-Location $PSScriptRoot
-            Remove-Item -r -Force (Join-Path -ChildPath 'BRCTemplates' -Path (Split-Path -Parent -Path $PSScriptRoot))
+            Remove-Item -Recurse -Force (Join-Path -ChildPath 'BRCTemplates' -Path (Split-Path -Parent -Path $PSScriptRoot))
         }
 
         $getAzDoRepoSplat = @{
             CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
-            Name          = $DestinationRepoName
+            RepoName      = $DestinationRepoName
             ProjectName   = $DestinationProjectName
             PAT           = $DestinationPAT
         }
