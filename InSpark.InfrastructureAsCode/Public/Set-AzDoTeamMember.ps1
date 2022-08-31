@@ -67,7 +67,7 @@ function Set-AzDoTeamMember {
             Origin        = $Response.origin
         }
     } else {
-        Write-Output $Body | Format-List
+        $Body
         return
     }
 }

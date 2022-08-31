@@ -13,7 +13,7 @@ Function to create an Azure DevOps project
 ## SYNTAX
 
 ```
-New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [[-Description] <String>]
+New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String[]> [[-Description] <String>]
  [[-SourceControlType] <String>] [[-Visibility] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -48,7 +48,7 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -67,7 +67,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
+### -ProjectName
 Name of the project.
 
 ```yaml
@@ -78,7 +78,7 @@ Aliases:
 Required: True
 Position: 3
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 

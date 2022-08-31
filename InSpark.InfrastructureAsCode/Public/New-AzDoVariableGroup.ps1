@@ -10,7 +10,7 @@ function New-AzDoVariableGroup {
             Collectionuri = 'https://dev.azure.com/weareinspark/'
             PAT = '*******************'
             ProjectName = 'Project 1'
-            Name = 'VariableGroup1'
+            VariableGroupName = 'VariableGroup1'
             Variables = @{ test = @{ value = 'test' } }
             Description = 'This is a test'
         }
@@ -39,9 +39,9 @@ function New-AzDoVariableGroup {
         $ProjectName,
 
         # Name of the variable group
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
         [string[]]
-        $Name,
+        $VariableGroupName,
 
         # Variable names and values
         [Parameter(Mandatory)]
@@ -54,11 +54,11 @@ function New-AzDoVariableGroup {
         $Description
     )
     Process {
-        foreach ($n in $Name) {
+        foreach ($name in $VariableGroupName) {
 
-            $Body = @{
+            $body = @{
                 description = $Description
-                name        = $n
+                name        = $name
                 variables   = $Variables
             }
 
@@ -73,7 +73,7 @@ function New-AzDoVariableGroup {
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
                 Invoke-RestMethod @params
             } else {
-                Write-Output $Body | Format-List
+                $body
                 return
             }
         }

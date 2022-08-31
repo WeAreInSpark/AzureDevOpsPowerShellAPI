@@ -13,7 +13,7 @@ This script creates a variable group with at least 1 variable in a given project
 ## SYNTAX
 
 ```
-New-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String> [-ProjectName] <String> [-WhatIf]
+New-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [-RepoName] <String> [-ProjectName] <String> [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
@@ -44,7 +44,7 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -63,8 +63,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-Project where the variable group has to be created
+### -RepoName
+Name of the new repository
 
 ```yaml
 Type: String
@@ -74,7 +74,7 @@ Aliases:
 Required: True
 Position: 3
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 

@@ -54,12 +54,12 @@ function New-AzDoServiceConnection {
         $ProjectID,
 
         # Description to add to the service connection.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $Description = '',
 
         # Scope level (Subscription or ManagementGroup).
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [ValidateSet('Subscription', 'ManagementGroup')]
         [string]
         $ScopeLevel = 'Subscription',
@@ -95,34 +95,34 @@ function New-AzDoServiceConnection {
         $Serviceprincipalid,
 
         # AuthenticationType (spnKey or spnCertificate).
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [ValidateSet('spnKey', 'spnCertificate')]
         [string]
         $AuthenticationType = 'spnKey',
 
         # App secret of the app registation.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $Serviceprincipalkey,
 
         # KeyVault name where the certificate is stored.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $KeyVaultName,
 
         # Name of the certificate
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $CertName
     )
 
     if (($AuthenticationType -eq 'spnKey') -and !$Serviceprincipalkey ) {
-        Write-Error "Parameter Serviceprincipalkey should not be empty"
+        Write-Error 'Parameter Serviceprincipalkey should not be empty'
         exit
     }
 
     if (($AuthenticationType -eq 'spnCertificate') -and !$KeyVaultName -and !$CertName) {
-        Write-Error "Parameter KeyVaultName or CertName should not be empty"
+        Write-Error 'Parameter KeyVaultName or CertName should not be empty'
         exit
     }
 
@@ -155,7 +155,7 @@ function New-AzDoServiceConnection {
             scheme     = 'ServicePrincipal'
         }
     } else {
-        $CertName = ($CertName -replace " ", "")
+        $CertName = ($CertName -replace ' ', '')
         $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
         $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
         $SecretValueText = ''
@@ -168,12 +168,12 @@ function New-AzDoServiceConnection {
         }
 
         $SecretByte = [Convert]::FromBase64String($secretValueText)
-        $Cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
+        $Cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, '', 'Exportable,PersistKeySet')
 
         $Pem = New-Object System.Text.StringBuilder
-        $Pem.AppendLine("-----BEGIN CERTIFICATE-----") > $null
-        $Pem.AppendLine([System.Convert]::ToBase64String($cert.RawData, 1)) > $null
-        $Pem.AppendLine("-----END CERTIFICATE-----") > $null
+        $Pem.AppendLine('-----BEGIN CERTIFICATE-----') | Out-Null
+        $Pem.AppendLine([System.Convert]::ToBase64String($cert.RawData, 1)) | Out-Null
+        $Pem.AppendLine('-----END CERTIFICATE-----') | Out-Null
 
         $Authorization = @{
             parameters = @{
@@ -186,7 +186,7 @@ function New-AzDoServiceConnection {
         }
     }
 
-    $Body = @{
+    $body = @{
         name                             = $Name
         type                             = 'AzureRM'
         url                              = 'https://management.azure.com/'
@@ -224,7 +224,7 @@ function New-AzDoServiceConnection {
             SubscriptionId   = $Response.data.subscriptionId
         }
     } else {
-        Write-Output $Body | Format-List
+        $body
         return
     }
 }

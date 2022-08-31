@@ -13,8 +13,9 @@ This script creates a variable group with at least 1 variable in a given project
 ## SYNTAX
 
 ```
-New-AzDoVariableGroup [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String> [-Name] <String[]>
- [-Variables] <Hashtable> [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-AzDoVariableGroup [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String>
+ [-VariableGroupName] <String[]> [-Variables] <Hashtable> [[-Description] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -78,7 +79,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
+### -VariableGroupName
 Name of the variable group
 
 ```yaml
@@ -89,7 +90,7 @@ Aliases:
 Required: True
 Position: 4
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 

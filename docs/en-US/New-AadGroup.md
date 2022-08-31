@@ -13,8 +13,8 @@ This script creates a new app registration with a certificate or secret.
 ## SYNTAX
 
 ```
-New-AadGroup [-Name] <String> [-MailNickName] <String> [[-MailEnabled] <Boolean>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+New-AadGroup [-GroupName] <String> [-MailNickName] <String> [-MailEnabled] [[-Description] <String>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,8 +29,8 @@ To create an app registration with a secret that lasts 1 year, choose a name for
 
 ## PARAMETERS
 
-### -Name
-Name of the app registration
+### -GroupName
+Name of the Azure AD Group
 
 ```yaml
 Type: String
@@ -40,7 +40,7 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -55,7 +55,7 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -63,14 +63,29 @@ Accept wildcard characters: False
 {{ Fill MailEnabled Description }}
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Provide a description for the group.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 3
-Default value: True
-Accept pipeline input: False
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

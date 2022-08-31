@@ -1,7 +1,7 @@
 Properties {
     $PSBPreference.Help.DefaultLocale = 'en-US'
-    $PSBPreference.Test.OutputFile = 'out/testResults.xml'
-    $PSBPreference.Test.ScriptAnalysis.SettingsPath = "tests/ScriptAnalyzerSettings.psd1"
+    $PSBPreference.Test.OutputFile = 'Output/testResults.xml'
+    $PSBPreference.Test.ScriptAnalysis.SettingsPath = 'tests/ScriptAnalyzerSettings.psd1'
     $PSBPreference.Publish.PSRepository = $PSRepository
     $PSBPreference.Publish.PSRepositoryApiKey = $PSRepositoryApiKey
     $PSBPreference.Test.ScriptAnalysis.Enabled = $ScriptAnalysisEnabled

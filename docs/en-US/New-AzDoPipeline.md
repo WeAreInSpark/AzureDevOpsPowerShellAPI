@@ -13,8 +13,8 @@ This script creates a variable group with at least 1 variable in a given project
 ## SYNTAX
 
 ```
-New-AzDoPipeline [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [-RepoName] <Object>
- [-ProjectName] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [[-PAT] <String>] [-PipelineName] <String[]>
+ [-RepoName] <Object> [[-Path] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,52 +44,7 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PAT
-PAT to authentice with the organization
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Name
-Project where the variable group has to be created
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RepoName
-Project where the variable group has to be created
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -102,9 +57,69 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 5
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -PAT
+PAT to authentice with the organization
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PipelineName
+Name of the Pipeline
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 4
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -RepoName
+Project where the variable group has to be created
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 5
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Path
+Path of the YAML-sourcecode in the Repository
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: /main.yaml
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

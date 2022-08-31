@@ -13,7 +13,7 @@ Get information about a repo in Azure DevOps.
 ## SYNTAX
 
 ```
-Get-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [[-Name] <String>] [-ProjectName] <String>
+Get-AzDoRepo -CollectionUri <String> [-PAT <String>] [-RepoName <String>] -ProjectName <String>
  [<CommonParameters>]
 ```
 
@@ -45,9 +45,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -60,14 +60,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-Project where the variable group has to be created
+### -RepoName
+Name of the Repo to get information about
 
 ```yaml
 Type: String
@@ -75,7 +75,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -90,9 +90,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

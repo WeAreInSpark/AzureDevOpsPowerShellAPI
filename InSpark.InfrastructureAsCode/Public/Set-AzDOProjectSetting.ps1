@@ -41,32 +41,32 @@ function Set-AzDoProjectSetting {
         $ProjectName,
 
         # If enabled, scope of access for all pipelines reduces to the current project.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [bool]
         $EnforceJobAuthScope = $true,
 
         # Limit job authorization scope to current project for release pipelines.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [bool]
         $EnforceJobAuthScopeForReleases = $true,
 
         # Restricts the scope of access for all pipelines to only repositories explicitly referenced by the pipeline.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [bool]
         $EnforceReferencedRepoScopedToken = $true,
 
         # If enabled, only those variables that are explicitly marked as "Settable at queue time" can be set at queue time.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [bool]
         $EnforceSettableVar = $true,
 
         # Allows pipelines to record metadata.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [bool]
         $PublishPipelineMetadata = $false,
 
         # Anonymous users can access the status badge API for all pipelines unless this option is enabled.
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [bool]
         $StatusBadgesArePrivate = $true
     )
@@ -91,7 +91,7 @@ function Set-AzDoProjectSetting {
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
         Invoke-RestMethod @params
     } else {
-        Write-Output $Body | Format-List
+        $body
         return
     }
 }
