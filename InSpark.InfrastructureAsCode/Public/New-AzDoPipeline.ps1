@@ -14,7 +14,7 @@ function New-AzDoPipeline {
     }
     New-AzDoPipeline @newAzDoPipelineSplat
 
-    This example creates a new Azure Pipeline
+    This example creates a new Azure Pipeline using the PowerShell pipeline
 
 .EXAMPLE
     Get-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT $PAT | 
