@@ -37,7 +37,7 @@ New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $Pro
 ### -CollectionUri
 Collection URI.
 e.g.
-https://dev.azure.com/contoso. 
+https://dev.azure.com/contoso.
 Azure Pipelines has a predefined variable for this.
 
 ```yaml
@@ -163,8 +163,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 ## OUTPUTS
-
-## NOTES
-When you are using Azure DevOps with Build service Access token, make sure the setting 'Protect access to repositories in YAML pipelin' is off.
 
 ## RELATED LINKS

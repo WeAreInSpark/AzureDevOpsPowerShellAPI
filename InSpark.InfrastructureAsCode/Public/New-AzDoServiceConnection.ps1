@@ -4,8 +4,6 @@ function New-AzDoServiceConnection {
         Function to create a service connection in Azure DevOps
     .DESCRIPTION
         Function to create a service connection in Azure DevOps
-    .NOTES
-        When you are using Azure DevOps with Build service Access token, make sure the setting 'Protect access to repositories in YAML pipeline' is off.
     .EXAMPLE
         $params = @{
             CollectionUri               = "https://dev.azure.com/contoso"
