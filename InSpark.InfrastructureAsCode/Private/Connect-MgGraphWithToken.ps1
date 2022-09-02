@@ -1,3 +1,4 @@
+# Connects to Graph - Can request token via live Azure PowerShell session and connects with that, else sets up regular graph connection
 function Connect-MgGraphWithToken {
     [CmdletBinding()]
     param (
