@@ -5,9 +5,23 @@ function New-AadGroup {
 .DESCRIPTION
     Creates an Azure AD group. It defaults to an Office 365 group with a mail address.
 .EXAMPLE
-    New-AadGroup -Name "AD group 1" -MailNickname "AdGroup1"
+    New-AadGroup -GroupName "AD group 1" -MailNickname "AdGroup1"
 
     This example will create a new Azure AD group with a specific mail address.
+
+.EXAMPLE
+    [pscustomobject]@{
+        GroupName    = 'Group1'
+        MailNickname = 'group1'
+        Description  = 'This is the best group'
+    },
+    [pscustomobject]@{
+        GroupName    = 'Group2'
+        MailNickname = 'group2'
+        Description  = 'This is also the best group'
+    } | New-AadGroup
+
+    This example will create new Azure AD groups with a specific mail addresses.
 .OUTPUTS
     PSobject containing the display name, ID and description.
 .NOTES
@@ -36,7 +50,7 @@ function New-AadGroup {
     )
     begin {
         try {
-            Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
+            Connect-MgGraphWithToken
         } catch {
             throw $_
         }
@@ -73,3 +87,14 @@ function New-AadGroup {
         }
     }
 }
+
+[pscustomobject]@{
+    GroupName    = 'Group1'
+    MailNickname = 'group1'
+    Description  = 'This is the best group'
+},
+[pscustomobject]@{
+    GroupName    = 'Group2'
+    MailNickname = 'group2'
+    Description  = 'This is also the best group'
+} | New-AadGroup
