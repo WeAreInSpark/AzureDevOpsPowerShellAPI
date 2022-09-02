@@ -28,11 +28,9 @@ function Get-AzDoProject {
         collectionuri = "https://dev.azure.com/contoso"
         PAT = "***"
     }
-
     $somedifferentobject = [PSCustomObject]@{
         ProjectName = 'Project1'
     }
-
     $somedifferentobject | Get-AzDoProject @params
 
     This example will get the details of 'Project1' contained in the collection ('https://dev.azure.com/contoso').
@@ -42,7 +40,6 @@ function Get-AzDoProject {
         collectionuri = "https://dev.azure.com/contoso"
         PAT = "***"
     }
-
     @(
         'Project1',
         'Project2'
