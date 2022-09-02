@@ -225,6 +225,5 @@ function New-AzDoServiceConnection {
         }
     } else {
         $body
-        return
     }
 }
