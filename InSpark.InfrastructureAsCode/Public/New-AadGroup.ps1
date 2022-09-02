@@ -50,7 +50,7 @@ function New-AadGroup {
     )
     begin {
         try {
-            Connect-MgGraphWithToken
+            Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
         } catch {
             throw $_
         }
