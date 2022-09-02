@@ -3,20 +3,28 @@ function New-AzDoPipeline {
 .SYNOPSIS
     Creates an Azure Pipeline
 .DESCRIPTION
-    Creates an Azure Pipeline
+    Creates an Azure Pipeline in a given Azure Project based on a repo
 .EXAMPLE
     $newAzDoPipelineSplat = @{
         CollectionUri = "https://dev.azure.com/contoso"
         PAT = "***"
-        Name = "Pipeline 1"
+        PipelineName = "Pipeline 1"
         RepoName = "Repo 1"
         ProjectName = "Project 1"
     }
     New-AzDoPipeline @newAzDoPipelineSplat
 
     This example creates a new Azure Pipeline
+
+.EXAMPLE
+    Get-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT $PAT | 
+        Get-AzDoRepo -RepoName 'Repo 1' -PAT $PAT |
+            New-AzDoPipeline -PipelineName "Pipeline 1" -PAT $PAT
+
+    This example creates a new Azure Pipeline
+
 .OUTPUTS
-    PSobject containing Project information
+    PSobject. An object containing the name, the folder and the URI of the pipeline
 .NOTES
 #>
     [CmdletBinding(SupportsShouldProcess)]
