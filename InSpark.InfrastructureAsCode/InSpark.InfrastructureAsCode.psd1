@@ -123,6 +123,7 @@
             # External dependent modules of this module
             ExternalModuleDependencies = @(
                 'Microsoft.Graph.Applications',
+                'Microsoft.Graph.Groups',
                 'Az.Accounts',
                 'Az.KeyVault'
             )
