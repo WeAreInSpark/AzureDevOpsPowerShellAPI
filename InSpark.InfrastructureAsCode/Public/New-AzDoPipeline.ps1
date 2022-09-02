@@ -85,9 +85,9 @@ function New-AzDoPipeline {
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
                 Invoke-RestMethod @params | ForEach-Object {
                     [PSCustomObject]@{
-                        Name   = $_.name
-                        Folder = $_.folder
-                        Url    = $_.url
+                        PipelineName   = $_.name
+                        PipelineFolder = $_.folder
+                        PipelineUrl    = $_.url
                     }
                 }
             } else {
