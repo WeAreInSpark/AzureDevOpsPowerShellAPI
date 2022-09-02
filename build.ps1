@@ -25,7 +25,7 @@ param(
         "TestEnabled"           = $true
     }
 )
- 
+
 $ErrorActionPreference = 'Stop'
 
 # Bootstrap dependencies
@@ -52,7 +52,7 @@ if ($PSCmdlet.ParameterSetName -eq 'Help') {
     Set-BuildEnvironment -Force
     Invoke-psake -buildFile $psakeFile -taskList $Task -nologo -properties $Properties -parameters $Parameters
     if ($psake.build_success) {
-        Write-Output "Build complete"
+        "Build complete"
         exit 0
     } else {
         Write-Error "Build not complete"
