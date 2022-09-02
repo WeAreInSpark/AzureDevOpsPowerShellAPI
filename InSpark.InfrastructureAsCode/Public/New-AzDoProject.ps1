@@ -90,7 +90,7 @@ function New-AzDoProject {
             } while (
                 $Response.State -ne 'wellFormed'
             )
-            return $Response
+            $Response
         }
     }
 }
