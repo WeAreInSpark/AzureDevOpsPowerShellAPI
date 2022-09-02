@@ -13,8 +13,8 @@ This script creates a new app registration with a certificate or secret.
 ## SYNTAX
 
 ```
-New-AadGroup [-GroupName] <String> [-MailNickName] <String> [-MailEnabled] [[-Description] <String>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+New-AadGroup [-GroupName] <String> [-MailNickName] <String> [-MailEnabled] [[-Description] <String>]
+ [-ManuallyConnectToGraph] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -86,6 +86,21 @@ Required: False
 Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ManuallyConnectToGraph
+Manually connect to Microsoft Graph
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

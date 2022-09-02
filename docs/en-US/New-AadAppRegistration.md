@@ -13,7 +13,7 @@ This script creates a new app registration with a certificate or secret.
 ## SYNTAX
 
 ```
-New-AadAppRegistration [-Name] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+New-AadAppRegistration [-Name] <String> [-ManuallyConnectToGraph] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,6 +39,21 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ManuallyConnectToGraph
+Manually connect to Microsoft Graph
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

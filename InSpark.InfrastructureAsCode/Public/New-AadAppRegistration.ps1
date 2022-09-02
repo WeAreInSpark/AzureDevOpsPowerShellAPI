@@ -17,10 +17,23 @@ function New-AadAppRegistration {
         # Name of the App registration
         [Parameter(Mandatory)]
         [string]
-        $Name
+        $Name,
+
+        # Manually connect to Microsoft Graph
+        [Parameter()]
+        [switch]
+        $ManuallyConnectToGraph
     )
 
-    Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
+    try {
+        if ($ManuallyConnectToGraph) {
+            Connect-MgGraphWithToken
+        } else {
+            Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
+        }
+    } catch {
+        throw $_
+    }
 
     $ExistingApplication = Get-MgApplication | Where-Object { $_.DisplayName -eq $Name }
     if ($ExistingApplication) {

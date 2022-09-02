@@ -33,10 +33,23 @@ function New-AadAppRegistrationSecret {
         # Enddate of validity of the secret
         [Parameter(Mandatory)]
         [string]
-        $EndDate
+        $EndDate,
+
+        # Manually connect to Microsoft Graph
+        [Parameter()]
+        [switch]
+        $ManuallyConnectToGraph
     )
 
-    Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
+    try {
+        if ($ManuallyConnectToGraph) {
+            Connect-MgGraphWithToken
+        } else {
+            Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
+        }
+    } catch {
+        throw $_
+    }
 
     $PasswordCredential = @{
         endDateTime = $EndDate

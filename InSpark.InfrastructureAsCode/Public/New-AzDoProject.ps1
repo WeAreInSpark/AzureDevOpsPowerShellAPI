@@ -16,6 +16,19 @@ function New-AzDoProject {
         @("MyProject1","Myproject2") | New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***"
 
         This example creates two new Azure DevOps projects using the pipeline.
+
+    .EXAMPLE
+        [pscustomobject]@{
+            ProjectName     = 'Project 1'
+            Visibility      = 'public'
+            Description     = 'This is the best project'
+        },
+        [pscustomobject]@{
+            ProjectName     = 'Project 1'
+            Description     = 'This is the best project'
+        } | New-AzDoProject -PAT $PAT -CollectionUri $CollectionUri
+
+        This example creates two new Azure DevOps projects using the pipeline.
     #>
     [CmdletBinding(SupportsShouldProcess)]
     param (

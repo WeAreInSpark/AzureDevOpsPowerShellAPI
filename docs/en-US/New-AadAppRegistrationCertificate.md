@@ -14,7 +14,8 @@ This script creates a new certificate or secret for an existing app registration
 
 ```
 New-AadAppRegistrationCertificate [-ObjectId] <String> [[-CertName] <String>] [[-KeyVaultName] <String>]
- [[-SubjectName] <String>] [[-ValidityInMonths] <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-SubjectName] <String>] [[-ValidityInMonths] <Int32>] [-ManuallyConnectToGraph] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -101,6 +102,21 @@ Aliases:
 Required: False
 Position: 5
 Default value: 6
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ManuallyConnectToGraph
+Manually connect to Microsoft Graph
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

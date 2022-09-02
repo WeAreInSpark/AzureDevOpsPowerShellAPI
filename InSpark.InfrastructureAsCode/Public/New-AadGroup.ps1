@@ -46,11 +46,20 @@ function New-AadGroup {
         # Provide a description for the group.
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]
-        $Description
+        $Description,
+
+        # Manually connect to Microsoft Graph
+        [Parameter()]
+        [switch]
+        $ManuallyConnectToGraph
     )
     begin {
         try {
-            Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
+            if ($ManuallyConnectToGraph) {
+                Connect-MgGraphWithToken
+            } else {
+                Connect-MgGraphWithToken -RequestTokenViaAzurePowerShell
+            }
         } catch {
             throw $_
         }
@@ -87,14 +96,3 @@ function New-AadGroup {
         }
     }
 }
-
-[pscustomobject]@{
-    GroupName    = 'Group1'
-    MailNickname = 'group1'
-    Description  = 'This is the best group'
-},
-[pscustomobject]@{
-    GroupName    = 'Group2'
-    MailNickname = 'group2'
-    Description  = 'This is also the best group'
-} | New-AadGroup
