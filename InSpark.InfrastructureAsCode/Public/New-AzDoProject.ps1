@@ -7,11 +7,11 @@ function New-AzDoProject {
     .NOTES
         When you are using Azure DevOps with Build service Access token, make sure the setting 'Protect access to repositories in YAML pipelin' is off.
     .EXAMPLE
-        New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
+        New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
 
         This example creates a new private Azure DevOps project
     .EXAMPLE
-        New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
+        New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
 
         This example creates a new public Azure DevOps project
     #>
@@ -76,6 +76,7 @@ function New-AzDoProject {
             }
 
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+                Write-Verbose "Trying to create the project"
                 Invoke-RestMethod @params
             } else {
                 $Body | Format-List
@@ -84,15 +85,10 @@ function New-AzDoProject {
 
             do {
                 Start-Sleep 10
-                $params = @{
-                    uri     = "$CollectionUri/_apis/projects?api-version=7.1-preview.4"
-                    Method  = 'GET'
-                    Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$PAT")) }
-                }
-                $Response = (Invoke-RestMethod @params).value | Where-Object { $_.name -eq $name }
-                Write-Verbose "Trying to invoke rest method"
+                Write-Verbose "Fetching creation state of $name"
+                $response = Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $name
             } while (
-                $Response.state -ne 'wellFormed'
+                $Response.State -ne 'wellFormed'
             )
             return $Response
         }
