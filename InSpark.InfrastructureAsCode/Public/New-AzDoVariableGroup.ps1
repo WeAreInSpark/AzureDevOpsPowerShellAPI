@@ -3,8 +3,8 @@ function New-AzDoVariableGroup {
     .SYNOPSIS
         This script creates a variable group with at least 1 variable in a given project.
     .DESCRIPTION
-        This script creates a variable group with at least 1 variable in a given project. When used in a pipeline, you can use the pre defined CollectionUri,
-        ProjectName and AccessToken (PAT) variables.
+        This script creates a variable group with at least 1 variable in a given project.
+        When used in a pipeline, you can use the pre defined CollectionUri, ProjectName and AccessToken (PAT) variables.
     .EXAMPLE
         $params = @{
             Collectionuri = 'https://dev.azure.com/weareinspark/'
@@ -17,6 +17,22 @@ function New-AzDoVariableGroup {
         New-AzDoVariableGroup @params
 
         This example creates a new Variable Group with a variable "test = test".
+
+    .EXAMPLE
+        $params = @{
+            Collectionuri = 'https://dev.azure.com/ChristianPiet0452/'
+            ProjectName = 'Ditproject'
+            Variables = @{ test = @{ value = 'test' } }
+            Description = 'This is a test'
+            PAT = $PAT
+        }
+        @(
+            'dev-group'
+            'acc-group'
+            'prd-group'
+        ) | New-AzDoVariableGroup @params
+
+        This example creates a few new Variable Groups with a variable "test = test".
     .OUTPUTS
         PSobject
     .NOTES
@@ -71,10 +87,20 @@ function New-AzDoVariableGroup {
             }
 
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-                Invoke-RestMethod @params
+
+                (Invoke-RestMethod @params) | ForEach-Object {
+                    [PSCustomObject]@{
+                        VariableGroupName = $_.name
+                        VariableGroupId   = $_.id
+                        Variables         = $_.variables
+                        CreatedOn         = $_.createdOn
+                        IsShared          = $_.isShared
+                        ProjectName       = $ProjectName
+                        CollectionURI     = $CollectionUri
+                    }
+                }
             } else {
-                $body
-                return
+                $body | Out-String
             }
         }
     }
