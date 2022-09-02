@@ -1,6 +1,6 @@
 ---
-external help file: InfrastructureAsCode-help.xml
-Module Name: InfrastructureAsCode
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
 online version:
 schema: 2.0.0
 ---
@@ -13,7 +13,7 @@ Get information about a repo in Azure DevOps.
 ## SYNTAX
 
 ```
-Get-AzDoRepo [-CollectionUri] <String> [-PAT] <String> [[-Name] <String>] [-ProjectName] <String>
+Get-AzDoRepo -CollectionUri <String> [-PAT <String>] [-RepoName <String>] -ProjectName <String>
  [<CommonParameters>]
 ```
 
@@ -31,10 +31,8 @@ $Params = @{
     ProjectName = "Project 1"
     Name "Repo 1"
 }
-Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1" -Name "Repo 1"
+Get-AzDoRepo @Params
 ```
-
-This example will fetch information about the repo with the name 'Repo 1'.
 
 ## PARAMETERS
 
@@ -47,9 +45,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -61,15 +59,15 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 2
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-Project where the variable group has to be created
+### -RepoName
+Name of the Repo to get information about
 
 ```yaml
 Type: String
@@ -77,7 +75,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -92,9 +90,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -103,6 +101,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### Get-AzDoRepo [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string>
 ## OUTPUTS
 
 ### PSObject with repo(s).

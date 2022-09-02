@@ -1,6 +1,6 @@
 ---
-external help file: InfrastructureAsCode-help.xml
-Module Name: InfrastructureAsCode
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
 online version:
 schema: 2.0.0
 ---
@@ -8,32 +8,29 @@ schema: 2.0.0
 # New-AadGroup
 
 ## SYNOPSIS
-Creates an Azure AD group.
+This script creates a new app registration with a certificate or secret.
 
 ## SYNTAX
 
 ```
-New-AadGroup [-Name] <String> [-MailNickName] <String> [[-MailEnabled] <Boolean>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+New-AadGroup [-GroupName] <String> [-MailNickName] <String> [-MailEnabled] [[-Description] <String>]
+ [-ManuallyConnectToGraph] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates an Azure AD group.
-It defaults to an Office 365 group with a mail address.
+This script creates a new app registration with a certificate or secret.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-AadGroup -Name "AD group 1" -MailNickname "AdGroup1"
+To create an app registration with a secret that lasts 1 year, choose a name for $AppRegName, a name for $ClientSecretName and set $ClientSecretDuration to 1.
 ```
-
-This example will create a new Azure AD group with a specific mail address.
 
 ## PARAMETERS
 
-### -Name
-Name of the app registration
+### -GroupName
+Name of the Azure AD Group
 
 ```yaml
 Type: String
@@ -43,13 +40,12 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -MailNickName
-Provide nickname for the email.
-this cannot have spaces in it.
+{{ Fill MailNickName Description }}
 
 ```yaml
 Type: String
@@ -59,28 +55,57 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -MailEnabled
-Enable mail on the Azure AD group
+{{ Fill MailEnabled Description }}
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: True
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Description
+Provide a description for the group.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ManuallyConnectToGraph
+Manually connect to Microsoft Graph
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -114,9 +139,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
+### [<CommonParameters>]
+### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
+### <String>] [<CommonParameters>]
 ## OUTPUTS
 
-### PSobject containing the display name, ID and description.
+### New app registration with credentials, and variables with the ID and secret.
 ## NOTES
 
 ## RELATED LINKS

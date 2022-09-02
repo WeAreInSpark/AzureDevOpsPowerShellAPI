@@ -1,6 +1,6 @@
 ---
-external help file: InfrastructureAsCode-help.xml
-Module Name: InfrastructureAsCode
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
 online version:
 schema: 2.0.0
 ---
@@ -13,8 +13,9 @@ This script creates a variable group with at least 1 variable in a given project
 ## SYNTAX
 
 ```
-New-AzDoVariableGroup [-CollectionUri] <String> [-PAT] <String> [-ProjectName] <String> [-Name] <String[]>
- [-Variables] <Hashtable> [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-AzDoVariableGroup [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String>
+ [-VariableGroupName] <String[]> [-Variables] <Hashtable> [[-Description] <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,18 +27,10 @@ ProjectName and AccessToken (PAT) variables.
 
 ### EXAMPLE 1
 ```
-$params = @{
-    Collectionuri = 'https://dev.azure.com/weareinspark/'
-    PAT = '*******************'
-    ProjectName = 'Project 1'
-    Name = 'VariableGroup1'
-    Variables = @{ test = @{ value = 'test' } }
-    Description = 'This is a test'
-}
-New-AzDoVariableGroup @params
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
 ```
-
-This example creates a new Variable Group with a variable "test = test".
 
 ## PARAMETERS
 
@@ -64,7 +57,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 2
 Default value: None
 Accept pipeline input: False
@@ -86,7 +79,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
+### -VariableGroupName
 Name of the variable group
 
 ```yaml
@@ -97,7 +90,7 @@ Aliases:
 Required: True
 Position: 4
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
@@ -132,8 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -167,9 +159,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
 ## OUTPUTS
 
-### PSobject
+### New variable group with at least 1 variable in a given project.
 ## NOTES
 
 ## RELATED LINKS

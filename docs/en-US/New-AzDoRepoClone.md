@@ -1,6 +1,6 @@
 ---
-external help file: InfrastructureAsCode-help.xml
-Module Name: InfrastructureAsCode
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
 online version:
 schema: 2.0.0
 ---
@@ -8,37 +8,30 @@ schema: 2.0.0
 # New-AzDoRepoClone
 
 ## SYNOPSIS
-Clones the main branch to a new location
+This script creates a variable group with at least 1 variable in a given project.
 
 ## SYNTAX
 
 ```
 New-AzDoRepoClone [-SourceOrganizationName] <String> [-SourceProjectName] <String> [-SourceRepoName] <String>
  [[-SourcePAT] <String>] [-DestinationOrganizationName] <String> [-DestinationProjectName] <String>
- [-DestinationRepoName] <String> [-DestinationPAT] <String> [-Mirror] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-DestinationRepoName] <String> [-DestinationPAT] <String> [-Mirror] [-NewRepo] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Clones the main branch to a new location
+This script creates a variable group with at least 1 variable in a given project.
+When used in a pipeline, you can use the pre defined CollectionUri,
+ProjectName and AccessToken (PAT) variables.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$params = @{
-    SourceOrganizationName      = "contoso"
-    SourceProjectName           = "project1"
-    SourcePAT                   = "***"
-    SourceRepoName              = "repo1"
-    DestinationOrganizationName = "New Contoso"
-    DestinationProjectName      = "Project1"
-    DestinationPAT              = "***"
-    DestinationRepoName         = "repo1"
-}
-New-AzDoRepoClone @params
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
 ```
-
-This example Clones the main branch to another organization with the same project and repo name.
 
 ## PARAMETERS
 
@@ -170,7 +163,22 @@ Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NewRepo
+Creates a new repo if $true
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -212,9 +220,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
 ## OUTPUTS
 
-### PSobject
+### New variable group with at least 1 variable in a given project.
 ## NOTES
 
 ## RELATED LINKS

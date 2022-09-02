@@ -41,7 +41,7 @@ Describe "Test help for <_.Name>" -ForEach $commands {
         # Get command help, parameters, and links
         $command = $_
         $commandHelp = Get-Help $command.Name -ErrorAction SilentlyContinue
-        $commandParameters = global:FilterOutCommonParams  -Params $command.ParameterSets.Parameters
+        $commandParameters = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
         $commandParameterNames = $commandParameters.Name
         $helpLinks = $commandHelp.relatedLinks.navigationLink.uri
     }
@@ -51,9 +51,9 @@ Describe "Test help for <_.Name>" -ForEach $commands {
         $command = $_
         $commandName = $_.Name
         $commandHelp = Get-Help $command.Name -ErrorAction SilentlyContinue
-        $commandParameters = global:FilterOutCommonParams  -Params $command.ParameterSets.Parameters
+        $commandParameters = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
         $commandParameterNames = $commandParameters.Name
-        $helpParameters = global:FilterOutCommonParams  -Params $commandHelp.Parameters.Parameter
+        $helpParameters = global:FilterOutCommonParams -Params $commandHelp.Parameters.Parameter
         $helpParameterNames = $helpParameters.Name
     }
 
@@ -81,12 +81,12 @@ Describe "Test help for <_.Name>" -ForEach $commands {
         (Invoke-WebRequest -Uri $_ -UseBasicParsing).StatusCode | Should -Be '200'
     }
 
-    Context "Parameter <_.Name>" -Foreach $commandParameters {
+    Context "Parameter <_.Name>" -ForEach $commandParameters {
 
         BeforeAll {
             $parameter = $_
             $parameterName = $parameter.Name
-            $parameterHelp = $commandHelp.parameters.parameter | Where-Object Name -eq $parameterName
+            $parameterHelp = $commandHelp.parameters.parameter | Where-Object Name -EQ $parameterName
             $parameterHelpType = if ($parameterHelp.ParameterValue) { $parameterHelp.ParameterValue.Trim() }
         }
 
@@ -107,7 +107,7 @@ Describe "Test help for <_.Name>" -ForEach $commands {
         }
     }
 
-    Context "Test <_> help parameter help for <commandName>" -Foreach $helpParameterNames {
+    Context "Test <_> help parameter help for <commandName>" -ForEach $helpParameterNames {
 
         # Shouldn't find extra parameters in help.
         It "finds help parameter in code: <_>" {

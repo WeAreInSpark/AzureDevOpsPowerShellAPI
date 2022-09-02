@@ -18,9 +18,14 @@ param(
     [hashtable]$Properties,
 
     # Optional parameters to pass to psake
-    [hashtable]$Parameters
+    [hashtable]$Parameters = @{
+        "PSRepository"          = 'PSGallery'
+        "PSRepositoryApiKey"    = ""
+        "ScriptAnalysisEnabled" = $true
+        "TestEnabled"           = $true
+    }
 )
- 
+
 $ErrorActionPreference = 'Stop'
 
 # Bootstrap dependencies
@@ -33,36 +38,9 @@ if ($Bootstrap.IsPresent) {
         }
         Import-Module -Name PSDepend -Verbose:$false
         Invoke-PSDepend -Path './requirements.psd1' -Install -Import -Force -WarningAction SilentlyContinue
-    }
-    else {
+    } else {
         Write-Warning 'No [requirements.psd1] found. Skipping build dependency installation.'
     }
-}
-
-if ($CalculateVersion.IsPresent) {
-    $CurrentBranch = &git rev-parse --abbrev-ref HEAD
-    $LatestTag = git tag --sort=v:refname | Select-Object -Last 1
-
-    [int]$Major = $LatestTag.split('.')[0]
-    [int]$Minor = $LatestTag.split('.')[1]
-    [int]$Patch = $LatestTag.split('.')[2]
-
-    if ($CurrentBranch -match "patch") {
-        $Patch++
-    }
-    elseif ($CurrentBranch -match "feature") {
-        $Minor++
-    }
-    elseif ($CurrentBranch -match "major") {
-        $Major++
-    }
-    else {
-        Write-Error "Wrong branch!"
-        exit 1
-    }
-
-    [string]$env:NewVersion = "$Major.$Minor.$Patch" 
-    Update-ModuleManifest -Path "$PSScriptRoot/InfrastructureAsCode/InfrastructureAsCode.psd1" -ModuleVersion $env:NewVersion
 }
 
 # Execute psake task(s)
@@ -70,9 +48,14 @@ $psakeFile = './psakeFile.ps1'
 if ($PSCmdlet.ParameterSetName -eq 'Help') {
     Get-PSakeScriptTasks -buildFile $psakeFile |
     Format-Table -Property Name, Description, Alias, DependsOn
-}
-else {
+} else {
     Set-BuildEnvironment -Force
     Invoke-psake -buildFile $psakeFile -taskList $Task -nologo -properties $Properties -parameters $Parameters
-    exit ([int](-not $psake.build_success))
+    if ($psake.build_success) {
+        "Build complete"
+        exit 0
+    } else {
+        Write-Error "Build not complete"
+        exit 1
+    }
 }
