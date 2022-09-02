@@ -2,7 +2,7 @@
   "recommendations": [
     "ms-dotnettools.vscode-dotnet-runtime",
     "ms-azure-devops.azure-pipelines",
-    "ms-vscode.powershell",
+    "ms-vscode.powershell-preview",
     "ms-vscode.azure-account",
     "ms-azuretools.vscode-bicep",
     "msazurermtools.azurerm-vscode-tools",

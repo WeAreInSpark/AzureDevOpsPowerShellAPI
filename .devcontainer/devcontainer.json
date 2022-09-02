@@ -2,7 +2,6 @@
   "name": "PowerShell",
   "dockerFile": "Dockerfile",
   // "image": "mcr.microsoft.com/powershell",
-
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "terminal.integrated.profiles.linux": {
@@ -13,10 +12,9 @@
     },
     "terminal.integrated.defaultProfile.windows": "PowerShell"
   },
-
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
-    "ms-vscode.powershell",
+    "ms-vscode.powershell-preview",
     "davidanson.vscode-markdownlint",
     "TylerLeonhardt.vscode-pester-test-adapter",
     "eamodio.gitlens",
@@ -25,13 +23,10 @@
     "hbenl.vscode-test-explorer",
     "ms-vscode.test-adapter-converter"
   ],
-
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
-
   // Bootstrap build modules
   "postCreateCommand": "pwsh -c './build.ps1 -Task Init -Bootstrap'"
-
   // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
   // "remoteUser": "vscode"
 }
