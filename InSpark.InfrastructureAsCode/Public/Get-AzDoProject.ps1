@@ -89,6 +89,7 @@ function Get-AzDoProject {
                     ProjectURL        = $_.url
                     CollectionURI     = $CollectionUri
                     ProjectVisibility = $_.visibility
+                    State             = $_.state
                 }
             }
         } else {
@@ -99,6 +100,7 @@ function Get-AzDoProject {
                     ProjectURL        = $_.url
                     CollectionURI     = $CollectionUri
                     ProjectVisibility = $_.visibility
+                    State             = $_.state
                 }
             }
         }
