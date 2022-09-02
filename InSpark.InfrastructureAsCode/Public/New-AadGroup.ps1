@@ -44,7 +44,8 @@ function New-AadGroup {
         $MailEnabled = $true,
 
         # Provide a description for the group.
-        [Parameter(ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty]
         [string]
         $Description,
 
