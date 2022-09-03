@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-AzDoRepo
 
 ## SYNOPSIS
-Get information about a repo in Azure DevOps.
+Gets information about a repo in Azure DevOps.
 
 ## SYNTAX
 
@@ -18,8 +18,8 @@ Get-AzDoRepo -CollectionUri <String> [-PAT <String>] [-RepoName <String>] -Proje
 ```
 
 ## DESCRIPTION
-Get information about 1 repo if the parameter $Name is filled in.
-Otherwise it will get all the repo's
+Gets information about 1 repo if the parameter $Name is filled in.
+Otherwise it will list all the repo's.
 
 ## EXAMPLES
 
@@ -31,8 +31,35 @@ $Params = @{
     ProjectName = "Project 1"
     Name "Repo 1"
 }
-Get-AzDoRepo @Params
+Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1"
 ```
+
+This example will list all the repo's contained in 'Project 1'.
+
+### EXAMPLE 2
+```
+$Params = @{
+    CollectionUri = "https://dev.azure.com/contoso"
+    PAT = "***"
+    ProjectName = "Project 1"
+    Name "Repo 1"
+}
+Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1" -Name "Repo 1"
+```
+
+This example will fetch information about the repo with the name 'Repo 1'.
+
+### EXAMPLE 3
+```
+$Params = @{
+    CollectionUri = "https://dev.azure.com/contoso"
+    PAT = "***"
+    Name "Repo 1"
+}
+get-AzDoProject -pat $pat -CollectionUri $collectionuri | Get-AzDoRepo -PAT $PAT
+```
+
+This example will fetch information about the repo with the name 'Repo 1'.
 
 ## PARAMETERS
 
@@ -52,7 +79,7 @@ Accept wildcard characters: False
 ```
 
 ### -PAT
-PAT to authentice with the organization
+PAT to authenticate with the organization
 
 ```yaml
 Type: String
@@ -61,7 +88,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: $env:SYSTEM_ACCESSTOKEN
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -82,7 +109,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProjectName
-Project where the variable group has to be created
+Project where the Repos are contained
 
 ```yaml
 Type: String
@@ -101,7 +128,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### Get-AzDoRepo [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string>
 ## OUTPUTS
 
 ### PSObject with repo(s).

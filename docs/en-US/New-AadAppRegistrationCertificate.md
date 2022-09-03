@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AadAppRegistrationCertificate
 
 ## SYNOPSIS
-This script creates a new certificate or secret for an existing app registration.
+Creates a X.509 certificate and uploads it to the App registration in Azure AD.
 
 ## SYNTAX
 
@@ -19,20 +19,28 @@ New-AadAppRegistrationCertificate [-ObjectId] <String> [[-CertName] <String>] [[
 ```
 
 ## DESCRIPTION
-This script creates a new certificate or secret for an existing app registration.
+Creates a X.509 certificate and uploads it as an authentication factor to the App registration in Azure AD.
+The certificate will also be uploaded to an Azure KeyVault.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
-$ClientSecretDuration to 1.
+$newAadAppRegistrationCertificateSplat = @{
+    ObjectID = "00000-00000-00000-00000"
+    CertName = "cert01"
+    KeyVaultName = "kv01"
+    SubjectName = "contoso.com"
+}
+New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
 ```
+
+This example will create a new certificate for the app registration, upload it to the Application Registration in Azure AD and upload it to Azure KeyVault.
 
 ## PARAMETERS
 
 ### -ObjectId
-Application (client) ID of the app registration
+Object Id of the App registration
 
 ```yaml
 Type: String
@@ -62,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -KeyVaultName
-Name of the keyvault to store the certificate
+Name of the Azure Key Vault to store the certificate
 
 ```yaml
 Type: String
@@ -77,7 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -SubjectName
-{{ Fill SubjectName Description }}
+CN for the certificate
 
 ```yaml
 Type: String
@@ -122,7 +130,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -156,13 +165,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
-### [-KeyVaultName <String>] [<CommonParameters>]
-### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
-### <String>] [<CommonParameters>]
 ## OUTPUTS
 
-### New credentials in an app registration, and a variable with the secret.
+### PSObject containing the thumbprint of the certificate and 2 dates when the certificate is valid.
 ## NOTES
 
 ## RELATED LINKS

@@ -92,6 +92,7 @@ function New-AzDoRepoFork {
         body        = $Body | ConvertTo-Json -Depth 99
         ContentType = 'application/json'
     }
+
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
         Invoke-RestMethod @params
     }

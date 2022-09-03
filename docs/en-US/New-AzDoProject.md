@@ -18,19 +18,45 @@ New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <Stri
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Function to create an Azure DevOps project
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName
+New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
 ```
+
+This example creates a new private Azure DevOps project
 
 ### EXAMPLE 2
 ```
-New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName -Visibility 'public'
+New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
 ```
+
+This example creates a new public Azure DevOps project
+
+### EXAMPLE 3
+```
+@("MyProject1","Myproject2") | New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***"
+```
+
+This example creates two new Azure DevOps projects using the pipeline.
+
+### EXAMPLE 4
+```
+[pscustomobject]@{
+    ProjectName     = 'Project 1'
+    Visibility      = 'public'
+    Description     = 'This is the best project'
+},
+[pscustomobject]@{
+    ProjectName     = 'Project 1'
+    Description     = 'This is the best project'
+} | New-AzDoProject -PAT $PAT -CollectionUri $CollectionUri
+```
+
+This example creates two new Azure DevOps projects using the pipeline.
 
 ## PARAMETERS
 
@@ -62,7 +88,7 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
+Default value: $env:SYSTEM_ACCESSTOKEN
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -128,7 +154,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -163,5 +190,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 ## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS

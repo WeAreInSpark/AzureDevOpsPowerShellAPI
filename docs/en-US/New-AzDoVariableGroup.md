@@ -20,17 +20,42 @@ New-AzDoVariableGroup [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName]
 
 ## DESCRIPTION
 This script creates a variable group with at least 1 variable in a given project.
-When used in a pipeline, you can use the pre defined CollectionUri,
-ProjectName and AccessToken (PAT) variables.
+When used in a pipeline, you can use the pre defined CollectionUri, ProjectName and AccessToken (PAT) variables.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To create a variable group 'test' with one variable:
-New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
--Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+$params = @{
+    Collectionuri = 'https://dev.azure.com/weareinspark/'
+    PAT = '*******************'
+    ProjectName = 'Project 1'
+    VariableGroupName = 'VariableGroup1'
+    Variables = @{ test = @{ value = 'test' } }
+    Description = 'This is a test'
+}
+New-AzDoVariableGroup @params
 ```
+
+This example creates a new Variable Group with a variable "test = test".
+
+### EXAMPLE 2
+```
+$params = @{
+    Collectionuri = 'https://dev.azure.com/ChristianPiet0452/'
+    ProjectName = 'Ditproject'
+    Variables = @{ test = @{ value = 'test' } }
+    Description = 'This is a test'
+    PAT = $PAT
+}
+@(
+    'dev-group'
+    'acc-group'
+    'prd-group'
+) | New-AzDoVariableGroup @params
+```
+
+This example creates a few new Variable Groups with a variable "test = test".
 
 ## PARAMETERS
 
@@ -59,7 +84,7 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
+Default value: $env:SYSTEM_ACCESSTOKEN
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -125,7 +150,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -159,11 +185,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-### [<CommonParameters>]
 ## OUTPUTS
 
-### New variable group with at least 1 variable in a given project.
+### PSobject
 ## NOTES
 
 ## RELATED LINKS

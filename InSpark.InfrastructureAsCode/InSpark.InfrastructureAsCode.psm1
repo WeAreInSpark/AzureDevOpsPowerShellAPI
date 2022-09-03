@@ -4,9 +4,9 @@ $private = @(Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'Priv
 foreach ($import in @($private + $public)) {
     try {
         . $import.FullName
-    } catch {
+    }
+    catch {
         throw "Unable to dot source [$($import.FullName)]"
     }
 }
-
 Export-ModuleMember -Function $public.Basename

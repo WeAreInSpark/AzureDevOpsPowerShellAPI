@@ -4,6 +4,11 @@ function New-AzDoServiceConnection {
         Function to create a service connection in Azure DevOps
     .DESCRIPTION
         Function to create a service connection in Azure DevOps
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
+=======
+    .NOTES
+        When you are using Azure DevOps with Build service Access token, make sure the setting 'Protect access to repositories in YAML pipelin' is off.
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
     .EXAMPLE
         $params = @{
             CollectionUri               = "https://dev.azure.com/contoso"

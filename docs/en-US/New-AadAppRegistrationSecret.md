@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AadAppRegistrationSecret
 
 ## SYNOPSIS
-This script creates a new certificate or secret for an existing app registration.
+Creates a secret and set it to the App registration in Azure AD.
 
 ## SYNTAX
 
@@ -18,15 +18,22 @@ New-AadAppRegistrationSecret [-ObjectID] <String> [-ClientSecretName] <String> [
 ```
 
 ## DESCRIPTION
-This script creates a new certificate or secret for an existing app registration.
+Creates a secret and uploads it as an authentication factor to the App registration in Azure AD.
+The secret will also be uploaded to an Azure KeyVault.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
-$ClientSecretDuration to 1.
+$newAadAppRegistrationSecretSplat = @{
+    ObjectID = "00000-00000-00000-00000-00000"
+    ClientSecretName = "Secret 1"
+    EndDate = "2022-01-01"
+}
+New-AadAppRegistrationSecret @newAadAppRegistrationSecretSplat
 ```
+
+This example will create a new secret for the app registration, upload it to the Azure KeyVault and add it to the Application Registration in Azure AD.
 
 ## PARAMETERS
 
@@ -61,7 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -EndDate
-Duration of the secret until this date
+Enddate of validity of the secret
 
 ```yaml
 Type: String
@@ -91,7 +98,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -125,13 +133,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
-### [-KeyVaultName <String>] [<CommonParameters>]
-### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
-### <String>] [<CommonParameters>]
 ## OUTPUTS
 
-### New credentials in an app registration, and a variable with the secret.
+### The Appsecret
 ## NOTES
 
 ## RELATED LINKS

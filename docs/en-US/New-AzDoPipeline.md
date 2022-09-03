@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AzDoPipeline
 
 ## SYNOPSIS
-This script creates a variable group with at least 1 variable in a given project.
+Creates an Azure Pipeline
 
 ## SYNTAX
 
@@ -18,18 +18,32 @@ New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [[-PAT] <Stri
 ```
 
 ## DESCRIPTION
-This script creates a variable group with at least 1 variable in a given project.
-When used in a pipeline, you can use the pre defined CollectionUri,
-ProjectName and AccessToken (PAT) variables.
+Creates an Azure Pipeline in a given Azure Project based on a repo
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To create a variable group 'test' with one variable:
-New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
--Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+$newAzDoPipelineSplat = @{
+    CollectionUri = "https://dev.azure.com/contoso"
+    PAT = "***"
+    PipelineName = "Pipeline 1"
+    RepoName = "Repo 1"
+    ProjectName = "Project 1"
+}
+New-AzDoPipeline @newAzDoPipelineSplat
 ```
+
+This example creates a new Azure Pipeline using the PowerShell pipeline
+
+### EXAMPLE 2
+```
+Get-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT $PAT | 
+    Get-AzDoRepo -RepoName 'Repo 1' -PAT $PAT |
+        New-AzDoPipeline -PipelineName "Pipeline 1" -PAT $PAT
+```
+
+This example creates a new Azure Pipeline
 
 ## PARAMETERS
 
@@ -49,7 +63,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProjectName
-Project where the variable group has to be created
+Project where the pipeline will be created.
 
 ```yaml
 Type: String
@@ -73,7 +87,7 @@ Aliases:
 
 Required: False
 Position: 3
-Default value: None
+Default value: $env:SYSTEM_ACCESSTOKEN
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -94,7 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -RepoName
-Project where the variable group has to be created
+Name of the Repository containing the YAML-sourcecode
 
 ```yaml
 Type: Object
@@ -124,7 +138,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -158,11 +173,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
-### [<CommonParameters>]
 ## OUTPUTS
 
-### New variable group with at least 1 variable in a given project.
+### PSobject. An object containing the name, the folder and the URI of the pipeline
 ## NOTES
 
 ## RELATED LINKS

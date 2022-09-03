@@ -7,9 +7,6 @@ param(
     # Bootstrap dependencies
     [switch]$Bootstrap,
 
-    # Calculate version
-    [switch]$CalculateVersion,
-
     # List available build tasks
     [parameter(ParameterSetName = 'Help')]
     [switch]$Help,
@@ -18,14 +15,8 @@ param(
     [hashtable]$Properties,
 
     # Optional parameters to pass to psake
-    [hashtable]$Parameters = @{
-        "PSRepository"          = 'PSGallery'
-        "PSRepositoryApiKey"    = ""
-        "ScriptAnalysisEnabled" = $true
-        "TestEnabled"           = $true
-    }
+    [hashtable]$Parameters
 )
-
 $ErrorActionPreference = 'Stop'
 
 # Bootstrap dependencies
@@ -47,15 +38,9 @@ if ($Bootstrap.IsPresent) {
 $psakeFile = './psakeFile.ps1'
 if ($PSCmdlet.ParameterSetName -eq 'Help') {
     Get-PSakeScriptTasks -buildFile $psakeFile |
-    Format-Table -Property Name, Description, Alias, DependsOn
+        Format-Table -Property Name, Description, Alias, DependsOn
 } else {
     Set-BuildEnvironment -Force
     Invoke-psake -buildFile $psakeFile -taskList $Task -nologo -properties $Properties -parameters $Parameters
-    if ($psake.build_success) {
-        "Build complete"
-        exit 0
-    } else {
-        Write-Error "Build not complete"
-        exit 1
-    }
+    exit ([int](-not $psake.build_success))
 }

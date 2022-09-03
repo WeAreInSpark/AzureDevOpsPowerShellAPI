@@ -20,16 +20,4 @@
     'PSScriptAnalyzer'             = @{
         Version = '1.19.1'
     }
-    'Microsoft.Graph.Applications' = @{
-        Version = '1.11.1'
-    }
-    'Microsoft.Graph.Groups' = @{
-        Version = '1.11.1'
-    }
-    'Az.Accounts'                  = @{
-        Version = '2.9.1'
-    }
-    'Az.KeyVault'                  = @{
-        Version = '4.6.1'
-    }
 }

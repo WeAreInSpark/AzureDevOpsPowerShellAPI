@@ -68,6 +68,5 @@ function Set-AzDoTeamMember {
         }
     } else {
         $Body
-        return
     }
 }

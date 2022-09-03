@@ -8,24 +8,44 @@ schema: 2.0.0
 # New-AadGroup
 
 ## SYNOPSIS
-This script creates a new app registration with a certificate or secret.
+Creates an Azure AD group.
 
 ## SYNTAX
 
 ```
-New-AadGroup [-GroupName] <String> [-MailNickName] <String> [-MailEnabled] [[-Description] <String>]
- [-ManuallyConnectToGraph] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-AadGroup [-GroupName] <String> [-MailNickName] <String> [-MailEnabled]
+ [-Description] <ValidateNotNullOrEmptyAttribute> [-ManuallyConnectToGraph] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This script creates a new app registration with a certificate or secret.
+Creates an Azure AD group.
+It defaults to an Office 365 group with a mail address.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-To create an app registration with a secret that lasts 1 year, choose a name for $AppRegName, a name for $ClientSecretName and set $ClientSecretDuration to 1.
+New-AadGroup -GroupName "AD group 1" -MailNickname "AdGroup1"
 ```
+
+This example will create a new Azure AD group with a specific mail address.
+
+### EXAMPLE 2
+```
+[pscustomobject]@{
+    GroupName    = 'Group1'
+    MailNickname = 'group1'
+    Description  = 'This is the best group'
+},
+[pscustomobject]@{
+    GroupName    = 'Group2'
+    MailNickname = 'group2'
+    Description  = 'This is also the best group'
+} | New-AadGroup
+```
+
+This example will create new Azure AD groups with a specific mail addresses.
 
 ## PARAMETERS
 
@@ -45,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -MailNickName
-{{ Fill MailNickName Description }}
+Provide nickname/alias for the email.
 
 ```yaml
 Type: String
@@ -60,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -MailEnabled
-{{ Fill MailEnabled Description }}
+Enable mail on the Azure AD group
 
 ```yaml
 Type: SwitchParameter
@@ -78,11 +98,11 @@ Accept wildcard characters: False
 Provide a description for the group.
 
 ```yaml
-Type: String
+Type: ValidateNotNullOrEmptyAttribute
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -105,7 +125,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -139,13 +160,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
-### [<CommonParameters>]
-### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
-### <String>] [<CommonParameters>]
 ## OUTPUTS
 
-### New app registration with credentials, and variables with the ID and secret.
+### PSobject containing the display name, ID and description.
 ## NOTES
 
 ## RELATED LINKS

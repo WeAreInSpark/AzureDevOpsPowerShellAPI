@@ -1,26 +1,26 @@
 ---
-external help file: InSpark.InfrastructureAsCode-help.xml
-Module Name: InSpark.InfrastructureAsCode
+external help file: Module-help.xml
+Module Name: Module
 online version:
 schema: 2.0.0
 ---
 
-# New-AzDoRepoClone
+# New-AzDoRepoMirror
 
 ## SYNOPSIS
-Clones the main branch to a new location
+Clones all branches and tags to a new location
 
 ## SYNTAX
 
 ```
-New-AzDoRepoClone [-SourceOrganizationName] <String> [-SourceProjectName] <String> [-SourceRepoName] <String>
+New-AzDoRepoMirror [-SourceOrganizationName] <String> [-SourceProjectName] <String> [-SourceRepoName] <String>
  [[-SourcePAT] <String>] [-DestinationOrganizationName] <String> [-DestinationProjectName] <String>
- [-DestinationRepoName] <String> [-DestinationPAT] <String> [-Mirror] [-NewRepo] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-DestinationRepoName] <String> [-DestinationPAT] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Clones the main branch to a new location
+Clones all branches and tags to a new location.
+pull request will not be copied.
 
 ## EXAMPLES
 
@@ -36,15 +36,15 @@ $params = @{
     DestinationPAT              = "***"
     DestinationRepoName         = "repo1"
 }
-New-AzDoRepoClone @params
+New-AzDoRepoMirror @params
 ```
 
-This example Clones the main branch to another organization with the same project and repo name.
+This example mirrors a repo to another organization with te same project and repo name.
 
 ## PARAMETERS
 
 ### -SourceOrganizationName
-Collection Uri of the organization
+Collection Uri of the organization where the source repo is located
 
 ```yaml
 Type: String
@@ -59,7 +59,7 @@ Accept wildcard characters: False
 ```
 
 ### -SourceProjectName
-Project where the variable group has to be created
+Name of the project where the source repo is located
 
 ```yaml
 Type: String
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -SourceRepoName
-Project where the variable group has to be created
+Name of the repo that has to be copied.
 
 ```yaml
 Type: String
@@ -89,7 +89,8 @@ Accept wildcard characters: False
 ```
 
 ### -SourcePAT
-PAT to authenticate with the organization
+PAT to authentice with the source organization.
+Defaults to azure pipeline token.
 
 ```yaml
 Type: String
@@ -104,7 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -DestinationOrganizationName
-Collection Uri of the organization
+Collection Uri of the organization where the repo needs to be copied to
 
 ```yaml
 Type: String
@@ -119,7 +120,7 @@ Accept wildcard characters: False
 ```
 
 ### -DestinationProjectName
-Project where the variable group has to be created
+Project where the repo needs to be copied to
 
 ```yaml
 Type: String
@@ -134,7 +135,8 @@ Accept wildcard characters: False
 ```
 
 ### -DestinationRepoName
-Project where the variable group has to be created
+Name of the repo in the destination project.
+if empty it will be the same as the source repo name.
 
 ```yaml
 Type: String
@@ -149,7 +151,8 @@ Accept wildcard characters: False
 ```
 
 ### -DestinationPAT
-PAT to authenticate with the organization
+PAT to authentice with the destination organization.
+Defaults to azure pipeline token.
 
 ```yaml
 Type: String
@@ -158,68 +161,7 @@ Aliases:
 
 Required: True
 Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Mirror
-Switch to enable mirroring the repo
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NewRepo
-Switch to create a new repo
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
+Default value: $env:SYSTEM_ACCESSTOKEN
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
