@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -14,10 +19,14 @@ schema: 2.0.0
 
 ## SYNOPSIS
 <<<<<<< HEAD
+<<<<<<< HEAD
 This script creates a new app registration with a certificate or secret.
 =======
 Creates an Azure AD group.
 >>>>>>> 690e7a4 (Working version)
+=======
+This script creates a new app registration with a certificate or secret.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## SYNTAX
 
@@ -33,16 +42,21 @@ New-AadGroup [-Name] <String> [-MailNickName] <String> [[-MailEnabled] <Boolean>
 
 ## DESCRIPTION
 <<<<<<< HEAD
+<<<<<<< HEAD
 This script creates a new app registration with a certificate or secret.
 =======
 Creates an Azure AD group.
 It defaults to an Office 365 group with a mail address.
 >>>>>>> 690e7a4 (Working version)
+=======
+This script creates a new app registration with a certificate or secret.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 New-AadGroup -GroupName "AD group 1" -MailNickname "AdGroup1"
@@ -80,6 +94,11 @@ To create an app registration with a secret that lasts 1 year, choose a name for
 ### -GroupName
 Name of the Azure AD Group
 =======
+=======
+To create an app registration with a secret that lasts 1 year, choose a name for $AppRegName, a name for $ClientSecretName and set $ClientSecretDuration to 1.
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -Name
@@ -105,6 +124,7 @@ Accept wildcard characters: False
 ### -MailNickName
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Provide nickname/alias for the email.
 =======
 {{ Fill MailNickName Description }}
@@ -113,6 +133,9 @@ Provide nickname/alias for the email.
 Provide nickname for the email.
 this cannot have spaces in it.
 >>>>>>> 690e7a4 (Working version)
+=======
+{{ Fill MailNickName Description }}
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: String
@@ -132,12 +155,16 @@ Accept wildcard characters: False
 
 ### -MailEnabled
 <<<<<<< HEAD
+<<<<<<< HEAD
 {{ Fill MailEnabled Description }}
 
 ```yaml
 Type: SwitchParameter
 =======
 Enable mail on the Azure AD group
+=======
+{{ Fill MailEnabled Description }}
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: Boolean
@@ -191,9 +218,13 @@ Accept wildcard characters: False
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
 =======
 ### -WhatIf
+<<<<<<< HEAD
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 >>>>>>> 690e7a4 (Working version)
+=======
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: SwitchParameter
@@ -228,10 +259,14 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 ### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
 ### [<CommonParameters>]
 ### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
 ### <String>] [<CommonParameters>]
+<<<<<<< HEAD
 ## OUTPUTS
 
 ### New app registration with credentials, and variables with the ID and secret.
@@ -240,6 +275,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### PSobject containing the display name, ID and description.
 >>>>>>> 690e7a4 (Working version)
+=======
+## OUTPUTS
+
+### New app registration with credentials, and variables with the ID and secret.
+>>>>>>> 18d4dd8 (InitialVersion)
 ## NOTES
 
 ## RELATED LINKS

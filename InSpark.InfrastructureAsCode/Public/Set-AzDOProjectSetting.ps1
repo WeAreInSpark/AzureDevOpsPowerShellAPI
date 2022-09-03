@@ -32,7 +32,11 @@ function Set-AzDoProjectSetting {
 
         # PAT to get access to Azure DevOps.
 <<<<<<< HEAD
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         [Parameter(Mandatory = $false)]
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -94,6 +98,7 @@ function Set-AzDoProjectSetting {
 
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
         Invoke-RestMethod @params
+<<<<<<< HEAD
 <<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/Set-AzDOProjectSetting.ps1
     } else {
 <<<<<<< HEAD
@@ -108,6 +113,10 @@ function Set-AzDoProjectSetting {
     }
     else {
         Write-Output $Body | format-list
+=======
+    } else {
+        Write-Output $Body | Format-List
+>>>>>>> 18d4dd8 (InitialVersion)
         return
     }
 }

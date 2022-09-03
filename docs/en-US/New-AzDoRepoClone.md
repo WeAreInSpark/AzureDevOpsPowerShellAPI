@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -14,16 +19,21 @@ schema: 2.0.0
 
 ## SYNOPSIS
 <<<<<<< HEAD
+<<<<<<< HEAD
 This script creates a variable group with at least 1 variable in a given project.
 =======
 Clones the main branch to a new location
 >>>>>>> 690e7a4 (Working version)
+=======
+This script creates a variable group with at least 1 variable in a given project.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## SYNTAX
 
 ```
 New-AzDoRepoClone [-SourceOrganizationName] <String> [-SourceProjectName] <String> [-SourceRepoName] <String>
  [[-SourcePAT] <String>] [-DestinationOrganizationName] <String> [-DestinationProjectName] <String>
+<<<<<<< HEAD
 <<<<<<< HEAD
  [-DestinationRepoName] <String> [-DestinationPAT] <String> [-Mirror] [-NewRepo] [-WhatIf] [-Confirm]
  [<CommonParameters>]
@@ -40,11 +50,22 @@ ProjectName and AccessToken (PAT) variables.
 ## DESCRIPTION
 Clones the main branch to a new location
 >>>>>>> 690e7a4 (Working version)
+=======
+ [-DestinationRepoName] <String> [-DestinationPAT] <String> [-Mirror] [-NewRepo] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
+```
+
+## DESCRIPTION
+This script creates a variable group with at least 1 variable in a given project.
+When used in a pipeline, you can use the pre defined CollectionUri,
+ProjectName and AccessToken (PAT) variables.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 To create a variable group 'test' with one variable:
 New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
@@ -68,6 +89,13 @@ New-AzDoRepoClone @params
 This example Clones the main branch to another organization with the same project and repo name.
 
 >>>>>>> 690e7a4 (Working version)
+=======
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -SourceOrganizationName
@@ -207,6 +235,9 @@ Parameter Sets: (All)
 Aliases:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 Required: False
 Position: Named
 Default value: False
@@ -216,7 +247,11 @@ Accept wildcard characters: False
 
 ### -NewRepo
 <<<<<<< HEAD
+<<<<<<< HEAD
 Switch to create a new repo
+=======
+Creates a new repo if $true
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
 Creates a new repo if $true
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -227,9 +262,12 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+<<<<<<< HEAD
 =======
 Required: True
 >>>>>>> 690e7a4 (Working version)
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -277,6 +315,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
 ### [<CommonParameters>]
 ## OUTPUTS
@@ -287,6 +326,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### PSobject
 >>>>>>> 690e7a4 (Working version)
+=======
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
+## OUTPUTS
+
+### New variable group with at least 1 variable in a given project.
+>>>>>>> 18d4dd8 (InitialVersion)
 ## NOTES
 
 ## RELATED LINKS

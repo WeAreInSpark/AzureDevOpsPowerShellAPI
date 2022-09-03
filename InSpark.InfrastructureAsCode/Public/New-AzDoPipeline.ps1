@@ -4,7 +4,11 @@ function New-AzDoPipeline {
     Creates an Azure Pipeline
 .DESCRIPTION
 <<<<<<< HEAD
+<<<<<<< HEAD
     Creates an Azure Pipeline in a given Azure Project based on a repo
+=======
+    Creates an Azure Pipeline
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
     Creates an Azure Pipeline
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -13,7 +17,11 @@ function New-AzDoPipeline {
         CollectionUri = "https://dev.azure.com/contoso"
         PAT = "***"
 <<<<<<< HEAD
+<<<<<<< HEAD
         PipelineName = "Pipeline 1"
+=======
+        Name = "Pipeline 1"
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         Name = "Pipeline 1"
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -22,6 +30,7 @@ function New-AzDoPipeline {
     }
     New-AzDoPipeline @newAzDoPipelineSplat
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     This example creates a new Azure Pipeline using the PowerShell pipeline
 
@@ -39,11 +48,17 @@ function New-AzDoPipeline {
 .OUTPUTS
     PSobject containing Project information
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+    This example creates a new Azure Pipeline
+.OUTPUTS
+    PSobject containing Project information
+>>>>>>> 18d4dd8 (InitialVersion)
 .NOTES
 #>
     [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
+<<<<<<< HEAD
 <<<<<<< HEAD
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
@@ -84,6 +99,8 @@ function New-AzDoPipeline {
                     type       = "yaml"
                     path       = $Path
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         [Parameter(Mandatory)]
         [string]
         $CollectionUri,
@@ -118,6 +135,9 @@ function New-AzDoPipeline {
                 configuration = @{
                     type       = "yaml"
                     path       = "/main.yaml"
+<<<<<<< HEAD
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
 >>>>>>> 18d4dd8 (InitialVersion)
                     repository = @{
                         id   = $RepoId
@@ -135,6 +155,7 @@ function New-AzDoPipeline {
             }
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 Invoke-RestMethod @params | ForEach-Object {
                     [PSCustomObject]@{
                         PipelineName   = $_.name
@@ -149,13 +170,22 @@ function New-AzDoPipeline {
             } else {
                 Write-Output $Body | Format-List
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+                Invoke-RestMethod @params
+            } else {
+                Write-Output $Body | Format-List
+>>>>>>> 18d4dd8 (InitialVersion)
                 return
             }
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
 }
 >>>>>>> 18d4dd8 (InitialVersion)

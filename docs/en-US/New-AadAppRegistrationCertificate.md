@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -15,6 +20,7 @@ schema: 2.0.0
 ## SYNOPSIS
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Creates a X.509 certificate and uploads it to the App registration in Azure AD.
 =======
 This script creates a new certificate or secret for an existing app registration.
@@ -22,6 +28,9 @@ This script creates a new certificate or secret for an existing app registration
 =======
 Creates a Certificate and uploads it to the App registration.
 >>>>>>> 690e7a4 (Working version)
+=======
+This script creates a new certificate or secret for an existing app registration.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## SYNTAX
 
@@ -44,14 +53,19 @@ This script creates a new certificate or secret for an existing app registration
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 Creates a Certificate and uploads it to the App registration.
 The certificate will also be saves to an Azure KeyVault.
 >>>>>>> 690e7a4 (Working version)
+=======
+This script creates a new certificate or secret for an existing app registration.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
 $ClientSecretDuration to 1.
@@ -74,15 +88,21 @@ $newAadAppRegistrationCertificateSplat = @{
     SubjectName = "contoso.com"
 }
 New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
+=======
+To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
+$ClientSecretDuration to 1.
+>>>>>>> 18d4dd8 (InitialVersion)
 ```
-
-This example will create a new certificate for the app registration.
 
 ## PARAMETERS
 
 ### -ObjectId
+<<<<<<< HEAD
 Object Id of the App registration
 >>>>>>> 690e7a4 (Working version)
+=======
+Application (client) ID of the app registration
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: String
@@ -132,10 +152,14 @@ Accept wildcard characters: False
 
 ### -SubjectName
 <<<<<<< HEAD
+<<<<<<< HEAD
 {{ Fill SubjectName Description }}
 =======
 CN for the certificate
 >>>>>>> 690e7a4 (Working version)
+=======
+{{ Fill SubjectName Description }}
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: String
@@ -221,10 +245,14 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 ### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
 ### [-KeyVaultName <String>] [<CommonParameters>]
 ### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
 ### <String>] [<CommonParameters>]
+<<<<<<< HEAD
 ## OUTPUTS
 
 <<<<<<< HEAD
@@ -237,6 +265,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### PSobject containing thumbprint of certificate and 2 dates when the certificate is valid.
 >>>>>>> 690e7a4 (Working version)
+=======
+## OUTPUTS
+
+### New credentials in an app registration, and a variable with the secret.
+>>>>>>> 18d4dd8 (InitialVersion)
 ## NOTES
 
 ## RELATED LINKS

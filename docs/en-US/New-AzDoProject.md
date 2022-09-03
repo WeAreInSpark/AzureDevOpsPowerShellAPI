@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -20,6 +25,7 @@ Function to create an Azure DevOps project
 ```
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String[]> [[-Description] <String>]
 =======
 New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [[-Description] <String>]
@@ -27,20 +33,28 @@ New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [
 =======
 New-AzDoProject [-CollectionUri] <String> [-PAT] <String> [-Name] <String[]> [[-Description] <String>]
 >>>>>>> 690e7a4 (Working version)
+=======
+New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [[-Description] <String>]
+>>>>>>> 18d4dd8 (InitialVersion)
  [[-SourceControlType] <String>] [[-Visibility] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 <<<<<<< HEAD
+<<<<<<< HEAD
 {{ Fill in the Description }}
 =======
 Function to create an Azure DevOps project
 >>>>>>> 690e7a4 (Working version)
+=======
+{{ Fill in the Description }}
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
@@ -55,12 +69,14 @@ New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $Pro
 New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
 =======
 New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
+=======
+New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName
+>>>>>>> 18d4dd8 (InitialVersion)
 ```
-
-This example creates a new private Azure DevOps project
 
 ### EXAMPLE 2
 ```
+<<<<<<< HEAD
 New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
 >>>>>>> 690e7a4 (Working version)
 ```
@@ -97,16 +113,25 @@ New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $Pro
 >>>>>>> 18d4dd8 (InitialVersion)
 =======
 >>>>>>> 690e7a4 (Working version)
+=======
+New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName -Visibility 'public'
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -CollectionUri
 Collection URI.
 e.g.
 <<<<<<< HEAD
+<<<<<<< HEAD
 https://dev.azure.com/contoso. 
 =======
 https://dev.azure.com/contoso.
 >>>>>>> 690e7a4 (Working version)
+=======
+https://dev.azure.com/contoso. 
+>>>>>>> 18d4dd8 (InitialVersion)
 Azure Pipelines has a predefined variable for this.
 
 ```yaml
@@ -134,11 +159,15 @@ Parameter Sets: (All)
 Aliases:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Required: False
 Position: 2
 Default value: $env:SYSTEM_ACCESSTOKEN
 =======
 Required: True
+=======
+Required: False
+>>>>>>> 18d4dd8 (InitialVersion)
 Position: 2
 Default value: None
 >>>>>>> 690e7a4 (Working version)
@@ -216,11 +245,15 @@ Accept wildcard characters: False
 
 ### -WhatIf
 <<<<<<< HEAD
+<<<<<<< HEAD
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
 =======
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 >>>>>>> 690e7a4 (Working version)
+=======
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: SwitchParameter

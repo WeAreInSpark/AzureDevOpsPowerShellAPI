@@ -40,8 +40,13 @@ function New-AzDoRepoClone {
         $SourceRepoName,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         # PAT to authenticate with the organization
         [Parameter()]
+=======
+        # PAT to authentice with the organization
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         # PAT to authentice with the organization
         [Parameter(Mandatory = $false)]

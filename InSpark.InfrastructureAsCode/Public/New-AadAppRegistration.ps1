@@ -1,6 +1,7 @@
 function New-AadAppRegistration {
     <#
 <<<<<<< HEAD
+<<<<<<< HEAD
     .SYNOPSIS
         Creates an App registration in Azure AD.
     .DESCRIPTION
@@ -15,6 +16,8 @@ function New-AadAppRegistration {
     #>
     [CmdletBinding(SupportsShouldProcess)]
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 .SYNOPSIS
     Creates an App registration in Azure AD.
 .DESCRIPTION
@@ -28,11 +31,15 @@ function New-AadAppRegistration {
 .NOTES
 #>
     [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'ByDate')]
+<<<<<<< HEAD
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
 >>>>>>> 18d4dd8 (InitialVersion)
     param (
         # Name of the App registration
         [Parameter(Mandatory)]
         [string]
+<<<<<<< HEAD
 <<<<<<< HEAD
         $Name,
 
@@ -52,15 +59,21 @@ function New-AadAppRegistration {
         throw $_
     }
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         $Name
     )
 
     Test-MgGraphConnection
+<<<<<<< HEAD
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
 >>>>>>> 18d4dd8 (InitialVersion)
 
     $ExistingApplication = Get-MgApplication | Where-Object { $_.DisplayName -eq $Name }
     if ($ExistingApplication) {
         Write-Error 'This Application already exists!'
+<<<<<<< HEAD
 <<<<<<< HEAD
         return
     } else {
@@ -70,6 +83,8 @@ function New-AadAppRegistration {
             # Create an AAD service principal
             New-MgServicePrincipal -AppId $Application.AppId | Out-Null
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         exit
     }
     else {
@@ -78,6 +93,9 @@ function New-AadAppRegistration {
 
             ###Create an AAD service principal
             New-MgServicePrincipal -AppId $Application.AppId > $null
+<<<<<<< HEAD
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
 >>>>>>> 18d4dd8 (InitialVersion)
 
             [PSCustomObject]@{
@@ -85,7 +103,12 @@ function New-AadAppRegistration {
                 Id    = $Application.Id
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
         } else {
+=======
+        }
+        else {
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         }
         else {
@@ -95,7 +118,11 @@ function New-AadAppRegistration {
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
 }
 >>>>>>> 18d4dd8 (InitialVersion)

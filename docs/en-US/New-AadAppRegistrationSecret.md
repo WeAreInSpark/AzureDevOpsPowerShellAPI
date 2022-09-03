@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -15,6 +20,7 @@ schema: 2.0.0
 ## SYNOPSIS
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Creates a secret and set it to the App registration in Azure AD.
 =======
 This script creates a new certificate or secret for an existing app registration.
@@ -22,6 +28,9 @@ This script creates a new certificate or secret for an existing app registration
 =======
 Creates a secret for the App registration
 >>>>>>> 690e7a4 (Working version)
+=======
+This script creates a new certificate or secret for an existing app registration.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## SYNTAX
 
@@ -44,14 +53,19 @@ New-AadAppRegistrationSecret -ObjectID <String> -ClientSecretName <String> -EndD
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 Creates a secret for the App registration.
 The secret will get uploaded to an Azure KeyVault.
 >>>>>>> 690e7a4 (Working version)
+=======
+This script creates a new certificate or secret for an existing app registration.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
 $ClientSecretDuration to 1.
@@ -74,6 +88,12 @@ New-AadAppRegistrationSecret @newAadAppRegistrationSecretSplat
 This example will create a new secret for the app registration.
 
 >>>>>>> 690e7a4 (Working version)
+=======
+To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
+$ClientSecretDuration to 1.
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -ObjectID
@@ -194,10 +214,14 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 ### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
 ### [-KeyVaultName <String>] [<CommonParameters>]
 ### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
 ### <String>] [<CommonParameters>]
+<<<<<<< HEAD
 ## OUTPUTS
 
 ### New credentials in an app registration, and a variable with the secret.
@@ -206,6 +230,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### The Appsecret
 >>>>>>> 690e7a4 (Working version)
+=======
+## OUTPUTS
+
+### New credentials in an app registration, and a variable with the secret.
+>>>>>>> 18d4dd8 (InitialVersion)
 ## NOTES
 
 ## RELATED LINKS

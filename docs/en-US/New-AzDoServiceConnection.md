@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -20,10 +25,14 @@ Function to create a service connection in Azure DevOps
 ### Subscription
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 New-AzDoServiceConnection -Name <String> -CollectionUri <String> [-PAT <String>] -ProjectName <String>
 =======
 New-AzDoServiceConnection -Name <String> -CollectionUri <String> -PAT <String> -ProjectName <String>
 >>>>>>> 690e7a4 (Working version)
+=======
+New-AzDoServiceConnection -Name <String> -CollectionUri <String> [-PAT <String>] -ProjectName <String>
+>>>>>>> 18d4dd8 (InitialVersion)
  -ProjectID <String> [-Description <String>] [-ScopeLevel <String>] -SubscriptionId <String>
  -SubscriptionName <String> -Tenantid <String> -Serviceprincipalid <String> [-AuthenticationType <String>]
  [-Serviceprincipalkey <String>] [-KeyVaultName <String>] [-CertName <String>] [-WhatIf] [-Confirm]
@@ -33,10 +42,14 @@ New-AzDoServiceConnection -Name <String> -CollectionUri <String> -PAT <String> -
 ### ManagementGroup
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 New-AzDoServiceConnection -Name <String> -CollectionUri <String> [-PAT <String>] -ProjectName <String>
 =======
 New-AzDoServiceConnection -Name <String> -CollectionUri <String> -PAT <String> -ProjectName <String>
 >>>>>>> 690e7a4 (Working version)
+=======
+New-AzDoServiceConnection -Name <String> -CollectionUri <String> [-PAT <String>] -ProjectName <String>
+>>>>>>> 18d4dd8 (InitialVersion)
  -ProjectID <String> [-Description <String>] [-ScopeLevel <String>] -ManagementGroupId <String>
  -ManagementGroupName <String> -Tenantid <String> -Serviceprincipalid <String> [-AuthenticationType <String>]
  [-Serviceprincipalkey <String>] [-KeyVaultName <String>] [-CertName <String>] [-WhatIf] [-Confirm]
@@ -44,6 +57,7 @@ New-AzDoServiceConnection -Name <String> -CollectionUri <String> -PAT <String> -
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 Function to create a service connection in Azure DevOps
@@ -55,12 +69,18 @@ Function to create a service connection in Azure DevOps
 =======
 Function to create a service connection in Azure DevOps
 >>>>>>> 690e7a4 (Working version)
+=======
+{{ Fill in the Description }}
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 New-AzDoServiceConnection -CollectionUri $CollectionUri `
     -PAT $PAT `
     -ProjectName "Project 1" `
@@ -72,6 +92,7 @@ New-AzDoServiceConnection -CollectionUri $CollectionUri `
     -AuthenticationType 'spnCertificate' `
     -ProjectID '1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2' `
     -Name 'Project 1'
+<<<<<<< HEAD
 ```
 
 Service connection with certificate
@@ -109,6 +130,25 @@ New-AzDoServiceConnection @params
 
 This example creates a new Azure DevOps service connection with a Certificate from a KeyVault in Azure.
 >>>>>>> 690e7a4 (Working version)
+=======
+```
+
+Service connection with certificate
+
+### EXAMPLE 2
+```
+New-AzDoServiceConnection -CollectionUri $CollectionUri `
+    -PAT $PAT `
+    -ProjectName "Project 1" `
+    -SubscriptionId "00000-00000-00000-00000-00000" `
+    -SubscriptionName "Subscription 1" `
+    -Tenantid "11111-11111-11111-11111-11111" `
+    -Serviceprincipalid "1c03163f-7e4e-4fab-8b41-6f040a8361b9" `
+    -Serviceprincipalkey $Serviceprincipalkey
+```
+
+Service connection with key
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## PARAMETERS
 
@@ -153,11 +193,15 @@ Parameter Sets: (All)
 Aliases:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Required: False
 Position: Named
 Default value: $env:SYSTEM_ACCESSTOKEN
 =======
 Required: True
+=======
+Required: False
+>>>>>>> 18d4dd8 (InitialVersion)
 Position: Named
 Default value: None
 >>>>>>> 690e7a4 (Working version)
@@ -347,10 +391,14 @@ Accept wildcard characters: False
 
 ### -KeyVaultName
 <<<<<<< HEAD
+<<<<<<< HEAD
 Certificate of the App registration in .PEM format.
 =======
 KeyVault name where the certificate is stored.
 >>>>>>> 690e7a4 (Working version)
+=======
+Certificate of the App registration in .PEM format.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: String
@@ -366,10 +414,14 @@ Accept wildcard characters: False
 
 ### -CertName
 <<<<<<< HEAD
+<<<<<<< HEAD
 {{ Fill CertName Description }}
 =======
 Name of the certificate
 >>>>>>> 690e7a4 (Working version)
+=======
+{{ Fill CertName Description }}
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: String
@@ -385,11 +437,15 @@ Accept wildcard characters: False
 
 ### -WhatIf
 <<<<<<< HEAD
+<<<<<<< HEAD
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
 =======
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 >>>>>>> 690e7a4 (Working version)
+=======
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: SwitchParameter

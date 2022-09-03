@@ -3,8 +3,13 @@ changelog:
     - title: Breaking Changes 🛠
       labels:
 <<<<<<< HEAD
+<<<<<<< HEAD
         - major
     - title: New Features 🎉
+=======
+        - breaking
+    - title: Exciting New Features 🎉
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         - breaking
     - title: Exciting New Features 🎉

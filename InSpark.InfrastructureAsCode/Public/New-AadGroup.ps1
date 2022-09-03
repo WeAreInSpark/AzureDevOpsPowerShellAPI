@@ -6,6 +6,7 @@ function New-AadGroup {
     Creates an Azure AD group. It defaults to an Office 365 group with a mail address.
 .EXAMPLE
 <<<<<<< HEAD
+<<<<<<< HEAD
     New-AadGroup -GroupName "AD group 1" -MailNickname "AdGroup1"
 
     This example will create a new Azure AD group with a specific mail address.
@@ -28,10 +29,16 @@ function New-AadGroup {
 
     This example will create a new Azure AD group with a specific mail address.
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+    New-AadGroup -Name "AD group 1" -MailNickname "AdGroup1"
+
+    This example will create a new Azure AD group with a specific mail address.
+>>>>>>> 18d4dd8 (InitialVersion)
 .OUTPUTS
     PSobject containing the display name, ID and description.
 .NOTES
 #>
+<<<<<<< HEAD
 <<<<<<< HEAD
     [CmdletBinding(SupportsShouldProcess)]
     param (
@@ -43,6 +50,8 @@ function New-AadGroup {
         # Provide nickname/alias for the email.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
     [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'ByDate')]
     param (
         # Name of the app registration
@@ -52,11 +61,15 @@ function New-AadGroup {
 
         # Provide nickname for the email. this cannot have spaces in it.
         [Parameter(Mandatory)]
+<<<<<<< HEAD
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
 >>>>>>> 18d4dd8 (InitialVersion)
         [string]
         $MailNickName,
 
         # Enable mail on the Azure AD group
+<<<<<<< HEAD
 <<<<<<< HEAD
         [Parameter()]
         [switch]
@@ -117,6 +130,8 @@ function New-AadGroup {
     }
 }
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         [Parameter(Mandatory = $false)]
         [bool]
         $MailEnabled = $true
@@ -139,5 +154,9 @@ function New-AadGroup {
             }
         }
     }
+<<<<<<< HEAD
+}
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
 }
 >>>>>>> 18d4dd8 (InitialVersion)

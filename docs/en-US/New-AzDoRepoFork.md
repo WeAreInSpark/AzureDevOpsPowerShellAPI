@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -21,10 +26,14 @@ This script creates a fork of a repo in a project to a given project.
 New-AzDoRepoFork [-CollectionUri] <String> [[-PAT] <String>] [-ProjectId] <String> [-ForkName] <String>
  [-SourceProjectId] <String> [-SourceRepo] <String> [[-CopyBranch] <Boolean>] [[-ToBeForkedBranch] <String>]
 <<<<<<< HEAD
+<<<<<<< HEAD
  [-WhatIf] [-Confirm] [<CommonParameters>]
 =======
  [<CommonParameters>]
 >>>>>>> 690e7a4 (Working version)
+=======
+ [-WhatIf] [-Confirm] [<CommonParameters>]
+>>>>>>> 18d4dd8 (InitialVersion)
 ```
 
 ## DESCRIPTION
@@ -183,11 +192,16 @@ Accept wildcard characters: False
 ```
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### -WhatIf
 <<<<<<< HEAD
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 =======
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
+### -WhatIf
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
 >>>>>>> 18d4dd8 (InitialVersion)
 
@@ -218,8 +232,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+<<<<<<< HEAD
 =======
 >>>>>>> 690e7a4 (Working version)
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 

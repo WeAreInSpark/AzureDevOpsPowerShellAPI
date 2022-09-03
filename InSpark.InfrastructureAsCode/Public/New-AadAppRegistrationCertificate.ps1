@@ -2,9 +2,15 @@ function New-AadAppRegistrationCertificate {
     <#
 .SYNOPSIS
 <<<<<<< HEAD
+<<<<<<< HEAD
     Creates a X.509 certificate and uploads it to the App registration in Azure AD.
 .DESCRIPTION
     Creates a X.509 certificate and uploads it as an authentication factor to the App registration in Azure AD. The certificate will also be uploaded to an Azure KeyVault.
+=======
+    Creates a Certificate and uploads it to the App registration.
+.DESCRIPTION
+    Creates a Certificate and uploads it to the App registration. The certificate will also be saves to an Azure KeyVault.
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
     Creates a Certificate and uploads it to the App registration.
 .DESCRIPTION
@@ -20,9 +26,15 @@ function New-AadAppRegistrationCertificate {
     New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     This example will create a new certificate for the app registration, upload it to the Application Registration in Azure AD and upload it to Azure KeyVault.
 .OUTPUTS
     PSObject containing the thumbprint of the certificate and 2 dates when the certificate is valid.
+=======
+    This example will create a new certificate for the app registration.
+.OUTPUTS
+    PSobject containing thumbprint of certificate and 2 dates when the certificate is valid.
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
     This example will create a new certificate for the app registration.
 .OUTPUTS
@@ -44,7 +56,11 @@ function New-AadAppRegistrationCertificate {
         $CertName,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         # Name of the Azure Key Vault to store the certificate
+=======
+        # Name of the keyvault to store the certificate
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         # Name of the keyvault to store the certificate
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -60,6 +76,7 @@ function New-AadAppRegistrationCertificate {
         # Amount of months the certificate must be valid
         [Parameter()]
         [int]
+<<<<<<< HEAD
 <<<<<<< HEAD
         $ValidityInMonths = 6,
 
@@ -92,6 +109,8 @@ function New-AadAppRegistrationCertificate {
         do {
             $Response = Get-AzKeyVaultCertificateOperation -VaultName $KeyVaultName -Name $certNameTrimmed
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         $ValidityInMonths = 6
     )
     Test-MgGraphConnection
@@ -105,11 +124,15 @@ function New-AadAppRegistrationCertificate {
 
         do {
             $Response = Get-AzKeyVaultCertificateOperation -VaultName $KeyVaultName -Name $CertName
+<<<<<<< HEAD
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
 >>>>>>> 18d4dd8 (InitialVersion)
         } while (
             $Response.Status -ne 'completed'
         )
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         $keyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $certNameTrimmed
         $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $keyVaultCert.Name
@@ -132,6 +155,8 @@ function New-AadAppRegistrationCertificate {
         $secretByte = [Convert]::FromBase64String($secretValueText)
         $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($secretByte, "", "Exportable,PersistKeySet")
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
         $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
         $SecretValueText = ''
@@ -146,6 +171,9 @@ function New-AadAppRegistrationCertificate {
 
         $SecretByte = [Convert]::FromBase64String($secretValueText)
         $Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
+<<<<<<< HEAD
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
 >>>>>>> 18d4dd8 (InitialVersion)
 
         $KeyCredential = @{
@@ -155,7 +183,11 @@ function New-AadAppRegistrationCertificate {
             CustomKeyIdentifier = $cert.GetCertHash()
             EndDateTime         = $cert.NotAfter
 <<<<<<< HEAD
+<<<<<<< HEAD
             DisplayName         = $certNameTrimmed
+=======
+            DisplayName         = $ClientSecretName
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
             DisplayName         = $ClientSecretName
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -170,7 +202,11 @@ function New-AadAppRegistrationCertificate {
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
 }
 >>>>>>> 18d4dd8 (InitialVersion)

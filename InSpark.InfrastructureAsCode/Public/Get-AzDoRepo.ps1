@@ -2,6 +2,7 @@ function Get-AzDoRepo {
     <#
 .SYNOPSIS
 <<<<<<< HEAD
+<<<<<<< HEAD
     Gets information about a repo in Azure DevOps.
 .DESCRIPTION
     Gets information about 1 repo if the parameter $Name is filled in. Otherwise it will list all the repo's.
@@ -20,6 +21,11 @@ function Get-AzDoRepo {
 .DESCRIPTION
     Get information about 1 repo if the parameter $Name is filled in. Otherwise it will get all the repo's.
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+    Get information about a repo in Azure DevOps.
+.DESCRIPTION
+    Get information about 1 repo if the parameter $Name is filled in. Otherwise it will get all the repo's.
+>>>>>>> 18d4dd8 (InitialVersion)
 .EXAMPLE
     $Params = @{
         CollectionUri = "https://dev.azure.com/contoso"
@@ -30,6 +36,7 @@ function Get-AzDoRepo {
     Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1" -Name "Repo 1"
 
     This example will fetch information about the repo with the name 'Repo 1'.
+<<<<<<< HEAD
 <<<<<<< HEAD
 .EXAMPLE
     $Params = @{
@@ -42,6 +49,8 @@ function Get-AzDoRepo {
     This example will fetch information about the repo with the name 'Repo 1'.
 =======
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 .OUTPUTS
     PSObject with repo(s).
 .NOTES
@@ -49,6 +58,7 @@ function Get-AzDoRepo {
     [CmdletBinding()]
     param (
         # Collection Uri of the organization
+<<<<<<< HEAD
 <<<<<<< HEAD
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
@@ -117,6 +127,8 @@ function Get-AzDoRepo {
     }
 }
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         [Parameter(Mandatory)]
         [string]
         $CollectionUri,
@@ -152,5 +164,9 @@ function Get-AzDoRepo {
 
         Invoke-RestMethod @params
     }
+<<<<<<< HEAD
+}
+>>>>>>> 18d4dd8 (InitialVersion)
+=======
 }
 >>>>>>> 18d4dd8 (InitialVersion)

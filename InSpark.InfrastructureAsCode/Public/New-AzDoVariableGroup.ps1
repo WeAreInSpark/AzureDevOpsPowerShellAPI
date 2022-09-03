@@ -46,7 +46,11 @@ function New-AzDoVariableGroup {
 
         # PAT to authentice with the organization
 <<<<<<< HEAD
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         [Parameter(Mandatory = $false)]
 >>>>>>> 18d4dd8 (InitialVersion)

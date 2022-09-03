@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -24,6 +29,7 @@ Get information about a repo in Azure DevOps.
 ```
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Get-AzDoRepo -CollectionUri <String> [-PAT <String>] [-RepoName <String>] -ProjectName <String>
 =======
 Get-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [[-Name] <String>] [-ProjectName] <String>
@@ -31,6 +37,9 @@ Get-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [[-Name] <String>] [-Pr
 =======
 Get-AzDoRepo [-CollectionUri] <String> [-PAT] <String> [[-Name] <String>] [-ProjectName] <String>
 >>>>>>> 690e7a4 (Working version)
+=======
+Get-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [[-Name] <String>] [-ProjectName] <String>
+>>>>>>> 18d4dd8 (InitialVersion)
  [<CommonParameters>]
 ```
 
@@ -53,6 +62,7 @@ $Params = @{
     ProjectName = "Project 1"
     Name "Repo 1"
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1"
@@ -95,6 +105,11 @@ Get-AzDoRepo @Params
 >>>>>>> 18d4dd8 (InitialVersion)
 =======
 >>>>>>> 690e7a4 (Working version)
+=======
+Get-AzDoRepo @Params
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -CollectionUri
@@ -133,10 +148,14 @@ Parameter Sets: (All)
 Aliases:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Required: False
 =======
 Required: True
 >>>>>>> 690e7a4 (Working version)
+=======
+Required: False
+>>>>>>> 18d4dd8 (InitialVersion)
 Position: 2
 Default value: None
 Accept pipeline input: False
@@ -212,9 +231,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### Get-AzDoRepo [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string>
 =======
 >>>>>>> 690e7a4 (Working version)
+=======
+### Get-AzDoRepo [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string>
+>>>>>>> 18d4dd8 (InitialVersion)
 ## OUTPUTS
 
 ### PSObject with repo(s).

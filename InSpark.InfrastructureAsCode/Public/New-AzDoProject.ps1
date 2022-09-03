@@ -40,7 +40,11 @@ function New-AzDoProject {
 
         # PAT to get access to Azure DevOps.
 <<<<<<< HEAD
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         [Parameter(Mandatory = $false)]
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -99,7 +103,11 @@ function New-AzDoProject {
                 Invoke-RestMethod @params
             } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 $Body | Format-List
+=======
+                Write-Output $Body | Format-List
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
                 Write-Output $Body | Format-List
 >>>>>>> 18d4dd8 (InitialVersion)

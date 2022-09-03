@@ -42,10 +42,14 @@ Describe 'Test help for <_.Name>' -ForEach $commands {
         $command = $_
         $commandHelp = Get-Help $command.Name -ErrorAction SilentlyContinue
 <<<<<<< HEAD
+<<<<<<< HEAD
         $commandParameters = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
 =======
         $commandParameters = global:FilterOutCommonParams  -Params $command.ParameterSets.Parameters
 >>>>>>> 690e7a4 (Working version)
+=======
+        $commandParameters = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
+>>>>>>> 18d4dd8 (InitialVersion)
         $commandParameterNames = $commandParameters.Name
         $helpLinks = $commandHelp.relatedLinks.navigationLink.uri
     }
@@ -56,6 +60,7 @@ Describe 'Test help for <_.Name>' -ForEach $commands {
         $commandName = $_.Name
         $commandHelp = Get-Help $command.Name -ErrorAction SilentlyContinue
 <<<<<<< HEAD
+<<<<<<< HEAD
         $commandParameters = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
         $commandParameterNames = $commandParameters.Name
         $helpParameters = global:FilterOutCommonParams -Params $commandHelp.Parameters.Parameter
@@ -64,6 +69,11 @@ Describe 'Test help for <_.Name>' -ForEach $commands {
         $commandParameterNames = $commandParameters.Name
         $helpParameters = global:FilterOutCommonParams  -Params $commandHelp.Parameters.Parameter
 >>>>>>> 690e7a4 (Working version)
+=======
+        $commandParameters = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
+        $commandParameterNames = $commandParameters.Name
+        $helpParameters = global:FilterOutCommonParams -Params $commandHelp.Parameters.Parameter
+>>>>>>> 18d4dd8 (InitialVersion)
         $helpParameterNames = $helpParameters.Name
     }
 
@@ -92,7 +102,11 @@ Describe 'Test help for <_.Name>' -ForEach $commands {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     Context 'Parameter <_.Name>' -ForEach $commandParameters {
+=======
+    Context "Parameter <_.Name>" -ForEach $commandParameters {
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
     Context "Parameter <_.Name>" -ForEach $commandParameters {
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -101,10 +115,14 @@ Describe 'Test help for <_.Name>' -ForEach $commands {
             $parameter = $_
             $parameterName = $parameter.Name
 <<<<<<< HEAD
+<<<<<<< HEAD
             $parameterHelp = $commandHelp.parameters.parameter | Where-Object Name -EQ $parameterName
 =======
             $parameterHelp = $commandHelp.parameters.parameter | Where-Object Name -eq $parameterName
 >>>>>>> 690e7a4 (Working version)
+=======
+            $parameterHelp = $commandHelp.parameters.parameter | Where-Object Name -EQ $parameterName
+>>>>>>> 18d4dd8 (InitialVersion)
             $parameterHelpType = if ($parameterHelp.ParameterValue) { $parameterHelp.ParameterValue.Trim() }
         }
 
@@ -126,7 +144,11 @@ Describe 'Test help for <_.Name>' -ForEach $commands {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     Context 'Test <_> help parameter help for <commandName>' -ForEach $helpParameterNames {
+=======
+    Context "Test <_> help parameter help for <commandName>" -ForEach $helpParameterNames {
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
     Context "Test <_> help parameter help for <commandName>" -ForEach $helpParameterNames {
 >>>>>>> 18d4dd8 (InitialVersion)

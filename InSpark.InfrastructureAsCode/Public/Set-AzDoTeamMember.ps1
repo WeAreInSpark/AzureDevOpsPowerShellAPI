@@ -25,7 +25,11 @@ function Set-AzDoTeamMember {
 
         # PAT to authentice with the organization
 <<<<<<< HEAD
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         [Parameter(Mandatory = $false)]
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -72,10 +76,13 @@ function Set-AzDoTeamMember {
         }
     } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $Body
     }
 }
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         Write-Output $Body | Format-List
         return
     }

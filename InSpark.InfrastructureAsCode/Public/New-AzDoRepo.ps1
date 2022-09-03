@@ -32,7 +32,11 @@ function New-AzDoRepo {
 
         # PAT to authenticate with the organization
 <<<<<<< HEAD
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         [Parameter(Mandatory = $false)]
 >>>>>>> 18d4dd8 (InitialVersion)

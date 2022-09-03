@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -20,6 +25,7 @@ This script creates a variable group with at least 1 variable in a given project
 ```
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 New-AzDoVariableGroup [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String>
  [-VariableGroupName] <String[]> [-Variables] <Hashtable> [[-Description] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
@@ -29,6 +35,9 @@ New-AzDoVariableGroup [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName]
 >>>>>>> 18d4dd8 (InitialVersion)
 =======
 New-AzDoVariableGroup [-CollectionUri] <String> [-PAT] <String> [-ProjectName] <String> [-Name] <String[]>
+=======
+New-AzDoVariableGroup [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String> [-Name] <String[]>
+>>>>>>> 18d4dd8 (InitialVersion)
  [-Variables] <Hashtable> [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 >>>>>>> 690e7a4 (Working version)
 ```
@@ -46,6 +55,7 @@ ProjectName and AccessToken (PAT) variables.
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -95,6 +105,13 @@ New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT 
 >>>>>>> 18d4dd8 (InitialVersion)
 =======
 >>>>>>> 690e7a4 (Working version)
+=======
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -CollectionUri
@@ -121,11 +138,15 @@ Parameter Sets: (All)
 Aliases:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Required: False
 Position: 2
 Default value: $env:SYSTEM_ACCESSTOKEN
 =======
 Required: True
+=======
+Required: False
+>>>>>>> 18d4dd8 (InitialVersion)
 Position: 2
 Default value: None
 >>>>>>> 690e7a4 (Working version)
@@ -203,11 +224,15 @@ Accept wildcard characters: False
 
 ### -WhatIf
 <<<<<<< HEAD
+<<<<<<< HEAD
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
 =======
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 >>>>>>> 690e7a4 (Working version)
+=======
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: SwitchParameter
@@ -242,6 +267,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
 ### [<CommonParameters>]
 ## OUTPUTS
@@ -252,6 +278,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### PSobject
 >>>>>>> 690e7a4 (Working version)
+=======
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
+## OUTPUTS
+
+### New variable group with at least 1 variable in a given project.
+>>>>>>> 18d4dd8 (InitialVersion)
 ## NOTES
 
 ## RELATED LINKS

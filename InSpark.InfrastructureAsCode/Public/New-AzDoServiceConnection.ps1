@@ -46,7 +46,11 @@ function New-AzDoServiceConnection {
 
         # PAT to get access to Azure DevOps.
 <<<<<<< HEAD
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
 =======
         [Parameter(Mandatory = $false)]
 >>>>>>> 18d4dd8 (InitialVersion)
@@ -174,8 +178,11 @@ function New-AzDoServiceConnection {
         }
     } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $CertName = ($CertName -replace ' ', '')
 =======
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         $CertName = ($CertName -replace " ", "")
 >>>>>>> 18d4dd8 (InitialVersion)
         $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
@@ -192,6 +199,7 @@ function New-AzDoServiceConnection {
 =======
 
         $SecretByte = [Convert]::FromBase64String($secretValueText)
+<<<<<<< HEAD
         $Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
 >>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
 
@@ -206,6 +214,10 @@ function New-AzDoServiceConnection {
 =======
         $Cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
 
+=======
+        $Cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
+
+>>>>>>> 18d4dd8 (InitialVersion)
         $Pem = New-Object System.Text.StringBuilder
         $Pem.AppendLine("-----BEGIN CERTIFICATE-----") > $null
         $Pem.AppendLine([System.Convert]::ToBase64String($cert.RawData, 1)) > $null
@@ -262,6 +274,7 @@ function New-AzDoServiceConnection {
         }
     } else {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $body
     }
 <<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
@@ -272,6 +285,9 @@ function New-AzDoServiceConnection {
     else {
         Write-Output $Body | format-list
 >>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
+=======
+        Write-Output $Body | Format-List
+>>>>>>> 18d4dd8 (InitialVersion)
         return
     }
 }

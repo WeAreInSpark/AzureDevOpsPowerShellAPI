@@ -1,11 +1,16 @@
 ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
 =======
 external help file: InfrastructureAsCode-help.xml
 Module Name: InfrastructureAsCode
 >>>>>>> 690e7a4 (Working version)
+=======
+external help file: InSpark.InfrastructureAsCode-help.xml
+Module Name: InSpark.InfrastructureAsCode
+>>>>>>> 18d4dd8 (InitialVersion)
 online version:
 schema: 2.0.0
 ---
@@ -14,14 +19,19 @@ schema: 2.0.0
 
 ## SYNOPSIS
 <<<<<<< HEAD
+<<<<<<< HEAD
 This script creates a variable group with at least 1 variable in a given project.
 =======
 Creates a repo in Azure DevOps.
 >>>>>>> 690e7a4 (Working version)
+=======
+This script creates a variable group with at least 1 variable in a given project.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## SYNTAX
 
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 New-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [-RepoName] <String> [-ProjectName] <String> [-WhatIf]
@@ -31,10 +41,14 @@ New-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String> [-Proj
 =======
 New-AzDoRepo [-CollectionUri] <String> [-PAT] <String> [-Name] <String> [-ProjectId] <String> [-WhatIf]
 >>>>>>> 690e7a4 (Working version)
+=======
+New-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String> [-ProjectName] <String> [-WhatIf]
+>>>>>>> 18d4dd8 (InitialVersion)
  [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 <<<<<<< HEAD
 This script creates a variable group with at least 1 variable in a given project.
 When used in a pipeline, you can use the pre defined CollectionUri,
@@ -42,11 +56,17 @@ ProjectName and AccessToken (PAT) variables.
 =======
 Creates a repo in Azure DevOps.
 >>>>>>> 690e7a4 (Working version)
+=======
+This script creates a variable group with at least 1 variable in a given project.
+When used in a pipeline, you can use the pre defined CollectionUri,
+ProjectName and AccessToken (PAT) variables.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -75,6 +95,13 @@ New-AzDoRepo @params
 This example creates a new Azure DevOps repo
 
 >>>>>>> 690e7a4 (Working version)
+=======
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -CollectionUri
@@ -109,11 +136,15 @@ Parameter Sets: (All)
 Aliases:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Required: False
 Position: 2
 Default value: $env:SYSTEM_ACCESSTOKEN
 =======
 Required: True
+=======
+Required: False
+>>>>>>> 18d4dd8 (InitialVersion)
 Position: 2
 Default value: None
 >>>>>>> 690e7a4 (Working version)
@@ -149,9 +180,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+<<<<<<< HEAD
 ### -ProjectId
 Project where the variable group has to be created
 >>>>>>> 690e7a4 (Working version)
+=======
+### -ProjectName
+Name of the project where the new repository has to be created
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: String
@@ -167,11 +203,15 @@ Accept wildcard characters: False
 
 ### -WhatIf
 <<<<<<< HEAD
+<<<<<<< HEAD
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
 =======
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 >>>>>>> 690e7a4 (Working version)
+=======
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: SwitchParameter
@@ -206,6 +246,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
 ### [<CommonParameters>]
 ## OUTPUTS
@@ -217,6 +258,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### PSObject
 ### Containg the repo information
 >>>>>>> 690e7a4 (Working version)
+=======
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
+## OUTPUTS
+
+### New variable group with at least 1 variable in a given project.
+>>>>>>> 18d4dd8 (InitialVersion)
 ## NOTES
 
 ## RELATED LINKS
