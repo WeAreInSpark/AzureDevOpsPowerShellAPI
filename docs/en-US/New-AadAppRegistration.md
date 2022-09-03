@@ -1,6 +1,11 @@
 ---
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
+=======
+external help file: InfrastructureAsCode-help.xml
+Module Name: InfrastructureAsCode
+>>>>>>> 690e7a4 (Working version)
 online version:
 schema: 2.0.0
 ---
@@ -8,11 +13,16 @@ schema: 2.0.0
 # New-AadAppRegistration
 
 ## SYNOPSIS
+<<<<<<< HEAD
 This script creates a new app registration with a certificate or secret.
+=======
+Creates an App registration in Azure AD.
+>>>>>>> 690e7a4 (Working version)
 
 ## SYNTAX
 
 ```
+<<<<<<< HEAD
 New-AadAppRegistration [-Name] <String> [-ManuallyConnectToGraph] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -22,11 +32,19 @@ Creates an App regestration in Azure AD, if no App registration with the same na
 =======
 This script creates a new app registration with a certificate or secret.
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+New-AadAppRegistration [-Name] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+## DESCRIPTION
+Creates an App regestration in Azure AD when no App registration with the same name exists.
+>>>>>>> 690e7a4 (Working version)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 To create an app registration with a secret that lasts 1 year, choose a name for $AppRegName, a name for $ClientSecretName and set $ClientSecretDuration to 1.
 ```
 
@@ -34,6 +52,17 @@ To create an app registration with a secret that lasts 1 year, choose a name for
 
 ### -Name
 Name of the app registration
+=======
+New-AadAppRegistration -Name "App 1"
+```
+
+This Example will create a new App registration with the name 'App 1'
+
+## PARAMETERS
+
+### -Name
+Name of the App registration
+>>>>>>> 690e7a4 (Working version)
 
 ```yaml
 Type: String
@@ -47,6 +76,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+<<<<<<< HEAD
 ### -ManuallyConnectToGraph
 Manually connect to Microsoft Graph
 
@@ -64,6 +94,11 @@ Accept wildcard characters: False
 
 ### -WhatIf
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
+=======
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+>>>>>>> 690e7a4 (Working version)
 
 ```yaml
 Type: SwitchParameter
@@ -97,6 +132,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+<<<<<<< HEAD
 ### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
 ### [<CommonParameters>]
 ### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
@@ -108,6 +144,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 =======
 ### New app registration with credentials, and variables with the ID and secret.
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+## OUTPUTS
+
+### PSobject with the object ID and application ID of the App registration
+>>>>>>> 690e7a4 (Working version)
 ## NOTES
 
 ## RELATED LINKS

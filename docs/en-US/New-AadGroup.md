@@ -1,6 +1,11 @@
 ---
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
+=======
+external help file: InfrastructureAsCode-help.xml
+Module Name: InfrastructureAsCode
+>>>>>>> 690e7a4 (Working version)
 online version:
 schema: 2.0.0
 ---
@@ -8,29 +13,47 @@ schema: 2.0.0
 # New-AadGroup
 
 ## SYNOPSIS
+<<<<<<< HEAD
 This script creates a new app registration with a certificate or secret.
+=======
+Creates an Azure AD group.
+>>>>>>> 690e7a4 (Working version)
 
 ## SYNTAX
 
 ```
+<<<<<<< HEAD
 New-AadGroup [-GroupName] <String> [-MailNickName] <String> [-MailEnabled]
  [-Description] <ValidateNotNullOrEmptyAttribute> [-ManuallyConnectToGraph] [-WhatIf] [-Confirm]
+=======
+New-AadGroup [-Name] <String> [-MailNickName] <String> [[-MailEnabled] <Boolean>] [-WhatIf] [-Confirm]
+>>>>>>> 690e7a4 (Working version)
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 This script creates a new app registration with a certificate or secret.
+=======
+Creates an Azure AD group.
+It defaults to an Office 365 group with a mail address.
+>>>>>>> 690e7a4 (Working version)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 New-AadGroup -GroupName "AD group 1" -MailNickname "AdGroup1"
+=======
+New-AadGroup -Name "AD group 1" -MailNickname "AdGroup1"
+>>>>>>> 690e7a4 (Working version)
 ```
 
 This example will create a new Azure AD group with a specific mail address.
 
+<<<<<<< HEAD
 ### EXAMPLE 2
 ```
 [pscustomobject]@{
@@ -56,6 +79,12 @@ To create an app registration with a secret that lasts 1 year, choose a name for
 
 ### -GroupName
 Name of the Azure AD Group
+=======
+## PARAMETERS
+
+### -Name
+Name of the app registration
+>>>>>>> 690e7a4 (Working version)
 
 ```yaml
 Type: String
@@ -65,16 +94,25 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
+<<<<<<< HEAD
 Accept pipeline input: True (ByPropertyName)
+=======
+Accept pipeline input: False
+>>>>>>> 690e7a4 (Working version)
 Accept wildcard characters: False
 ```
 
 ### -MailNickName
 <<<<<<< HEAD
+<<<<<<< HEAD
 Provide nickname/alias for the email.
 =======
 {{ Fill MailNickName Description }}
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+Provide nickname for the email.
+this cannot have spaces in it.
+>>>>>>> 690e7a4 (Working version)
 
 ```yaml
 Type: String
@@ -84,25 +122,41 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
+<<<<<<< HEAD
 Accept pipeline input: True (ByPropertyName)
+=======
+Accept pipeline input: False
+>>>>>>> 690e7a4 (Working version)
 Accept wildcard characters: False
 ```
 
 ### -MailEnabled
+<<<<<<< HEAD
 {{ Fill MailEnabled Description }}
 
 ```yaml
 Type: SwitchParameter
+=======
+Enable mail on the Azure AD group
+
+```yaml
+Type: Boolean
+>>>>>>> 690e7a4 (Working version)
 Parameter Sets: (All)
 Aliases:
 
 Required: False
+<<<<<<< HEAD
 Position: Named
+=======
+Position: 3
+>>>>>>> 690e7a4 (Working version)
 Default value: True
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+<<<<<<< HEAD
 ### -Description
 Provide a description for the group.
 
@@ -135,6 +189,11 @@ Accept wildcard characters: False
 
 ### -WhatIf
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
+=======
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+>>>>>>> 690e7a4 (Working version)
 
 ```yaml
 Type: SwitchParameter
@@ -168,6 +227,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+<<<<<<< HEAD
 ### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
 ### [<CommonParameters>]
 ### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
@@ -175,6 +235,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### New app registration with credentials, and variables with the ID and secret.
+=======
+## OUTPUTS
+
+### PSobject containing the display name, ID and description.
+>>>>>>> 690e7a4 (Working version)
 ## NOTES
 
 ## RELATED LINKS

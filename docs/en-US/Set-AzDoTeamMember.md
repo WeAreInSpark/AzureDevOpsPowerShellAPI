@@ -1,6 +1,11 @@
 ---
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
+=======
+external help file: InfrastructureAsCode-help.xml
+Module Name: InfrastructureAsCode
+>>>>>>> 690e7a4 (Working version)
 online version:
 schema: 2.0.0
 ---
@@ -8,29 +13,49 @@ schema: 2.0.0
 # Set-AzDoTeamMember
 
 ## SYNOPSIS
+<<<<<<< HEAD
 This script creates a variable group with at least 1 variable in a given project.
+=======
+Adds a Azure Group to a default team in an Azure DevOps project.
+>>>>>>> 690e7a4 (Working version)
 
 ## SYNTAX
 
 ```
+<<<<<<< HEAD
 Set-AzDoTeamMember [-OrganizationName] <String> [[-PAT] <String>] [-ProjectName] <String> [-ObjectId] <String>
+=======
+Set-AzDoTeamMember [-OrganizationName] <String> [-PAT] <String> [-ProjectName] <String> [-ObjectId] <String>
+>>>>>>> 690e7a4 (Working version)
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 This script creates a variable group with at least 1 variable in a given project.
 When used in a pipeline, you can use the pre defined CollectionUri,
 ProjectName and AccessToken (PAT) variables.
+=======
+Adds a Azure Group to a default team in an Azure DevOps project.
+>>>>>>> 690e7a4 (Working version)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 To create a variable group 'test' with one variable:
+=======
+>>>>>>> 690e7a4 (Working version)
 New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
 -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
 ```
 
+<<<<<<< HEAD
+=======
+To create a variable group 'test' with one variable
+
+>>>>>>> 690e7a4 (Working version)
 ## PARAMETERS
 
 ### -OrganizationName
@@ -56,9 +81,15 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
+<<<<<<< HEAD
 Required: False
 Position: 2
 Default value: $env:SYSTEM_ACCESSTOKEN
+=======
+Required: True
+Position: 2
+Default value: None
+>>>>>>> 690e7a4 (Working version)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -94,7 +125,12 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+<<<<<<< HEAD
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
+=======
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+>>>>>>> 690e7a4 (Working version)
 
 ```yaml
 Type: SwitchParameter

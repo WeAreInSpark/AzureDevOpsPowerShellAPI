@@ -94,6 +94,7 @@ function Set-AzDoProjectSetting {
 
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
         Invoke-RestMethod @params
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/Set-AzDOProjectSetting.ps1
     } else {
 <<<<<<< HEAD
         $body
@@ -103,3 +104,11 @@ function Set-AzDoProjectSetting {
         return
     }
 }
+=======
+    }
+    else {
+        Write-Output $Body | format-list
+        return
+    }
+}
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/Set-AzDOProjectSetting.ps1

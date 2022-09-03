@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 690e7a4 (Working version)
 name: Tests
 on: [pull_request]
 jobs:
@@ -11,6 +14,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
+<<<<<<< HEAD
       - uses: actions/checkout@v3
       - name: Test
         shell: pwsh
@@ -36,3 +40,9 @@ jobs:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           valid-labels: "patch, minor, major, no-release"
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+      - uses: actions/checkout@v1
+      - name: Test
+        shell: pwsh
+        run: ./build.ps1 -Task Test -Bootstrap
+>>>>>>> 690e7a4 (Working version)

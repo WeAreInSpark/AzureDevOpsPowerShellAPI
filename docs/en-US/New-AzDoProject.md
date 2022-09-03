@@ -1,6 +1,11 @@
 ---
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
+=======
+external help file: InfrastructureAsCode-help.xml
+Module Name: InfrastructureAsCode
+>>>>>>> 690e7a4 (Working version)
 online version:
 schema: 2.0.0
 ---
@@ -14,20 +19,29 @@ Function to create an Azure DevOps project
 
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String[]> [[-Description] <String>]
 =======
 New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [[-Description] <String>]
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+New-AzDoProject [-CollectionUri] <String> [-PAT] <String> [-Name] <String[]> [[-Description] <String>]
+>>>>>>> 690e7a4 (Working version)
  [[-SourceControlType] <String>] [[-Visibility] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 {{ Fill in the Description }}
+=======
+Function to create an Azure DevOps project
+>>>>>>> 690e7a4 (Working version)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
 =======
@@ -39,10 +53,21 @@ New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $Pro
 ```
 <<<<<<< HEAD
 New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
+=======
+New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
+```
+
+This example creates a new private Azure DevOps project
+
+### EXAMPLE 2
+```
+New-AzureDevOpsProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
+>>>>>>> 690e7a4 (Working version)
 ```
 
 This example creates a new public Azure DevOps project
 
+<<<<<<< HEAD
 ### EXAMPLE 3
 ```
 @("MyProject1","Myproject2") | New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***"
@@ -70,12 +95,18 @@ New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $Pro
 ```
 
 >>>>>>> 18d4dd8 (InitialVersion)
+=======
+>>>>>>> 690e7a4 (Working version)
 ## PARAMETERS
 
 ### -CollectionUri
 Collection URI.
 e.g.
+<<<<<<< HEAD
 https://dev.azure.com/contoso. 
+=======
+https://dev.azure.com/contoso.
+>>>>>>> 690e7a4 (Working version)
 Azure Pipelines has a predefined variable for this.
 
 ```yaml
@@ -86,7 +117,11 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
+<<<<<<< HEAD
 Accept pipeline input: True (ByPropertyName)
+=======
+Accept pipeline input: False
+>>>>>>> 690e7a4 (Working version)
 Accept wildcard characters: False
 ```
 
@@ -98,14 +133,24 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
+<<<<<<< HEAD
 Required: False
 Position: 2
 Default value: $env:SYSTEM_ACCESSTOKEN
+=======
+Required: True
+Position: 2
+Default value: None
+>>>>>>> 690e7a4 (Working version)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+<<<<<<< HEAD
 ### -ProjectName
+=======
+### -Name
+>>>>>>> 690e7a4 (Working version)
 Name of the project.
 
 ```yaml
@@ -116,7 +161,11 @@ Aliases:
 Required: True
 Position: 3
 Default value: None
+<<<<<<< HEAD
 Accept pipeline input: True (ByPropertyName, ByValue)
+=======
+Accept pipeline input: False
+>>>>>>> 690e7a4 (Working version)
 Accept wildcard characters: False
 ```
 
@@ -166,7 +215,12 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+<<<<<<< HEAD
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
+=======
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+>>>>>>> 690e7a4 (Working version)
 
 ```yaml
 Type: SwitchParameter
@@ -203,5 +257,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
+<<<<<<< HEAD
+=======
+When you are using Azure DevOps with Build service Access token, make sure the setting 'Protect access to repositories in YAML pipelin' is off.
+>>>>>>> 690e7a4 (Working version)
 
 ## RELATED LINKS

@@ -7,6 +7,9 @@ param(
     # Bootstrap dependencies
     [switch]$Bootstrap,
 
+    # Calculate version
+    [switch]$CalculateVersion,
+
     # List available build tasks
     [parameter(ParameterSetName = 'Help')]
     [switch]$Help,
@@ -22,6 +25,10 @@ param(
         "TestEnabled"           = $true
     }
 )
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 690e7a4 (Working version)
 $ErrorActionPreference = 'Stop'
 
 # Bootstrap dependencies
@@ -34,17 +41,45 @@ if ($Bootstrap.IsPresent) {
         }
         Import-Module -Name PSDepend -Verbose:$false
         Invoke-PSDepend -Path './requirements.psd1' -Install -Import -Force -WarningAction SilentlyContinue
-    } else {
+    }
+    else {
         Write-Warning 'No [requirements.psd1] found. Skipping build dependency installation.'
     }
+}
+
+if ($CalculateVersion.IsPresent) {
+    $CurrentBranch = &git rev-parse --abbrev-ref HEAD
+    $LatestTag = git tag --sort=v:refname | Select-Object -Last 1
+
+    [int]$Major = $LatestTag.split('.')[0]
+    [int]$Minor = $LatestTag.split('.')[1]
+    [int]$Patch = $LatestTag.split('.')[2]
+
+    if ($CurrentBranch -match "patch") {
+        $Patch++
+    }
+    elseif ($CurrentBranch -match "feature") {
+        $Minor++
+    }
+    elseif ($CurrentBranch -match "major") {
+        $Major++
+    }
+    else {
+        Write-Error "Wrong branch!"
+        exit 1
+    }
+
+    [string]$env:NewVersion = "$Major.$Minor.$Patch" 
+    Update-ModuleManifest -Path "$PSScriptRoot/InfrastructureAsCode/InfrastructureAsCode.psd1" -ModuleVersion $env:NewVersion
 }
 
 # Execute psake task(s)
 $psakeFile = './psakeFile.ps1'
 if ($PSCmdlet.ParameterSetName -eq 'Help') {
     Get-PSakeScriptTasks -buildFile $psakeFile |
-        Format-Table -Property Name, Description, Alias, DependsOn
-} else {
+    Format-Table -Property Name, Description, Alias, DependsOn
+}
+else {
     Set-BuildEnvironment -Force
     Invoke-psake -buildFile $psakeFile -taskList $Task -nologo -properties $Properties -parameters $Parameters
     if ($psake.build_success) {

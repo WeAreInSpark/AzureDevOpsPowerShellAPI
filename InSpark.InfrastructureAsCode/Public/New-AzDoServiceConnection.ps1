@@ -5,7 +5,10 @@ function New-AzDoServiceConnection {
     .DESCRIPTION
         Function to create a service connection in Azure DevOps
 <<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
 =======
+=======
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
     .NOTES
         When you are using Azure DevOps with Build service Access token, make sure the setting 'Protect access to repositories in YAML pipelin' is off.
 >>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
@@ -113,12 +116,20 @@ function New-AzDoServiceConnection {
         $Serviceprincipalkey,
 
         # KeyVault name where the certificate is stored.
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
         [string]
         $KeyVaultName,
 
         # Name of the certificate
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
         [string]
         $CertName
     )
@@ -177,6 +188,12 @@ function New-AzDoServiceConnection {
         } finally {
             [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($SsPtr)
         }
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
+=======
+
+        $SecretByte = [Convert]::FromBase64String($secretValueText)
+        $Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
 
         $SecretByte = [Convert]::FromBase64String($secretValueText)
 <<<<<<< HEAD
@@ -247,9 +264,14 @@ function New-AzDoServiceConnection {
 <<<<<<< HEAD
         $body
     }
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
 }
 =======
         Write-Output $Body | Format-List
+=======
+    else {
+        Write-Output $Body | format-list
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
         return
     }
 }

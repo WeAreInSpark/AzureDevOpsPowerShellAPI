@@ -41,7 +41,11 @@ Describe 'Test help for <_.Name>' -ForEach $commands {
         # Get command help, parameters, and links
         $command = $_
         $commandHelp = Get-Help $command.Name -ErrorAction SilentlyContinue
+<<<<<<< HEAD
         $commandParameters = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
+=======
+        $commandParameters = global:FilterOutCommonParams  -Params $command.ParameterSets.Parameters
+>>>>>>> 690e7a4 (Working version)
         $commandParameterNames = $commandParameters.Name
         $helpLinks = $commandHelp.relatedLinks.navigationLink.uri
     }
@@ -51,9 +55,15 @@ Describe 'Test help for <_.Name>' -ForEach $commands {
         $command = $_
         $commandName = $_.Name
         $commandHelp = Get-Help $command.Name -ErrorAction SilentlyContinue
+<<<<<<< HEAD
         $commandParameters = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
         $commandParameterNames = $commandParameters.Name
         $helpParameters = global:FilterOutCommonParams -Params $commandHelp.Parameters.Parameter
+=======
+        $commandParameters = global:FilterOutCommonParams  -Params $command.ParameterSets.Parameters
+        $commandParameterNames = $commandParameters.Name
+        $helpParameters = global:FilterOutCommonParams  -Params $commandHelp.Parameters.Parameter
+>>>>>>> 690e7a4 (Working version)
         $helpParameterNames = $helpParameters.Name
     }
 
@@ -90,7 +100,11 @@ Describe 'Test help for <_.Name>' -ForEach $commands {
         BeforeAll {
             $parameter = $_
             $parameterName = $parameter.Name
+<<<<<<< HEAD
             $parameterHelp = $commandHelp.parameters.parameter | Where-Object Name -EQ $parameterName
+=======
+            $parameterHelp = $commandHelp.parameters.parameter | Where-Object Name -eq $parameterName
+>>>>>>> 690e7a4 (Working version)
             $parameterHelpType = if ($parameterHelp.ParameterValue) { $parameterHelp.ParameterValue.Trim() }
         }
 

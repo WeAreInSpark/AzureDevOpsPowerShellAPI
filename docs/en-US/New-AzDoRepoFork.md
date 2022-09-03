@@ -1,6 +1,11 @@
 ---
+<<<<<<< HEAD
 external help file: InSpark.InfrastructureAsCode-help.xml
 Module Name: InSpark.InfrastructureAsCode
+=======
+external help file: InfrastructureAsCode-help.xml
+Module Name: InfrastructureAsCode
+>>>>>>> 690e7a4 (Working version)
 online version:
 schema: 2.0.0
 ---
@@ -15,7 +20,11 @@ This script creates a fork of a repo in a project to a given project.
 ```
 New-AzDoRepoFork [-CollectionUri] <String> [[-PAT] <String>] [-ProjectId] <String> [-ForkName] <String>
  [-SourceProjectId] <String> [-SourceRepo] <String> [[-CopyBranch] <Boolean>] [[-ToBeForkedBranch] <String>]
+<<<<<<< HEAD
  [-WhatIf] [-Confirm] [<CommonParameters>]
+=======
+ [<CommonParameters>]
+>>>>>>> 690e7a4 (Working version)
 ```
 
 ## DESCRIPTION
@@ -30,7 +39,11 @@ When used in a pipeline, you can use the pre defined CollectionUri, TeamProject 
 ```
 This example forks a repo from one project to another and forks a single branch ('main'), the forked repo is called 'ForkedRepo'.
 $newAzDoRepoForkSplat = @{
+<<<<<<< HEAD
     CollectionUri    = 'https://dev.azure.com/contoso'
+=======
+    CollectionUri    = 'https://dev.azure.com/ChristianPiet0452'
+>>>>>>> 690e7a4 (Working version)
     ProjectId        = "15bca695-6260-498a-8b4c-38e53097906c"
     SourceProjectId  = "15bca695-6260-498a-8b4c-38e53097906c"
     SourceRepo       = 'b050b2de-2d6c-4357-8a03-3c14c1ccb3f5'
@@ -69,7 +82,11 @@ Aliases:
 
 Required: False
 Position: 2
+<<<<<<< HEAD
 Default value: $env:SYSTEM_ACCESSTOKEN
+=======
+Default value: (Read-Host -MaskInput -Prompt 'Azure DevOps PAT: ')
+>>>>>>> 690e7a4 (Working version)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -165,6 +182,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+<<<<<<< HEAD
 ### -WhatIf
 <<<<<<< HEAD
 Shows what would happen if the cmdlet runs.
@@ -200,6 +218,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+=======
+>>>>>>> 690e7a4 (Working version)
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 

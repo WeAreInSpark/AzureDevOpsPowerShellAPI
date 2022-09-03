@@ -11,7 +11,11 @@ function New-AzDoRepoFork {
     .EXAMPLE
         This example forks a repo from one project to another and forks a single branch ('main'), the forked repo is called 'ForkedRepo'.
         $newAzDoRepoForkSplat = @{
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoRepoFork.ps1
             CollectionUri    = 'https://dev.azure.com/contoso'
+=======
+            CollectionUri    = 'https://dev.azure.com/ChristianPiet0452'
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoRepoFork.ps1
             ProjectId        = "15bca695-6260-498a-8b4c-38e53097906c"
             SourceProjectId  = "15bca695-6260-498a-8b4c-38e53097906c"
             SourceRepo       = 'b050b2de-2d6c-4357-8a03-3c14c1ccb3f5'
@@ -26,7 +30,11 @@ function New-AzDoRepoFork {
     .OUTPUTS
         PSCustomObject
 #>
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoRepoFork.ps1
     [CmdletBinding(SupportsShouldProcess)]
+=======
+    [CmdletBinding()]
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoRepoFork.ps1
     param (
         # Collection Uri of the organization
         [Parameter(Mandatory)]
@@ -34,9 +42,15 @@ function New-AzDoRepoFork {
         $CollectionUri,
 
         # PAT to authenticate with the organization
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoRepoFork.ps1
         [Parameter(Mandatory = $false)]
         [String]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
+=======
+        [Parameter()]
+        [String]
+        $PAT = (Read-Host -MaskInput -Prompt 'Azure DevOps PAT: '),
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoRepoFork.ps1
 
         # Project where the variable group has to be created
         [Parameter(Mandatory)]
@@ -92,6 +106,7 @@ function New-AzDoRepoFork {
         body        = $Body | ConvertTo-Json -Depth 99
         ContentType = 'application/json'
     }
+<<<<<<< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoRepoFork.ps1
 <<<<<<< HEAD
 
 =======
@@ -99,4 +114,8 @@ function New-AzDoRepoFork {
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
         Invoke-RestMethod @params
     }
+=======
+
+    Invoke-RestMethod @params
+>>>>>>> 690e7a4 (Working version):InfrastructureAsCode/Public/New-AzDoRepoFork.ps1
 }
