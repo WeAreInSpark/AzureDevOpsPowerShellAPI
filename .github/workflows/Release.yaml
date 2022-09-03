@@ -1,0 +1,95 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "InSpark.InfrastructureAsCode/**"
+jobs:
+  test:
+    name: Release module
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get Previous tag
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@8a0e045f02c0a3a04e1452df58b90fc7e555e950"
+        with:
+          fallback: 0.0.0
+
+      - name: Calculate version
+        id: CalcVersion
+        shell: pwsh
+        run: |
+          $Uri = "https://api.github.com/repos/weareinspark/BRC.PS.InfrastructureAsCode/pulls?state=closed"
+          $PR = curl -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.Github_Token }}" $uri | ConvertFrom-Json | Where-Object {$_.merge_commit_sha -eq "${{ github.sha }}"}
+          $Title = $PR.title
+
+          $LatestTag = "${{ steps.previoustag.outputs.tag }}"
+          [int]$Major = $LatestTag.split('.')[0]
+          [int]$Minor = $LatestTag.split('.')[1]
+          [int]$Patch = $LatestTag.split('.')[2]
+
+          if ($pr.labels -match "patch") {
+            $Patch++
+          }
+          elseif ($PR.labels -match "minor") {
+            $Minor++
+            $Patch = 0
+          }
+          elseif ($pr.labels -match "major") {
+            $Major++
+            $Minor = 0
+            $Patch = 0
+          }
+          else {
+            Write-Error "No labels found"
+            exit 1
+          }
+          [string]$env:NewVersion = "$Major.$Minor.$Patch"
+          Write-Output "New version is: $env:NewVersion"
+          Write-Output "::set-output name=Version::$env:NewVersion"
+
+          Install-Module -Name Microsoft.Graph.Applications -Force
+          Install-Module -Name Az.Accounts -Force
+          Install-Module -Name Az.KeyVault -Force
+
+          $Params = @{
+            Path = "${{ github.workspace }}/InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psd1"
+            ModuleVersion = $env:NewVersion
+            PrivateData = @{
+              PSData = @{
+                ProjectUri = ("${{ github.repositoryUrl }}").Replace(0,6)
+                ReleaseNotes = $Title
+              }
+            }
+          }
+          Update-ModuleManifest @Params
+
+      - name: Create github release
+        uses: actions/github-script@v5.1.1
+        with:
+          github-token: ${{ secrets.Github_Token }}
+          script: |
+            await github.request('POST /repos/${{ github.repository }}/releases', {
+              tag_name: "${{ steps.CalcVersion.outputs.Version }}",
+              generate_release_notes: true })
+
+      - name: Release pipeline to Azure Artifact
+        shell: pwsh
+        env:
+          PAT: ${{ secrets.PAT }}
+          VSS_NUGET_EXTERNAL_FEED_ENDPOINTS: '{"endpointCredentials": [{"endpoint":"https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2", "username":"${{ secrets.Username }}", "password":"${{ secrets.PAT }}"}]}'
+        run: |
+          Register-PSRepository -Name "InSpark" -SourceLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2" -PublishLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2" -InstallationPolicy Trusted
+
+          $Parameters = @{
+            "PSRepository" = 'InSpark'
+            "PSRepositoryApiKey" = '$env:PAT'
+            "ScriptAnalysisEnabled" = $true
+            "TestEnabled" = $false
+          }
+          ./build.ps1 -Task Init,Publish -Bootstrap -parameters $Parameters
