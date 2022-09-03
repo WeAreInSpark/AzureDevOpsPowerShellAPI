@@ -13,9 +13,14 @@ This script creates a variable group with at least 1 variable in a given project
 ## SYNTAX
 
 ```
+<<<<<<< HEAD
 New-AzDoVariableGroup [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String>
  [-VariableGroupName] <String[]> [-Variables] <Hashtable> [[-Description] <String>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
+=======
+New-AzDoVariableGroup [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String> [-Name] <String[]>
+ [-Variables] <Hashtable> [[-Description] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+>>>>>>> 18d4dd8 (InitialVersion)
 ```
 
 ## DESCRIPTION
@@ -26,6 +31,7 @@ When used in a pipeline, you can use the pre defined CollectionUri, ProjectName 
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 $params = @{
     Collectionuri = 'https://dev.azure.com/weareinspark/'
     PAT = '*******************'
@@ -57,6 +63,13 @@ $params = @{
 
 This example creates a few new Variable Groups with a variable "test = test".
 
+=======
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -CollectionUri
@@ -150,8 +163,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -185,9 +197,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
 ## OUTPUTS
 
-### PSobject
+### New variable group with at least 1 variable in a given project.
 ## NOTES
 
 ## RELATED LINKS

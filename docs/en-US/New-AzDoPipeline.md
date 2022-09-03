@@ -8,22 +8,34 @@ schema: 2.0.0
 # New-AzDoPipeline
 
 ## SYNOPSIS
-Creates an Azure Pipeline
+This script creates a variable group with at least 1 variable in a given project.
 
 ## SYNTAX
 
 ```
+<<<<<<< HEAD
 New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [[-PAT] <String>] [-PipelineName] <String[]>
  [-RepoName] <Object> [[-Path] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 Creates an Azure Pipeline in a given Azure Project based on a repo
+=======
+New-AzDoPipeline [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [-RepoName] <Object>
+ [-ProjectName] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+## DESCRIPTION
+This script creates a variable group with at least 1 variable in a given project.
+When used in a pipeline, you can use the pre defined CollectionUri,
+ProjectName and AccessToken (PAT) variables.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 $newAzDoPipelineSplat = @{
     CollectionUri = "https://dev.azure.com/contoso"
     PAT = "***"
@@ -45,6 +57,13 @@ Get-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT $PAT |
 
 This example creates a new Azure Pipeline
 
+=======
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -CollectionUri
@@ -86,8 +105,13 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+<<<<<<< HEAD
 Position: 3
 Default value: $env:SYSTEM_ACCESSTOKEN
+=======
+Position: 2
+Default value: None
+>>>>>>> 18d4dd8 (InitialVersion)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -138,8 +162,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -173,9 +196,15 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
 ## OUTPUTS
 
+<<<<<<< HEAD
 ### PSobject. An object containing the name, the folder and the URI of the pipeline
+=======
+### New variable group with at least 1 variable in a given project.
+>>>>>>> 18d4dd8 (InitialVersion)
 ## NOTES
 
 ## RELATED LINKS

@@ -24,7 +24,11 @@ function Set-AzDoTeamMember {
         $OrganizationName,
 
         # PAT to authentice with the organization
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
@@ -67,6 +71,13 @@ function Set-AzDoTeamMember {
             Origin        = $Response.origin
         }
     } else {
+<<<<<<< HEAD
         $Body
     }
 }
+=======
+        Write-Output $Body | Format-List
+        return
+    }
+}
+>>>>>>> 18d4dd8 (InitialVersion)

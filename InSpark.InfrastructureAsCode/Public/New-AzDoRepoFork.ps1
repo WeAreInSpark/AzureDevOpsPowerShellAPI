@@ -34,7 +34,7 @@ function New-AzDoRepoFork {
         $CollectionUri,
 
         # PAT to authenticate with the organization
-        [Parameter()]
+        [Parameter(Mandatory = $false)]
         [String]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
@@ -92,7 +92,10 @@ function New-AzDoRepoFork {
         body        = $Body | ConvertTo-Json -Depth 99
         ContentType = 'application/json'
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
         Invoke-RestMethod @params
     }

@@ -31,7 +31,11 @@ function Set-AzDoProjectSetting {
         $CollectionUri,
 
         # PAT to get access to Azure DevOps.
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
@@ -91,7 +95,11 @@ function Set-AzDoProjectSetting {
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
         Invoke-RestMethod @params
     } else {
+<<<<<<< HEAD
         $body
+=======
+        Write-Output $Body | Format-List
+>>>>>>> 18d4dd8 (InitialVersion)
         return
     }
 }

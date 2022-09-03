@@ -3,17 +3,26 @@ function New-AzDoPipeline {
 .SYNOPSIS
     Creates an Azure Pipeline
 .DESCRIPTION
+<<<<<<< HEAD
     Creates an Azure Pipeline in a given Azure Project based on a repo
+=======
+    Creates an Azure Pipeline
+>>>>>>> 18d4dd8 (InitialVersion)
 .EXAMPLE
     $newAzDoPipelineSplat = @{
         CollectionUri = "https://dev.azure.com/contoso"
         PAT = "***"
+<<<<<<< HEAD
         PipelineName = "Pipeline 1"
+=======
+        Name = "Pipeline 1"
+>>>>>>> 18d4dd8 (InitialVersion)
         RepoName = "Repo 1"
         ProjectName = "Project 1"
     }
     New-AzDoPipeline @newAzDoPipelineSplat
 
+<<<<<<< HEAD
     This example creates a new Azure Pipeline using the PowerShell pipeline
 
 .EXAMPLE
@@ -25,11 +34,17 @@ function New-AzDoPipeline {
 
 .OUTPUTS
     PSobject. An object containing the name, the folder and the URI of the pipeline
+=======
+    This example creates a new Azure Pipeline
+.OUTPUTS
+    PSobject containing Project information
+>>>>>>> 18d4dd8 (InitialVersion)
 .NOTES
 #>
     [CmdletBinding(SupportsShouldProcess)]
     param (
         # Collection Uri of the organization
+<<<<<<< HEAD
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
         $CollectionUri,
@@ -68,6 +83,42 @@ function New-AzDoPipeline {
                 configuration = @{
                     type       = "yaml"
                     path       = $Path
+=======
+        [Parameter(Mandatory)]
+        [string]
+        $CollectionUri,
+
+        # PAT to authentice with the organization
+        [Parameter(Mandatory = $false)]
+        [string]
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
+
+        # Project where the variable group has to be created
+        [Parameter(Mandatory)]
+        [string[]]
+        $Name,
+
+        # Project where the variable group has to be created
+        [Parameter(Mandatory)]
+        $RepoName,
+
+        # Project where the variable group has to be created.
+        [Parameter(Mandatory)]
+        [string]
+        $ProjectName
+    )
+    Begin {
+        $RepoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -Name $RepoName).Id
+    }
+    Process {
+        foreach ($n in $Name) {
+            $Body = @{
+                name          = $n
+                folder        = $null
+                configuration = @{
+                    type       = "yaml"
+                    path       = "/main.yaml"
+>>>>>>> 18d4dd8 (InitialVersion)
                     repository = @{
                         id   = $RepoId
                         type = "azureReposGit"
@@ -83,6 +134,7 @@ function New-AzDoPipeline {
                 ContentType = 'application/json'
             }
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+<<<<<<< HEAD
                 Invoke-RestMethod @params | ForEach-Object {
                     [PSCustomObject]@{
                         PipelineName   = $_.name
@@ -92,9 +144,18 @@ function New-AzDoPipeline {
                 }
             } else {
                 $Body | Format-List
+=======
+                Invoke-RestMethod @params
+            } else {
+                Write-Output $Body | Format-List
+>>>>>>> 18d4dd8 (InitialVersion)
                 return
             }
         }
     }
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> 18d4dd8 (InitialVersion)

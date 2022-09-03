@@ -42,7 +42,11 @@ function New-AzDoServiceConnection {
         $CollectionUri,
 
         # PAT to get access to Azure DevOps.
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
@@ -158,7 +162,11 @@ function New-AzDoServiceConnection {
             scheme     = 'ServicePrincipal'
         }
     } else {
+<<<<<<< HEAD
         $CertName = ($CertName -replace ' ', '')
+=======
+        $CertName = ($CertName -replace " ", "")
+>>>>>>> 18d4dd8 (InitialVersion)
         $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
         $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
         $SecretValueText = ''
@@ -171,12 +179,21 @@ function New-AzDoServiceConnection {
         }
 
         $SecretByte = [Convert]::FromBase64String($secretValueText)
+<<<<<<< HEAD
         $Cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, '', 'Exportable,PersistKeySet')
 
         $Pem = New-Object System.Text.StringBuilder
         $Pem.AppendLine('-----BEGIN CERTIFICATE-----') | Out-Null
         $Pem.AppendLine([System.Convert]::ToBase64String($cert.RawData, 1)) | Out-Null
         $Pem.AppendLine('-----END CERTIFICATE-----') | Out-Null
+=======
+        $Cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
+
+        $Pem = New-Object System.Text.StringBuilder
+        $Pem.AppendLine("-----BEGIN CERTIFICATE-----") > $null
+        $Pem.AppendLine([System.Convert]::ToBase64String($cert.RawData, 1)) > $null
+        $Pem.AppendLine("-----END CERTIFICATE-----") > $null
+>>>>>>> 18d4dd8 (InitialVersion)
 
         $Authorization = @{
             parameters = @{
@@ -227,6 +244,13 @@ function New-AzDoServiceConnection {
             SubscriptionId   = $Response.data.subscriptionId
         }
     } else {
+<<<<<<< HEAD
         $body
     }
 }
+=======
+        Write-Output $Body | Format-List
+        return
+    }
+}
+>>>>>>> 18d4dd8 (InitialVersion)

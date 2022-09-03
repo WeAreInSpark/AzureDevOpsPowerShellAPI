@@ -31,32 +31,46 @@ New-AzDoServiceConnection -Name <String> -CollectionUri <String> [-PAT <String>]
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 Function to create a service connection in Azure DevOps
 \<\<\<\<\<\<\< HEAD:InSpark.InfrastructureAsCode/Public/New-AzDoServiceConnection.ps1
 =======
+=======
+{{ Fill in the Description }}
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$params = @{
-    CollectionUri               = "https://dev.azure.com/contoso"
-    PAT                         = "***"
-    ProjectName                 = "Project 1"
-    SubscriptionId              = "00000-00000-00000-00000-00000"
-    SubscriptionName            = "Subscription 1"
-    Tenantid                    = "11111-11111-11111-11111-11111"
-    Serviceprincipalid          = "1c03163f-7e4e-4fab-8b41-6f040a8361b9"
-    KeyVaultName                = "kv01"
-    CertName                    = "Cert01"
-    AuthenticationType          = "spnCertificate"
-    ProjectID                   = "1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2"
-    Name                        = "Project 1"
-}
-New-AzDoServiceConnection @params
+New-AzDoServiceConnection -CollectionUri $CollectionUri `
+    -PAT $PAT `
+    -ProjectName "Project 1" `
+    -SubscriptionId "00000-00000-00000-00000-00000" `
+    -SubscriptionName "Subscription 1" `
+    -Tenantid "11111-11111-11111-11111-11111" `
+    -Serviceprincipalid "1c03163f-7e4e-4fab-8b41-6f040a8361b9" `
+    -ServicePrincipalCertificate $ServicePrincipalCertificate `
+    -AuthenticationType 'spnCertificate' `
+    -ProjectID '1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2' `
+    -Name 'Project 1'
 ```
 
-This example creates a new Azure DevOps service connection with a Certificate from a KeyVault in Azure.
+Service connection with certificate
+
+### EXAMPLE 2
+```
+New-AzDoServiceConnection -CollectionUri $CollectionUri `
+    -PAT $PAT `
+    -ProjectName "Project 1" `
+    -SubscriptionId "00000-00000-00000-00000-00000" `
+    -SubscriptionName "Subscription 1" `
+    -Tenantid "11111-11111-11111-11111-11111" `
+    -Serviceprincipalid "1c03163f-7e4e-4fab-8b41-6f040a8361b9" `
+    -Serviceprincipalkey $Serviceprincipalkey
+```
+
+Service connection with key
 
 ## PARAMETERS
 
@@ -288,7 +302,7 @@ Accept wildcard characters: False
 ```
 
 ### -KeyVaultName
-KeyVault name where the certificate is stored.
+Certificate of the App registration in .PEM format.
 
 ```yaml
 Type: String
@@ -303,7 +317,7 @@ Accept wildcard characters: False
 ```
 
 ### -CertName
-Name of the certificate
+{{ Fill CertName Description }}
 
 ```yaml
 Type: String
@@ -318,8 +332,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter

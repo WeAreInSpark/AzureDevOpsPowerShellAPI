@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AzDoRepoClone
 
 ## SYNOPSIS
-Clones the main branch to a new location
+This script creates a variable group with at least 1 variable in a given project.
 
 ## SYNTAX
 
@@ -20,26 +20,18 @@ New-AzDoRepoClone [-SourceOrganizationName] <String> [-SourceProjectName] <Strin
 ```
 
 ## DESCRIPTION
-Clones the main branch to a new location
+This script creates a variable group with at least 1 variable in a given project.
+When used in a pipeline, you can use the pre defined CollectionUri,
+ProjectName and AccessToken (PAT) variables.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$params = @{
-    SourceOrganizationName      = "contoso"
-    SourceProjectName           = "project1"
-    SourcePAT                   = "***"
-    SourceRepoName              = "repo1"
-    DestinationOrganizationName = "New Contoso"
-    DestinationProjectName      = "Project1"
-    DestinationPAT              = "***"
-    DestinationRepoName         = "repo1"
-}
-New-AzDoRepoClone @params
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
 ```
-
-This example Clones the main branch to another organization with the same project and repo name.
 
 ## PARAMETERS
 
@@ -179,7 +171,11 @@ Accept wildcard characters: False
 ```
 
 ### -NewRepo
+<<<<<<< HEAD
 Switch to create a new repo
+=======
+Creates a new repo if $true
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: SwitchParameter
@@ -229,9 +225,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
 ## OUTPUTS
 
-### PSobject
+### New variable group with at least 1 variable in a given project.
 ## NOTES
 
 ## RELATED LINKS

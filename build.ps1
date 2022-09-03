@@ -15,7 +15,12 @@ param(
     [hashtable]$Properties,
 
     # Optional parameters to pass to psake
-    [hashtable]$Parameters
+    [hashtable]$Parameters = @{
+        "PSRepository"          = 'PSGallery'
+        "PSRepositoryApiKey"    = ""
+        "ScriptAnalysisEnabled" = $true
+        "TestEnabled"           = $true
+    }
 )
 $ErrorActionPreference = 'Stop'
 
@@ -42,5 +47,11 @@ if ($PSCmdlet.ParameterSetName -eq 'Help') {
 } else {
     Set-BuildEnvironment -Force
     Invoke-psake -buildFile $psakeFile -taskList $Task -nologo -properties $Properties -parameters $Parameters
-    exit ([int](-not $psake.build_success))
+    if ($psake.build_success) {
+        Write-Output "Build complete"
+        exit 0
+    } else {
+        Write-Error "Build not complete"
+        exit 1
+    }
 }

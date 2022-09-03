@@ -12,7 +12,11 @@
     RootModule        = 'InSpark.InfrastructureAsCode.psm1'
 
     # Version number of this module.
+<<<<<<< HEAD
     ModuleVersion     = '0.1.0'
+=======
+    ModuleVersion     = '6.1.3'
+>>>>>>> 18d4dd8 (InitialVersion)
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -21,6 +25,7 @@
     GUID              = 'b9f88665-969d-4670-849a-407cfc372831'
 
     # Author of this module
+<<<<<<< HEAD
     Author            = 'Business Ready Cloud'
 
     # Company or vendor of this module
@@ -31,6 +36,18 @@
 
     # Description of the functionality provided by this module
     Description       = 'PowerShell module to deploy and adjust services on Azure DevOps and Azure AD'
+=======
+    Author            = 'Dylan Prins'
+
+    # Company or vendor of this module
+    CompanyName       = 'Unknown'
+
+    # Copyright statement for this module
+    Copyright         = '(c) Dylan Prins. All rights reserved.'
+
+    # Description of the functionality provided by this module
+    Description       = 'Powershell module for API to DevOps services'
+>>>>>>> 18d4dd8 (InitialVersion)
 
     # Minimum version of the PowerShell engine required by this module
     PowerShellVersion = '5.1'
@@ -53,7 +70,10 @@
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules   = @(
         'Microsoft.Graph.Applications',
+<<<<<<< HEAD
         'Microsoft.Graph.Groups',
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
         'Az.Accounts',
         'Az.KeyVault'
     )
@@ -77,13 +97,21 @@
     FunctionsToExport = @()
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
+<<<<<<< HEAD
     CmdletsToExport   = @()
+=======
+    CmdletsToExport   = '*'
+>>>>>>> 18d4dd8 (InitialVersion)
 
     # Variables to export from this module
     VariablesToExport = @()
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
+<<<<<<< HEAD
     AliasesToExport   = @()
+=======
+    AliasesToExport   = '*'
+>>>>>>> 18d4dd8 (InitialVersion)
 
     # DSC resources to export from this module
     # DscResourcesToExport = @()
@@ -123,7 +151,10 @@
             # External dependent modules of this module
             ExternalModuleDependencies = @(
                 'Microsoft.Graph.Applications',
+<<<<<<< HEAD
                 'Microsoft.Graph.Groups',
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
                 'Az.Accounts',
                 'Az.KeyVault'
             )

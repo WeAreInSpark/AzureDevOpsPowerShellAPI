@@ -8,7 +8,11 @@ schema: 2.0.0
 # New-AadAppRegistrationSecret
 
 ## SYNOPSIS
+<<<<<<< HEAD
 Creates a secret and set it to the App registration in Azure AD.
+=======
+This script creates a new certificate or secret for an existing app registration.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## SYNTAX
 
@@ -18,23 +22,26 @@ New-AadAppRegistrationSecret [-ObjectID] <String> [-ClientSecretName] <String> [
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 Creates a secret and uploads it as an authentication factor to the App registration in Azure AD.
 The secret will also be uploaded to an Azure KeyVault.
+=======
+This script creates a new certificate or secret for an existing app registration.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$newAadAppRegistrationSecretSplat = @{
-    ObjectID = "00000-00000-00000-00000-00000"
-    ClientSecretName = "Secret 1"
-    EndDate = "2022-01-01"
-}
-New-AadAppRegistrationSecret @newAadAppRegistrationSecretSplat
+To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
+$ClientSecretDuration to 1.
 ```
 
+<<<<<<< HEAD
 This example will create a new secret for the app registration, upload it to the Azure KeyVault and add it to the Application Registration in Azure AD.
 
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -ObjectID
@@ -133,9 +140,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
+### [-KeyVaultName <String>] [<CommonParameters>]
+### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
+### <String>] [<CommonParameters>]
 ## OUTPUTS
 
-### The Appsecret
+### New credentials in an app registration, and a variable with the secret.
 ## NOTES
 
 ## RELATED LINKS

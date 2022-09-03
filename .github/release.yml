@@ -2,8 +2,13 @@ changelog:
   categories:
     - title: Breaking Changes 🛠
       labels:
+<<<<<<< HEAD
         - major
     - title: New Features 🎉
+=======
+        - breaking
+    - title: Exciting New Features 🎉
+>>>>>>> 18d4dd8 (InitialVersion)
       labels:
         - minor
     - title: Fixes

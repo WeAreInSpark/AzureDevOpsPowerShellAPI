@@ -13,24 +13,31 @@ Function to create an Azure DevOps project
 ## SYNTAX
 
 ```
+<<<<<<< HEAD
 New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String[]> [[-Description] <String>]
+=======
+New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String[]> [[-Description] <String>]
+>>>>>>> 18d4dd8 (InitialVersion)
  [[-SourceControlType] <String>] [[-Visibility] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Function to create an Azure DevOps project
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
+=======
+New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName
+>>>>>>> 18d4dd8 (InitialVersion)
 ```
-
-This example creates a new private Azure DevOps project
 
 ### EXAMPLE 2
 ```
+<<<<<<< HEAD
 New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
 ```
 
@@ -58,12 +65,17 @@ This example creates two new Azure DevOps projects using the pipeline.
 
 This example creates two new Azure DevOps projects using the pipeline.
 
+=======
+New-AzureDevOpsProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName -Visibility 'public'
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -CollectionUri
 Collection URI.
 e.g.
-https://dev.azure.com/contoso.
+https://dev.azure.com/contoso. 
 Azure Pipelines has a predefined variable for this.
 
 ```yaml
@@ -154,8 +166,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter

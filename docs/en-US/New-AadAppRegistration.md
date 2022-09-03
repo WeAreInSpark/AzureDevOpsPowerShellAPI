@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AadAppRegistration
 
 ## SYNOPSIS
-Creates an App registration in Azure AD.
+This script creates a new app registration with a certificate or secret.
 
 ## SYNTAX
 
@@ -17,21 +17,23 @@ New-AadAppRegistration [-Name] <String> [-ManuallyConnectToGraph] [-WhatIf] [-Co
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 Creates an App regestration in Azure AD, if no App registration with the same name exists.
+=======
+This script creates a new app registration with a certificate or secret.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-AadAppRegistration -Name "App 1"
+To create an app registration with a secret that lasts 1 year, choose a name for $AppRegName, a name for $ClientSecretName and set $ClientSecretDuration to 1.
 ```
-
-This Example will create a new App registration with the name 'App 1'
 
 ## PARAMETERS
 
 ### -Name
-Name of the App registration
+Name of the app registration
 
 ```yaml
 Type: String
@@ -61,8 +63,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -96,9 +97,17 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
+### [<CommonParameters>]
+### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
+### <String>] [<CommonParameters>]
 ## OUTPUTS
 
+<<<<<<< HEAD
 ### PSobject with the object ID and application ID of the App registration.
+=======
+### New app registration with credentials, and variables with the ID and secret.
+>>>>>>> 18d4dd8 (InitialVersion)
 ## NOTES
 
 ## RELATED LINKS

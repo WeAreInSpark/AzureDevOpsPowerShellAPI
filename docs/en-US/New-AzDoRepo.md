@@ -8,22 +8,29 @@ schema: 2.0.0
 # New-AzDoRepo
 
 ## SYNOPSIS
-Creates a repo in Azure DevOps.
+This script creates a variable group with at least 1 variable in a given project.
 
 ## SYNTAX
 
 ```
+<<<<<<< HEAD
 New-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [-RepoName] <String> [-ProjectName] <String> [-WhatIf]
+=======
+New-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [-Name] <String> [-ProjectName] <String> [-WhatIf]
+>>>>>>> 18d4dd8 (InitialVersion)
  [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates a repo in Azure DevOps.
+This script creates a variable group with at least 1 variable in a given project.
+When used in a pipeline, you can use the pre defined CollectionUri,
+ProjectName and AccessToken (PAT) variables.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 $params = @{
     CollectionUri = "https://dev.azure.com/contoso"
     PAT           = "***"
@@ -31,9 +38,12 @@ $params = @{
     ProjectName   = "RandomProject"
 }
 New-AzDoRepo @params
+=======
+To create a variable group 'test' with one variable:
+New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
+-Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
+>>>>>>> 18d4dd8 (InitialVersion)
 ```
-
-This example creates a new Azure DevOps repo
 
 ## PARAMETERS
 
@@ -98,8 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -133,10 +142,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AzDoVariableGroup [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string> [-Variables] <hashtable> [[-Description] <string>]
+### [<CommonParameters>]
 ## OUTPUTS
 
-### PSObject
-### Containg the repo information
+### New variable group with at least 1 variable in a given project.
 ## NOTES
 
 ## RELATED LINKS

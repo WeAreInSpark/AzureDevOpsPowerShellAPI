@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AadGroup
 
 ## SYNOPSIS
-Creates an Azure AD group.
+This script creates a new app registration with a certificate or secret.
 
 ## SYNTAX
 
@@ -19,13 +19,13 @@ New-AadGroup [-GroupName] <String> [-MailNickName] <String> [-MailEnabled]
 ```
 
 ## DESCRIPTION
-Creates an Azure AD group.
-It defaults to an Office 365 group with a mail address.
+This script creates a new app registration with a certificate or secret.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+<<<<<<< HEAD
 New-AadGroup -GroupName "AD group 1" -MailNickname "AdGroup1"
 ```
 
@@ -47,6 +47,11 @@ This example will create a new Azure AD group with a specific mail address.
 
 This example will create new Azure AD groups with a specific mail addresses.
 
+=======
+To create an app registration with a secret that lasts 1 year, choose a name for $AppRegName, a name for $ClientSecretName and set $ClientSecretDuration to 1.
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -GroupName
@@ -65,7 +70,11 @@ Accept wildcard characters: False
 ```
 
 ### -MailNickName
+<<<<<<< HEAD
 Provide nickname/alias for the email.
+=======
+{{ Fill MailNickName Description }}
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: String
@@ -80,7 +89,7 @@ Accept wildcard characters: False
 ```
 
 ### -MailEnabled
-Enable mail on the Azure AD group
+{{ Fill MailEnabled Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -125,8 +134,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -160,9 +168,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -EndDate <String> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName <String>]
+### [<CommonParameters>]
+### New-AppRegistration -AppRegName <String> -ClientSecretName <String> -ClientSecretDuration <Int32> [-Append <Boolean>] [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
+### <String>] [<CommonParameters>]
 ## OUTPUTS
 
-### PSobject containing the display name, ID and description.
+### New app registration with credentials, and variables with the ID and secret.
 ## NOTES
 
 ## RELATED LINKS

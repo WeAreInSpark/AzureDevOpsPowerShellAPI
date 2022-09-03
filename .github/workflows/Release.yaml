@@ -1,10 +1,13 @@
-name: ReleaseModule
+name: CI
 on:
   push:
     branches:
       - main
+<<<<<<< HEAD
     paths:
       - "InSpark.InfrastructureAsCode/**"
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 jobs:
   test:
     name: Release module
@@ -16,7 +19,11 @@ jobs:
 
       - name: Get Previous tag
         id: previoustag
+<<<<<<< HEAD
         uses: "WyriHaximus/github-action-get-previous-tag@8a0e045f02c0a3a04e1452df58b90fc7e555e950"
+=======
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+>>>>>>> 18d4dd8 (InitialVersion)
         with:
           fallback: 0.0.0
 
@@ -24,7 +31,11 @@ jobs:
         id: CalcVersion
         shell: pwsh
         run: |
+<<<<<<< HEAD
           $Uri = "https://api.github.com/repos/weareinspark/BRC.PS.InfrastructureAsCode/pulls?state=closed"
+=======
+          $Uri = "https://api.github.com/repos/weareinspark/DNA.AutomateRelease/pulls?state=closed"
+>>>>>>> 18d4dd8 (InitialVersion)
           $PR = curl -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.Github_Token }}" $uri | ConvertFrom-Json | Where-Object {$_.merge_commit_sha -eq "${{ github.sha }}"}
           $Title = $PR.title
 
@@ -57,7 +68,11 @@ jobs:
           Install-Module -Name Az.Accounts -Force
           Install-Module -Name Az.KeyVault -Force
 
+<<<<<<< HEAD
           $Params = @{
+=======
+          $Parms = @{
+>>>>>>> 18d4dd8 (InitialVersion)
             Path = "${{ github.workspace }}/InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psd1"
             ModuleVersion = $env:NewVersion
             PrivateData = @{
@@ -67,7 +82,11 @@ jobs:
               }
             }
           }
+<<<<<<< HEAD
           Update-ModuleManifest @Params
+=======
+          Update-ModuleManifest -Path "${{ github.workspace }}/InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psd1" -ModuleVersion $env:NewVersion
+>>>>>>> 18d4dd8 (InitialVersion)
 
       - name: Create github release
         uses: actions/github-script@v5.1.1
@@ -82,9 +101,15 @@ jobs:
         shell: pwsh
         env:
           PAT: ${{ secrets.PAT }}
+<<<<<<< HEAD
           VSS_NUGET_EXTERNAL_FEED_ENDPOINTS: '{"endpointCredentials": [{"endpoint":"https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2", "username":"${{ secrets.Username }}", "password":"${{ secrets.PAT }}"}]}'
         run: |
           Register-PSRepository -Name "InSpark" -SourceLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2" -PublishLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2" -InstallationPolicy Trusted
+=======
+          VSS_NUGET_EXTERNAL_FEED_ENDPOINTS: '{"endpointCredentials": [{"endpoint":"https://pkgs.dev.azure.com/weareinspark/_packaging/dylantest/nuget/v2", "username":"${{ secrets.Username }}", "password":"${{ secrets.PAT }}"}]}'
+        run: |
+          Register-PSRepository -Name "InSpark" -SourceLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/dylantest/nuget/v2" -PublishLocation "https://pkgs.dev.azure.com/weareinspark/_packaging/dylantest/nuget/v2" -InstallationPolicy Trusted
+>>>>>>> 18d4dd8 (InitialVersion)
 
           $Parameters = @{
             "PSRepository" = 'InSpark'
@@ -92,4 +117,8 @@ jobs:
             "ScriptAnalysisEnabled" = $true
             "TestEnabled" = $false
           }
+<<<<<<< HEAD
           ./build.ps1 -Task Init,Publish -Bootstrap -parameters $Parameters
+=======
+          ./build.ps1 -Task Init,Publish -Bootstrap -parameters $Parameters
+>>>>>>> 18d4dd8 (InitialVersion)

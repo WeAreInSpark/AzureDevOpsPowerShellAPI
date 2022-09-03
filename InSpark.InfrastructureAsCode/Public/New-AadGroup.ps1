@@ -5,6 +5,7 @@ function New-AadGroup {
 .DESCRIPTION
     Creates an Azure AD group. It defaults to an Office 365 group with a mail address.
 .EXAMPLE
+<<<<<<< HEAD
     New-AadGroup -GroupName "AD group 1" -MailNickname "AdGroup1"
 
     This example will create a new Azure AD group with a specific mail address.
@@ -22,10 +23,16 @@ function New-AadGroup {
     } | New-AadGroup
 
     This example will create new Azure AD groups with a specific mail addresses.
+=======
+    New-AadGroup -Name "AD group 1" -MailNickname "AdGroup1"
+
+    This example will create a new Azure AD group with a specific mail address.
+>>>>>>> 18d4dd8 (InitialVersion)
 .OUTPUTS
     PSobject containing the display name, ID and description.
 .NOTES
 #>
+<<<<<<< HEAD
     [CmdletBinding(SupportsShouldProcess)]
     param (
         # Name of the Azure AD Group
@@ -35,10 +42,22 @@ function New-AadGroup {
 
         # Provide nickname/alias for the email.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+=======
+    [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'ByDate')]
+    param (
+        # Name of the app registration
+        [Parameter(Mandatory)]
+        [string]
+        $Name,
+
+        # Provide nickname for the email. this cannot have spaces in it.
+        [Parameter(Mandatory)]
+>>>>>>> 18d4dd8 (InitialVersion)
         [string]
         $MailNickName,
 
         # Enable mail on the Azure AD group
+<<<<<<< HEAD
         [Parameter()]
         [switch]
         $MailEnabled = $true,
@@ -97,3 +116,28 @@ function New-AadGroup {
         }
     }
 }
+=======
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $MailEnabled = $true
+    )
+    Test-MgGraphConnection
+    $MailNickName = ($MailNickName -replace " ", "")
+    $ExistingGroup = Get-MgGroup | Where-Object { $_.DisplayName -eq $Name }
+
+    if ($ExistingGroup) {
+        Write-Error 'This Group already exists!'
+        exit
+    } else {
+        if ($PSCmdlet.ShouldProcess($Name)) {
+            $Group = New-MgGroup -DisplayName $Name -MailEnabled:$MailEnabled -MailNickname $MailNickName -SecurityEnabled:$true -Visibility 'private' -GroupTypes 'Unified' -WhatIf:$WhatIfPreference
+
+            [PSCustomObject]@{
+                DisplayName = $Group.DisplayName
+                Id          = $Group.Id
+                Description = $Group.Description
+            }
+        }
+    }
+}
+>>>>>>> 18d4dd8 (InitialVersion)

@@ -39,7 +39,11 @@ function New-AzDoProject {
         $CollectionUri,
 
         # PAT to get access to Azure DevOps.
+<<<<<<< HEAD
         [Parameter()]
+=======
+        [Parameter(Mandatory = $false)]
+>>>>>>> 18d4dd8 (InitialVersion)
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
@@ -94,7 +98,11 @@ function New-AzDoProject {
                 Write-Verbose "Trying to create the project"
                 Invoke-RestMethod @params
             } else {
+<<<<<<< HEAD
                 $Body | Format-List
+=======
+                Write-Output $Body | Format-List
+>>>>>>> 18d4dd8 (InitialVersion)
                 return
             }
 

@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 minor: minor/*
 patch: patch/*
 major: major/*
+=======
+feature: feature/*
+patch: patch/*
+breaking: breaking/*
+>>>>>>> 18d4dd8 (InitialVersion)

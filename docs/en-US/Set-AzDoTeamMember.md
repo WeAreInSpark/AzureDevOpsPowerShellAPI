@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-AzDoTeamMember
 
 ## SYNOPSIS
-Adds a Azure Group to a default team in an Azure DevOps project.
+This script creates a variable group with at least 1 variable in a given project.
 
 ## SYNTAX
 
@@ -18,17 +18,18 @@ Set-AzDoTeamMember [-OrganizationName] <String> [[-PAT] <String>] [-ProjectName]
 ```
 
 ## DESCRIPTION
-Adds a Azure Group to a default team in an Azure DevOps project.
+This script creates a variable group with at least 1 variable in a given project.
+When used in a pipeline, you can use the pre defined CollectionUri,
+ProjectName and AccessToken (PAT) variables.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
+To create a variable group 'test' with one variable:
 New-AzDoVariableGroup -collectionuri 'https://dev.azure.com/weareinspark/' -PAT '*******************' -ProjectName 'BusinessReadyCloud'
 -Name 'test' -Variables @{ test = @{ value = 'test' } } -Description 'This is a test'
 ```
-
-To create a variable group 'test' with one variable
 
 ## PARAMETERS
 
@@ -93,8 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter

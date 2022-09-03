@@ -1,9 +1,15 @@
 function New-AadAppRegistrationCertificate {
     <#
 .SYNOPSIS
+<<<<<<< HEAD
     Creates a X.509 certificate and uploads it to the App registration in Azure AD.
 .DESCRIPTION
     Creates a X.509 certificate and uploads it as an authentication factor to the App registration in Azure AD. The certificate will also be uploaded to an Azure KeyVault.
+=======
+    Creates a Certificate and uploads it to the App registration.
+.DESCRIPTION
+    Creates a Certificate and uploads it to the App registration. The certificate will also be saves to an Azure KeyVault.
+>>>>>>> 18d4dd8 (InitialVersion)
 .EXAMPLE
     $newAadAppRegistrationCertificateSplat = @{
         ObjectID = "00000-00000-00000-00000"
@@ -13,9 +19,15 @@ function New-AadAppRegistrationCertificate {
     }
     New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
 
+<<<<<<< HEAD
     This example will create a new certificate for the app registration, upload it to the Application Registration in Azure AD and upload it to Azure KeyVault.
 .OUTPUTS
     PSObject containing the thumbprint of the certificate and 2 dates when the certificate is valid.
+=======
+    This example will create a new certificate for the app registration.
+.OUTPUTS
+    PSobject containing thumbprint of certificate and 2 dates when the certificate is valid.
+>>>>>>> 18d4dd8 (InitialVersion)
 .NOTES
 #>
     [CmdletBinding(SupportsShouldProcess)]
@@ -31,7 +43,11 @@ function New-AadAppRegistrationCertificate {
         [string]
         $CertName,
 
+<<<<<<< HEAD
         # Name of the Azure Key Vault to store the certificate
+=======
+        # Name of the keyvault to store the certificate
+>>>>>>> 18d4dd8 (InitialVersion)
         [Parameter()]
         [string]
         $KeyVaultName,
@@ -44,6 +60,7 @@ function New-AadAppRegistrationCertificate {
         # Amount of months the certificate must be valid
         [Parameter()]
         [int]
+<<<<<<< HEAD
         $ValidityInMonths = 6,
 
         # Manually connect to Microsoft Graph
@@ -74,10 +91,26 @@ function New-AadAppRegistrationCertificate {
         # Wait until the certificate is added
         do {
             $Response = Get-AzKeyVaultCertificateOperation -VaultName $KeyVaultName -Name $certNameTrimmed
+=======
+        $ValidityInMonths = 6
+    )
+    Test-MgGraphConnection
+
+    $CertName = ($CertName -replace " ", "")
+    $SubjectName = ($SubjectName -replace " ", "")
+    $Policy = New-AzKeyVaultCertificatePolicy -SecretContentType "application/x-pkcs12" -SubjectName "CN=$SubjectName" -IssuerName "Self" -ValidityInMonths $ValidityInMonths -ReuseKeyOnRenewal
+
+    if ($PSCmdlet.ShouldProcess($ObjectId)) {
+        Add-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName -CertificatePolicy $Policy >> $null
+
+        do {
+            $Response = Get-AzKeyVaultCertificateOperation -VaultName $KeyVaultName -Name $CertName
+>>>>>>> 18d4dd8 (InitialVersion)
         } while (
             $Response.Status -ne 'completed'
         )
 
+<<<<<<< HEAD
         $keyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $certNameTrimmed
         $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $keyVaultCert.Name
         $secretValueText = ''
@@ -98,6 +131,22 @@ function New-AadAppRegistrationCertificate {
 
         $secretByte = [Convert]::FromBase64String($secretValueText)
         $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($secretByte, "", "Exportable,PersistKeySet")
+=======
+        $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
+        $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
+        $SecretValueText = ''
+        $SsPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secret.SecretValue)
+
+        try {
+            $SecretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SsPtr)
+        }
+        finally {
+            [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ssPtr)
+        }
+
+        $SecretByte = [Convert]::FromBase64String($secretValueText)
+        $Cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, "", "Exportable,PersistKeySet")
+>>>>>>> 18d4dd8 (InitialVersion)
 
         $KeyCredential = @{
             Type                = 'AsymmetricX509Cert'
@@ -105,7 +154,11 @@ function New-AadAppRegistrationCertificate {
             Key                 = $cert.RawData
             CustomKeyIdentifier = $cert.GetCertHash()
             EndDateTime         = $cert.NotAfter
+<<<<<<< HEAD
             DisplayName         = $certNameTrimmed
+=======
+            DisplayName         = $ClientSecretName
+>>>>>>> 18d4dd8 (InitialVersion)
         }
 
         Update-MgApplication -ApplicationId $ObjectID -KeyCredential $KeyCredential
@@ -116,4 +169,8 @@ function New-AadAppRegistrationCertificate {
             NotAfter   = $Cert.NotAfter
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 18d4dd8 (InitialVersion)

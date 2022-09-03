@@ -8,7 +8,11 @@ schema: 2.0.0
 # New-AadAppRegistrationCertificate
 
 ## SYNOPSIS
+<<<<<<< HEAD
 Creates a X.509 certificate and uploads it to the App registration in Azure AD.
+=======
+This script creates a new certificate or secret for an existing app registration.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## SYNTAX
 
@@ -19,28 +23,30 @@ New-AadAppRegistrationCertificate [-ObjectId] <String> [[-CertName] <String>] [[
 ```
 
 ## DESCRIPTION
+<<<<<<< HEAD
 Creates a X.509 certificate and uploads it as an authentication factor to the App registration in Azure AD.
 The certificate will also be uploaded to an Azure KeyVault.
+=======
+This script creates a new certificate or secret for an existing app registration.
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$newAadAppRegistrationCertificateSplat = @{
-    ObjectID = "00000-00000-00000-00000"
-    CertName = "cert01"
-    KeyVaultName = "kv01"
-    SubjectName = "contoso.com"
-}
-New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat
+To create a secret that lasts 1 year for an existing app registration, input the Application (client) ID of the app registration, a name for $ClientSecretName and set
+$ClientSecretDuration to 1.
 ```
 
+<<<<<<< HEAD
 This example will create a new certificate for the app registration, upload it to the Application Registration in Azure AD and upload it to Azure KeyVault.
 
+=======
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -ObjectId
-Object Id of the App registration
+Application (client) ID of the app registration
 
 ```yaml
 Type: String
@@ -85,7 +91,7 @@ Accept wildcard characters: False
 ```
 
 ### -SubjectName
-CN for the certificate
+{{ Fill SubjectName Description }}
 
 ```yaml
 Type: String
@@ -165,9 +171,17 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -ClientSecretDuration <Int32> [-CreateCert <Boolean>] [-CertName <String>]
+### [-KeyVaultName <String>] [<CommonParameters>]
+### New-AppRegistrationSecret -ClientSecretName <String> [-Append <Boolean>] -ClientId <String> -EndDate <String> [-CreateCert <Boolean>] [-CertName <String>] [-KeyVaultName
+### <String>] [<CommonParameters>]
 ## OUTPUTS
 
+<<<<<<< HEAD
 ### PSObject containing the thumbprint of the certificate and 2 dates when the certificate is valid.
+=======
+### New credentials in an app registration, and a variable with the secret.
+>>>>>>> 18d4dd8 (InitialVersion)
 ## NOTES
 
 ## RELATED LINKS

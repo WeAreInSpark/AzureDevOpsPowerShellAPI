@@ -13,7 +13,11 @@ Gets information about a repo in Azure DevOps.
 ## SYNTAX
 
 ```
+<<<<<<< HEAD
 Get-AzDoRepo -CollectionUri <String> [-PAT <String>] [-RepoName <String>] -ProjectName <String>
+=======
+Get-AzDoRepo [-CollectionUri] <String> [[-PAT] <String>] [[-Name] <String>] [-ProjectName] <String>
+>>>>>>> 18d4dd8 (InitialVersion)
  [<CommonParameters>]
 ```
 
@@ -31,6 +35,7 @@ $Params = @{
     ProjectName = "Project 1"
     Name "Repo 1"
 }
+<<<<<<< HEAD
 Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1"
 ```
 
@@ -61,6 +66,11 @@ get-AzDoProject -pat $pat -CollectionUri $collectionuri | Get-AzDoRepo -PAT $PAT
 
 This example will fetch information about the repo with the name 'Repo 1'.
 
+=======
+Get-AzDoRepo @Params
+```
+
+>>>>>>> 18d4dd8 (InitialVersion)
 ## PARAMETERS
 
 ### -CollectionUri
@@ -79,7 +89,26 @@ Accept wildcard characters: False
 ```
 
 ### -PAT
+<<<<<<< HEAD
 PAT to authenticate with the organization
+=======
+PAT to authentice with the organization
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Project where the variable group has to be created
+>>>>>>> 18d4dd8 (InitialVersion)
 
 ```yaml
 Type: String
@@ -128,6 +157,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### Get-AzDoRepo [-CollectionUri] <string> [-PAT] <string> [-ProjectName] <string> [-Name] <string>
 ## OUTPUTS
 
 ### PSObject with repo(s).
