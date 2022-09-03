@@ -24,7 +24,7 @@ jobs:
         id: CalcVersion
         shell: pwsh
         run: |
-          $Uri = "https://api.github.com/repos/weareinspark/DNA.AutomateRelease/pulls?state=closed"
+          $Uri = "https://api.github.com/repos/weareinspark/BRC.PS.InfrastructureAsCode/pulls?state=closed"
           $PR = curl -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.Github_Token }}" $uri | ConvertFrom-Json | Where-Object {$_.merge_commit_sha -eq "${{ github.sha }}"}
           $Title = $PR.title
 
