@@ -27,8 +27,7 @@ code $PROFILE
 ```
 5. Save the following code in your profile
 ```powershell
-Import-Module -Name 'Microsoft.PowerShell.SecretManagement'
-Import-Module -Name 'Microsoft.PowerShell.SecretStore'
+# This prepares authentication with the nuget packagefeed
 $env:VSS_NUGET_EXTERNAL_FEED_ENDPOINTS = @{
     endpointCredentials = @(
         @{
@@ -39,8 +38,15 @@ $env:VSS_NUGET_EXTERNAL_FEED_ENDPOINTS = @{
     )
 } | ConvertTo-Json
 
+# This creates a persistant PSCredential so you can easily install modules from the repository
 $InSparkAzureDevopsArtifacts = New-Object System.Management.Automation.PSCredential("<REPLACE ME>", (Get-Secret -Name Pat)) # Replace with your e-mail (User Principal Name)
 ```
+
+## Install Azure Artifact Credential Provider
+
+1. Follow the steps to install the [Azure Artifact Credential Provider](https://github.com/microsoft/artifacts-credprovider#setup)
+
+
 ## Set-up the Powershell Repository
 1. Restart PowerShell session
 2. Register the Repository
@@ -58,9 +64,46 @@ Register-PSRepository @registerPSRepositorySplat
 ```powershell
 Find-Module -Repository InSpark
 ```
-4. Install the module
+4. Install the module ()
 ```powershell
 Install-Module -Name InSpark.InfrastructureAsCode -Scope CurrentUser -Repository InSpark -Credential $InSparkAzureDevopsArtifacts
+```
+
+## Troubleshooting
+
+### Query Url ... is invalid
+**Issue**
+In some cases PowerShell returns errors during `Find-Module` or `Install-Module`.
+PowerShell will return errors like:
+```powershell
+Find-Module -Repository InSpark
+WARNING: Query Url https://pkgs.dev.azure.com/weareinspark/_packaging/PowerShell/nuget/v2 is invalid.
+```
+
+PowerShell sometimes registers a NuGet Provider as a PackageSource when registering a PSRepository instead of just the PowerShellGet entry.
+You can check this by performing
+
+```powershell
+Get-PackageSource
+
+Name                             ProviderName     IsTrusted  Location
+----                             ------------     ---------  --------
+PSGallery                        PowerShellGet    True       https://www.powershellgallery.com/api/v2
+InSpark                          PowerShellGet    True       https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2
+InSpark                          NuGet            True       https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2
+```
+**Fix**
+
+You can remove NuGet the PackageSource with:
+
+```powershell
+Unregister-PackageSource -Name InSpark -ProviderName NuGet
+```
+
+Make sure to validate that functionality is restored:
+
+```powershell
+Find-Module -Repository InSpark
 ```
 ## Reference
 - [https://devblogs.microsoft.com/powershell-community/how-to-use-the-secret-modules/](https://devblogs.microsoft.com/powershell-community/how-to-use-the-secret-modules/)
