@@ -7,7 +7,6 @@ We use Powershell Secret Management with a local stored secret vault. This imple
 | :warning: WARNING                                                                                                     |
 | :-------------------------------------------------------------------------------------------------------------------- |
 | Contain the PAT to this permission (Packaging (Read Access)), since it's going to be exposed to the environment vars. |
-| :---------------------------                                                                                          |
 
 ## Set-up authentication with PAT
 1. Install the required modules
