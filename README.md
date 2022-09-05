@@ -6,7 +6,7 @@
 </h1>
 
  <p align="center">
-    PowerShell module to automate DevOps services
+    PowerShell module to automate tasks in Azure DevOps and Azure AD services
     <br />
     <a href="https://weareinspark.github.io/BRC.PS.InfrastructureAsCode/"><strong>Explore the docs »</strong></a>
   </p>
