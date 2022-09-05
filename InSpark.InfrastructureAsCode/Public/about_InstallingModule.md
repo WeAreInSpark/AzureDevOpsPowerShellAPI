@@ -82,7 +82,7 @@ WARNING: Query Url https://pkgs.dev.azure.com/weareinspark/_packaging/PowerShell
 ```
 
 PowerShell sometimes registers a NuGet Provider as a PackageSource when registering a PSRepository instead of just the PowerShellGet entry.
-You can check this by performing
+You can check this by performing:
 
 ```powershell
 Get-PackageSource
@@ -95,7 +95,7 @@ InSpark                          NuGet            True       https://pkgs.dev.az
 ```
 **Fix**
 
-You can remove NuGet the PackageSource with:
+You can remove the NuGet PackageSource with:
 
 ```powershell
 Unregister-PackageSource -Name InSpark -ProviderName NuGet
