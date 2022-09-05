@@ -3,9 +3,11 @@ In this document we will describe how to register the PowerShell repository loca
 We use Powershell Secret Management with a local stored secret vault. This implementation has 1 downside, you will need to enter your password (One that you will create is this guide) every time you start PowerShell.
 ## Requirements
 - PAT with Packaging (Read Access) to weareinspark organization
+
 | :warning: WARNING                                                                                                       |
 | :---------------------------------------------------------------------------------------------------------------------- |
 | Contain the permission of the PAT to (Packaging (Read Access)), since it's going to be exposed to the environment vars. |
+
 ## Set-up authentication with PAT
 1. Install the required modules
 ```powershell
