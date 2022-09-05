@@ -17,10 +17,9 @@
 </p>
 
 <p align="center">
-  <a href="CODE_OF_CONDUCT.md">Code of conduct</a> |
-  <a href=".github/CONTRIBUTING.md">Contributing</a> |
+  <a href="https://weareinspark.github.io/BRC.PS.InfrastructureAsCode/about_InstallingModule/">Installation</a> |
+  <a href="https://weareinspark.github.io/BRC.PS.InfrastructureAsCode/">Module Documentation</a> |
   <a href="LICENSE">License</a> |
-  <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/releases">Releases</a> |
 
 ## Overview
 
