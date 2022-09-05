@@ -65,7 +65,9 @@ Install-Module -Name InSpark.InfrastructureAsCode -Scope CurrentUser -Repository
 ```
 ## Troubleshooting
 ### Query Url ... is invalid
+
 **Issue**
+
 In some cases PowerShell returns errors during `Find-Module` or `Install-Module`.
 PowerShell will return errors like:
 ```powershell
@@ -82,7 +84,9 @@ PSGallery                        PowerShellGet    True       https://www.powersh
 InSpark                          PowerShellGet    True       https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2
 InSpark                          NuGet            True       https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2
 ```
+
 **Fix**
+
 You can remove the NuGet PackageSource with:
 ```powershell
 Unregister-PackageSource -Name InSpark -ProviderName NuGet
@@ -94,3 +98,4 @@ Find-Module -Repository InSpark
 ## Reference
 - [https://devblogs.microsoft.com/powershell-community/how-to-use-the-secret-modules/](https://devblogs.microsoft.com/powershell-community/how-to-use-the-secret-modules/)
 - [https://docs.microsoft.com/en-us/azure/devops/artifacts/tutorials/private-powershell-library?view=azure-devops](https://docs.microsoft.com/en-us/azure/devops/artifacts/tutorials/private-powershell-library?view=azure-devops)
+- [https://github.com/microsoft/artifacts-credprovider](https://github.com/microsoft/artifacts-credprovider)
