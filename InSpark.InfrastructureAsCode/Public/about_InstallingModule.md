@@ -42,7 +42,8 @@ $env:VSS_NUGET_EXTERNAL_FEED_ENDPOINTS = @{
 $InSparkAzureDevopsArtifacts = New-Object System.Management.Automation.PSCredential("<REPLACE ME>", (Get-Secret -Name Pat)) # Replace with your e-mail (User Principal Name)
 ```
 ## Set-up the Powershell Repository
-1. Register the Repository
+1. Restart PowerShell session
+2. Register the Repository
 ```powershell
 $registerPSRepositorySplat = @{
     Name = "InSpark"
@@ -52,6 +53,14 @@ $registerPSRepositorySplat = @{
     Credential = $InSparkAzureDevopsArtifacts
 }
 Register-PSRepository @registerPSRepositorySplat
+```
+3. Validate that the setup succeeded
+```powershell
+Find-Module -Repository InSpark
+```
+4. Install the module
+```powershell
+Install-Module -Name InSpark.InfrastructureAsCode -Scope CurrentUser -Repository InSpark -Credential $InSparkAzureDevopsArtifacts
 ```
 ## Reference
 - [https://devblogs.microsoft.com/powershell-community/how-to-use-the-secret-modules/](https://devblogs.microsoft.com/powershell-community/how-to-use-the-secret-modules/)
