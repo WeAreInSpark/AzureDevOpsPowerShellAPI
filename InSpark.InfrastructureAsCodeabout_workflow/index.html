@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Set-AzDoProjectSetting - InfrastuctureAsCode</title>
+    <title>Workflow - InfrastuctureAsCode</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Set-AzDoProjectSetting";
-        var mkdocs_page_input_path = "Set-AzDOProjectSetting.md";
+        var mkdocs_page_name = "Workflow";
+        var mkdocs_page_input_path = "InSpark.InfrastructureAsCodeabout_workflow.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -46,6 +46,10 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../Get-AzDoRepo/">Get-AzDoRepo</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Workflow</a>
                 </li>
               </ul>
               <ul>
@@ -92,8 +96,8 @@
                 <li class="toctree-l1"><a class="reference internal" href="../New-AzDoVariableGroup/">New-AzDoVariableGroup</a>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Set-AzDoProjectSetting</a>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Set-AzDoProjectSetting/">Set-AzDoProjectSetting</a>
                 </li>
               </ul>
               <ul>
@@ -126,9 +130,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Set-AzDoProjectSetting</li>
+      <li>Workflow</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/edit/master/docs/Set-AzDOProjectSetting.md"
+        <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/edit/master/docs/InSpark.InfrastructureAsCodeabout_workflow.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -137,170 +141,62 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="set-azdoprojectsetting">Set-AzDoProjectSetting</h1>
-<h2 id="synopsis">SYNOPSIS</h2>
-<p>{{ Fill in the Synopsis }}</p>
-<h2 id="syntax">SYNTAX</h2>
-<pre><code>Set-AzDoProjectSetting [-CollectionUri] &lt;String&gt; [[-PAT] &lt;String&gt;] [-ProjectName] &lt;String&gt;
- [[-EnforceJobAuthScope] &lt;Boolean&gt;] [[-EnforceJobAuthScopeForReleases] &lt;Boolean&gt;]
- [[-EnforceReferencedRepoScopedToken] &lt;Boolean&gt;] [[-EnforceSettableVar] &lt;Boolean&gt;]
- [[-PublishPipelineMetadata] &lt;Boolean&gt;] [[-StatusBadgesArePrivate] &lt;Boolean&gt;] [-WhatIf] [-Confirm]
- [&lt;CommonParameters&gt;]
-</code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<p>{{ Fill in the Description }}</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
-<pre><code class="language-powershell">PS C:\&gt; {{ Add example code here }}
-</code></pre>
-<p>{{ Add example description here }}</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-collectionuri">-CollectionUri</h3>
-<p>{{ Fill CollectionUri Description }}</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-pat">-PAT</h3>
-<p>{{ Fill PAT Description }}</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-projectname">-ProjectName</h3>
-<p>{{ Fill ProjectName Description }}</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-enforcejobauthscope">-EnforceJobAuthScope</h3>
-<p>{{ Fill EnforceJobAuthScope Description }}</p>
-<pre><code class="language-yaml">Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-enforcejobauthscopeforreleases">-EnforceJobAuthScopeForReleases</h3>
-<p>{{ Fill EnforceJobAuthScopeForReleases Description }}</p>
-<pre><code class="language-yaml">Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-enforcereferencedreposcopedtoken">-EnforceReferencedRepoScopedToken</h3>
-<p>{{ Fill EnforceReferencedRepoScopedToken Description }}</p>
-<pre><code class="language-yaml">Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-enforcesettablevar">-EnforceSettableVar</h3>
-<p>{{ Fill EnforceSettableVar Description }}</p>
-<pre><code class="language-yaml">Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-publishpipelinemetadata">-PublishPipelineMetadata</h3>
-<p>{{ Fill PublishPipelineMetadata Description }}</p>
-<pre><code class="language-yaml">Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-statusbadgesareprivate">-StatusBadgesArePrivate</h3>
-<p>{{ Fill StatusBadgesArePrivate Description }}</p>
-<pre><code class="language-yaml">Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 9
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="language-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="language-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
-<h2 id="inputs">INPUTS</h2>
-<h3 id="none">None</h3>
-<h2 id="outputs">OUTPUTS</h2>
-<h3 id="systemobject">System.Object</h3>
-<h2 id="notes">NOTES</h2>
-<h2 id="related-links">RELATED LINKS</h2>
+                <h1 id="workflow">Workflow</h1>
+<p>In this document we will describe how our test en release workflow works. The test workflow starts when a pull request opens and the release workflow starts when there is a commit on the main branch with a change in the folder InSpark.InfrastructureAsCode.</p>
+<p><img alt="Image" src="../images/workflow.png" /></p>
+<h2 id="pull-request-labels">Pull request labels</h2>
+<p>When a pull request opens the test workflow wil start to set labels based on the head branch. You can find the labels in the file <a href="../../.github/pr-labeler.yml">pr-labeler.yml</a>. The labels are used in other actions to determine the version or changes. The workflow will check if one of these labels are set and will then be added as a reviewer. You can also choose to set the labels manually if you are not on the right branch.</p>
+<p>Reference:</p>
+<ul>
+<li><a href="https://github.com/TimonVS/pr-labeler-action">Github - TimonVS - pr-labeler-action</a></li>
+<li><a href="https://github.com/NathanielHill/check-pr-label-action">Github - NathanielHill - check-pr-label-action</a></li>
+</ul>
+<h2 id="unit-testing">Unit testing</h2>
+<p>Before merging the PR, PSake will test the module with Pester and PSScriptAnalyzer. This will be done multiple times on different operating systems (Windows, Linux, Mac OS). The Pester tests are located in <a href="../../tests">tests/</a> and the PSScriptAnalyzer settings can be found in <a href="../../tests/ScriptAnalyzerSettings.psd1">ScriptAnalyzerSettings.psd1</a>.</p>
+<p>Reference:</p>
+<ul>
+<li><a href="https://github.com/psake/PowerShellBuild">Github - PowerShellBuild</a></li>
+</ul>
+<h2 id="search-for-previous-tags">Search for previous tags</h2>
+<p>When the labels are present and the unit tests completes whithout any errors the pull request will be merged intoo the main branch and the release workflow will start. The first action that takes place is the search for previous tags. This is needed to determine the new version of the module. When there are no tags found, the version 0.0.0 will be given.</p>
+<p>Reference:</p>
+<ul>
+<li><a href="https://github.com/WyriHaximus/github-action-get-previous-tag">github-action-get-previous-tag</a></li>
+</ul>
+<h2 id="calculating-the-new-version">Calculating the new version</h2>
+<p>All our versions are SemVer based and are calculated based on the labels that are set in the pull request. Examples:</p>
+<ul>
+<li>patch: 0.0.0 -&gt; 0.0.1</li>
+<li>minor: 0.0.0 -&gt; 0.1.0</li>
+<li>major: 0.0.0 -&gt; 1.0.0</li>
+</ul>
+<h2 id="updating-the-manifest">Updating the manifest</h2>
+<p>The manifest <a href="../../InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psd1">InSpark.InfrastructureAsCode.psd1</a> will be updated with the following information:</p>
+<ul>
+<li>New version</li>
+<li>Release notes (The name of the pull request)</li>
+<li>The Project URL (The Github repo URL)</li>
+</ul>
+<h2 id="create-a-github-release">Create a github release</h2>
+<p>There will be github release created based on a template that can be found in <a href="../../.github/release.yml">release.yml</a>. The template will look for All pull request between to the versions based on SemVer and add the pull request title and link to different sections. Because this workflow runs after every pull request there will always be one pull request linked in the github release.</p>
+<p>Reference:</p>
+<ul>
+<li><a href="https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes">Github - Automatically generated release notes</a></li>
+</ul>
+<h2 id="publishing-the-module">Publishing the module</h2>
+<p>When the manifest is updated the module is ready to be published. We use PSake to publish the module as well.
+We first make sure that the PowerShell repository is registered. For this reason we switched to a Windows runner, because the CmdLet Register-PSRepository does not work on a Linux runner. After this we will PSake publish the module to the repository. This will only work if the version is higher then the latest available version.</p>
+<p>Reference:</p>
+<ul>
+<li><a href="https://github.com/psake/PowerShellBuild">Github - PowerShellBuild</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/devops/artifacts/tutorials/private-powershell-library?view=azure-devops">Azure DevOps - Use an Azure Artifacts feed as a private PowerShell repository</a></li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../New-AzDoVariableGroup/" class="btn btn-neutral float-left" title="New-AzDoVariableGroup"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../Set-AzDoTeamMember/" class="btn btn-neutral float-right" title="Set-AzDoTeamMember">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Get-AzDoRepo/" class="btn btn-neutral float-left" title="Get-AzDoRepo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../New-AadAppRegistration/" class="btn btn-neutral float-right" title="New-AadAppRegistration">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -327,10 +223,10 @@ Accept wildcard characters: False
         </span>
     
     
-      <span><a href="../New-AzDoVariableGroup/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../Get-AzDoRepo/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../Set-AzDoTeamMember/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../New-AadAppRegistration/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

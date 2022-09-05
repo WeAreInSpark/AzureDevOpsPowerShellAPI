@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>New-AzDoServiceConnection - InfrastuctureAsCode</title>
+    <title>Set-AzDoProjectSetting - InfrastuctureAsCode</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "New-AzDoServiceConnection";
-        var mkdocs_page_input_path = "New-AzDoServiceConnection.md";
+        var mkdocs_page_name = "Set-AzDoProjectSetting";
+        var mkdocs_page_input_path = "Set-AzDoProjectSetting.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -88,16 +88,16 @@
                 <li class="toctree-l1"><a class="reference internal" href="../New-AzDoRepoFork/">New-AzDoRepoFork</a>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">New-AzDoServiceConnection</a>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../New-AzDoServiceConnection/">New-AzDoServiceConnection</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../New-AzDoVariableGroup/">New-AzDoVariableGroup</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Set-AzDoProjectSetting/">Set-AzDoProjectSetting</a>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Set-AzDoProjectSetting</a>
                 </li>
               </ul>
               <ul>
@@ -130,9 +130,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>New-AzDoServiceConnection</li>
+      <li>Set-AzDoProjectSetting</li>
     <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/edit/master/docs/New-AzDoServiceConnection.md"
+        <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/edit/master/docs/Set-AzDoProjectSetting.md"
           class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
@@ -141,255 +141,128 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="new-azdoserviceconnection">New-AzDoServiceConnection</h1>
+                <h1 id="set-azdoprojectsetting">Set-AzDoProjectSetting</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Function to create a service connection in Azure DevOps</p>
+<p>{{ Fill in the Synopsis }}</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="subscription">Subscription</h3>
-<pre><code>New-AzDoServiceConnection -Name &lt;String&gt; -CollectionUri &lt;String&gt; [-PAT &lt;String&gt;] -ProjectName &lt;String&gt;
- -ProjectID &lt;String&gt; [-Description &lt;String&gt;] [-ScopeLevel &lt;String&gt;] -SubscriptionId &lt;String&gt;
- -SubscriptionName &lt;String&gt; -Tenantid &lt;String&gt; -Serviceprincipalid &lt;String&gt; [-AuthenticationType &lt;String&gt;]
- [-Serviceprincipalkey &lt;String&gt;] [-KeyVaultName &lt;String&gt;] [-CertName &lt;String&gt;] [-WhatIf] [-Confirm]
- [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="managementgroup">ManagementGroup</h3>
-<pre><code>New-AzDoServiceConnection -Name &lt;String&gt; -CollectionUri &lt;String&gt; [-PAT &lt;String&gt;] -ProjectName &lt;String&gt;
- -ProjectID &lt;String&gt; [-Description &lt;String&gt;] [-ScopeLevel &lt;String&gt;] -ManagementGroupId &lt;String&gt;
- -ManagementGroupName &lt;String&gt; -Tenantid &lt;String&gt; -Serviceprincipalid &lt;String&gt; [-AuthenticationType &lt;String&gt;]
- [-Serviceprincipalkey &lt;String&gt;] [-KeyVaultName &lt;String&gt;] [-CertName &lt;String&gt;] [-WhatIf] [-Confirm]
+<pre><code>Set-AzDoProjectSetting [-CollectionUri] &lt;String&gt; [[-PAT] &lt;String&gt;] [-ProjectName] &lt;String&gt;
+ [[-EnforceJobAuthScope] &lt;Boolean&gt;] [[-EnforceJobAuthScopeForReleases] &lt;Boolean&gt;]
+ [[-EnforceReferencedRepoScopedToken] &lt;Boolean&gt;] [[-EnforceSettableVar] &lt;Boolean&gt;]
+ [[-PublishPipelineMetadata] &lt;Boolean&gt;] [[-StatusBadgesArePrivate] &lt;Boolean&gt;] [-WhatIf] [-Confirm]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>{{ Fill in the Description }}</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code>New-AzDoServiceConnection -CollectionUri $CollectionUri `
-    -PAT $PAT `
-    -ProjectName &quot;Project 1&quot; `
-    -SubscriptionId &quot;00000-00000-00000-00000-00000&quot; `
-    -SubscriptionName &quot;Subscription 1&quot; `
-    -Tenantid &quot;11111-11111-11111-11111-11111&quot; `
-    -Serviceprincipalid &quot;1c03163f-7e4e-4fab-8b41-6f040a8361b9&quot; `
-    -ServicePrincipalCertificate $ServicePrincipalCertificate `
-    -AuthenticationType 'spnCertificate' `
-    -ProjectID '1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2' `
-    -Name 'Project 1'
+<h3 id="example-1">Example 1</h3>
+<pre><code class="language-powershell">PS C:\&gt; {{ Add example code here }}
 </code></pre>
-<p>Service connection with certificate</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code>New-AzDoServiceConnection -CollectionUri $CollectionUri `
-    -PAT $PAT `
-    -ProjectName &quot;Project 1&quot; `
-    -SubscriptionId &quot;00000-00000-00000-00000-00000&quot; `
-    -SubscriptionName &quot;Subscription 1&quot; `
-    -Tenantid &quot;11111-11111-11111-11111-11111&quot; `
-    -Serviceprincipalid &quot;1c03163f-7e4e-4fab-8b41-6f040a8361b9&quot; `
-    -Serviceprincipalkey $Serviceprincipalkey
-</code></pre>
-<p>Service connection with key</p>
+<p>{{ Add example description here }}</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-name">-Name</h3>
-<p>Name of the service connection.</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-collectionuri">-CollectionUri</h3>
-<p>Collection Uri.
-e.g.
-https://dev.azure.com/contoso.</p>
+<p>{{ Fill CollectionUri Description }}</p>
 <pre><code class="language-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-pat">-PAT</h3>
-<p>PAT to get access to Azure DevOps.</p>
+<p>{{ Fill PAT Description }}</p>
 <pre><code class="language-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-projectname">-ProjectName</h3>
-<p>Name of the project.</p>
+<p>{{ Fill ProjectName Description }}</p>
 <pre><code class="language-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-projectid">-ProjectID</h3>
-<p>ID of the project.</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-description">-Description</h3>
-<p>Description to add to the service connection.</p>
-<pre><code class="language-yaml">Type: String
+<h3 id="-enforcejobauthscope">-EnforceJobAuthScope</h3>
+<p>{{ Fill EnforceJobAuthScope Description }}</p>
+<pre><code class="language-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-scopelevel">-ScopeLevel</h3>
-<p>Scope level (Subscription or ManagementGroup).</p>
-<pre><code class="language-yaml">Type: String
+<h3 id="-enforcejobauthscopeforreleases">-EnforceJobAuthScopeForReleases</h3>
+<p>{{ Fill EnforceJobAuthScopeForReleases Description }}</p>
+<pre><code class="language-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: Subscription
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-subscriptionid">-SubscriptionId</h3>
-<p>ID of the subscriptionn.</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: Subscription
-Aliases:
-
-Required: True
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-subscriptionname">-SubscriptionName</h3>
-<p>Name of the subscription.</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: Subscription
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-managementgroupid">-ManagementGroupId</h3>
-<p>ID of the Management group.</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: ManagementGroup
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-managementgroupname">-ManagementGroupName</h3>
-<p>Name of the Management group.</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: ManagementGroup
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-tenantid">-Tenantid</h3>
-<p>ID of the tenant.</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-serviceprincipalid">-Serviceprincipalid</h3>
-<p>Client ID of the app registration.</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-authenticationtype">-AuthenticationType</h3>
-<p>AuthenticationType (spnKey or spnCertificate).</p>
-<pre><code class="language-yaml">Type: String
+<h3 id="-enforcereferencedreposcopedtoken">-EnforceReferencedRepoScopedToken</h3>
+<p>{{ Fill EnforceReferencedRepoScopedToken Description }}</p>
+<pre><code class="language-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: SpnKey
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-serviceprincipalkey">-Serviceprincipalkey</h3>
-<p>App secret of the app registation.</p>
-<pre><code class="language-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-keyvaultname">-KeyVaultName</h3>
-<p>Certificate of the App registration in .PEM format.</p>
-<pre><code class="language-yaml">Type: String
+<h3 id="-enforcesettablevar">-EnforceSettableVar</h3>
+<p>{{ Fill EnforceSettableVar Description }}</p>
+<pre><code class="language-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-certname">-CertName</h3>
-<p>{{ Fill CertName Description }}</p>
-<pre><code class="language-yaml">Type: String
+<h3 id="-publishpipelinemetadata">-PublishPipelineMetadata</h3>
+<p>{{ Fill PublishPipelineMetadata Description }}</p>
+<pre><code class="language-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-statusbadgesareprivate">-StatusBadgesArePrivate</h3>
+<p>{{ Fill StatusBadgesArePrivate Description }}</p>
+<pre><code class="language-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -421,14 +294,17 @@ Accept wildcard characters: False
 <h3 id="commonparameters">CommonParameters</h3>
 <p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="inputs">INPUTS</h2>
+<h3 id="none">None</h3>
 <h2 id="outputs">OUTPUTS</h2>
+<h3 id="systemobject">System.Object</h3>
+<h2 id="notes">NOTES</h2>
 <h2 id="related-links">RELATED LINKS</h2>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../New-AzDoRepoFork/" class="btn btn-neutral float-left" title="New-AzDoRepoFork"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../New-AzDoVariableGroup/" class="btn btn-neutral float-right" title="New-AzDoVariableGroup">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../New-AzDoVariableGroup/" class="btn btn-neutral float-left" title="New-AzDoVariableGroup"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Set-AzDoTeamMember/" class="btn btn-neutral float-right" title="Set-AzDoTeamMember">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -455,10 +331,10 @@ Accept wildcard characters: False
         </span>
     
     
-      <span><a href="../New-AzDoRepoFork/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../New-AzDoVariableGroup/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../New-AzDoVariableGroup/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../Set-AzDoTeamMember/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

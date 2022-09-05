@@ -49,6 +49,10 @@
                 </li>
               </ul>
               <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InSpark.InfrastructureAsCodeabout_workflow/">Workflow</a>
+                </li>
+              </ul>
+              <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../New-AadAppRegistration/">New-AadAppRegistration</a>
                 </li>
               </ul>
@@ -93,7 +97,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Set-AzDOProjectSetting/">Set-AzDoProjectSetting</a>
+                <li class="toctree-l1"><a class="reference internal" href="../Set-AzDoProjectSetting/">Set-AzDoProjectSetting</a>
                 </li>
               </ul>
               <ul>
@@ -142,7 +146,8 @@
 <p>This script creates a new certificate or secret for an existing app registration.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code>New-AadAppRegistrationCertificate [-ObjectId] &lt;String&gt; [[-CertName] &lt;String&gt;] [[-KeyVaultName] &lt;String&gt;]
- [[-SubjectName] &lt;String&gt;] [[-ValidityInMonths] &lt;Int32&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+ [[-SubjectName] &lt;String&gt;] [[-ValidityInMonths] &lt;Int32&gt;] [-ManuallyConnectToGraph] [-WhatIf] [-Confirm]
+ [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This script creates a new certificate or secret for an existing app registration.</p>
@@ -209,6 +214,18 @@ Aliases:
 Required: False
 Position: 5
 Default value: 6
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-manuallyconnecttograph">-ManuallyConnectToGraph</h3>
+<p>Manually connect to Microsoft Graph</p>
+<pre><code class="language-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
