@@ -1,4 +1,10 @@
-site_name: none
-repo_url: https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode
-theme: readthedocs
+site_name: InfrastuctureAsCode
+repo_url: https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/
+docs_dir: docs/en-US
+theme:
+  name: readthedocs
+  titles_only: true
 
+plugins:
+  - search
+  - awesome-pages
