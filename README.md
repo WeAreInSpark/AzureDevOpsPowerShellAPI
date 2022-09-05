@@ -8,7 +8,7 @@
  <p align="center">
     PowerShell module to automate DevOps services
     <br />
-    <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/"><strong>Explore the docs »</strong></a>
+    <a href="https://weareinspark.github.io/BRC.PS.InfrastructureAsCode/"><strong>Explore the docs »</strong></a>
   </p>
 <p align="center">
   <a href="https://dev.azure.com/weareinspark/Expertteam%20Deployment%20and%20Automation/_artifacts/feed/PowerShell/NuGet/InSpark.InfrastructureAsCode">
@@ -24,4 +24,4 @@
 
 ## Overview
 
-  
+
