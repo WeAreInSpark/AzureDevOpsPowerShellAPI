@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="CODE_OF_CONDUCT.md">Code of conduct</a> |
-  <a href=".github/CONTRIBUTING">Contributing</a> |
+  <a href=".github/CONTRIBUTING.md">Contributing</a> |
   <a href="LICENSE">License</a> |
   <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/releases">Releases</a> |
 
