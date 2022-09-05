@@ -73,6 +73,7 @@ Install-Module -Name InSpark.InfrastructureAsCode -Scope CurrentUser -Repository
 
 ### Query Url ... is invalid
 **Issue**
+
 In some cases PowerShell returns errors during `Find-Module` or `Install-Module`.
 PowerShell will return errors like:
 ```powershell
