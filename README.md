@@ -8,11 +8,11 @@
  <p align="center">
     PowerShell module to automate DevOps services
     <br />
-    <a href="https://weareinspark.github.io/DNA.AutomateRelease/"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/"><strong>Explore the docs »</strong></a>
   </p>
 <p align="center">
-  <a href="https://dev.azure.com/DylanPrins/Foundation/_artifacts/feed/DylanPrins">
-   <img alt="Azure Artifact" src="https://feeds.dev.azure.com/weareinspark/_apis/public/Packaging/Feeds/dylantest@Local/Packages/7b1950cf-43c6-4daa-910e-5c3c596aad50/Badge">
+  <a href="https://dev.azure.com/weareinspark/Expertteam%20Deployment%20and%20Automation/_artifacts/feed/PowerShell/NuGet/InSpark.InfrastructureAsCode">
+   <img alt="Azure Artifact" src="https://feeds.dev.azure.com/weareinspark/_apis/public/Packaging/Feeds/PowerShell/Packages/200425db-4a18-4620-9e56-e793d845934c/Badge">
   </a>
 </p>
 
@@ -20,6 +20,8 @@
   <a href="CODE_OF_CONDUCT.md">Code of conduct</a> |
   <a href=".github/CONTRIBUTING">Contributing</a> |
   <a href="LICENSE">License</a> |
-  <a href="https://github.com/WeAreInSpark/DNA.AutomateRelease/releases">Releases</a> |
+  <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/releases">Releases</a> |
 
 ## Overview
+
+  
