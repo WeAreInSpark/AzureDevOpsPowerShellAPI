@@ -1,4 +1,4 @@
-{
+ypo{
   "$schema": "https://aka.ms/codetour-schema",
   "title": "Repo Structure (Detailed)",
   "steps": [
@@ -143,7 +143,7 @@
     },
     {
       "file": "tests/ScriptAnalyzerSettings.psd1",
-      "description": "Our PowerShell Script Analyzer rules settings, with the addition of the Indented.ScriptAnalyzerRules module rules.\r\n\r\nThe rules also are integrated in our development process with VSCode by the help of the PowerShell Extension.\r\n\r\nIn our [settings.json](.\\.vscode\\settings.json) we set the setting referenced below, so it highlights your code if VSCode is opened at the repo-root (BRC.PS.InfrastructureAsCode):\r\n\r\n`powershell.scriptAnalysis.settingsPath\": \"tests/ScriptAnalyzerSettings.psd1\"`\r\n\r\nFor more infomration on PowerShell Script Analyzer: https://docs.microsoft.com/en-us/powershell/module/psscriptanalyzer/?view=ps-modules",
+      "description": "Our PowerShell Script Analyzer rules settings, with the addition of the Indented.ScriptAnalyzerRules module rules.\r\n\r\nThe rules also are integrated in our development process with VSCode by the help of the PowerShell Extension.\r\n\r\nIn our [settings.json](.\\.vscode\\settings.json) we set the setting referenced below, so it highlights your code if VSCode is opened at the repo-root (BRC.PS.InfrastructureAsCode):\r\n\r\n`powershell.scriptAnalysis.settingsPath\": \"tests/ScriptAnalyzerSettings.psd1\"`\r\n\r\nFor more information on PowerShell Script Analyzer: https://docs.microsoft.com/en-us/powershell/module/psscriptanalyzer/?view=ps-modules",
       "line": 1
     },
     {
