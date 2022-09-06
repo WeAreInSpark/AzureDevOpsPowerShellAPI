@@ -4,7 +4,7 @@ We use Powershell Secret Management with a local stored secret vault. This imple
 ## Requirements
 - PAT with Packaging (Read Access) to weareinspark organization
 
-| :warning: WARNING                                                                                                       |
+| ⚠️ WARNING                                                                                                               |
 | :---------------------------------------------------------------------------------------------------------------------- |
 | Contain the permission of the PAT to (Packaging (Read Access)), since it's going to be exposed to the environment vars. |
 
