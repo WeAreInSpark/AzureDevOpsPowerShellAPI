@@ -37,17 +37,17 @@ PSCustomObject
     [CmdletBinding()]
     param (
         # Collection Uri of the organization
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]
         $CollectionUri,
 
         # PAT to authenticate with the organization
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $PAT,
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # ID of the project
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]
         $ProjectId,
 

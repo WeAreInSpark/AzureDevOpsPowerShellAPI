@@ -26,9 +26,9 @@ function Get-AzDoObject {
         $CollectionUri,
 
         # PAT to authenticate with the organization
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
-        $PAT,
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # ID of the project
         [Parameter(Mandatory, ParameterSetName = 'ProjectId')]

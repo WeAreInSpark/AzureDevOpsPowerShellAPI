@@ -1,9 +1,9 @@
 function Add-GitRepositoryPermission {
     <#
 .SYNOPSIS
-    Adds a git repository permission
+    Adds a permission on project or repository level
 .DESCRIPTION
-    Adds a git repository permission
+    Adds a permission on project or repository level
 .EXAMPLE
     $params = @{
         CollectionUri       = "https://dev.azure.com/weareinspark"
@@ -40,9 +40,9 @@ function Add-GitRepositoryPermission {
         $CollectionUri,
 
         # PAT to authenticate with the organization
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+        [Parameter()]
         [string]
-        $PAT,
+        $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # ID of the project
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
@@ -51,6 +51,7 @@ function Add-GitRepositoryPermission {
 
         # ID of the repository
         [Parameter(ValueFromPipelineByPropertyName)]
+        [Parameter(ParameterSetName = 'RepoPermissions')]
         [string]
         $RepositoryId,
 
@@ -70,17 +71,17 @@ function Add-GitRepositoryPermission {
         $RoleName,
 
         # Variable group name to set the permissions on
-        [Parameter()]
+        [Parameter(ParameterSetName = 'VariableGroupPermissions')]
         [string]
         $VariableGroupName,
 
         # Name of the service connection to set the permissions on
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ServiceConnectionPermissions')]
         [string]
         $ServiceConnectionName,
 
         # Switch to set permissions on all service connections
-        [Parameter()]
+        [Parameter(ParameterSetName = 'AllServiceConnections')]
         [switch]
         $AllServiceConnections,
 
@@ -146,11 +147,11 @@ function Add-GitRepositoryPermission {
         if ($Deny) {
             $Deny = $Actions.$Deny
         }
-        if ($GroupName) {
-            $Descriptor = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -GroupName $GroupName).IdentityDescriptor
-        }
         if ($UserName) {
             $Descriptor = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -UserName $UserName).IdentityDescriptor
+        }
+        if ($GroupName) {
+            $Descriptor = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -GroupName $GroupName).IdentityDescriptor
         }
         $Token = "repoV2/$ProjectId"
         if ($RepositoryId) {
@@ -169,12 +170,6 @@ function Add-GitRepositoryPermission {
             $VariableGroupId = ((Invoke-RestMethod @params).value | Where-Object { $_.name -EQ $VariableGroupName }).id
 
             $Token = "Library/$ProjectId/VariableGroup/$VariableGroupId"
-            if ($UserName) {
-                $Descriptor = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -UserName $UserName).IdentityDescriptor
-            }
-            if ($GroupName) {
-                $Descriptor = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -GroupName $GroupName).IdentityDescriptor
-            }
         }
 
         $addAccessControlEntrySplat = @{
