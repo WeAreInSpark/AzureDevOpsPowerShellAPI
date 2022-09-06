@@ -51,7 +51,6 @@ function Add-GitRepositoryPermission {
 
         # ID of the repository
         [Parameter(ValueFromPipelineByPropertyName)]
-        [Parameter(ParameterSetName = 'RepoPermissions')]
         [string]
         $RepositoryId,
 
@@ -71,26 +70,26 @@ function Add-GitRepositoryPermission {
         $RoleName,
 
         # Variable group name to set the permissions on
-        [Parameter(ParameterSetName = 'VariableGroupPermissions')]
+        [Parameter()]
         [string]
         $VariableGroupName,
 
         # Name of the service connection to set the permissions on
-        [Parameter(ParameterSetName = 'ServiceConnectionPermissions')]
+        [Parameter()]
         [string]
         $ServiceConnectionName,
 
         # Switch to set permissions on all service connections
-        [Parameter(ParameterSetName = 'AllServiceConnections')]
+        [Parameter()]
         [switch]
         $AllServiceConnections,
 
         # Actions to allow
-        [parameter()]
+        [Parameter()]
         $Allow,
 
         # Actions to deny
-        [parameter()]
+        [Parameter()]
         $Deny
     )
 

@@ -21,7 +21,7 @@ function Get-AzDoProjectName {
     [CmdletBinding()]
     param (
         # Collection Uri of the organization
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
         $CollectionUri,
 
@@ -31,7 +31,7 @@ function Get-AzDoProjectName {
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # ID of the project
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
         $ProjectId
     )
