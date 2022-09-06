@@ -112,8 +112,24 @@
                 <h1 id="infrastructureascode">InfrastructureAsCode</h1>
 <p>Powershell module for API to DevOps services</p>
 <h2 id="overview">Overview</h2>
+<p>Automate tasks in Azure DevOps and Azure AD. Works on Windows Linux and MacOS.</p>
 <h2 id="installation">Installation</h2>
-<h2 id="examples">Examples</h2>
+<pre><code class="language-powershell">Install-Module -Name InSpark.InfrastructureAsCode -Scope CurrentUser -Repository InSpark -Credential $InSparkAzureDevopsArtifacts
+</code></pre>
+<p>For more information on how to setup access to our repository, please checkout <a href="https://weareinspark.github.io/BRC.PS.InfrastructureAsCode/about_InstallingModule/">our guide</a>. The <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/blob/main/docs/en-US/about_InstallingModule.md">source documentation on installation can also be found here</a>.</p>
+<h2 id="basic-usage">Basic Usage</h2>
+<h3 id="list-all-azure-devops-projects">List all Azure DevOps projects</h3>
+<pre><code class="language-powershell">$Params = @{
+    CollectionUri = &quot;https://dev.azure.com/contoso&quot;
+    PAT = &quot;***&quot;
+}
+Get-AzDoProject @params
+</code></pre>
+<h3 id="create-an-azure-devops-project">Create an Azure DevOps Project</h3>
+<pre><code class="language-powershell">New-AzDoProject -CollectionUri &quot;https://dev.azure.com/contoso&quot; -PAT &quot;***&quot; -ProjectName &quot;Project 1&quot;
+</code></pre>
+<h2 id="contributing">Contributing</h2>
+<p>Contributions are welcome! Open a pull request to fix a bug, or open an issue to discuss a new feature or change.</p>
               
             </div>
           </div><footer>
@@ -165,5 +181,5 @@
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-09-06 13:02:25.014552+00:00
+Build Date UTC : 2022-09-06 19:24:48.578377+00:00
 -->
