@@ -84,6 +84,11 @@ function Add-GitRepositoryPermission {
         [switch]
         $AllServiceConnections,
 
+        # When enabled, the permissions will be set on the project build service
+        [Parameter()]
+        [switch]
+        $BuildServicePermissions,
+
         # Actions to allow
         [Parameter()]
         $Allow,
@@ -94,6 +99,10 @@ function Add-GitRepositoryPermission {
     )
 
     begin {
+        if ($BuildServicePermissions) {
+            $ProjectName = Get-AzDoProjectName -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId
+            $UserName = "$ProjectName Build Service ($($CollectionUri.split('/')[3]))"
+        }
         if ($VariableGroupName) {
             $SecurityNamespaceId = 'b7e84409-6553-448a-bbb2-af228e07cbeb'
             $Actions = @{
