@@ -16,12 +16,14 @@
   "extensions": [
     "ms-vscode.powershell-preview",
     "davidanson.vscode-markdownlint",
-    "TylerLeonhardt.vscode-pester-test-adapter",
     "eamodio.gitlens",
     "GitHub.vscode-pull-request-github",
     "pspester.pester-test",
-    "hbenl.vscode-test-explorer",
-    "ms-vscode.test-adapter-converter"
+    "mhutchie.git-graph",
+    "cschleiden.vscode-github-actions",
+    "rangav.vscode-thunder-client",
+    "Gruntfuggly.todo-tree",
+    "ms-vscode.azure-account"
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],

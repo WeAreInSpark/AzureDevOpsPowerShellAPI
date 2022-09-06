@@ -1,12 +1,12 @@
 # Workflow
 
-In this document we will describe how our test en release workflow works. The test workflow starts when a pull request opens and the release workflow starts when there is a commit on the main branch with a change in the folder InSpark.InfrastructureAsCode.
+In this document we describe how our test and release workflows work. The test workflow starts when a pull request opens and the release workflow starts when there is a commit on the main branch with a change in the folder InSpark.InfrastructureAsCode.
 
 ![Image](images/workflow.png)
 
 ## Pull request labels
 
-When a pull request opens the test workflow wil start to set labels based on the head branch. You can find the labels in the file [pr-labeler.yml](../../.github/pr-labeler.yml). The labels are used in other actions to determine the version or changes. The workflow will check if one of these labels are set and will then be added as a reviewer. You can also choose to set the labels manually if you are not on the right branch.
+When a pull request opens the test workflow will start to set labels based on the head branch. You can find the labels in the file [pr-labeler.yml](../../.github/pr-labeler.yml). The labels are used in other actions to determine the version or changes. The workflow will check if one of these labels are set and will then be added as a reviewer. You can also choose to set the labels manually if you are not on the right branch.
 
 Reference:
 
@@ -15,7 +15,7 @@ Reference:
 
 ## Unit testing
 
-Before merging the PR, PSake will test the module with Pester and PSScriptAnalyzer. This will be done multiple times on different operating systems (Windows, Linux, Mac OS). The Pester tests are located in [tests/](../../tests) and the PSScriptAnalyzer settings can be found in [ScriptAnalyzerSettings.psd1](../../tests/ScriptAnalyzerSettings.psd1).
+Before merging the PR, PSake will test the module with Pester and PSScriptAnalyzer. The tests will be performed on different operating systems (Windows, Linux, Mac OS). The Pester tests are located in [tests/](../../tests) and the PSScriptAnalyzer settings can be found in [ScriptAnalyzerSettings.psd1](../../tests/ScriptAnalyzerSettings.psd1).
 
 Reference:
 
@@ -23,7 +23,7 @@ Reference:
 
 ## Search for previous tags
 
-When the labels are present and the unit tests completes whithout any errors the pull request will be merged intoo the main branch and the release workflow will start. The first action that takes place is the search for previous tags. This is needed to determine the new version of the module. When there are no tags found, the version 0.0.0 will be given.
+When the labels are present and the unit tests complete whithout any errors, the pull request will be merged into the main branch and the release workflow will start. The first action that takes place is the search for previous tags. This is required to determine the new version of the module. When no tags are found, the version 0.0.0 will be given.
 
 Reference:
 
@@ -47,7 +47,7 @@ The manifest [InSpark.InfrastructureAsCode.psd1](../../InSpark.InfrastructureAsC
 
 ## Create a github release
 
-There will be github release created based on a template that can be found in [release.yml](../../.github/release.yml). The template will look for All pull request between to the versions based on SemVer and add the pull request title and link to different sections. Because this workflow runs after every pull request there will always be one pull request linked in the github release.
+After a new commit on the main branch, there will be GitHub release created based on a template that can be found in [release.yml](../../.github/release.yml). The template will look for all pull request between the two (previous and current) versions based on SemVer and add the pull request title and link to different sections. Because this workflow runs after every pull request there will always be one pull request linked in the github release.
 
 Reference:
 
