@@ -93,19 +93,3 @@ jobs:
             "TestEnabled" = $false
           }
           ./build.ps1 -Task Init,Publish -Bootstrap -parameters $Parameters
-
-  Docs:
-    name: Deploy docs to GitHub Pages
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Build
-        uses: Tiryoh/actions-mkdocs@v0
-        with:
-          requirements: "mkdocs.txt"
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
