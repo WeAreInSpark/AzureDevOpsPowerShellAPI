@@ -26,7 +26,7 @@ function Add-AzDoPermission {
     }
     Add-AzDoPermission @params
 
-    This example gives the user 'BRC Build Service (weareinspark)' the adminstrator role on all service endpoints in project
+    This example gives the user 'BRC Build Service (weareinspark)' the adminstrator role on all service connections in project
     6ed46fc1-9152-4a63-8817-530fd24b1662
 .EXAMPLE
     $params = @{
