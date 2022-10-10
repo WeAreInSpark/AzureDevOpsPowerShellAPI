@@ -10,11 +10,11 @@ function Add-AzDoPermission {
         PAT                 = "***"
         ProjectName         = TestProject
         GroupName           = Contributors
-        Allow               = 256
+        Allow               = 'Create repository'
     }
     Add-AzDoPermission @params
 
-    This example gives the contributor group permission to create repositories
+    This example gives the contributors group permission to create repositories
 .EXAMPLE
     $params = @{
         CollectionUri           = "https://dev.azure.com/weareinspark"
@@ -26,8 +26,7 @@ function Add-AzDoPermission {
     }
     Add-AzDoPermission @params
 
-    This example gives the user 'BRC Build Service (weareinspark)' the adminstrator role on all service connections in project
-    6ed46fc1-9152-4a63-8817-530fd24b1662
+    This example gives the Build Service user the adminstrator role on all service connections in project 6ed46fc1-9152-4a63-8817-530fd24b1662
 .EXAMPLE
     $params = @{
         CollectionUri           = "https://dev.azure.com/weareinspark"
@@ -57,17 +56,26 @@ function Add-AzDoPermission {
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Name of the project
-        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectName')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectNameRepoName')]
+        [Parameter(ParameterSetName = 'ByProjectNameRepoId')]
         [string]
         $ProjectName,
 
         # ID of the project
-        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectId')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectIdRepoName')]
+        [Parameter(ParameterSetName = 'ByProjectIdRepoId')]
         [string]
         $ProjectId,
 
+        # Name of the repository
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectNameRepoName')]
+        [Parameter(ParameterSetName = 'ByProjectIdRepoName')]
+        [string]
+        $RepositoryName,
+
         # ID of the repository
-        [Parameter(ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectNameRepoId')]
+        [Parameter(ParameterSetName = 'ByProjectIdRepoId')]
         [string]
         $RepositoryId,
 
@@ -123,6 +131,9 @@ function Add-AzDoPermission {
     begin {
         if ($ProjectName) {
             $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName).ProjectId
+        }
+        if ($RepositoryName) {
+            $RepositoryId = (Get-AzDoRepo -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName -RepoName $RepositoryName).RepoId
         }
         if ($BuildServicePermissions) {
             if (-not ($ProjectName)) {
