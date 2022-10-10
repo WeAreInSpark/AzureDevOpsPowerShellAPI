@@ -17,12 +17,12 @@ function Add-AzDoPermission {
     This example gives the contributor group permission to create repositories
 .EXAMPLE
     $params = @{
-        CollectionUri         = "https://dev.azure.com/weareinspark"
-        PAT                   = "***"
-        ProjectId             = '6ed46fc1-9152-4a63-8817-530fd24b1662'
-        UserName              = BRC Build Service (weareinspark)
-        RoleName              = Administrator
-        AllServiceConnections = $true
+        CollectionUri           = "https://dev.azure.com/weareinspark"
+        PAT                     = "***"
+        ProjectId               = '6ed46fc1-9152-4a63-8817-530fd24b1662'
+        RoleName                = Administrator
+        BuildServicePermissions = $true
+        AllServiceConnections   = $true
     }
     Add-AzDoPermission @params
 
@@ -39,7 +39,7 @@ function Add-AzDoPermission {
     }
     Add-AzDoPermission @params
 
-    This example gives the Build Service user Administrator permissions on all variable groups in TestProject
+    This example gives the Build Service user the administrator role on all variable groups in TestProject
 .OUTPUTS
 
 .NOTES
