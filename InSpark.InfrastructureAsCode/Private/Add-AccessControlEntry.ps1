@@ -68,7 +68,7 @@ PSCustomObject
 
         # Token used in the body of the API call
         [Parameter()]
-        [string]
+        [string[]]
         $Token,
 
         # The descriptor for the user/group this AccessControlEntry applies to
@@ -101,7 +101,6 @@ PSCustomObject
     process {
         if ($AllServiceConnections) {
             $body = "[{`"userId`": `"$UserId`",`"roleName`": `"$RoleName`"}]"
-
             $params = @{
                 uri         = "$CollectionUri/_apis/securityroles/scopes/distributedtask.project.serviceendpointrole/roleassignments/resources/$($ProjectId)?api-version=7.1-preview.1"
                 body        = $body
@@ -154,7 +153,6 @@ PSCustomObject
         if ($Deny) {
             $accessControlEntries['Deny'] = $Deny
         }
-
         $body = @{
             token                = $Token
             merge                = $true
@@ -162,33 +160,58 @@ PSCustomObject
                 $accessControlEntries
             )
         }
-
         if ($Token -match 'VariableGroup') {
+            foreach ($variableGroupToken in $Token) {
+                $body = @{
+                    token                = $variableGroupToken
+                    merge                = $true
+                    accessControlEntries = @(
+                        $accessControlEntries
+                    )
+                }
+                $params = @{
+                    uri         = "$CollectionUri/_apis/accesscontrolentries/$($SecurityNamespaceId)?token=$($variableGroupToken)&descriptors=$($Descriptor)&api-version=7.1-preview.1"
+                    body        = $body | ConvertTo-Json -Depth 99
+                    Method      = 'DELETE'
+                    Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+                    ContentType = 'application/json'
+
+                }
+                $response = Invoke-RestMethod @params
+
+
+                $params = @{
+                    uri         = "$CollectionUri/_apis/accesscontrolentries/$($SecurityNamespaceId)?api-version=7.1-preview.1"
+                    body        = $body | ConvertTo-Json -Depth 99
+                    Method      = 'POST'
+                    Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+                    ContentType = 'application/json'
+
+                }
+                $response = Invoke-RestMethod @params
+
+                [PSCustomObject]@{
+                    Descriptor = $response.value.descriptor
+                    Allow      = $response.value.allow
+                    Deny       = $response.value.deny
+                }
+            }
+        } else {
             $params = @{
-                uri         = "$CollectionUri/_apis/accesscontrolentries/$($SecurityNamespaceId)?token=$($Token)&descriptors=$($Descriptor)&api-version=7.1-preview.1"
+                uri         = "$CollectionUri/_apis/accesscontrolentries/$($SecurityNamespaceId)?api-version=7.1-preview.1"
                 body        = $body | ConvertTo-Json -Depth 99
-                Method      = 'DELETE'
+                Method      = 'POST'
                 Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
                 ContentType = 'application/json'
 
             }
             $response = Invoke-RestMethod @params
-        }
 
-        $params = @{
-            uri         = "$CollectionUri/_apis/accesscontrolentries/$($SecurityNamespaceId)?api-version=7.1-preview.1"
-            body        = $body | ConvertTo-Json -Depth 99
-            Method      = 'POST'
-            Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
-            ContentType = 'application/json'
-
-        }
-        $response = Invoke-RestMethod @params
-
-        [PSCustomObject]@{
-            Descriptor = $response.value.descriptor
-            Allow      = $response.value.allow
-            Deny       = $response.value.deny
+            [PSCustomObject]@{
+                Descriptor = $response.value.descriptor
+                Allow      = $response.value.allow
+                Deny       = $response.value.deny
+            }
         }
     }
 }
