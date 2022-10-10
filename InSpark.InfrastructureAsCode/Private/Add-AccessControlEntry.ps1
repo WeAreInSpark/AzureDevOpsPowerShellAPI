@@ -179,7 +179,6 @@ PSCustomObject
                 }
                 $response = Invoke-RestMethod @params
 
-
                 $params = @{
                     uri         = "$CollectionUri/_apis/accesscontrolentries/$($SecurityNamespaceId)?api-version=7.1-preview.1"
                     body        = $body | ConvertTo-Json -Depth 99
