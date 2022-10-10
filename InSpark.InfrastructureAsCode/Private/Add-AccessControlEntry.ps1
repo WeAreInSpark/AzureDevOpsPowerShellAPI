@@ -154,7 +154,7 @@ PSCustomObject
             $accessControlEntries['Deny'] = $Deny
         }
         $body = @{
-            token                = $Token
+            token                = [string]$Token
             merge                = $true
             accessControlEntries = @(
                 $accessControlEntries
