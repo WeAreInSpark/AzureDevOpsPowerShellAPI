@@ -53,7 +53,7 @@ function Get-AzDoProject {
     [CmdletBinding()]
     param (
         # Collection Uri of the organization
-        [Parameter()]
+        [Parameter(Mandatory)]
         [string]
         $CollectionUri,
 
@@ -85,7 +85,7 @@ function Get-AzDoProject {
             (Invoke-RestMethod @params) | ForEach-Object {
                 [PSCustomObject]@{
                     ProjectName       = $_.name
-                    ProjectID         = $_.id
+                    ProjectId         = $_.id
                     ProjectURL        = $_.url
                     CollectionURI     = $CollectionUri
                     ProjectVisibility = $_.visibility
@@ -96,7 +96,7 @@ function Get-AzDoProject {
             (Invoke-RestMethod @params).value | ForEach-Object {
                 [PSCustomObject]@{
                     ProjectName       = $_.name
-                    ProjectID         = $_.id
+                    ProjectId         = $_.id
                     ProjectURL        = $_.url
                     CollectionURI     = $CollectionUri
                     ProjectVisibility = $_.visibility
