@@ -28,6 +28,18 @@ function Add-AzDoPermission {
 
     This example gives the user 'BRC Build Service (weareinspark)' the adminstrator role on all service endpoints in project
     6ed46fc1-9152-4a63-8817-530fd24b1662
+.EXAMPLE
+    $params = @{
+        CollectionUri           = "https://dev.azure.com/weareinspark"
+        PAT                     = "***"
+        ProjectName             = TestProject
+        RoleName                = Administrator
+        AllVariableGroups       = $true
+        BuildServicePermissions = $true
+    }
+    Add-AzDoPermission @params
+
+    This example gives the Build Service user Administrator permissions on all variable groups in TestProject
 .OUTPUTS
 
 .NOTES
