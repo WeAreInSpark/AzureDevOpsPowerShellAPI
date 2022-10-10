@@ -8,8 +8,8 @@ function Add-AzDoPermission {
     $params = @{
         CollectionUri       = "https://dev.azure.com/weareinspark"
         PAT                 = "***"
-        ProjectName         = TestProject
-        GroupName           = Contributors
+        ProjectName         = 'TestProject'
+        GroupName           = 'Contributors'
         Allow               = 'Create repository'
     }
     Add-AzDoPermission @params
@@ -20,7 +20,7 @@ function Add-AzDoPermission {
         CollectionUri           = "https://dev.azure.com/weareinspark"
         PAT                     = "***"
         ProjectId               = '6ed46fc1-9152-4a63-8817-530fd24b1662'
-        RoleName                = Administrator
+        RoleName                = 'Administrator'
         BuildServicePermissions = $true
         AllServiceConnections   = $true
     }
@@ -31,8 +31,8 @@ function Add-AzDoPermission {
     $params = @{
         CollectionUri           = "https://dev.azure.com/weareinspark"
         PAT                     = "***"
-        ProjectName             = TestProject
-        RoleName                = Administrator
+        ProjectName             = 'TestProject'
+        RoleName                = 'Administrator'
         AllVariableGroups       = $true
         BuildServicePermissions = $true
     }
@@ -56,26 +56,22 @@ function Add-AzDoPermission {
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
         # Name of the project
-        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectNameRepoName')]
-        [Parameter(ParameterSetName = 'ByProjectNameRepoId')]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]
         $ProjectName,
 
         # ID of the project
-        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectIdRepoName')]
-        [Parameter(ParameterSetName = 'ByProjectIdRepoId')]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]
         $ProjectId,
 
         # Name of the repository
-        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectNameRepoName')]
-        [Parameter(ParameterSetName = 'ByProjectIdRepoName')]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]
         $RepositoryName,
 
         # ID of the repository
-        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ByProjectNameRepoId')]
-        [Parameter(ParameterSetName = 'ByProjectIdRepoId')]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]
         $RepositoryId,
 
