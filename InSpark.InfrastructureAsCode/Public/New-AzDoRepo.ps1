@@ -43,7 +43,7 @@ function New-AzDoRepo {
     )
     process {
         $Projects = Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT
-        $ProjectId = ($Projects | Where-Object ProjectName -EQ $ProjectName).Projectid
+        $ProjectId = ($Projects | Where-Object ProjectName -EQ $ProjectName).ProjectId
 
         $Body = @{
             name    = $RepoName
