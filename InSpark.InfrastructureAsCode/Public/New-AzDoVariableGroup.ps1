@@ -71,13 +71,11 @@ function New-AzDoVariableGroup {
     )
     Process {
         foreach ($name in $VariableGroupName) {
-
             $body = @{
                 description = $Description
                 name        = $name
                 variables   = $Variables
             }
-
             $params = @{
                 uri         = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups?api-version=5.0-preview.1"
                 Method      = 'POST'
@@ -85,9 +83,7 @@ function New-AzDoVariableGroup {
                 body        = $Body | ConvertTo-Json -Depth 99
                 ContentType = 'application/json'
             }
-
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-
                 (Invoke-RestMethod @params) | ForEach-Object {
                     [PSCustomObject]@{
                         VariableGroupName = $_.name
