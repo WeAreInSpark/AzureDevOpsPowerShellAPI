@@ -100,6 +100,7 @@ function New-AzDoRepoClone {
         } else {
             $Path = (Get-Location).Path
             New-Item -Path "$Path/TempScriptBaseline" -ItemType Directory
+            Set-Location "$Path/TempScriptBaseline"
 
             git clone "https://$SourcePAT@dev.azure.com/$SourceOrganizationName/$SourceProjectName/_git/$SourceRepoName" --branch main
             Set-Location $SourceRepoName
