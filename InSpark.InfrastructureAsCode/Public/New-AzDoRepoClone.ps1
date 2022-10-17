@@ -108,7 +108,6 @@ function New-AzDoRepoClone {
 
             Set-Location $Path
             Remove-Item -Recurse -Force "$Path/TempScriptBaseline"
-
         }
 
         $getAzDoRepoSplat = @{
