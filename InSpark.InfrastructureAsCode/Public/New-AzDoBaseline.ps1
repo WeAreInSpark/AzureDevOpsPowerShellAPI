@@ -84,24 +84,6 @@ function New-AzDoBaseline {
         [bool]
         $Mirror = $false
     )
-    $SourceOrganizationName = 'WeAreInSpark'
-    $SourcePAT = 'o4exieba6irbbsaezqfshtz3xouseihr4rmo6y7rmcydatpumypa'
-    $SourceProjectName = 'CIA'
-    $DestinationOrganizationName = 'LucasBahnmuller0751'
-    $DestinationPAT = '7r4xzhc6m5jcsixkvkqafu43y7fla22hrnjem4jrclfylrg2bdca'
-    $DestinationProjectName = 'TestProject'
-    $SubscriptionName = 'Generic - Team DNA'
-    $SubscriptionId = '1e95b10c-266b-4d4f-9be2-856a3bb1462e'
-    $TenantId = 'cd004ec9-bc4b-4721-82df-cd3a2e134a09'
-    $KeyVaultName = 'kv-lucas-test'
-    $AppRegistrationName = 'lucastestscript'
-    $NewProject = $true
-    $NewRepo = $true
-    $Mirror = $false
-
-    # Connect-AzAccount -tenantid $TenantId
-    # Set-AzContext $SubscriptionName
-
     # Create project
     if ($NewProject) {
         $newAzDoProjectSplat = @{
