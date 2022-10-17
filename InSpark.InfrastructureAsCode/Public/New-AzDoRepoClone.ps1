@@ -114,6 +114,12 @@ function New-AzDoRepoClone {
             ProjectName   = $DestinationProjectName
             PAT           = $DestinationPAT
         }
-        Get-AzDoRepo @getAzDoRepoSplat
+        Get-AzDoRepo @getAzDoRepoSplat | ForEach-Object {
+            [PSCustomObject]@{
+                RepoName    = $_.RepoName
+                RepoId      = $_.RepoId
+                ProjectName = $_.ProjectName
+            }
+        }
     }
 }
