@@ -40,7 +40,7 @@ function New-AadAppRegistration {
         Write-Error 'This Application already exists!'
         return
     } else {
-        if ($PSCmdlet.ShouldProcess()) {
+        if ($PSCmdlet.ShouldProcess('Azure AD')) {
             $Application = New-MgApplication -DisplayName $Name
 
             # Create an AAD service principal
