@@ -98,16 +98,13 @@ function New-AzDoRepoClone {
 
             git push --mirror "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
         } else {
-            $Path = (Get-Location).Path
-            New-Item -Path (Split-Path -Parent -Path $Path) -Name 'TempScriptBaseline' -ItemType Directory
-            Set-Location (Join-Path -ChildPath 'TempScriptBaseline' -Path (Split-Path -Parent -Path $Path))
+            $TempFile = New-TemporaryFile
 
             git clone "https://$SourcePAT@dev.azure.com/$SourceOrganizationName/$SourceProjectName/_git/$SourceRepoName" --branch main
             Set-Location $SourceRepoName
             git push "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
 
-            Set-Location $Path
-            Remove-Item -Recurse -Force (Join-Path -ChildPath 'TempScriptBaseline' -Path (Split-Path -Parent -Path $Path))
+            Remove-Item -Recurse -Force $TempFile
         }
 
         $getAzDoRepoSplat = @{
