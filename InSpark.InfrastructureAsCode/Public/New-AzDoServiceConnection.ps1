@@ -11,12 +11,12 @@ function New-AzDoServiceConnection {
             ProjectName                 = "Project 1"
             SubscriptionId              = "00000-00000-00000-00000-00000"
             SubscriptionName            = "Subscription 1"
-            Tenantid                    = "11111-11111-11111-11111-11111"
+            TenantId                    = "11111-11111-11111-11111-11111"
             Serviceprincipalid          = "1c03163f-7e4e-4fab-8b41-6f040a8361b9"
             KeyVaultName                = "kv01"
             CertName                    = "Cert01"
             AuthenticationType          = "spnCertificate"
-            ProjectID                   = "1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2"
+            ProjectId                   = "1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2"
             Name                        = "Project 1"
         }
         New-AzDoServiceConnection @params
@@ -49,7 +49,7 @@ function New-AzDoServiceConnection {
         # ID of the project.
         [Parameter(Mandatory)]
         [string]
-        $ProjectID,
+        $ProjectId,
 
         # Description to add to the service connection.
         [Parameter()]
@@ -85,7 +85,7 @@ function New-AzDoServiceConnection {
         # ID of the tenant.
         [Parameter(Mandatory)]
         [string]
-        $Tenantid,
+        $TenantId,
 
         # Client ID of the app registration.
         [Parameter(Mandatory)]
@@ -145,7 +145,7 @@ function New-AzDoServiceConnection {
     if ($AuthenticationType -eq 'spnKey') {
         $authorization = @{
             parameters = @{
-                tenantid            = $Tenantid
+                TenantId            = $TenantId
                 serviceprincipalid  = $Serviceprincipalid
                 authenticationType  = $AuthenticationType
                 serviceprincipalkey = $Serviceprincipalkey
@@ -175,7 +175,7 @@ function New-AzDoServiceConnection {
 
         $Authorization = @{
             parameters = @{
-                tenantid                    = $Tenantid
+                TenantId                    = $TenantId
                 serviceprincipalid          = $Serviceprincipalid
                 authenticationType          = $AuthenticationType
                 servicePrincipalCertificate = $Pem.ToString()
@@ -196,7 +196,7 @@ function New-AzDoServiceConnection {
         serviceEndpointProjectReferences = @(
             @{
                 projectReference = @{
-                    id   = $ProjectID
+                    id   = $ProjectId
                     name = $ProjectName
                 }
                 name             = $Name
