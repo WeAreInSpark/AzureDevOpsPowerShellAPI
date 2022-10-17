@@ -12,7 +12,7 @@ function New-AzDoBaseline {
     PSobject containing the display name, ID and description.
 .NOTES
 #>
-    [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'BySubscriptionName')]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Tenant ID of the destination's project.
         [Parameter(Mandatory)]
@@ -109,14 +109,21 @@ function New-AzDoBaseline {
             PAT           = $DestinationPAT
             ProjectName   = $DestinationProjectName
         }
-        $ProjectId = (New-AzDoProject @newAzDoProjectSplat).Id
+        New-AzDoProject @newAzDoProjectSplat
 
-        $setAzDoProjectSettingsSplat = @{
+        $setAzDoProjectSettingSplat = @{
             CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
             PAT           = $DestinationPAT
             ProjectName   = $DestinationProjectName
         }
-        Set-AzDoProjectSettings @setAzDoProjectSettingsSplat | Format-List
+        Set-AzDoProjectSetting @setAzDoProjectSettingSplat | Format-List
+
+        $getAzDoProjectSplat = @{
+            CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
+            PAT           = $DestinationPAT
+            ProjectName   = $DestinationProjectName
+        }
+        $ProjectId = (Get-AzDoProject @getAzDoProjectSplat).ProjectId
     }
 
     # Get Project ID
@@ -147,13 +154,13 @@ function New-AzDoBaseline {
         CollectionUri      = "https://dev.azure.com/$DestinationOrganizationName"
         PAT                = $DestinationPAT
         ProjectName        = $DestinationProjectName
-        ProjectID          = $ProjectId
-        Description        = "Demo test connection"
+        ProjectId          = $ProjectId
+        Description        = ""
         ScopeLevel         = 'Subscription'
         SubscriptionId     = $SubscriptionId
         SubscriptionName   = $SubscriptionName
-        Tenantid           = $TenantId
-        Serviceprincipalid = '1ab217fe-1d72-4934-8ea5-32712880e92f'
+        TenantId           = $TenantId
+        Serviceprincipalid = $AppRegistration.AppId
         AuthenticationType = 'spnCertificate'
         KeyVaultName       = $KeyVaultName
         CertName           = $newAadAppRegistrationCertificateSplat.CertName
@@ -184,7 +191,6 @@ function New-AzDoBaseline {
 
     $newAzDoPipelineSplat = @{
         CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
-        Name          = $PipelineName
         ProjectName   = $DestinationProjectName
         PAT           = $DestinationPAT
     }
@@ -193,6 +199,7 @@ function New-AzDoBaseline {
         CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
         PAT           = $DestinationPAT
         ProjectName   = $DestinationProjectName
+        Description   = ''
     }
 
     ### Foundation
@@ -201,14 +208,14 @@ function New-AzDoBaseline {
     $PipelineName = 'Foundation'
     $VariableGroupName = 'Foundation'
 
-    $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).id
-    New-AzDoPipeline @newAzDoPipelineSplat -Name $PipelineName -RepoName $DestinationRepoName
+    $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
+    New-AzDoPipeline @newAzDoPipelineSplat -PipelineName $PipelineName -RepoName $DestinationRepoName
 
     $Variables = @{
         RepoId    = $RepoId
         ProjectId = $ProjectId
     }
-    New-AzDoVariableGroup @newAzDoVariableGroupSplat -Name $VariableGroupName -Variables $Variables
+    New-AzDoVariableGroup @newAzDoVariableGroupSplat -VariableGroupName $VariableGroupName -Variables $Variables
 
     $addAzDoPermissionSplat = @{
         CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
@@ -226,14 +233,14 @@ function New-AzDoBaseline {
     $PipelineName = 'PlatformConnectivity'
     $VariableGroupName = 'Platform-Connectivity-Weu'
 
-    $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).id
-    New-AzDoPipeline @newAzDoPipelineSplat -Name $PipelineName -RepoName $DestinationRepoName
+    $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
+    New-AzDoPipeline @newAzDoPipelineSplat -PipelineName $PipelineName -RepoName $DestinationRepoName
 
     $Variables = @{
         RepoId    = $RepoId
         ProjectId = $ProjectId
     }
-    New-AzDoVariableGroup @newAzDoVariableGroupSplat -Name $VariableGroupName -Variables $Variables
+    New-AzDoVariableGroup @newAzDoVariableGroupSplat -VariableGroupName $VariableGroupName -Variables $Variables
 
     $addAzDoPermissionSplat = @{
         CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
@@ -251,14 +258,14 @@ function New-AzDoBaseline {
     $PipelineName = 'PlatformIdentity'
     $VariableGroupName = 'Platform-Identity-Weu'
 
-    $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).id
-    New-AzDoPipeline @newAzDoPipelineSplat -Name $PipelineName -RepoName $DestinationRepoName
+    $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
+    New-AzDoPipeline @newAzDoPipelineSplat -PipelineName $PipelineName -RepoName $DestinationRepoName
 
     $Variables = @{
         RepoId    = $RepoId
         ProjectId = $ProjectId
     }
-    New-AzDoVariableGroup @newAzDoVariableGroupSplat -Name $VariableGroupName -Variables $Variables
+    New-AzDoVariableGroup @newAzDoVariableGroupSplat -VariableGroupName $VariableGroupName -Variables $Variables
 
     $addAzDoPermissionSplat = @{
         CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
@@ -276,14 +283,14 @@ function New-AzDoBaseline {
     $PipelineName = 'PlatformManagement'
     $VariableGroupName = 'Platform-Management-Weu'
 
-    $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).id
-    New-AzDoPipeline @newAzDoPipelineSplat -Name $PipelineName -RepoName $DestinationRepoName
+    $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
+    New-AzDoPipeline @newAzDoPipelineSplat -PipelineName $PipelineName -RepoName $DestinationRepoName
 
     $Variables = @{
         RepoId    = $RepoId
         ProjectId = $ProjectId
     }
-    New-AzDoVariableGroup @newAzDoVariableGroupSplat -Name $VariableGroupName -Variables $Variables
+    New-AzDoVariableGroup @newAzDoVariableGroupSplat -VariableGroupName $VariableGroupName -Variables $Variables
 
     $addAzDoPermissionSplat = @{
         CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
