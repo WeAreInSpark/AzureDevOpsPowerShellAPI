@@ -106,6 +106,7 @@ function New-AzDoRepoClone {
             git push "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
 
             Remove-Item -Recurse -Force "$Path/TempScriptBaseline"
+            Set-Location $Path
         }
 
         $getAzDoRepoSplat = @{
