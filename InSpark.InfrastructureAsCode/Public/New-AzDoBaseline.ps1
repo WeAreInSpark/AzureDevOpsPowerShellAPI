@@ -84,17 +84,17 @@ function New-AzDoBaseline {
 
         # Whether to create a new project in the destiniation organization.
         [Parameter()]
-        [switch]
+        [boolean]
         $NewProject = $true,
 
         # Whether to create new repositories in the destiniation project.
         [Parameter()]
-        [switch]
+        [boolean]
         $NewRepo = $true,
 
         # Whether to perform a mirror clone, which also clones branches and tags.
         [Parameter()]
-        [switch]
+        [boolean]
         $Mirror = $false
     )
     # Create project
