@@ -82,19 +82,19 @@ function New-AzDoBaseline {
         [string]
         $KeyVaultName,
 
-        # Switch to create a new project in the destiniation organization.
+        # Whether to create a new project in the destiniation organization.
         [Parameter()]
-        [bool]
+        [switch]
         $NewProject = $true,
 
-        # Switch to create new repositories in the destiniation project.
+        # Whether to create new repositories in the destiniation project.
         [Parameter()]
-        [bool]
+        [switch]
         $NewRepo = $true,
 
-        # Switch to perform a mirror clone, which also clones branches and tags.
+        # Whether to perform a mirror clone, which also clones branches and tags.
         [Parameter()]
-        [bool]
+        [switch]
         $Mirror = $false
     )
     # Create project
