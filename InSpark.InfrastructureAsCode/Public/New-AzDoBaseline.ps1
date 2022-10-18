@@ -1,15 +1,28 @@
 function New-AzDoBaseline {
     <#
 .SYNOPSIS
-    Creates the Azure DevOps baseline.
+    Creates the Azure DevOps baseline within a newly created project.
 .DESCRIPTION
-    Creates the Azure DevOps baseline.
+    This script creates an app registration to be used for a service connection and stores the created certificate in a key vault.
+    A new project is created and the foundation, platformmanagement, platformidentity and platformconnectivity CIA repositories are cloned into this project.
+    It also creates a pipeline and variable group for each of the repositories and stores the RepoId and ProjectId values.
+    The project's build service user is given the administrator role on these variable groups and also on all service connections.
 .EXAMPLE
-    New-AzDoBaseline
+    $newAzDoBaselineSplat = @{
+        TenantId = 'cd004ec9-bc4b-4721-82df-cd3a2e134a09'
+        SubscriptionId = '1e95b10c-266b-4d4f-9be2-856a3bb1462e'
+        SubscriptionName = 'Generic - Team DNA'
+        AppRegistrationName = 'TestApp'
+        SourcePAT = '***'
+        DestinationOrganizationName = 'RandomOrg'
+        DestinationProjectName = 'TestProject'
+        DestinationPAT = '***'
+        KeyVaultName = 'kv-dna-test'
+    }
+    New-AzDoBaseline @newAzDoBaselineSplat
 
-    This example will create
+    This example will create an app registration named 'TestApp', and create the project 'TestProject' in the 'RandomOrg' organization and set up the described baseline.
 .OUTPUTS
-    PSobject containing the display name, ID and description.
 .NOTES
 #>
     [CmdletBinding(SupportsShouldProcess)]
@@ -19,17 +32,17 @@ function New-AzDoBaseline {
         [string]
         $TenantId,
 
-        # Subscription ID for the App Registration.
+        # Subscription ID for the scope of the App Registration.
         [Parameter(Mandatory)]
         [string]
         $SubscriptionId,
 
-        # Subscription name for the App Registration.
+        # Subscription name for the scope of the App Registration.
         [Parameter(Mandatory)]
         [string]
         $SubscriptionName,
 
-        # Name of the App Registration to be used for the service connection.
+        # Name of the App Registration (to be used for the service connection).
         [Parameter(Mandatory)]
         [string]
         $AppRegistrationName,
@@ -199,16 +212,6 @@ function New-AzDoBaseline {
     }
     New-AzDoVariableGroup @newAzDoVariableGroupSplat -VariableGroupName $VariableGroupName -Variables $Variables
 
-    $addAzDoPermissionSplat = @{
-        CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
-        ProjectId               = $ProjectId
-        PAT                     = $DestinationPAT
-        RoleName                = 'Administrator'
-        VariableGroupName       = $VariableGroupName
-        BuildServicePermissions = $true
-    }
-    Add-AzDoPermission @addAzDoPermissionSplat
-
     ### PlatformConnectivity
     $SourceRepoName = 'PlatformConnectivity'
     $DestinationRepoName = 'PlatformConnectivity'
@@ -223,16 +226,6 @@ function New-AzDoBaseline {
         ProjectId = $ProjectId
     }
     New-AzDoVariableGroup @newAzDoVariableGroupSplat -VariableGroupName $VariableGroupName -Variables $Variables
-
-    $addAzDoPermissionSplat = @{
-        CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
-        ProjectId               = $ProjectId
-        PAT                     = $DestinationPAT
-        RoleName                = 'Administrator'
-        VariableGroupName       = $VariableGroupName
-        BuildServicePermissions = $true
-    }
-    Add-AzDoPermission @addAzDoPermissionSplat
 
     ### PlatformIdentity
     $SourceRepoName = 'PlatformIdentity'
@@ -249,16 +242,6 @@ function New-AzDoBaseline {
     }
     New-AzDoVariableGroup @newAzDoVariableGroupSplat -VariableGroupName $VariableGroupName -Variables $Variables
 
-    $addAzDoPermissionSplat = @{
-        CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
-        ProjectId               = $ProjectId
-        PAT                     = $DestinationPAT
-        RoleName                = 'Administrator'
-        VariableGroupName       = $VariableGroupName
-        BuildServicePermissions = $true
-    }
-    Add-AzDoPermission @addAzDoPermissionSplat
-
     ### PlatformManagement
     $SourceRepoName = 'PlatformManagement'
     $DestinationRepoName = 'PlatformManagement'
@@ -274,12 +257,13 @@ function New-AzDoBaseline {
     }
     New-AzDoVariableGroup @newAzDoVariableGroupSplat -VariableGroupName $VariableGroupName -Variables $Variables
 
+    ### Variable group permissions
     $addAzDoPermissionSplat = @{
         CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
         ProjectId               = $ProjectId
         PAT                     = $DestinationPAT
         RoleName                = 'Administrator'
-        VariableGroupName       = $VariableGroupName
+        AllVariableGroups       = $true
         BuildServicePermissions = $true
     }
     Add-AzDoPermission @addAzDoPermissionSplat
