@@ -1,4 +1,4 @@
-function Get-AzDoObject {
+function Get-AzDoGroupOrUser {
     <#
 .SYNOPSIS
     Retrieves properties from an azure devops object, like a group.
@@ -11,7 +11,7 @@ function Get-AzDoObject {
         ProjectName   = "RandomProject"
         GroupName     = 'Readers'
     }
-    Get-AzDoObject @params
+    Get-AzDoGroupOrUser @params
 
     This example retrieves the properties of the reader group in project 'RandomProject'.
 .OUTPUTS

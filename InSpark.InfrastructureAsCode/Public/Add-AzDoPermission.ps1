@@ -190,10 +190,10 @@ function Add-AzDoPermission {
             $Deny = $Actions.$Deny
         }
         if ($UserName) {
-            $Descriptor = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -UserName $UserName).IdentityDescriptor
+            $Descriptor = (Get-AzDoGroupOrUser -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -UserName $UserName).IdentityDescriptor
         }
         if ($GroupName) {
-            $Descriptor = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -GroupName $GroupName).IdentityDescriptor
+            $Descriptor = (Get-AzDoGroupOrUser -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -GroupName $GroupName).IdentityDescriptor
         }
         $Token = "repoV2/$ProjectId"
         if ($RepositoryId) {
@@ -237,11 +237,11 @@ function Add-AzDoPermission {
             ProjectId           = $ProjectId
         }
         if ($UserName) {
-            $UserId = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -UserName $UserName).UserId
+            $UserId = (Get-AzDoGroupOrUser -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -UserName $UserName).UserId
             $addAccessControlEntrySplat['UserId'] = $UserId
         }
         if ($GroupName) {
-            $UserId = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -GroupName $GroupName).GroupId
+            $UserId = (Get-AzDoGroupOrUser -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -GroupName $GroupName).GroupId
             $addAccessControlEntrySplat['UserId'] = $UserId
         }
         if ($Descriptor) {

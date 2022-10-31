@@ -49,7 +49,7 @@ function Add-AzDoMemberToGroup {
     )
     process {
         foreach ($mail in $EmailAddress) {
-            $Descriptor = (Get-AzDoObject -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -GroupName $GroupName).Descriptor
+            $Descriptor = (Get-AzDoGroupOrUser -CollectionUri $CollectionUri -PAT $PAT -ProjectId $ProjectId -GroupName $GroupName).Descriptor
 
             $body = @{
                 principalName = $mail
