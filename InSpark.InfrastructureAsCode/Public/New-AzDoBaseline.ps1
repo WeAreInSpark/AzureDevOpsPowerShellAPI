@@ -147,7 +147,7 @@ function New-AzDoBaseline {
     if ($NewAppRegistration) {
         $AppRegistration = New-AadAppRegistration -Name $AppRegistrationName
     } else {
-        $AppRegistration = Get-AadAppRegistration
+        $AppRegistration = Get-AadAppRegistration -Name $AppRegistrationName
     }
     $newAadAppRegistrationCertificateSplat = @{
         ObjectID     = $AppRegistration.Id
@@ -290,3 +290,4 @@ function New-AzDoBaseline {
         $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
     }
 }
+

@@ -34,8 +34,7 @@ function Get-AadAppRegistration {
     } catch {
         throw $_
     }
-
-    $ExistingApplication = Get-MgApplication | Where-Object { $_.DisplayName -eq $Name }
+    $ExistingApplication = Get-MgApplication -All | Where-Object { $_.DisplayName -eq $Name }
     if ($ExistingApplication) {
         [PSCustomObject]@{
             AppId = $ExistingApplication.AppId
