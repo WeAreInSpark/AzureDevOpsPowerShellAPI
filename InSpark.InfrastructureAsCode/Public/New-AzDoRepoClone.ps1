@@ -98,6 +98,7 @@ function New-AzDoRepoClone {
 
             git push --mirror "https://$DestinationPAT@dev.azure.com/$DestinationOrganizationName/$DestinationProjectName/_git/$DestinationRepoName"
         } else {
+            $SourceOrganizationName
             $Path = (Get-Location).Path
             New-Item -Path "$Path/TempScriptBaseline" -ItemType Directory
             Set-Location "$Path/TempScriptBaseline"
