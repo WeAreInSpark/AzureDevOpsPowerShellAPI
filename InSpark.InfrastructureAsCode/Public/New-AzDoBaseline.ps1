@@ -47,6 +47,11 @@ function New-AzDoBaseline {
         [string]
         $AppRegistrationName,
 
+        # Whether to create a new app registration.
+        [Parameter()]
+        [boolean]
+        $NewAppRegistration = $true,
+
         # Name of the organization where the repositories to be cloned live.
         [Parameter()]
         [string]
@@ -95,7 +100,12 @@ function New-AzDoBaseline {
         # Whether to perform a mirror clone, which also clones branches and tags.
         [Parameter()]
         [boolean]
-        $Mirror = $false
+        $Mirror = $false,
+
+        # Whether to clone the 'Templates' repository.
+        [Parameter()]
+        [boolean]
+        $AddTemplatesRepo = $false
     )
     # Create project
     if ($NewProject) {
@@ -134,8 +144,11 @@ function New-AzDoBaseline {
     }
 
     # Service connection
-    $AppRegistration = New-AadAppRegistration -Name $AppRegistrationName
-
+    if ($NewAppRegistration) {
+        $AppRegistration = New-AadAppRegistration -Name $AppRegistrationName
+    } else {
+        $AppRegistration = Get-MgApplication -All | Where-Object { $_.DisplayName -eq $Name }
+    }
     $newAadAppRegistrationCertificateSplat = @{
         ObjectID     = $AppRegistration.Id
         CertName     = $DestinationProjectName
@@ -267,4 +280,12 @@ function New-AzDoBaseline {
         BuildServicePermissions = $true
     }
     Add-AzDoPermission @addAzDoPermissionSplat
+
+    ### Templates repo
+    if ($AddTemplatesRepo) {
+        $SourceRepoName = 'Templates'
+        $DestinationRepoName = 'Templates'
+
+        $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
+    }
 }
