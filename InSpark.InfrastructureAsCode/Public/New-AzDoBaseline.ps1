@@ -147,8 +147,7 @@ function New-AzDoBaseline {
     if ($NewAppRegistration) {
         $AppRegistration = New-AadAppRegistration -Name $AppRegistrationName
     } else {
-        Connect-MgGraphWithToken
-        $AppRegistration = Get-MgApplication -All | Where-Object { $_.DisplayName -eq $AppRegistrationName }
+        $AppRegistration = Get-AadAppRegistration
     }
     $newAadAppRegistrationCertificateSplat = @{
         ObjectID     = $AppRegistration.Id
