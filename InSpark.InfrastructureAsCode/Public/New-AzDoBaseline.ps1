@@ -99,13 +99,13 @@ function New-AzDoBaseline {
 
         # Whether to perform a mirror clone, which also clones branches and tags.
         [Parameter()]
-        [boolean]
-        $Mirror = $false,
+        [switch]
+        $Mirror,
 
         # Whether to clone the 'Templates' repository.
         [Parameter()]
-        [boolean]
-        $AddTemplatesRepo = $false
+        [switch]
+        $AddTemplatesRepo
     )
     # Create project
     if ($NewProject) {
@@ -285,6 +285,7 @@ function New-AzDoBaseline {
     if ($AddTemplatesRepo) {
         $SourceRepoName = 'Templates'
         $DestinationRepoName = 'Templates'
+        $Mirror = $true
 
         $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
     }
