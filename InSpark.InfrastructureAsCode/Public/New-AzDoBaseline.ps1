@@ -87,11 +87,6 @@ function New-AzDoBaseline {
         [string]
         $KeyVaultName,
 
-        # Whether to create a new project in the destiniation organization.
-        [Parameter()]
-        [boolean]
-        $NewProject = $true,
-
         # Whether to create new repositories in the destiniation project.
         [Parameter()]
         [boolean]
@@ -99,29 +94,31 @@ function New-AzDoBaseline {
 
         # Whether to perform a mirror clone, which also clones branches and tags.
         [Parameter()]
-        [switch]
-        $Mirror,
+        [boolean]
+        $Mirror = $false,
 
         # Whether to clone the 'Templates' repository.
         [Parameter()]
-        [switch]
-        $AddTemplatesRepo
+        [boolean]
+        $AddTemplatesRepo = $false
     )
-    # Create project
-    if ($NewProject) {
+    # Get Project ID
+    $params = @{
+        uri         = "https://dev.azure.com/$DestinationOrganizationName/_apis/projects?api-version=6.0"
+        Method      = 'GET'
+        Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($DestinationPAT)")) }
+        ContentType = 'application/json'
+    }
+    $Projects = Invoke-RestMethod @params
+    $ProjectId = ($Projects.value | Where-Object name -EQ $DestinationProjectName).id
+    if (-Not($ProjectId)) {
+        # Create project
         $newAzDoProjectSplat = @{
             CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
             PAT           = $DestinationPAT
             ProjectName   = $DestinationProjectName
         }
         New-AzDoProject @newAzDoProjectSplat
-
-        $setAzDoProjectSettingSplat = @{
-            CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
-            PAT           = $DestinationPAT
-            ProjectName   = $DestinationProjectName
-        }
-        Set-AzDoProjectSetting @setAzDoProjectSettingSplat | Format-List
 
         $getAzDoProjectSplat = @{
             CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
@@ -130,25 +127,18 @@ function New-AzDoBaseline {
         }
         $ProjectId = (Get-AzDoProject @getAzDoProjectSplat).ProjectId
     }
-
-    # Get Project ID
-    if (-not($NewProject)) {
-        $params = @{
-            uri         = "https://dev.azure.com/$DestinationOrganizationName/_apis/projects?api-version=6.0"
-            Method      = 'GET'
-            Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($DestinationPAT)")) }
-            ContentType = 'application/json'
-        }
-        $Projects = Invoke-RestMethod @params
-        $ProjectId = ($Projects.value | Where-Object name -EQ $DestinationProjectName).id
+    $setAzDoProjectSettingSplat = @{
+        CollectionUri = "https://dev.azure.com/$DestinationOrganizationName"
+        PAT           = $DestinationPAT
+        ProjectName   = $DestinationProjectName
     }
+    Set-AzDoProjectSetting @setAzDoProjectSettingSplat | Format-List
 
     # Service connection
     if ($NewAppRegistration) {
         $AppRegistration = New-AadAppRegistration -Name $AppRegistrationName
     } else {
-        Connect-MgGraphWithToken
-        $AppRegistration = Get-MgApplication -All | Where-Object { $_.DisplayName -eq $AppRegistrationName }
+        $AppRegistration = Get-AadAppRegistration -Name $AppRegistrationName
     }
     $newAadAppRegistrationCertificateSplat = @{
         ObjectID     = $AppRegistration.Id
@@ -217,7 +207,13 @@ function New-AzDoBaseline {
     $PipelineName = 'Foundation'
     $VariableGroupName = 'Foundation'
 
-    $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
+    if ($DestinationProjectName -eq 'Foundation') {
+        $newAzDoRepoCloneSplat['NewRepo'] = $false
+        $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
+        $newAzDoRepoCloneSplat['NewRepo'] = $NewRepo
+    } else {
+        $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
+    }
     New-AzDoPipeline @newAzDoPipelineSplat -PipelineName $PipelineName -RepoName $DestinationRepoName
 
     $Variables = @{
@@ -291,3 +287,4 @@ function New-AzDoBaseline {
         $RepoId = (New-AzDoRepoClone @newAzDoRepoCloneSplat -SourceRepoName $SourceRepoName -DestinationRepoName $DestinationRepoName).RepoId
     }
 }
+
