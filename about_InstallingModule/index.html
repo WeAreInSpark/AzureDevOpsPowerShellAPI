@@ -1,119 +1,1151 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Installing module - InfrastuctureAsCode</title>
-    <link rel="stylesheet" href="../css/theme.css" />
-    <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
-    
-      <script>
-        // Current page data
-        var mkdocs_page_name = "Installing module";
-        var mkdocs_page_input_path = "about_InstallingModule.md";
-        var mkdocs_page_url = null;
-      </script>
-    
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
-    <!--[if lt IE 9]>
-      <script src="../js/html5shiv.min.js"></script>
-    <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
-</head>
 
-<body class="wy-body-for-nav" role="document">
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/inspark-logo-semi.svg">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
+    
+    
+      
+        <title>Installing module - InfrastuctureAsCode</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> InfrastuctureAsCode
-        </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
-</div>
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+
+  <!-- Determine title -->
+  
+  
+    
+  
+
+  <!-- Determine description -->
+  
+  
+
+  <!-- The image needs to have an absolute URL -->
+  
+
+  <!-- Open graph meta tags -->
+  <meta property="og:site_name" content="InfrastuctureAsCode" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="InfrastuctureAsCode - Installing module" />
+  <meta property="og:description" content="None" />
+  <meta property="og:url" content="None" />
+  <meta property="og:image" content="https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="640" />
+  <meta property="og:image:alt" content="None" />
+
+  <!-- Twitter meta tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@github" />
+  <meta name="twitter:title" content="InfrastuctureAsCode - Installing module" />
+  <meta name="twitter:description" content="None" />
+  <meta name="twitter:image" content="https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654" />
+
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installing-module" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
       </div>
+    
+    
+      
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">InfrastructureAsCode</a>
-                </li>
-              </ul>
-              <p class="caption"><span class="caption-text">Docs</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Installing module</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../about_workflow/">Workflow</a>
-                  </li>
-              </ul>
-              <p class="caption"><span class="caption-text">Modules</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../Get-AzDoProject/">Get-AzDoProject</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../Get-AzDoRepo/">Get-AzDoRepo</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AadAppRegistration/">New-AadAppRegistration</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AadAppRegistrationCertificate/">New-AadAppRegistrationCertificate</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AadAppRegistrationSecret/">New-AadAppRegistrationSecret</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AadGroup/">New-AadGroup</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AzDoPipeline/">New-AzDoPipeline</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AzDoProject/">New-AzDoProject</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AzDoRepo/">New-AzDoRepo</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AzDoRepoClone/">New-AzDoRepoClone</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AzDoRepoFork/">New-AzDoRepoFork</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AzDoServiceConnection/">New-AzDoServiceConnection</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-AzDoVariableGroup/">New-AzDoVariableGroup</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../Set-AzDoProjectSetting/">Set-AzDoProjectSetting</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../Set-AzDoTeamMember/">Set-AzDoTeamMember</a>
-                  </li>
-              </ul>
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="InfrastuctureAsCode" class="md-header__button md-logo" aria-label="InfrastuctureAsCode" data-md-component="logo">
+      
+  <img src="../assets/inspark-logo-semi.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InfrastuctureAsCode
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installing module
+            
+          </span>
+        </div>
       </div>
     </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">InfrastuctureAsCode</a>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
         
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
       </nav>
-      <div class="wy-nav-content">
-        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Docs &raquo;</li>
-      <li>Installing module</li>
-    <li class="wy-breadcrumbs-aside">
-        <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/edit/master/docs/about_InstallingModule.md"
-          class="icon icon-github"> Edit on GitHub</a>
-    </li>
-  </ul>
-  <hr/>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-            <div class="section" itemprop="articleBody">
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link md-tabs__link--active">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Get-AzDoProject/" class="md-tabs__link">
+        Modules
+      </a>
+    </li>
+  
+
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
               
-                <h1 id="installing-module">Installing module</h1>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="InfrastuctureAsCode" class="md-nav__button md-logo" aria-label="InfrastuctureAsCode" data-md-component="logo">
+      
+  <img src="../assets/inspark-logo-semi.svg" alt="logo">
+
+    </a>
+    InfrastuctureAsCode
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="..">Home</a>
+          
+            <label for="__nav_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installing module
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Installing module
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-authentication-with-pat" class="md-nav__link">
+    Set-up authentication with PAT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-azure-artifact-credential-provider" class="md-nav__link">
+    Install Azure Artifact Credential Provider
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-the-powershell-repository" class="md-nav__link">
+    Set-up the Powershell Repository
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-url-is-invalid" class="md-nav__link">
+    Query Url ... is invalid
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about_workflow/" class="md-nav__link">
+        Workflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Modules
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Modules" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Modules
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          Azure DevOps
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Azure DevOps" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Azure DevOps
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_1" type="checkbox" id="__nav_2_1_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_1">
+          Project
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Project" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          Project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Get-AzDoProject/" class="md-nav__link">
+        Get-AzDoProject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AzDoProject/" class="md-nav__link">
+        New-AzDoProject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Set-AzDoProjectSetting/" class="md-nav__link">
+        Set-AzDoProjectSetting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_2" type="checkbox" id="__nav_2_1_2" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_2">
+          Pipeline
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Pipeline" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AzDoPipeline/" class="md-nav__link">
+        New-AzDoPipeline
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_3" type="checkbox" id="__nav_2_1_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_3">
+          Repos
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Repos" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          Repos
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Get-AzDoRepo/" class="md-nav__link">
+        Get-AzDoRepo
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AzDoRepo/" class="md-nav__link">
+        New-AzDoRepo
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AzDoRepoClone/" class="md-nav__link">
+        New-AzDoRepoClone
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AzDoRepoFork/" class="md-nav__link">
+        New-AzDoRepoFork
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_4" type="checkbox" id="__nav_2_1_4" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_4">
+          Service Connection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Service Connection" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          Service Connection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AzDoServiceConnection/" class="md-nav__link">
+        New-AzDoServiceConnection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_5" type="checkbox" id="__nav_2_1_5" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_5">
+          Team
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Team" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_5">
+          <span class="md-nav__icon md-icon"></span>
+          Team
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Set-AzDoTeamMember/" class="md-nav__link">
+        Set-AzDoTeamMember
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_6" type="checkbox" id="__nav_2_1_6" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_6">
+          Variable Group
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Variable Group" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_6">
+          <span class="md-nav__icon md-icon"></span>
+          Variable Group
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AzDoVariableGroup/" class="md-nav__link">
+        New-AzDoVariableGroup
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Azure AD
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Azure AD" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Azure AD
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AadAppRegistration/" class="md-nav__link">
+        New-AadAppRegistration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AadAppRegistrationCertificate/" class="md-nav__link">
+        New-AadAppRegistrationCertificate
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AadAppRegistrationSecret/" class="md-nav__link">
+        New-AadAppRegistrationSecret
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-AadGroup/" class="md-nav__link">
+        New-AadGroup
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-authentication-with-pat" class="md-nav__link">
+    Set-up authentication with PAT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-azure-artifact-credential-provider" class="md-nav__link">
+    Install Azure Artifact Credential Provider
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-the-powershell-repository" class="md-nav__link">
+    Set-up the Powershell Repository
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-url-is-invalid" class="md-nav__link">
+    Query Url ... is invalid
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+  
+
+
+
+  <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/edit/master/docs/about_InstallingModule.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="installing-module">Installing module<a class="headerlink" href="#installing-module" title="Permanent link">#</a></h1>
 <p>In this document we will describe how to register the PowerShell repository located at InSpark.
 We use Powershell Secret Management with a local stored secret vault. This implementation has 1 downside, you will need to enter your password (One that you will create is this guide) every time you start PowerShell.</p>
-<h2 id="requirements">Requirements</h2>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">#</a></h2>
 <ul>
 <li>PAT with Packaging (Read Access) to weareinspark organization</li>
 </ul>
@@ -129,148 +1161,251 @@ We use Powershell Secret Management with a local stored secret vault. This imple
 </tr>
 </tbody>
 </table>
-<h2 id="set-up-authentication-with-pat">Set-up authentication with PAT</h2>
+<h2 id="set-up-authentication-with-pat">Set-up authentication with PAT<a class="headerlink" href="#set-up-authentication-with-pat" title="Permanent link">#</a></h2>
 <ol>
-<li>Install the required modules</li>
-</ol>
-<pre><code class="language-powershell"># This module handles fetching secrets
-Install-Module -Name Microsoft.PowerShell.SecretManagement -Scope CurrentUser -Repository PSGallery -Force
-# This module stores the secrets safely on your machine
-Install-Module -Name Microsoft.PowerShell.SecretStore -Scope CurrentUser -Repository PSGallery -Force
-</code></pre>
-<ol>
-<li>Set the secret</li>
-</ol>
-<pre><code class="language-powershell">Set-Secret -Name Pat -Secret &quot;&lt;PERSONAL_ACCESS_TOKEN&gt;&quot;
-</code></pre>
-<ol>
+<li>Install the required modules
+<div class="highlight"><pre><span></span><code><span class="c"># This module handles fetching secrets</span>
+<span class="nb">Install-Module</span> <span class="n">-Name</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">PowerShell</span><span class="p">.</span><span class="n">SecretManagement</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span> <span class="n">-Repository</span> <span class="n">PSGallery</span> <span class="n">-Force</span>
+<span class="c"># This module stores the secrets safely on your machine</span>
+<span class="nb">Install-Module</span> <span class="n">-Name</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">PowerShell</span><span class="p">.</span><span class="n">SecretStore</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span> <span class="n">-Repository</span> <span class="n">PSGallery</span> <span class="n">-Force</span>
+</code></pre></div></li>
+<li>Set the secret
+<div class="highlight"><pre><span></span><code><span class="nb">Set-Secret</span> <span class="n">-Name</span> <span class="n">Pat</span> <span class="n">-Secret</span> <span class="s2">&quot;&lt;PERSONAL_ACCESS_TOKEN&gt;&quot;</span>
+</code></pre></div></li>
 <li>Enter a password for own use.</li>
-<li>Open your profile</li>
+<li>Open your profile
+<div class="highlight"><pre><span></span><code><span class="n">code</span> <span class="nv">$PROFILE</span>
+</code></pre></div></li>
+<li>Save the following code in your profile
+<div class="highlight"><pre><span></span><code><span class="c"># This prepares authentication with the nuget packagefeed</span>
+<span class="nv">$env:VSS_NUGET_EXTERNAL_FEED_ENDPOINTS</span> <span class="p">=</span> <span class="p">@{</span>
+    <span class="n">endpointCredentials</span> <span class="p">=</span> <span class="p">@(</span>
+        <span class="p">@{</span>
+            <span class="n">endpoint</span> <span class="p">=</span> <span class="s2">&quot;https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2&quot;</span>
+            <span class="n">username</span> <span class="p">=</span> <span class="s2">&quot;&lt;REPLACE ME&gt;&quot;</span> <span class="c"># Replace with your e-mail (User Principal Name)</span>
+            <span class="n">password</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-Secret</span> <span class="n">-Name</span> <span class="n">Pat</span> <span class="n">-AsPlainText</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">}</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span>
+<span class="c"># This creates a persistant PSCredential so you can easily install modules from the repository</span>
+<span class="nv">$InSparkAzureDevopsArtifacts</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Management</span><span class="p">.</span><span class="n">Automation</span><span class="p">.</span><span class="n">PSCredential</span><span class="p">(</span><span class="s2">&quot;&lt;REPLACE ME&gt;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nb">Get-Secret</span> <span class="n">-Name</span> <span class="n">Pat</span><span class="p">))</span> <span class="c"># Replace with your e-mail (User Principal Name)</span>
+</code></pre></div></li>
 </ol>
-<pre><code class="language-powershell">code $PROFILE
-</code></pre>
-<ol>
-<li>Save the following code in your profile</li>
-</ol>
-<pre><code class="language-powershell"># This prepares authentication with the nuget packagefeed
-$env:VSS_NUGET_EXTERNAL_FEED_ENDPOINTS = @{
-    endpointCredentials = @(
-        @{
-            endpoint = &quot;https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2&quot;
-            username = &quot;&lt;REPLACE ME&gt;&quot; # Replace with your e-mail (User Principal Name)
-            password = (Get-Secret -Name Pat -AsPlainText)
-        }
-    )
-} | ConvertTo-Json
-# This creates a persistant PSCredential so you can easily install modules from the repository
-$InSparkAzureDevopsArtifacts = New-Object System.Management.Automation.PSCredential(&quot;&lt;REPLACE ME&gt;&quot;, (Get-Secret -Name Pat)) # Replace with your e-mail (User Principal Name)
-</code></pre>
-<h2 id="install-azure-artifact-credential-provider">Install Azure Artifact Credential Provider</h2>
+<h2 id="install-azure-artifact-credential-provider">Install Azure Artifact Credential Provider<a class="headerlink" href="#install-azure-artifact-credential-provider" title="Permanent link">#</a></h2>
 <ol>
 <li>Follow the steps to install the <a href="https://github.com/microsoft/artifacts-credprovider#setup">Azure Artifact Credential Provider</a></li>
 </ol>
-<h2 id="set-up-the-powershell-repository">Set-up the Powershell Repository</h2>
+<h2 id="set-up-the-powershell-repository">Set-up the Powershell Repository<a class="headerlink" href="#set-up-the-powershell-repository" title="Permanent link">#</a></h2>
 <ol>
 <li>Restart PowerShell session</li>
-<li>Register the Repository</li>
+<li>Register the Repository
+<div class="highlight"><pre><span></span><code><span class="nv">$registerPSRepositorySplat</span> <span class="p">=</span> <span class="p">@{</span>
+    <span class="n">Name</span> <span class="p">=</span> <span class="s2">&quot;InSpark&quot;</span>
+    <span class="n">SourceLocation</span> <span class="p">=</span> <span class="s2">&quot;https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2&quot;</span>
+    <span class="n">PublishLocation</span> <span class="p">=</span> <span class="s2">&quot;https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2&quot;</span>
+    <span class="n">InstallationPolicy</span> <span class="p">=</span> <span class="s1">&#39;Trusted&#39;</span>
+    <span class="n">Credential</span> <span class="p">=</span> <span class="nv">$InSparkAzureDevopsArtifacts</span>
+<span class="p">}</span>
+<span class="nb">Register-PSRepository</span> <span class="nv">@registerPSRepositorySplat</span>
+</code></pre></div></li>
+<li>Validate that the setup succeeded
+<div class="highlight"><pre><span></span><code><span class="nb">Find-Module</span> <span class="n">-Repository</span> <span class="n">InSpark</span>
+</code></pre></div></li>
+<li>Install the module ()
+<div class="highlight"><pre><span></span><code><span class="nb">Install-Module</span> <span class="n">-Name</span> <span class="n">InSpark</span><span class="p">.</span><span class="n">InfrastructureAsCode</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span> <span class="n">-Repository</span> <span class="n">InSpark</span> <span class="n">-Credential</span> <span class="nv">$InSparkAzureDevopsArtifacts</span>
+</code></pre></div></li>
 </ol>
-<pre><code class="language-powershell">$registerPSRepositorySplat = @{
-    Name = &quot;InSpark&quot;
-    SourceLocation = &quot;https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2&quot;
-    PublishLocation = &quot;https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2&quot;
-    InstallationPolicy = 'Trusted'
-    Credential = $InSparkAzureDevopsArtifacts
-}
-Register-PSRepository @registerPSRepositorySplat
-</code></pre>
-<ol>
-<li>Validate that the setup succeeded</li>
-</ol>
-<pre><code class="language-powershell">Find-Module -Repository InSpark
-</code></pre>
-<ol>
-<li>Install the module ()</li>
-</ol>
-<pre><code class="language-powershell">Install-Module -Name InSpark.InfrastructureAsCode -Scope CurrentUser -Repository InSpark -Credential $InSparkAzureDevopsArtifacts
-</code></pre>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="query-url-is-invalid">Query Url ... is invalid</h3>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
+<h3 id="query-url-is-invalid">Query Url ... is invalid<a class="headerlink" href="#query-url-is-invalid" title="Permanent link">#</a></h3>
 <p><strong>Issue</strong></p>
 <p>In some cases PowerShell returns errors during <code>Find-Module</code> or <code>Install-Module</code>.
-PowerShell will return errors like:</p>
-<pre><code class="language-powershell">Find-Module -Repository InSpark
-WARNING: Query Url https://pkgs.dev.azure.com/weareinspark/_packaging/PowerShell/nuget/v2 is invalid.
-</code></pre>
-<p>PowerShell sometimes registers a NuGet Provider as a PackageSource when registering a PSRepository instead of just the PowerShellGet entry.
-You can check this by performing:</p>
-<pre><code class="language-powershell">Get-PackageSource
-Name                             ProviderName     IsTrusted  Location
-----                             ------------     ---------  --------
-PSGallery                        PowerShellGet    True       https://www.powershellgallery.com/api/v2
-InSpark                          PowerShellGet    True       https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2
-InSpark                          NuGet            True       https://pkgs.dev.azure.com/weareinspark/_packaging/powershell/nuget/v2
-</code></pre>
+PowerShell will return errors like:
+<div class="highlight"><pre><span></span><code><span class="nb">Find-Module</span> <span class="n">-Repository</span> <span class="n">InSpark</span>
+<span class="n">WARNING</span><span class="p">:</span> <span class="n">Query</span> <span class="n">Url</span> <span class="n">https</span><span class="p">://</span><span class="n">pkgs</span><span class="p">.</span><span class="n">dev</span><span class="p">.</span><span class="n">azure</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">weareinspark</span><span class="p">/</span><span class="n">_packaging</span><span class="p">/</span><span class="n">PowerShell</span><span class="p">/</span><span class="n">nuget</span><span class="p">/</span><span class="n">v2</span> <span class="n">is</span> <span class="n">invalid</span><span class="p">.</span>
+</code></pre></div>
+PowerShell sometimes registers a NuGet Provider as a PackageSource when registering a PSRepository instead of just the PowerShellGet entry.
+You can check this by performing:
+<div class="highlight"><pre><span></span><code><span class="nb">Get-PackageSource</span>
+<span class="n">Name</span>                             <span class="n">ProviderName</span>     <span class="n">IsTrusted</span>  <span class="n">Location</span>
+<span class="p">----</span>                             <span class="p">------------</span>     <span class="p">---------</span>  <span class="p">--------</span>
+<span class="n">PSGallery</span>                        <span class="n">PowerShellGet</span>    <span class="n">True</span>       <span class="n">https</span><span class="p">://</span><span class="n">www</span><span class="p">.</span><span class="n">powershellgallery</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">api</span><span class="p">/</span><span class="n">v2</span>
+<span class="n">InSpark</span>                          <span class="n">PowerShellGet</span>    <span class="n">True</span>       <span class="n">https</span><span class="p">://</span><span class="n">pkgs</span><span class="p">.</span><span class="n">dev</span><span class="p">.</span><span class="n">azure</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">weareinspark</span><span class="p">/</span><span class="n">_packaging</span><span class="p">/</span><span class="n">powershell</span><span class="p">/</span><span class="n">nuget</span><span class="p">/</span><span class="n">v2</span>
+<span class="n">InSpark</span>                          <span class="n">NuGet</span>            <span class="n">True</span>       <span class="n">https</span><span class="p">://</span><span class="n">pkgs</span><span class="p">.</span><span class="n">dev</span><span class="p">.</span><span class="n">azure</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">weareinspark</span><span class="p">/</span><span class="n">_packaging</span><span class="p">/</span><span class="n">powershell</span><span class="p">/</span><span class="n">nuget</span><span class="p">/</span><span class="n">v2</span>
+</code></pre></div></p>
 <p><strong>Fix</strong></p>
-<p>You can remove the NuGet PackageSource with:</p>
-<pre><code class="language-powershell">Unregister-PackageSource -Name InSpark -ProviderName NuGet
-</code></pre>
-<p>Make sure to validate that functionality is restored:</p>
-<pre><code class="language-powershell">Find-Module -Repository InSpark
-</code></pre>
-<h2 id="reference">Reference</h2>
+<p>You can remove the NuGet PackageSource with:
+<div class="highlight"><pre><span></span><code><span class="nb">Unregister-PackageSource</span> <span class="n">-Name</span> <span class="n">InSpark</span> <span class="n">-ProviderName</span> <span class="n">NuGet</span>
+</code></pre></div>
+Make sure to validate that functionality is restored:
+<div class="highlight"><pre><span></span><code><span class="nb">Find-Module</span> <span class="n">-Repository</span> <span class="n">InSpark</span>
+</code></pre></div></p>
+<h2 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">#</a></h2>
 <ul>
 <li><a href="https://devblogs.microsoft.com/powershell-community/how-to-use-the-secret-modules/">https://devblogs.microsoft.com/powershell-community/how-to-use-the-secret-modules/</a></li>
 <li><a href="https://docs.microsoft.com/en-us/azure/devops/artifacts/tutorials/private-powershell-library?view=azure-devops">https://docs.microsoft.com/en-us/azure/devops/artifacts/tutorials/private-powershell-library?view=azure-devops</a></li>
 <li><a href="https://github.com/microsoft/artifacts-credprovider">https://github.com/microsoft/artifacts-credprovider</a></li>
 </ul>
-              
-            </div>
-          </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href=".." class="btn btn-neutral float-left" title="InfrastructureAsCode"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../about_workflow/" class="btn btn-neutral float-right" title="Workflow">Next <span class="icon icon-circle-arrow-right"></span></a>
-    </div>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-  </div>
-
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-          
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="Versions">
-  <span class="rst-current-version" data-toggle="rst-current-version">
+  <hr>
+<div class="md-source-file">
+  <small>
     
-        <span>
-          <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
-        </span>
+      Last update:
+      2022-11-11
     
-    
-      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
-    
-    
-      <span><a href="../about_workflow/" style="color: #fcfcfc">Next &raquo;</a></span>
-    
-  </span>
+  </small>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        };
-    </script>
 
-</body>
+
+
+
+
+                
+
+  
+
+
+  <!-- Giscus -->
+  <h2 id="__comments">Comments</h2>
+  
+
+  
+    <script src="https://giscus.app/client.js"
+      data-repo="Azure/PSRule.Rules.Azure"
+      data-repo-id="MDEwOlJlcG9zaXRvcnkxODQxNTQ2Njg="
+      data-category="Documentation"
+      data-category-id="DIC_kwDOCvn6LM4CQqE6"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="light"
+      data-lang="en"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async>
+    </script>
+  
+
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../about_workflow/" class="md-footer__link md-footer__link--next" aria-label="Next: Workflow" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Workflow
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.indexes", {"navigation.sections": {"level": 1}}, "navigation.tabs", "content.code.annotate", "content.tabs.link"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
 </html>
