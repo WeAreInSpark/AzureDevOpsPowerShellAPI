@@ -1,6 +1,20 @@
 nav:
+  - Home:
     - index.md
-    - Docs:
-      - ...| about*.md
-    - Modules:
-      - ...
+    - ...| about*.md
+  - Modules:
+    - Azure DevOps:
+      - Project:
+        - ... | *AzDoProject*.md
+      - Pipeline:
+        - ... | *AzDoPipeline*.md
+      - Repos:
+        - ... | *AzDoRepo*.md
+      - Service Connection:
+        - ... | *AzDoServiceConnection*.md
+      - Team:
+        - ... | *AzDoTeam*.md
+      - Variable Group:
+        - ... | *AzDoVariableGroup*.md
+    - Azure AD:
+      - ... | *Aad*.md
