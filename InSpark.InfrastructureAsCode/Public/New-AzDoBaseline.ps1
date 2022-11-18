@@ -47,10 +47,15 @@ function New-AzDoBaseline {
         [string]
         $AppRegistrationName,
 
-        # Whether to create a new app registration.
+        # Whether to create a new app registration. This parameter is ignored if $NewServiceConnection is $false, as an app registration isn't needed in that case.
         [Parameter()]
         [boolean]
         $NewAppRegistration = $true,
+
+        # Whether to create a service connection.
+        [Parameter()]
+        [boolean]
+        $NewServiceConnection = $true,
 
         # Name of the organization where the repositories to be cloned live.
         [Parameter()]
@@ -135,46 +140,48 @@ function New-AzDoBaseline {
     Set-AzDoProjectSetting @setAzDoProjectSettingSplat | Format-List
 
     # Service connection
-    if ($NewAppRegistration) {
-        $AppRegistration = New-AadAppRegistration -Name $AppRegistrationName
-    } else {
-        $AppRegistration = Get-AadAppRegistration -Name $AppRegistrationName
-    }
-    $newAadAppRegistrationCertificateSplat = @{
-        ObjectID     = $AppRegistration.Id
-        CertName     = $DestinationProjectName
-        KeyVaultName = $KeyVaultName
-        SubjectName  = "$DestinationProjectName.com"
-    }
-    New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat | Format-List
+    if ($NewServiceConnection) {
+        if ($NewAppRegistration) {
+            $AppRegistration = New-AadAppRegistration -Name $AppRegistrationName
+        } else {
+            $AppRegistration = Get-AadAppRegistration -Name $AppRegistrationName
+        }
+        $newAadAppRegistrationCertificateSplat = @{
+            ObjectID     = $AppRegistration.Id
+            CertName     = $DestinationProjectName
+            KeyVaultName = $KeyVaultName
+            SubjectName  = "$DestinationProjectName.com"
+        }
+        New-AadAppRegistrationCertificate @newAadAppRegistrationCertificateSplat | Format-List
 
-    $newAzDoServiceConnectionSplat = @{
-        Name               = $SubscriptionName
-        CollectionUri      = "https://dev.azure.com/$DestinationOrganizationName"
-        PAT                = $DestinationPAT
-        ProjectName        = $DestinationProjectName
-        ProjectId          = $ProjectId
-        Description        = ""
-        ScopeLevel         = 'Subscription'
-        SubscriptionId     = $SubscriptionId
-        SubscriptionName   = $SubscriptionName
-        TenantId           = $TenantId
-        Serviceprincipalid = $AppRegistration.AppId
-        AuthenticationType = 'spnCertificate'
-        KeyVaultName       = $KeyVaultName
-        CertName           = $newAadAppRegistrationCertificateSplat.CertName
-    }
-    New-AzDoServiceConnection @newAzDoServiceConnectionSplat | Format-List
+        $newAzDoServiceConnectionSplat = @{
+            Name               = $SubscriptionName
+            CollectionUri      = "https://dev.azure.com/$DestinationOrganizationName"
+            PAT                = $DestinationPAT
+            ProjectName        = $DestinationProjectName
+            ProjectId          = $ProjectId
+            Description        = ""
+            ScopeLevel         = 'Subscription'
+            SubscriptionId     = $SubscriptionId
+            SubscriptionName   = $SubscriptionName
+            TenantId           = $TenantId
+            Serviceprincipalid = $AppRegistration.AppId
+            AuthenticationType = 'spnCertificate'
+            KeyVaultName       = $KeyVaultName
+            CertName           = $newAadAppRegistrationCertificateSplat.CertName
+        }
+        New-AzDoServiceConnection @newAzDoServiceConnectionSplat | Format-List
 
-    $addAzDoPermissionSplat = @{
-        CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
-        ProjectId               = $ProjectId
-        PAT                     = $DestinationPAT
-        RoleName                = 'Administrator'
-        AllServiceConnections   = $true
-        BuildServicePermissions = $true
+        $addAzDoPermissionSplat = @{
+            CollectionUri           = "https://dev.azure.com/$DestinationOrganizationName"
+            ProjectId               = $ProjectId
+            PAT                     = $DestinationPAT
+            RoleName                = 'Administrator'
+            AllServiceConnections   = $true
+            BuildServicePermissions = $true
+        }
+        Add-AzDoPermission @addAzDoPermissionSplat
     }
-    Add-AzDoPermission @addAzDoPermissionSplat
 
     # Repo splats
     $newAzDoRepoCloneSplat = @{
