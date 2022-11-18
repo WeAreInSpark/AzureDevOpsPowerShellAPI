@@ -43,11 +43,11 @@ function New-AzDoBaseline {
         $SubscriptionName,
 
         # Name of the App Registration (to be used for the service connection).
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]
         $AppRegistrationName,
 
-        # Whether to create a new app registration. This parameter is ignored if $NewServiceConnection is set to $false, as an app registration isn't needed in that case.
+        # Whether to create a new app registration. If set to $false, the script will search for the existing app registration $AppRegistrationName. This parameter is ignored if $NewServiceConnection is set to $false, as an app registration isn't needed in that case.
         [Parameter()]
         [boolean]
         $NewAppRegistration = $true,
