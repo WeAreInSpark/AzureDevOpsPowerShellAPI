@@ -6,7 +6,7 @@ function Set-AzDoProjectSetting {
         Sets the project settings for the given project.
     .EXAMPLE
         $params = @{
-            CollectionUri = "https://dev.azure.com/contoso"
+            CollectionUri = "https://dev.azure.com/weareinspark"
             PAT = "***"
             ProjectName = "Project01"
             EnforceJobAuthScope = $true
