@@ -24,17 +24,17 @@ function New-AzDoRepoClone {
 #>
     [CmdletBinding(SupportsShouldProcess)]
     param (
-        # Collection Uri of the organization
+        # Collection Uri of the organization where the repo has to be cloned from
         [Parameter(Mandatory)]
         [string]
         $SourceOrganizationName,
 
-        # Project where the variable group has to be created
+        # Project where the repo has to be cloned from
         [Parameter(Mandatory)]
         [string]
         $SourceProjectName,
 
-        # Project where the variable group has to be created
+        # Project where the repo has to be cloned from
         [Parameter(Mandatory)]
         [string]
         $SourceRepoName,
@@ -44,17 +44,17 @@ function New-AzDoRepoClone {
         [string]
         $SourcePAT = $env:SYSTEM_ACCESSTOKEN,
 
-        # Collection Uri of the organization
+        # Collection Uri of the organization where the repo has to be created
         [Parameter(Mandatory)]
         [string]
         $DestinationOrganizationName,
 
-        # Project where the variable group has to be created
+        # Project where the repo has to be created
         [Parameter(Mandatory)]
         [string]
         $DestinationProjectName,
 
-        # Project where the variable group has to be created
+        # Project where the repo has to be created
         [Parameter(Mandatory)]
         [string]
         $DestinationRepoName,

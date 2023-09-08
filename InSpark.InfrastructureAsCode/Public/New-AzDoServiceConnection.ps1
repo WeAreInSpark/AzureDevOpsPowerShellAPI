@@ -16,7 +16,6 @@ function New-AzDoServiceConnection {
             KeyVaultName                = "kv01"
             CertName                    = "Cert01"
             AuthenticationType          = "spnCertificate"
-            ProjectId                   = "1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2"
             Name                        = "Project 1"
         }
         New-AzDoServiceConnection @params
