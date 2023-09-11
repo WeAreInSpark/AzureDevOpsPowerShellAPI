@@ -36,15 +36,17 @@ function Get-AzDoProjectName {
         $ProjectId
     )
 
-    $params = @{
-        uri         = "$CollectionUri/_apis/projects/$($ProjectId)?api-version=7.1-preview.4"
-        Method      = 'GET'
-        Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
-        ContentType = 'application/json'
+    process {
+        $params = @{
+            uri         = "$CollectionUri/_apis/projects/$($ProjectId)?api-version=7.1-preview.4"
+            Method      = 'GET'
+            Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+            ContentType = 'application/json'
 
+        }
+        $response = Invoke-RestMethod @params
+        $ProjectName = $response.name
+
+        $ProjectName
     }
-    $response = Invoke-RestMethod @params
-    $ProjectName = $response.name
-
-    $ProjectName
 }
