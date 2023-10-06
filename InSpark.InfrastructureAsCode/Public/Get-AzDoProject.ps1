@@ -77,7 +77,7 @@ function Get-AzDoProject {
         $params = @{
             uri         = $uri
             Method      = 'GET'
-            Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+            Headers     = New-ADOAuthHeader
             ContentType = 'application/json'
         }
 

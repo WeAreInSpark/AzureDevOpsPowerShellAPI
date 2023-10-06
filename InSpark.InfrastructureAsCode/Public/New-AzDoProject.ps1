@@ -84,7 +84,7 @@ function New-AzDoProject {
             $params = @{
                 uri         = "$CollectionUri/_apis/projects?api-version=6.0"
                 Method      = 'POST'
-                Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$PAT")) }
+                Headers     = New-ADOAuthHeader
                 body        = $Body | ConvertTo-Json
                 ContentType = 'application/json'
                 ErrorAction = 'Stop'
@@ -92,7 +92,7 @@ function New-AzDoProject {
 
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
                 Write-Verbose "Trying to create the project"
-                Invoke-RestMethod @params
+                Invoke-RestMethod @params | Out-Null
             } else {
                 $Body | Format-List
                 return
@@ -101,7 +101,15 @@ function New-AzDoProject {
             do {
                 Start-Sleep 10
                 Write-Verbose "Fetching creation state of $name"
-                $response = Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $name
+                $getAzDoProjectSplat = @{
+                    CollectionUri = $CollectionUri
+                    ProjectName   = $name
+                }
+                if ($PAT) {
+                    $getAzDoProjectSplat += @{PAT = $PAT }
+                }
+
+                $response = Get-AzDoProject @getAzDoProjectSplat
             } while (
                 $Response.State -ne 'wellFormed'
             )
