@@ -43,6 +43,11 @@ function New-AzDoProject {
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
+        # Switch to use PAT instead of OAuth
+        [Parameter()]
+        [switch]
+        $UsePAT = $false,
+
         # Name of the project.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
         [string[]]
@@ -64,6 +69,30 @@ function New-AzDoProject {
         [string]
         $Visibility = 'private'
     )
+    Begin {
+        if ($UsePAT) {
+            Write-Verbose 'The [UsePAT]-parameter was set to true, so the PAT will be used to authenticate with the organization.'
+            if ($PAT -eq $env:SYSTEM_ACCESSTOKEN) {
+                Write-Verbose -Message "Using the PAT from the environment variable 'SYSTEM_ACCESSTOKEN'."
+            } elseif (-not [string]::IsNullOrWhitespace($PAT) -and $PSBoundParameters.ContainsKey('PAT')) {
+                Write-Verbose -Message "Using a custom PAT supplied in the parameters."
+            } else {
+                try {
+                    throw "Requested to use a PAT, but no custom PAT was supplied in the parameters or the environment variable 'SYSTEM_ACCESSTOKEN' was not set."
+                } catch {
+                    $PSCmdlet.ThrowTerminatingError($_)
+                }
+            }
+        } else {
+            Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
+            $PAT = ($UsePAT ? $PAT : $null)
+        }
+        try {
+            $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
+        } catch {
+            $PSCmdlet.ThrowTerminatingError($_)
+        }
+    }
     Process {
         foreach ($name in $ProjectName) {
 
@@ -84,7 +113,7 @@ function New-AzDoProject {
             $params = @{
                 uri         = "$CollectionUri/_apis/projects?api-version=6.0"
                 Method      = 'POST'
-                Headers     = New-ADOAuthHeader
+                Headers     = $Header
                 body        = $Body | ConvertTo-Json
                 ContentType = 'application/json'
                 ErrorAction = 'Stop'
@@ -92,21 +121,31 @@ function New-AzDoProject {
 
             if ($PSCmdlet.ShouldProcess($CollectionUri)) {
                 Write-Verbose "Trying to create the project"
-                Invoke-RestMethod @params | Out-Null
+                try {
+                    (Invoke-RestMethod @params | Out-Null)
+                } catch {
+                    $message = $_
+                    Write-Error "Failed to create the project [$name]"
+                    Write-Error $message.ErrorDetails.Message
+                    continue
+                }
             } else {
                 $Body | Format-List
                 return
             }
 
             do {
-                Start-Sleep 10
+                Start-Sleep 5
                 Write-Verbose "Fetching creation state of $name"
                 $getAzDoProjectSplat = @{
                     CollectionUri = $CollectionUri
                     ProjectName   = $name
                 }
                 if ($PAT) {
-                    $getAzDoProjectSplat += @{PAT = $PAT }
+                    $getAzDoProjectSplat += @{
+                        PAT    = $PAT
+                        UsePAT = $true
+                    }
                 }
 
                 $response = Get-AzDoProject @getAzDoProjectSplat
