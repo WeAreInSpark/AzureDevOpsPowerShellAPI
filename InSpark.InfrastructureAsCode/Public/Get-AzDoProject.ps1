@@ -90,6 +90,7 @@ function Get-AzDoProject {
             Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
             $PAT = ($UsePAT ? $PAT : $null)
         }
+        $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true)
     }
     Process {
         if ($ProjectName) {
@@ -101,7 +102,7 @@ function Get-AzDoProject {
         $params = @{
             uri         = $uri
             Method      = 'GET'
-            Headers     = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true)
+            Headers     = $header
             ContentType = 'application/json'
         }
 
