@@ -27,3 +27,4 @@ function New-ADOAuthHeader {
             throw 'Please login to Azure PowerShell first'
         }
     }
+}
