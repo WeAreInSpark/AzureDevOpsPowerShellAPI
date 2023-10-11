@@ -49,8 +49,13 @@ function Get-AzDoRepo {
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
 
+        # Switch to use PAT instead of OAuth
+        [Parameter()]
+        [switch]
+        $UsePAT = $false,
+
         # Name of the Repo to get information about
-        [Parameter(ParameterSetName = 'Get')]
+        [Parameter()]
         [string]
         $RepoName,
 
@@ -59,6 +64,25 @@ function Get-AzDoRepo {
         [string]
         $ProjectName
     )
+    Begin {
+        if ($UsePAT) {
+            Write-Verbose 'The [UsePAT]-parameter was set to true, so the PAT will be used to authenticate with the organization.'
+            if ($PAT -eq $env:SYSTEM_ACCESSTOKEN) {
+                Write-Verbose -Message "Using the PAT from the environment variable 'SYSTEM_ACCESSTOKEN'."
+            } elseif (-not [string]::IsNullOrWhitespace($PAT) -and $PSBoundParameters.ContainsKey('PAT')) {
+                Write-Verbose -Message "Using a custom PAT supplied in the parameters."
+            } else {
+                try {
+                    throw "Requested to use a PAT, but no custom PAT was supplied in the parameters or the environment variable 'SYSTEM_ACCESSTOKEN' was not set."
+                } catch {
+                    $PSCmdlet.ThrowTerminatingError($_)
+                }
+            }
+        } else {
+            Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
+            $PAT = ($UsePAT ? $PAT : $null)
+        }
+    }
     Process {
         if ($RepoName) {
             $uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($RepoName)?api-version=7.1-preview.1"
@@ -69,7 +93,7 @@ function Get-AzDoRepo {
         $params = @{
             uri         = $uri
             Method      = 'GET'
-            Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+            Headers     = New-ADOAuthHeader
             ContentType = 'application/json'
         }
 
