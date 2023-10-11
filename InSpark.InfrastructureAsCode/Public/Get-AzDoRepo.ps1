@@ -82,6 +82,11 @@ function Get-AzDoRepo {
             Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
             $PAT = ($UsePAT ? $PAT : $null)
         }
+        try {
+            $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
+        } catch {
+            $PSCmdlet.ThrowTerminatingError($_)
+        }
     }
     Process {
         if ($RepoName) {
@@ -93,7 +98,7 @@ function Get-AzDoRepo {
         $params = @{
             uri         = $uri
             Method      = 'GET'
-            Headers     = New-ADOAuthHeader
+            Headers     = $header
             ContentType = 'application/json'
         }
 
