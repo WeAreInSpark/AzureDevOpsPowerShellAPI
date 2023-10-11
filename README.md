@@ -1,6 +1,6 @@
 <h1 align="center">
   <a href="https://inspark.nl">
-    <img alt="InSpark" src="https://insparkteamplayer.inspark.nl/assets/partner/inspark-logo.png" height="150">
+    <img alt="InSpark" src="docs/inspark-logo-semi-1.svg" height="150">
   </a>
   <br>InfrastructureAsCode<br>
 </h1>
