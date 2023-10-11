@@ -69,8 +69,7 @@ function New-AzDoRepo {
         } catch {
             $PSCmdlet.ThrowTerminatingError($_)
         }
-    }
-    process {
+
         $getAzDoProjectSplat = @{
             CollectionUri = $CollectionUri
         }
@@ -84,7 +83,8 @@ function New-AzDoRepo {
 
         $Projects = Get-AzDoProject @getAzDoProjectSplat
         $ProjectId = ($Projects | Where-Object ProjectName -EQ $ProjectName).Projectid
-
+    }
+    process {
         $Body = @{
             name    = $RepoName
             project = @{
