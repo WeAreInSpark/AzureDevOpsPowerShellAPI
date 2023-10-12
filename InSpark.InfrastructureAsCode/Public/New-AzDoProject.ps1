@@ -51,6 +51,70 @@ function New-AzDoProject {
         # Name of the project.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
         [string[]]
+        [ValidateScript(
+            {
+                # Length
+                if (($_).Length -gt 63) {
+                    throw "The project name cannot be longer than 63 characters"
+                }
+
+                # - Must not be a system reserved name.
+                $forbiddenNames = @(
+                    'COM1',
+                    'COM2',
+                    'COM3',
+                    'COM4',
+                    'COM5',
+                    'COM6',
+                    'COM7',
+                    'COM8',
+                    'COM9',
+                    'COM10',
+                    'CON',
+                    'DefaultCollection',
+                    'LPT1',
+                    'LPT2',
+                    'LPT3',
+                    'LPT4',
+                    'LPT5',
+                    'LPT6',
+                    'LPT7',
+                    'LPT8',
+                    'LPT9',
+                    'NUL',
+                    'PRN',
+                    'SERVER',
+                    'SignalR',
+                    'Web',
+                    'WEB')
+                if ($forbiddenNames -contains $_) {
+                    throw "The project name cannot be one of the following values: $forbiddenNames"
+                }
+
+                # - Must not be one of the hidden segments used for IIS request filtering like App_Browsers, App_code, App_Data, App_GlobalResources, App_LocalResources, App_Themes, App_WebResources, bin, or web.config.
+                if ($_ -match "App_Browsers|App_code|App_Data|App_GlobalResources|App_LocalResources|App_Themes|App_WebResources|bin|web.config") {
+                    throw "The project name cannot be one of the following values: App_Browsers, App_code, App_Data, App_GlobalResources, App_LocalResources, App_Themes, App_WebResources, bin, or web.config"
+                }
+
+                # - Must not contain any Unicode control characters or surrogate characters.
+                if ($_ -match "[\p{C}\p{Cs}]") {
+                    throw "The project name cannot contain any Unicode control characters or surrogate characters"
+                }
+                # - Must not contain the following printable characters: \ / : * ? " < > | ; # $ * { } , + = [ ].
+                if ($_ -match "[\\/:*?`"<>|;#$*{},+=\[\]]") {
+                    throw "The project name cannot contain the following printable characters: \ / : * ? `"< > | ; # $ * { } , + = [ ]"
+                }
+                # - Must not start with an underscore _.
+                if ($_ -match "^_") {
+                    throw "The project name cannot start with an underscore _"
+                }
+                # - Must not start or end with a period ..
+                if ($_ -match "^\." -or $_ -match "\.$") {
+                    throw "The project name cannot start or end with a period ."
+                }
+                $true
+            }
+        )]
         $ProjectName,
 
         # Description of the project
