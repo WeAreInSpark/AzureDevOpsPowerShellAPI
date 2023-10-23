@@ -30,7 +30,7 @@ function New-AzDoProject {
 
         This example creates two new Azure DevOps projects using the pipeline.
     #>
-    [CmdletBinding(SupportsShouldProcess)]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     param (
         # Collection URI. e.g. https://dev.azure.com/contoso.
         # Azure Pipelines has a predefined variable for this.
@@ -183,7 +183,7 @@ function New-AzDoProject {
                 ErrorAction = 'Stop'
             }
 
-            if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+            if ($PSCmdlet.ShouldProcess($CollectionUri, "Create project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
                 Write-Verbose "Trying to create the project"
                 try {
                     (Invoke-RestMethod @params | Out-Null)
