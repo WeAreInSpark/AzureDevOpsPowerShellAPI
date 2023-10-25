@@ -138,7 +138,7 @@ function New-AzDoVariableGroup {
             $params = @{
                 uri         = "$CollectionUri/$ProjectId/_apis/distributedtask/variablegroups?api-version=7.2-preview.2"
                 Method      = 'POST'
-                Headers     = New-ADOAuthHeader
+                Headers     = $Header
                 body        = $Body | ConvertTo-Json -Depth 99
                 ContentType = 'application/json'
             }
