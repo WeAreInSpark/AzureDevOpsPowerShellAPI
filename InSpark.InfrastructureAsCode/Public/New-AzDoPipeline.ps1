@@ -81,6 +81,11 @@ function New-AzDoPipeline {
             Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
             $PAT = ($UsePAT ? $PAT : $null)
         }
+        try {
+            $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
+        } catch {
+            $PSCmdlet.ThrowTerminatingError($_)
+        }
     }
     Process {
         $getAzDoRepoSplat = @{
@@ -114,7 +119,7 @@ function New-AzDoPipeline {
             $params = @{
                 uri         = "$CollectionUri/$ProjectName/_apis/pipelines?api-version=7.1-preview.1"
                 Method      = 'POST'
-                Headers     = New-ADOAuthHeader
+                Headers     = $header
                 body        = $Body | ConvertTo-Json -Depth 99
                 ContentType = 'application/json'
             }
