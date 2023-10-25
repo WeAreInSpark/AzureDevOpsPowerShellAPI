@@ -277,7 +277,7 @@ function New-AzDoServiceConnection {
         $Params = @{
             uri         = "$CollectionUri/_apis/serviceendpoint/endpoints?api-version=7.1-preview.4"
             Method      = 'POST'
-            Headers     = New-ADOAuthHeader
+            Headers     = $Header
             body        = $Body | ConvertTo-Json -Depth 99
             ContentType = 'application/json'
         }
