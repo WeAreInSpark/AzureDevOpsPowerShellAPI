@@ -37,7 +37,7 @@ function New-AzDoVariableGroup {
         PSobject
     .NOTES
     #>
-    [CmdletBinding(SupportsShouldProcess)]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     param (
         # Collection Uri of the organization
         [Parameter(Mandatory)]
@@ -48,6 +48,11 @@ function New-AzDoVariableGroup {
         [Parameter()]
         [string]
         $PAT = $env:SYSTEM_ACCESSTOKEN,
+
+        # Switch to use PAT instead of OAuth
+        [Parameter()]
+        [switch]
+        $UsePAT = $false,
 
         # Project where the variable group has to be created
         [Parameter(Mandatory)]
@@ -69,24 +74,76 @@ function New-AzDoVariableGroup {
         [string]
         $Description
     )
+    Begin {
+        if ($UsePAT) {
+            Write-Verbose 'The [UsePAT]-parameter was set to true, so the PAT will be used to authenticate with the organization.'
+            if ($PAT -eq $env:SYSTEM_ACCESSTOKEN) {
+                Write-Verbose -Message "Using the PAT from the environment variable 'SYSTEM_ACCESSTOKEN'."
+            } elseif (-not [string]::IsNullOrWhitespace($PAT) -and $PSBoundParameters.ContainsKey('PAT')) {
+                Write-Verbose -Message "Using a custom PAT supplied in the parameters."
+            } else {
+                try {
+                    throw "Requested to use a PAT, but no custom PAT was supplied in the parameters or the environment variable 'SYSTEM_ACCESSTOKEN' was not set."
+                } catch {
+                    $PSCmdlet.ThrowTerminatingError($_)
+                }
+            }
+        } else {
+            Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
+            $PAT = ($UsePAT ? $PAT : $null)
+        }
+        try {
+            $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
+        } catch {
+            $PSCmdlet.ThrowTerminatingError($_)
+        }
+
+        $getAzDoProjectSplat = @{
+            CollectionUri = $CollectionUri
+        }
+
+        if ($PAT) {
+            $getAzDoProjectSplat += @{
+                PAT    = $PAT
+                UsePAT = $true
+            }
+        }
+
+        $Projects = Get-AzDoProject @getAzDoProjectSplat
+        $ProjectId = ($Projects | Where-Object ProjectName -EQ $ProjectName).Projectid
+    }
+
     Process {
         foreach ($name in $VariableGroupName) {
+            $trimmedvars = @{}
+            foreach ($variable in $Variables.GetEnumerator()) {
+                $trimmedvars += @{ $variable.Key = @{ value = $variable.Value } }
+            }
 
             $body = @{
-                description = $Description
-                name        = $name
-                variables   = $Variables
+                description                    = $Description
+                name                           = $name
+                variables                      = $trimmedvars
+                variableGroupProjectReferences = @(
+                    @{
+                        name             = $ProjectName
+                        description      = $Description
+                        projectReference = @{
+                            id = $ProjectId
+                        }
+                    }
+                )
             }
 
             $params = @{
-                uri         = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups?api-version=5.0-preview.1"
+                uri         = "$CollectionUri/$ProjectId/_apis/distributedtask/variablegroups?api-version=7.2-preview.2"
                 Method      = 'POST'
-                Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+                Headers     = New-ADOAuthHeader
                 body        = $Body | ConvertTo-Json -Depth 99
                 ContentType = 'application/json'
             }
 
-            if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+            if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
 
                 (Invoke-RestMethod @params) | ForEach-Object {
                     [PSCustomObject]@{
