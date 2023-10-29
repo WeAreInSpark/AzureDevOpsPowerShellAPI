@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Test
+        shell: pwsh
+        run: |
+          ./build.ps1 -Task Build -Bootstrap
       - name: Build
         uses: Tiryoh/actions-mkdocs@v0
         with:

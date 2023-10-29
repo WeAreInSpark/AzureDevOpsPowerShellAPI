@@ -23,7 +23,8 @@
     "cschleiden.vscode-github-actions",
     "rangav.vscode-thunder-client",
     "Gruntfuggly.todo-tree",
-    "ms-vscode.azure-account"
+    "ms-vscode.azure-account",
+    "vivaxy.vscode-conventional-commits"
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
