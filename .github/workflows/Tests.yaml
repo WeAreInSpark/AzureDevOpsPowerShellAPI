@@ -17,19 +17,3 @@ jobs:
           Install-Module -Name Az.Accounts -Force
           Install-Module -Name Az.KeyVault -Force
           ./build.ps1 -Task Test -Bootstrap
-
-  SetLabels:
-    name: Set labels to pull request
-    runs-on: ubuntu-latest
-    steps:
-      - uses: TimonVS/pr-labeler-action@bd0b592a410983316a454e3d48444608f028ec8e
-        name: Set Label PRs
-        if: github.event.action == 'opened'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: NathanielHill/check-pr-label-action@c55b3337f3234b6755a175fa255380726a4a6e98
-        name: Check Label PRs
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          valid-labels: "patch, minor, major, no-release"

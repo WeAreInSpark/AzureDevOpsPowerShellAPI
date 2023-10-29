@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "ms-dotnettools.vscode-dotnet-runtime",
-    "ms-azure-devops.azure-pipelines",
     "ms-vscode.powershell-preview",
     "ms-vscode.azure-account",
     "ms-azuretools.vscode-bicep",
@@ -10,7 +9,8 @@
     "vsls-contrib.codetour",
     "tylerleonhardt.vscode-pester-test-adapter",
     "rebornix.project-snippets",
-    "DavidAnson.vscode-markdownlint"
+    "DavidAnson.vscode-markdownlint",
+    "vivaxy.vscode-conventional-commits"
   ],
   "unwantedRecommendations": []
 }

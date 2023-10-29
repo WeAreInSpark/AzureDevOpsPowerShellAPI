@@ -4,10 +4,9 @@ on:
     branches:
       - main
     paths:
-      - "InSpark.InfrastructureAsCode/**"
+      - "AzureDevOpsPowerShellAPI/**"
       - "docs/**"
 jobs:
-
   Docs:
     name: Deploy docs to GitHub Pages
     runs-on: ubuntu-latest
