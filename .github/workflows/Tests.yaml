@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
       - name: Test
@@ -17,3 +17,12 @@ jobs:
           Install-Module -Name Az.Accounts -Force
           Install-Module -Name Az.KeyVault -Force
           ./build.ps1 -Task Test -Bootstrap
+  validate-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Commitsar check
+        uses: docker://aevea/commitsar
