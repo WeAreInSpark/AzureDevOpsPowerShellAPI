@@ -22,18 +22,31 @@ function Set-AzDoBranchPolicyMinimalApproval {
     This example creates a 'Minimum number of reviewers' policy on the main branch of repo1 and repo2
 
 .OUTPUTS
-    PSobject. An object containing the name, the folder and the URI of the pipeline
+    [PSCustomObject]@{
+      CollectionUri               = $CollectionUri
+      ProjectName                 = $ProjectName
+      RepoName                    = $RepoName
+      id                          = $res.id
+      minimumApproverCount        = $res.settings.minimumApproverCount
+      creatorVoteCounts           = $res.settings.creatorVoteCounts
+      allowDownvotes              = $res.settings.allowDownvotes
+      resetOnSourcePush           = $res.settings.resetOnSourcePush
+      requireVoteOnLastIteration  = $res.settings.requireVoteOnLastIteration
+      resetRejectionsOnSourcePush = $res.settings.resetRejectionsOnSourcePush
+      blockLastPusherVote         = $res.settings.blockLastPusherVote
+      requireVoteOnEachIteration  = $res.settings.requireVoteOnEachIteration
+    }
 .NOTES
 #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $CollectionUri,
 
     # Project where the pipeline will be created.
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $ProjectName,
 
@@ -44,6 +57,7 @@ function Set-AzDoBranchPolicyMinimalApproval {
 
     # Name of the Repository containing the YAML-sourcecode
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [string]
     $RepoName,
 
     # Branch to create the policy on
@@ -62,15 +76,19 @@ function Set-AzDoBranchPolicyMinimalApproval {
     $creatorVoteCounts = $true
   )
 
-  Begin {
+  Process {
+
+    Write-Debug "CollectionUri: $CollectionUri"
+    Write-Debug "ProjectName: $ProjectName"
+    Write-Debug "RepoName: $RepoName"
+    Write-Debug "branch: $branch"
+
     try {
       $policyId = Get-BranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -PolicyType "Minimum number of reviewers"
     } catch {
       throw $_.Exception.Message
     }
-  }
 
-  Process {
     try {
       $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -RepoName $RepoName).RepoId
     } catch {
@@ -113,7 +131,21 @@ function Set-AzDoBranchPolicyMinimalApproval {
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
       try {
         Write-Information "Creating 'Minimum number of reviewers' policy on $RepoName/$branch"
-        Invoke-RestMethod @params | Select-Object createdDate, settings, id, url
+        $res = Invoke-RestMethod @params
+        [PSCustomObject]@{
+          CollectionUri               = $CollectionUri
+          ProjectName                 = $ProjectName
+          RepoName                    = $RepoName
+          id                          = $res.id
+          minimumApproverCount        = $res.settings.minimumApproverCount
+          creatorVoteCounts           = $res.settings.creatorVoteCounts
+          allowDownvotes              = $res.settings.allowDownvotes
+          resetOnSourcePush           = $res.settings.resetOnSourcePush
+          requireVoteOnLastIteration  = $res.settings.requireVoteOnLastIteration
+          resetRejectionsOnSourcePush = $res.settings.resetRejectionsOnSourcePush
+          blockLastPusherVote         = $res.settings.blockLastPusherVote
+          requireVoteOnEachIteration  = $res.settings.requireVoteOnEachIteration
+        }
       } catch {
         Write-Warning "Policy on $RepoName/$branch already exists. It is not possible to update policies"
       }

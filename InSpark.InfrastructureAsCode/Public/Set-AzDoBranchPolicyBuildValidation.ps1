@@ -25,7 +25,13 @@ function Set-AzDoBranchPolicyBuildValidation {
     This example creates a new Azure Pipeline and sets this pipeline as Build Validation policy on the main branch
 
 .OUTPUTS
-    PSobject. An object containing the name, the folder and the URI of the pipeline
+    [PSCustomObject]@{
+      CollectionUri = $CollectionUri
+      ProjectName   = $ProjectName
+      RepoName      = $RepoName
+      Id            = $result.id
+      Url           = $result.url
+    }
 .NOTES
 #>
   [CmdletBinding(SupportsShouldProcess)]
