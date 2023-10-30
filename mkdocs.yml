@@ -1,4 +1,78 @@
-site_name: none
-repo_url: https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode
-theme: readthedocs
+site_name: InfrastuctureAsCode
+repo_url: https://github.com/WeAreInSpark/AzureDevOpsPowerShellAPI/
+docs_dir: docs/en-US
 
+extra_css:
+- assets/stylesheets/extra.css
+
+theme:
+  language: en
+  name: material
+  custom_dir: overrides
+  font:
+    text: Roboto
+  logo: assets/inspark-logo-semi.svg
+  favicon: assets/inspark-logo-semi.svg
+  icon:
+    repo: fontawesome/brands/github
+  features:
+  - navigation.instant
+  - navigation.indexes
+  - navigation.sections:
+      level: 1
+  - navigation.tabs
+  - content.code.annotate
+  - content.tabs.link
+
+markdown_extensions:
+- admonition
+- abbr
+- attr_list
+- def_list
+- footnotes
+- meta
+- md_in_html
+- pymdownx.snippets
+- pymdownx.highlight:
+    auto_title: false
+    anchor_linenums: false
+- pymdownx.superfences
+- pymdownx.pathconverter
+- pymdownx.tabbed:
+    alternate_style: true
+- pymdownx.details
+- mdx_truly_sane_lists
+- pymdownx.tasklist
+- pymdownx.emoji:
+    emoji_index: !!python/name:materialx.emoji.twemoji
+    emoji_generator: !!python/name:materialx.emoji.to_svg
+- toc:
+    permalink: '#'
+    separator: '-'
+
+extra:
+  version:
+    provider: mike
+
+  social:
+  - icon: fontawesome/brands/github
+    link: https://github.com/WeAreInSpark/AzureDevOpsPowerShellAPI/
+
+  local:
+    social_preview: https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654
+
+  giscus:
+    repo: Azure/PSRule.Rules.Azure
+    repo_id: MDEwOlJlcG9zaXRvcnkxODQxNTQ2Njg=
+    category: Documentation
+    category_id: DIC_kwDOCvn6LM4CQqE6
+
+plugins:
+- mkdocs-simple-hooks:
+    hooks:
+      on_page_markdown: "docs.hooks:replace_maml"
+      on_nav: "docs.hooks:build_reference_nav"
+- search
+- git-revision-date
+- awesome-pages
+- tags

@@ -1,0 +1,210 @@
+ypo{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Repo Structure (Detailed)",
+  "steps": [
+    {
+      "title": "Introduction",
+      "description": "Welcome to our detailed repo codetour.\r\n\r\nWe have several files which relate to our code, quality testing, releases and the documentation.\r\n\r\nThis can be a bit intimidating, but every part has it's own usecase.\r\n\r\nIn this tour we'll show you what folders and documents represent and how they contribute to our PowerShell module."
+    },
+    {
+      "directory": ".devcontainer",
+      "description": "This directory contains two files related to our devcontainer setup.\r\n\r\nA devcontainer is a configuration environment for VSCode, containing everything you need to work on our code.\r\n\r\nFor more information on devcontainers https://code.visualstudio.com/docs/remote/create-dev-container"
+    },
+    {
+      "file": ".devcontainer/devcontainer.json",
+      "description": "This json file contains all VSCode configuration information.\r\n\r\nIt contains terminal settings, contains all the extensions to load with the container and launch setup.",
+      "line": 1
+    },
+    {
+      "file": ".devcontainer/Dockerfile",
+      "description": "The dockerfile contains all the specifics on what container baseimage to fetch and what to add on top of it.",
+      "line": 1
+    },
+    {
+      "directory": ".github",
+      "description": "This folder contains everything relevant for our GitHub setup. From our pipelines to our PR and issue templates."
+    },
+    {
+      "file": ".github/CONTRIBUTING.md",
+      "description": "This file contains guidance on how to contribute to our repository.",
+      "line": 1
+    },
+    {
+      "file": ".github/ISSUE_TEMPLATE.md",
+      "description": "This file contains our current issue templates, this prefills any issues created by a user.",
+      "line": 1
+    },
+    {
+      "file": ".github/PULL_REQUEST_TEMPLATE.md",
+      "description": "This file contains our current pull request templates, this prefills any issues created by a user.",
+      "line": 1
+    },
+    {
+      "file": ".github/pr-labeler.yml",
+      "description": "This file is used to label our Pull Requests based on their gitbranch.\r\n\r\nIt is used in [Tests.yaml](.github\\workflows\\Tests.yaml)",
+      "line": 1
+    },
+    {
+      "file": ".github/release.yml",
+      "description": "This file has specifics on how the [release documentation](https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/releases/) should be generated.\r\n\r\nThis depends on the labels set on the Pull Request in [Tests.yaml](.github\\workflows\\Tests.yaml). \r\n\r\nMore information on the functionality can be found at https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes",
+      "line": 1
+    },
+    {
+      "directory": ".github/workflows",
+      "description": "This folder contains our pipelines. \r\n\r\nIn the pipeline files is instructed what actions must be performed after specified events."
+    },
+    {
+      "file": ".github/workflows/Tests.yaml",
+      "description": " This pipeline runs after a pull request is created, it test for compatibility and sets the PR label after testing. \r\n \r\n The pipeline tests compatibility on each platform (Windows, Ubuntu and MacOS) by running `build.ps1`on each OS (and therefore running our tests). \r\n \r\n After the tests complete running the pull-request is labeled with labels using the branch name as defined in `pr-labeler.yml`.",
+      "line": 1
+    },
+    {
+      "file": ".github/workflows/Release.yaml",
+      "description": "This pipeline releases our PowerShell module to our Azure DevOps Artifacts NuGet Package feed.\r\n\r\nWhen a file in our PowerShell module is changed, and the change is committed on main (after a pull request).\r\n\r\nIt fetches the previous tag, calculates the version (based on SemVer), creates the GitHub release and finally release to Azure DevOps.",
+      "line": 1
+    },
+    {
+      "directory": ".tours",
+      "description": "This contains all the toursteps you're taking now!\r\n\r\nMore information on code tours can be found at https://code.visualstudio.com/learn/educators/codetour"
+    },
+    {
+      "directory": ".vscode",
+      "description": "This folder contains everything relevant for our GitHub setup. From our pipelines to our PR- and Issue- templates."
+    },
+    {
+      "file": ".vscode/extensions.json",
+      "description": "This json file contains all our recommendations for [VSCode extensions](https://code.visualstudio.com/docs/editor/extension-marketplace).",
+      "line": 1
+    },
+    {
+      "file": ".vscode/launch.json",
+      "description": "This json file contains all VSCode [debug configurations](https://code.visualstudio.com/docs/editor/debugging).",
+      "line": 1
+    },
+    {
+      "file": ".vscode/settings.json",
+      "description": "This json file contains all [VSCode configuration settings](https://code.visualstudio.com/docs/getstarted/settings) with some of our code standards.\r\n\r\nThese entries override global settings by the user.",
+      "line": 1
+    },
+    {
+      "file": ".vscode/tasks.json",
+      "description": "This json file contains all [VSCode task definitions](https://code.visualstudio.com/Docs/editor/tasks) for this repo.",
+      "line": 1
+    },
+    {
+      "directory": "docs/en-US",
+      "description": "This directory contains all our documentation, hosted in our documentation site.\r\n\r\nThe Cmdlet Help is generated by PowerShell Build from our PowerShell comment-based help during our build with [PSake](psakeFile.ps1) in our [build.ps1](build.ps1) script.\r\n\r\nThe other files are manually maintained."
+    },
+    {
+      "directory": "InSpark.InfrastructureAsCode",
+      "description": "This folder contains all our PowerShell source code, which combined create a module.\r\n\r\nhttps://docs.microsoft.com/en-us/powershell/scripting/developer/module/understanding-a-windows-powershell-module?view=powershell-7.2"
+    },
+    {
+      "file": "InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psd1",
+      "description": "A module manifest file with the specifics what the module is, what it requires and which functions the module has.\r\n\r\nThis file normally contains all the functions you want to export, but this version is not the built version.\r\n\r\nSo you might miss entries which get filled during [build](./build.ps1) and the final module.\r\n\r\nhttps://docs.microsoft.com/en-us/powershell/scripting/developer/module/how-to-write-a-powershell-module-manifest?view=powershell-7.2",
+      "line": 1
+    },
+    {
+      "file": "InSpark.InfrastructureAsCode/InSpark.InfrastructureAsCode.psm1",
+      "description": "A PowerShell module file, this is what makes a module a module. \r\n\r\nIt enables some module sensitive options versus a script (.ps1).\r\n\r\nhttps://docs.microsoft.com/en-us/powershell/scripting/developer/module/understanding-a-windows-powershell-module?view=powershell-7.2#script-modules",
+      "line": 1
+    },
+    {
+      "directory": "InSpark.InfrastructureAsCode/Public",
+      "description": "The definitions of the public PowerShell functions, the functions you can use in the console."
+    },
+    {
+      "directory": "InSpark.InfrastructureAsCode/Private",
+      "description": "The definitions of the private PowerShell functions, the functions that work supporting in the background.\r\n\r\nYou typically cannot use these functions in the console."
+    },
+    {
+      "directory": "tests",
+      "description": "The folder with all our CI tests and rules. With these definitions we can test our code."
+    },
+    {
+      "file": "tests/Help.tests.ps1",
+      "description": "The PowerShell Pester tests, that test for function comment-based help.",
+      "line": 1
+    },
+    {
+      "file": "tests/Manifest.tests.ps1",
+      "description": "The PowerShell Pester tests, that test our PowerShell module manifest file (.psd1).",
+      "line": 1
+    },
+    {
+      "file": "tests/Meta.tests.ps1",
+      "description": "The PowerShell Pester tests, that test file encoding, and filenames.MetaFixers.psm1.",
+      "line": 1
+    },
+    {
+      "file": "tests/MetaFixers.psm1",
+      "description": "A PowerShell Script module, that is required for our meta.tests.ps1.",
+      "line": 1
+    },
+    {
+      "file": "tests/ScriptAnalyzerSettings.psd1",
+      "description": "Our PowerShell Script Analyzer rules settings, with the addition of the Indented.ScriptAnalyzerRules module rules.\r\n\r\nThe rules also are integrated in our development process with VSCode by the help of the PowerShell Extension.\r\n\r\nIn our [settings.json](.\\.vscode\\settings.json) we set the setting referenced below, so it highlights your code if VSCode is opened at the repo-root (BRC.PS.InfrastructureAsCode):\r\n\r\n`powershell.scriptAnalysis.settingsPath\": \"tests/ScriptAnalyzerSettings.psd1\"`\r\n\r\nFor more information on PowerShell Script Analyzer: https://docs.microsoft.com/en-us/powershell/module/psscriptanalyzer/?view=ps-modules",
+      "line": 1
+    },
+    {
+      "directory": "tests/Indented.ScriptAnalyzerRules",
+      "description": "A module containing additional PowerShell Script Analyzer rules by Chris Dent.\r\n\r\nSource can be found at https://github.com/indented-automation/Indented.ScriptAnalyzerRules"
+    },
+    {
+      "file": ".gitattributes",
+      "description": "This file gives gitattributes to pathnames. In our case defines what line-endings to use.",
+      "line": 1
+    },
+    {
+      "file": ".gitignore",
+      "description": "This file defines what directories/files not to integrate into source control (what is versioned in the repo).",
+      "line": 1
+    },
+    {
+      "file": "build.ps1",
+      "description": "This is a script file in which we build our code.\r\nIt installs and imports dependant modules using [PSDepend](https://github.com/RamblingCookieMonster/PSDepend/), and kicks of our [PSake](https://github.com/psake/psake) tools.",
+      "line": 1
+    },
+    {
+      "file": "CHANGELOG.md",
+      "description": "A reference to all changes we made in our module development.",
+      "line": 1
+    },
+    {
+      "file": "CODE_OF_CONDUCT.md",
+      "description": "Our rules of how we should function as a team.",
+      "line": 1
+    },
+    {
+      "file": "LICENSE",
+      "description": "The license of our code, what defines what you can and cannot do with it",
+      "line": 1
+    },
+    {
+      "file": "mkdocs.txt",
+      "description": "A requirements file on what to build the documentation site with. \r\n\r\nThis is used in [Release.yaml](.github\\workflows\\Release.yaml) by (https://github.com/Tiryoh/actions-mkdocs)",
+      "line": 1
+    },
+    {
+      "file": "psakeFile.ps1",
+      "description": "A [PSake](https://github.com/psake/psake) file which references functions from the [PowerShellBuild](https://github.com/psake/PowerShellBuild) module, which is used in the build of our module.",
+      "line": 1
+    },
+    {
+      "file": "README.md",
+      "description": "The readme of our repo, which is shown on the homepage of the repo on GitHub.",
+      "line": 1
+    },
+    {
+      "file": "requirements.psd1",
+      "description": "Our requirements file for [PSDepend](https://github.com/RamblingCookieMonster/PSDepend/) used to manage our dependencies in our [build.ps1](./build.ps1) file.",
+      "line": 1
+    },
+    {
+      "file": "mkdocs.yml",
+      "description": "A file with specifics on how to build our documentation site.\r\n\r\nUsed in [Release.yaml](.github\\workflows\\Release.yaml) by (https://github.com/Tiryoh/actions-mkdocs)",
+      "line": 1
+    }
+  ],
+  "isPrimary": true
+}
