@@ -1,22 +1,31 @@
 {
-  "editor.formatOnSave": true,
+  "[PowerShell]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4
+  },
+  "conventionalCommits.scopes": [
+    "docs",
+    "worklows",
+    "tests",
+    "functions"
+  ],
   "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairsHorizontal": true,
+  "editor.formatOnSave": true,
   "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairsHorizontal": true,
   "editor.guides.highlightActiveBracketPair": true,
-  "editor.quickSuggestionsDelay": 0,
-  "editor.suggestSelection": "first",
-  "editor.snippetSuggestions": "top",
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
   "editor.tabSize": 2,
   "files.trimTrailingWhitespace": true,
+  "editor.quickSuggestionsDelay": 0,
+  "editor.snippetSuggestions": "top",
+  "editor.suggestSelection": "first",
   "files.insertFinalNewline": true,
+  "git.enableSmartCommit": true,
+  "git.smartCommitChanges": "all",
+  "powershell.codeFormatting.preset": "OTBS",
   "powershell.codeFormatting.useCorrectCasing": true,
   "powershell.pester.useLegacyCodeLens": false,
-  "powershell.codeFormatting.preset": "OTBS",
-  "[PowerShell]": {
-    "files.trimTrailingWhitespace": true
-  },
   "powershell.scriptAnalysis.settingsPath": "tests/ScriptAnalyzerSettings.psd1"
 }
