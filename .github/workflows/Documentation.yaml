@@ -4,16 +4,19 @@ on:
     branches:
       - main
     paths:
-      - "InSpark.InfrastructureAsCode/**"
+      - "AzureDevOpsPowerShellAPI/**"
       - "docs/**"
 jobs:
-
   Docs:
     name: Deploy docs to GitHub Pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Test
+        shell: pwsh
+        run: |
+          ./build.ps1 -Task Build -Bootstrap
       - name: Build
         uses: Tiryoh/actions-mkdocs@v0
         with:

@@ -1,5 +1,5 @@
 site_name: InfrastuctureAsCode
-repo_url: https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/
+repo_url: https://github.com/WeAreInSpark/AzureDevOpsPowerShellAPI/
 docs_dir: docs/en-US
 
 extra_css:
@@ -25,38 +25,38 @@ theme:
   - content.tabs.link
 
 markdown_extensions:
-  - admonition
-  - abbr
-  - attr_list
-  - def_list
-  - footnotes
-  - meta
-  - md_in_html
-  - pymdownx.snippets
-  - pymdownx.highlight:
-      auto_title: false
-      anchor_linenums: false
-  - pymdownx.superfences
-  - pymdownx.pathconverter
-  - pymdownx.tabbed:
-      alternate_style: true
-  - pymdownx.details
-  - mdx_truly_sane_lists
-  - pymdownx.tasklist
-  - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
-  - toc:
-      permalink: '#'
-      separator: '-'
+- admonition
+- abbr
+- attr_list
+- def_list
+- footnotes
+- meta
+- md_in_html
+- pymdownx.snippets
+- pymdownx.highlight:
+    auto_title: false
+    anchor_linenums: false
+- pymdownx.superfences
+- pymdownx.pathconverter
+- pymdownx.tabbed:
+    alternate_style: true
+- pymdownx.details
+- mdx_truly_sane_lists
+- pymdownx.tasklist
+- pymdownx.emoji:
+    emoji_index: !!python/name:materialx.emoji.twemoji
+    emoji_generator: !!python/name:materialx.emoji.to_svg
+- toc:
+    permalink: '#'
+    separator: '-'
 
 extra:
   version:
     provider: mike
 
   social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/
+  - icon: fontawesome/brands/github
+    link: https://github.com/WeAreInSpark/AzureDevOpsPowerShellAPI/
 
   local:
     social_preview: https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654
