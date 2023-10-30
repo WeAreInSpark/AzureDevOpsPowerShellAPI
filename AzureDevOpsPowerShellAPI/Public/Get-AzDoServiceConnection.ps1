@@ -1,4 +1,4 @@
-function Get-AzDoRepo {
+function Get-AzDoServiceConnection {
     <#
 .SYNOPSIS
     Gets information about a repo in Azure DevOps.
@@ -44,6 +44,11 @@ function Get-AzDoRepo {
         [string]
         $CollectionUri,
 
+        # Project where the Repos are contained
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+        [string]
+        $ProjectName,
+
         # PAT to authenticate with the organization
         [Parameter()]
         [string]
@@ -55,14 +60,9 @@ function Get-AzDoRepo {
         $UsePAT = $false,
 
         # Name of the Repo to get information about
-        [Parameter()]
-        [string]
-        $RepoName,
-
-        # Project where the Repos are contained
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
-        [string]
-        $ProjectName
+        [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
+        [string[]]
+        $ServiceConnectionName
     )
     Begin {
         if ($UsePAT) {
@@ -89,49 +89,44 @@ function Get-AzDoRepo {
         }
     }
     Process {
-        if ($RepoName) {
-            $uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($RepoName)?api-version=7.1-preview.1"
-        } else {
-            $uri = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
-        }
-
         $params = @{
-            uri         = $uri
+            uri         = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints?api-version=7.2-preview.4"
             Method      = 'GET'
             Headers     = $header
             ContentType = 'application/json'
         }
 
-        if ($RepoName) {
-        (Invoke-RestMethod @params) | ForEach-Object {
-                [PSCustomObject]@{
-                    RepoName      = $_.name
-                    RepoId        = $_.id
-                    RepoURL       = $_.url
-                    ProjectName   = $ProjectName
-                    DefaultBranch = $_.defaultBranch
-                    WebUrl        = $_.webUrl
-                    HttpsUrl      = $_.remoteUrl
-                    SshUrl        = $_.sshUrl
-                    CollectionURI = $CollectionUri
-                    IsDisabled    = $_.IsDisabled
+        if ($ServiceConnectionName) {
+            foreach ($name in $ServiceConnectionName) {
+
+                $params.uri = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints?endpointNames=$($name)?api-version=7.2-preview.4"
+            (Invoke-RestMethod @params) | ForEach-Object {
+                    [PSCustomObject]@{
+                        ServiceConnectionName            = $_.name
+                        ServiceConnectionId              = $_.id
+                        ServiceConnectionType            = $_.type
+                        ServiceConnectionDescription     = $_.description
+                        ServiceConnectionScheme          = $_.authorization.scheme
+                        IsShared                         = $_.isShared
+                        IsReady                          = $_.isReady
+                        ServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
+                    }
                 }
             }
         } else {
-            (Invoke-RestMethod @params).value | ForEach-Object {
+                (Invoke-RestMethod @params).value | ForEach-Object {
                 [PSCustomObject]@{
-                    RepoName      = $_.name
-                    RepoId        = $_.id
-                    RepoURL       = $_.url
-                    ProjectName   = $ProjectName
-                    DefaultBranch = $_.defaultBranch
-                    WebUrl        = $_.webUrl
-                    HttpsUrl      = $_.remoteUrl
-                    SshUrl        = $_.sshUrl
-                    CollectionURI = $CollectionUri
-                    IsDisabled    = $_.IsDisabled
+                    ServiceConnectionName            = $_.name
+                    ServiceConnectionId              = $_.id
+                    ServiceConnectionType            = $_.type
+                    ServiceConnectionDescription     = $_.description
+                    ServiceConnectionScheme          = $_.authorization.scheme
+                    IsShared                         = $_.isShared
+                    IsReady                          = $_.isReady
+                    ServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
                 }
             }
         }
     }
 }
+
