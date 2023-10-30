@@ -472,6 +472,8 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_2_1_1">
@@ -508,6 +510,20 @@
     <li class="md-nav__item">
       <a href="../New-AzDoProject/" class="md-nav__link">
         New-AzDoProject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Remove-AzDoProject/" class="md-nav__link">
+        Remove-AzDoProject
       </a>
     </li>
   
@@ -859,10 +875,63 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_4" type="checkbox" id="__nav_2_1_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_1_4">
+          Service Connection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Service Connection" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          Service Connection
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        Service Connection
+      <a href="../Get-AzDoServiceConnection/" class="md-nav__link">
+        Get-AzDoServiceConnection
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Test-AzDoServiceConnection/" class="md-nav__link">
+        Test-AzDoServiceConnection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -935,6 +1004,10 @@
         
           
         
+          
+        
+          
+        
       
       
         <label class="md-nav__link" for="__nav_2_1_6">
@@ -948,6 +1021,34 @@
           Variable Group
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Add-AzDoVariableGroupVariable/" class="md-nav__link">
+        Add-AzDoVariableGroupVariable
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Get-AzDoVariableGroup/" class="md-nav__link">
+        Get-AzDoVariableGroup
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -982,47 +1083,10 @@
   
   
   
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
-      
-      
-      
-        
-          
-        
-      
-      
-        <label class="md-nav__link" for="__nav_2_2">
-          Azure AD
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Azure AD" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_2">
-          <span class="md-nav__icon md-icon"></span>
-          Azure AD
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../New-AadGroup/" class="md-nav__link">
-        New-AadGroup
+      <a href=".." class="md-nav__link">
+        Azure AD
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -1253,7 +1317,7 @@
 <h2 id="synopsis">SYNOPSIS<a class="headerlink" href="#synopsis" title="Permanent link">#</a></h2>
 <p>Creates an Azure Pipeline</p>
 <h2 id="syntax">SYNTAX<a class="headerlink" href="#syntax" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code>New-AzDoPipeline [-CollectionUri] &lt;String&gt; [-ProjectName] &lt;String&gt; [[-PAT] &lt;String&gt;] [-PipelineName] &lt;String[]&gt;
+<div class="highlight"><pre><span></span><code>New-AzDoPipeline [-CollectionUri] &lt;String&gt; [-ProjectName] &lt;String&gt; [[-PAT] &lt;String&gt;] [-PipelineName] &lt;String&gt;
  [-RepoName] &lt;Object&gt; [[-Path] &lt;String&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre></div>
 <h2 id="description">DESCRIPTION<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
@@ -1271,7 +1335,7 @@ New-AzDoPipeline @newAzDoPipelineSplat
 </code></pre></div>
 <p>This example creates a new Azure Pipeline using the PowerShell pipeline</p>
 <h3 id="example-2">EXAMPLE 2<a class="headerlink" href="#example-2" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoProject -CollectionUri &quot;https://dev.azure.com/contoso&quot; -PAT $PAT | 
+<div class="highlight"><pre><span></span><code>Get-AzDoProject -CollectionUri &quot;https://dev.azure.com/contoso&quot; -PAT $PAT |
     Get-AzDoRepo -RepoName &#39;Repo 1&#39; -PAT $PAT |
         New-AzDoPipeline -PipelineName &quot;Pipeline 1&quot; -PAT $PAT
 </code></pre></div>
@@ -1309,13 +1373,13 @@ New-AzDoPipeline @newAzDoPipelineSplat
 
 <span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 <span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$env:SYSTEM_ACCESSTOKEN</span>
+<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
 <span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
 <h3 id="-pipelinename">-PipelineName<a class="headerlink" href="#-pipelinename" title="Permanent link">#</a></h3>
 <p>Name of the Pipeline</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String[]</span>
+<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
 <span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
 <span class="nt">Aliases</span><span class="p">:</span>
 

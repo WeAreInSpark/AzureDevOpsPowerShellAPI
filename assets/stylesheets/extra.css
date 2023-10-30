@@ -61,3 +61,17 @@
 .md-header__title {
   margin-top: 10px;
 }
+
+.md-header__topic:first-child {
+  font-weight: 500;
+}
+
+.md-header__button.md-logo {
+  padding-left: 0px;
+  margin-left: 0px;
+  margin-bottom: 5px;
+}
+
+.md-header {
+  padding-top: 5px;
+}
