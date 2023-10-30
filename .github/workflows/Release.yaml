@@ -1,0 +1,52 @@
+name: release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Release module
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          output-file: "false"
+          skip-version-file: "false"
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.semver.outputs.next }}
+          release_name: Release ${{ steps.semver.outputs.next }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+
+      - name: Release pipeline to Azure Artifact
+        shell: pwsh
+        env:
+          PAT: ${{ secrets.PAT }}
+        run: |
+          $Parameters = @{
+            "PSRepositoryApiKey" = '$env:PAT'
+            "ScriptAnalysisEnabled" = $true
+            "TestEnabled" = $false
+          }
+          ./build.ps1 -Task Init,Publish -Bootstrap -parameters $Parameters
