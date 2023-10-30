@@ -12,7 +12,7 @@ function New-ADOAuthHeader {
     )
 
     if ($PAT) {
-        @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+        $script:header = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
     }
     if ($AccessToken -or $null -eq $PAT) {
         # validate if user is logged in to Azure PowerShell
@@ -21,7 +21,7 @@ function New-ADOAuthHeader {
                 Write-Error 'Please login to Azure PowerShell first'
                 $PSCmdlet.ThrowTerminatingError($PSItem)
             }
-            @{Authorization = 'Bearer ' + (Get-AzAccessToken -Resource 499b84ac-1321-427f-aa17-267ca6975798).token
+            $script:header = @{Authorization = 'Bearer ' + (Get-AzAccessToken -Resource 499b84ac-1321-427f-aa17-267ca6975798).token
             }
         } catch {
             throw 'Please login to Azure PowerShell first'
