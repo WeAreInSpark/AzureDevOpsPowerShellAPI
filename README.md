@@ -1,12 +1,12 @@
 <h1 align="center">
   <a href="https://inspark.nl">
-    <img alt="InSpark" src="https://insparkteamplayer.inspark.nl/assets/partner/inspark-logo.png" height="150">
+    <img alt="InSpark" src="docs/en-US/assets/inspark-logo-semi.svg" height="150">
   </a>
-  <br>InfrastructureAsCode<br>
+  <br>AzureDevOpsPowerShellAPI<br>
 </h1>
 
  <p align="center">
-    PowerShell module to automate tasks in Azure DevOps and Azure AD services
+    PowerShell module to automate tasks in Azure DevOps.
     <br />
     <a href="https://weareinspark.github.io/AzureDevOpsPowerShellAPI/"><strong>Explore the docs »</strong></a>
   </p>
@@ -24,7 +24,7 @@ Automate tasks in Azure DevOps and Azure AD. Works on Windows Linux and MacOS.
 
 ```powershell
 
-Install-Module -Name InSpark.InfrastructureAsCode -Scope CurrentUser -Repository InSpark -Credential $InSparkAzureDevopsArtifacts
+Install-Module -Name AzureDevOpsPowerShellAPI -Scope CurrentUser -Repository InSpark -Credential $InSparkAzureDevopsArtifacts
 
 ```
 
@@ -48,7 +48,6 @@ Get-AzDoProject @params
 New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
 ```
 
-
 ## Contributing
-Contributions are welcome! Open a pull request to fix a bug, or open an issue to discuss a new feature or change.
 
+Contributions are welcome! Open a pull request to fix a bug, or open an issue to discuss a new feature or change.
