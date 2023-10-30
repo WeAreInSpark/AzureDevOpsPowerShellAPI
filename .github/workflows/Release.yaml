@@ -1,0 +1,57 @@
+name: release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Release module
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          output-file: "false"
+          skip-version-file: "false"
+          skip-commit: "true"
+          skip-git-pull: "true"
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: false
+          prerelease: false
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          name: Release ${{ steps.changelog.outputs.tag }}
+
+      # - name: Create Release
+      #   uses: actions/create-release@v1
+      #   if: ${{ steps.changelog.outputs.skipped == 'false' }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ steps.changelog.outputs.tag }}
+      #     release_name: Release ${{ steps.changelog.outputs.tag }}
+      #     body: ${{ steps.changelog.outputs.clean_changelog }}
+      #     draft: false
+      #     prerelease: false
+
+      - name: Release module to PSGallery
+        shell: pwsh
+        env:
+          PSGALLERY_API_KEY: ${{ secrets.PAT }}
+        run: |
+          $version = "${{ steps.changelog.outputs.tag }}" -replace "v", ""
+          $public = @(Get-ChildItem -Path (Join-Path -Path ".\AzureDevOpsPowerShellAPI" -ChildPath 'Public\*.ps1')  -Recurse -ErrorAction Stop)
+
+          Update-ModuleManifest -Path ".\AzureDevOpsPowerShellAPI\AzureDevOpsPowerShellAPI.psd1" -ModuleVersion "$version"
+          Update-ModuleManifest -Path ".\AzureDevOpsPowerShellAPI\AzureDevOpsPowerShellAPI.psd1" -FunctionsToExport $public.Basename
+
+          Publish-Module  -NuGetApiKey "$env:PSGALLERY_API_KEY" -Repository PSGallery -path ".\AzureDevOpsPowerShellAPI"

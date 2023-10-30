@@ -1,26 +1,35 @@
 {
-    "name": "PowerShell",
-    "dockerFile": "Dockerfile",
-    // "image": "mcr.microsoft.com/powershell",
-
-    // Set *default* container specific settings.json values on container create.
-    "settings": {
-        "terminal.integrated.shell.linux": "/usr/bin/pwsh"
+  "name": "PowerShell",
+  "dockerFile": "Dockerfile",
+  // "image": "mcr.microsoft.com/powershell",
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "terminal.integrated.profiles.linux": {
+      "PowerShell": {
+        "path": "/usr/bin/pwsh",
+        "args": []
+      }
     },
-
-    // Add the IDs of extensions you want installed when the container is created.
-    "extensions": [
-        "ms-vscode.powershell",
-        "davidanson.vscode-markdownlint"
-    ],
-
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [],
-
-    // Bootstrap build modules
-    "postCreateCommand": "pwsh -c './build.ps1 -Task Init -Bootstrap'",
-
-    // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-    // "remoteUser": "vscode"
+    "terminal.integrated.defaultProfile.windows": "PowerShell"
+  },
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "ms-vscode.powershell-preview",
+    "davidanson.vscode-markdownlint",
+    "eamodio.gitlens",
+    "GitHub.vscode-pull-request-github",
+    "pspester.pester-test",
+    "mhutchie.git-graph",
+    "cschleiden.vscode-github-actions",
+    "rangav.vscode-thunder-client",
+    "Gruntfuggly.todo-tree",
+    "ms-vscode.azure-account",
+    "vivaxy.vscode-conventional-commits"
+  ],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+  // Bootstrap build modules
+  "postCreateCommand": "pwsh -c './build.ps1 -Task Init -Bootstrap'"
+  // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+  // "remoteUser": "vscode"
 }
-
