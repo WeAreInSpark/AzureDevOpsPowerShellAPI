@@ -42,7 +42,7 @@ function New-AzDoRepo {
     # PAT to authenticate with the organization
     [Parameter()]
     [string]
-    $PAT = $env:SYSTEM_ACCESSTOKEN,
+    $PAT,
 
     # Name of the new repository
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
@@ -54,6 +54,17 @@ function New-AzDoRepo {
     [string]
     $ProjectName
   )
+
+  begin {
+    if (-not($script:header)) {
+
+      try {
+        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
+      } catch {
+        $PSCmdlet.ThrowTerminatingError($_)
+      }
+    }
+  }
   process {
     $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName).Projectid
 
@@ -68,7 +79,7 @@ function New-AzDoRepo {
     $params = @{
       uri         = "$CollectionUri/$ProjectId/_apis/git/repositories?api-version=7.1-preview.1"
       Method      = 'POST'
-      Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+      Headers     = $script:header
       body        = $Body | ConvertTo-Json -Depth 99
       ContentType = 'application/json'
     }

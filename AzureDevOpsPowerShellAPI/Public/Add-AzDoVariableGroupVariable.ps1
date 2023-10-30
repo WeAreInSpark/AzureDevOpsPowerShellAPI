@@ -48,7 +48,7 @@ function Add-AzDoVariableGroupVariable {
     # PAT to authenticate with the organization
     [Parameter()]
     [string]
-    $PAT = $env:SYSTEM_ACCESSTOKEN,
+    $PAT,
 
     # Project where the variable group has to be created
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
@@ -70,13 +70,13 @@ function Add-AzDoVariableGroupVariable {
     if (-not($script:header)) {
 
       try {
-        $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
+        New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
       } catch {
         $PSCmdlet.ThrowTerminatingError($_)
       }
     }
 
-    $ProjectsId = (Get-AzDoProject -CollectionUri $CollectionUri | Where-Object ProjectName -EQ $ProjectName).Projectid
+    $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT | Where-Object ProjectName -EQ $ProjectName).Projectid
   }
 
   Process {

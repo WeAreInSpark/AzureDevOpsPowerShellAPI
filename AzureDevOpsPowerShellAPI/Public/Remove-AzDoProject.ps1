@@ -41,75 +41,47 @@ function Remove-AzDoProject {
     # PAT to get access to Azure DevOps.
     [Parameter()]
     [string]
-    $PAT = $env:SYSTEM_ACCESSTOKEN,
-
-    # Switch to use PAT instead of OAuth
-    [Parameter()]
-    [switch]
-    $UsePAT = $false,
+    $PAT,
 
     # Name of the project.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
     $ProjectName
   )
+
   Begin {
-    if ($UsePAT) {
-      Write-Verbose 'The [UsePAT]-parameter was set to true, so the PAT will be used to authenticate with the organization.'
-      if ($PAT -eq $env:SYSTEM_ACCESSTOKEN) {
-        Write-Verbose -Message "Using the PAT from the environment variable 'SYSTEM_ACCESSTOKEN'."
-      } elseif (-not [string]::IsNullOrWhitespace($PAT) -and $PSBoundParameters.ContainsKey('PAT')) {
-        Write-Verbose -Message "Using a custom PAT supplied in the parameters."
-      } else {
-        try {
-          throw "Requested to use a PAT, but no custom PAT was supplied in the parameters or the environment variable 'SYSTEM_ACCESSTOKEN' was not set."
-        } catch {
-          $PSCmdlet.ThrowTerminatingError($_)
-        }
-      }
-    } else {
-      Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
-      $PAT = ($UsePAT ? $PAT : $null)
-    }
-    try {
-      $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
-    } catch {
-      $PSCmdlet.ThrowTerminatingError($_)
-    }
+    if (-not($script:header)) {
 
-    $getAzDoProjectSplat = @{
-      CollectionUri = $CollectionUri
-    }
-    if ($PAT) {
-      $getAzDoProjectSplat += @{
-        PAT    = $PAT
-        UsePAT = $true
+      try {
+        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
+      } catch {
+        $PSCmdlet.ThrowTerminatingError($_)
       }
     }
 
-    $projects = Get-AzDoProject @getAzDoProjectSplat
+    $projects = Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT
   }
-  Process {
-    foreach ($name in $ProjectName) {
-      $project = $projects | Where-Object -Property ProjectName -EQ -Value $name
 
-      $params = @{
-        uri         = "$CollectionUri/_apis/projects/$($project.ProjectID)?api-version=6.0"
-        Method      = 'DELETE'
-        Headers     = $Header
-        ContentType = 'application/json'
-        ErrorAction = 'Stop'
-      }
-      if ($PSCmdlet.ShouldProcess($project.ProjectName, "Remove Azure DevOps Project")) {
-        Write-Verbose "Trying to remove the project"
-        try {
+  Process {
+
+    $project = $projects | Where-Object -Property ProjectName -EQ -Value $ProjectName
+
+    $params = @{
+      uri         = "$CollectionUri/_apis/projects/$($project.ProjectID)?api-version=6.0"
+      Method      = 'DELETE'
+      Headers     = $script:header
+      ContentType = 'application/json'
+      ErrorAction = 'Stop'
+    }
+    if ($PSCmdlet.ShouldProcess($project.ProjectName, "Remove Azure DevOps Project")) {
+      Write-Verbose "Trying to remove the project"
+      try {
                     (Invoke-RestMethod @params | Out-Null)
-        } catch {
-          $message = $_
-          Write-Error "Failed to create the project [$name]"
-          Write-Error $message.ErrorDetails.Message
-          continue
-        }
+      } catch {
+        $message = $_
+        Write-Error "Failed to create the project [$name]"
+        Write-Error $message.ErrorDetails.Message
+        continue
       }
     }
   }

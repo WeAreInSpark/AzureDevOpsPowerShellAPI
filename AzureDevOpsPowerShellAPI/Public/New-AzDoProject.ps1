@@ -41,12 +41,7 @@ function New-AzDoProject {
     # PAT to get access to Azure DevOps.
     [Parameter()]
     [string]
-    $PAT = $env:SYSTEM_ACCESSTOKEN,
-
-    # Switch to use PAT instead of OAuth
-    [Parameter()]
-    [switch]
-    $UsePAT = $false,
+    $PAT,
 
     # Name of the project.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
@@ -134,27 +129,13 @@ function New-AzDoProject {
     $Visibility = 'private'
   )
   Begin {
-    if ($UsePAT) {
-      Write-Verbose 'The [UsePAT]-parameter was set to true, so the PAT will be used to authenticate with the organization.'
-      if ($PAT -eq $env:SYSTEM_ACCESSTOKEN) {
-        Write-Verbose -Message "Using the PAT from the environment variable 'SYSTEM_ACCESSTOKEN'."
-      } elseif (-not [string]::IsNullOrWhitespace($PAT) -and $PSBoundParameters.ContainsKey('PAT')) {
-        Write-Verbose -Message "Using a custom PAT supplied in the parameters."
-      } else {
-        try {
-          throw "Requested to use a PAT, but no custom PAT was supplied in the parameters or the environment variable 'SYSTEM_ACCESSTOKEN' was not set."
-        } catch {
-          $PSCmdlet.ThrowTerminatingError($_)
-        }
+    if (-not($script:header)) {
+
+      try {
+        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
+      } catch {
+        $PSCmdlet.ThrowTerminatingError($_)
       }
-    } else {
-      Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
-      $PAT = ($UsePAT ? $PAT : $null)
-    }
-    try {
-      $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
-    } catch {
-      $PSCmdlet.ThrowTerminatingError($_)
     }
   }
   Process {
@@ -177,7 +158,7 @@ function New-AzDoProject {
       $params = @{
         uri         = "$CollectionUri/_apis/projects?api-version=6.0"
         Method      = 'POST'
-        Headers     = $Header
+        Headers     = $script:header
         body        = $Body | ConvertTo-Json
         ContentType = 'application/json'
         ErrorAction = 'Stop'

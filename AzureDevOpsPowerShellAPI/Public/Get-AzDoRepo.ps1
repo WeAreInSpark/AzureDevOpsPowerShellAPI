@@ -1,5 +1,5 @@
 function Get-AzDoRepo {
-    <#
+  <#
 .SYNOPSIS
     Gets information about a repo in Azure DevOps.
 .DESCRIPTION
@@ -37,101 +37,84 @@ function Get-AzDoRepo {
     PSObject with repo(s).
 .NOTES
 #>
-    [CmdletBinding()]
-    param (
-        # Collection Uri of the organization
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
-        [string]
-        $CollectionUri,
+  [CmdletBinding()]
+  param (
+    # Collection Uri of the organization
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+    [string]
+    $CollectionUri,
 
-        # PAT to authenticate with the organization
-        [Parameter()]
-        [string]
-        $PAT = $env:SYSTEM_ACCESSTOKEN,
+    # PAT to authenticate with the organization
+    [Parameter()]
+    [string]
+    $PAT,
 
-        # Switch to use PAT instead of OAuth
-        [Parameter()]
-        [switch]
-        $UsePAT = $false,
+    # Name of the Repo to get information about
+    [Parameter()]
+    [string]
+    $RepoName,
 
-        # Name of the Repo to get information about
-        [Parameter()]
-        [string]
-        $RepoName,
+    # Project where the Repos are contained
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+    [string]
+    $ProjectName
+  )
 
-        # Project where the Repos are contained
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
-        [string]
-        $ProjectName
-    )
-    Begin {
-        if ($UsePAT) {
-            Write-Verbose 'The [UsePAT]-parameter was set to true, so the PAT will be used to authenticate with the organization.'
-            if ($PAT -eq $env:SYSTEM_ACCESSTOKEN) {
-                Write-Verbose -Message "Using the PAT from the environment variable 'SYSTEM_ACCESSTOKEN'."
-            } elseif (-not [string]::IsNullOrWhitespace($PAT) -and $PSBoundParameters.ContainsKey('PAT')) {
-                Write-Verbose -Message "Using a custom PAT supplied in the parameters."
-            } else {
-                try {
-                    throw "Requested to use a PAT, but no custom PAT was supplied in the parameters or the environment variable 'SYSTEM_ACCESSTOKEN' was not set."
-                } catch {
-                    $PSCmdlet.ThrowTerminatingError($_)
-                }
-            }
-        } else {
-            Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
-            $PAT = ($UsePAT ? $PAT : $null)
-        }
-        try {
-            $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
-        } catch {
-            $PSCmdlet.ThrowTerminatingError($_)
-        }
+  Begin {
+    if (-not($script:header)) {
+
+      try {
+        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
+      } catch {
+        $PSCmdlet.ThrowTerminatingError($_)
+      }
     }
-    Process {
-        if ($RepoName) {
-            $uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($RepoName)?api-version=7.1-preview.1"
-        } else {
-            $uri = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
-        }
+  }
 
-        $params = @{
-            uri         = $uri
-            Method      = 'GET'
-            Headers     = $header
-            ContentType = 'application/json'
-        }
+  Process {
+    if ($RepoName) {
+      $uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($RepoName)?api-version=7.1-preview.1"
+    } else {
+      $uri = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
+    }
 
-        if ($RepoName) {
+    $params = @{
+      uri         = $uri
+      Method      = 'GET'
+      Headers     = $script:header
+      ContentType = 'application/json'
+    }
+
+    if ($RepoName) {
         (Invoke-RestMethod @params) | ForEach-Object {
-                [PSCustomObject]@{
-                    RepoName      = $_.name
-                    RepoId        = $_.id
-                    RepoURL       = $_.url
-                    ProjectName   = $ProjectName
-                    DefaultBranch = $_.defaultBranch
-                    WebUrl        = $_.webUrl
-                    HttpsUrl      = $_.remoteUrl
-                    SshUrl        = $_.sshUrl
-                    CollectionURI = $CollectionUri
-                    IsDisabled    = $_.IsDisabled
-                }
-            }
-        } else {
-            (Invoke-RestMethod @params).value | ForEach-Object {
-                [PSCustomObject]@{
-                    RepoName      = $_.name
-                    RepoId        = $_.id
-                    RepoURL       = $_.url
-                    ProjectName   = $ProjectName
-                    DefaultBranch = $_.defaultBranch
-                    WebUrl        = $_.webUrl
-                    HttpsUrl      = $_.remoteUrl
-                    SshUrl        = $_.sshUrl
-                    CollectionURI = $CollectionUri
-                    IsDisabled    = $_.IsDisabled
-                }
-            }
+        [PSCustomObject]@{
+          RepoName      = $_.name
+          RepoId        = $_.id
+          RepoURL       = $_.url
+          ProjectName   = $ProjectName
+          DefaultBranch = $_.defaultBranch
+          WebUrl        = $_.webUrl
+          HttpsUrl      = $_.remoteUrl
+          SshUrl        = $_.sshUrl
+          CollectionURI = $CollectionUri
+          IsDisabled    = $_.IsDisabled
         }
+      }
+    } else {
+            (Invoke-RestMethod @params).value | ForEach-Object {
+        [PSCustomObject]@{
+          RepoName      = $_.name
+          RepoId        = $_.id
+          RepoURL       = $_.url
+          ProjectName   = $ProjectName
+          DefaultBranch = $_.defaultBranch
+          WebUrl        = $_.webUrl
+          HttpsUrl      = $_.remoteUrl
+          SshUrl        = $_.sshUrl
+          CollectionURI = $CollectionUri
+          IsDisabled    = $_.IsDisabled
+        }
+      }
     }
+  }
 }

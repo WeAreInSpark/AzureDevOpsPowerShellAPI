@@ -60,38 +60,25 @@ function Get-AzDoProject {
     # PAT to authenticate with the organization
     [Parameter()]
     [string]
-    $PAT = $env:SYSTEM_ACCESSTOKEN,
-
-    # Switch to use PAT instead of OAuth
-    [Parameter()]
-    [switch]
-    $UsePAT = $false,
+    $PAT,
 
     # Project where the Repos are contained
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $ProjectName
   )
+
   Begin {
-    if ($UsePAT) {
-      Write-Verbose 'The [UsePAT]-parameter was set to true, so the PAT will be used to authenticate with the organization.'
-      if ($PAT -eq $env:SYSTEM_ACCESSTOKEN) {
-        Write-Verbose -Message "Using the PAT from the environment variable 'SYSTEM_ACCESSTOKEN'."
-      } elseif (-not [string]::IsNullOrWhitespace($PAT) -and $PSBoundParameters.ContainsKey('PAT')) {
-        Write-Verbose -Message "Using a custom PAT supplied in the parameters."
-      } else {
-        try {
-          throw "Requested to use a PAT, but no custom PAT was supplied in the parameters or the environment variable 'SYSTEM_ACCESSTOKEN' was not set."
-        } catch {
-          $PSCmdlet.ThrowTerminatingError($_)
-        }
+    if (-not($script:header)) {
+
+      try {
+        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
+      } catch {
+        $PSCmdlet.ThrowTerminatingError($_)
       }
-    } else {
-      Write-Verbose 'The [UsePAT]-parameter was set to false, so an OAuth will be used to authenticate with the organization.'
-      $PAT = ($UsePAT ? $PAT : $null)
     }
-    $Header = New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true)
   }
+
   Process {
     if ($ProjectName) {
       $uri = "$CollectionUri/_apis/projects/$($ProjectName)?api-version=7.1-preview.4"
@@ -102,7 +89,7 @@ function Get-AzDoProject {
     $params = @{
       uri         = $uri
       Method      = 'GET'
-      Headers     = $header
+      Headers     = $script:header
       ContentType = 'application/json'
     }
 

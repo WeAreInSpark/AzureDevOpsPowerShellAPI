@@ -53,7 +53,7 @@ function Set-AzDoBranchPolicyMinimalApproval {
     # PAT to authentice with the organization
     [Parameter()]
     [string]
-    $PAT = $env:SYSTEM_ACCESSTOKEN,
+    $PAT,
 
     # Name of the Repository containing the YAML-sourcecode
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
@@ -75,6 +75,17 @@ function Set-AzDoBranchPolicyMinimalApproval {
     [bool]
     $creatorVoteCounts = $true
   )
+
+  begin {
+    if (-not($script:header)) {
+
+      try {
+        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
+      } catch {
+        $PSCmdlet.ThrowTerminatingError($_)
+      }
+    }
+  }
 
   Process {
 
@@ -123,7 +134,7 @@ function Set-AzDoBranchPolicyMinimalApproval {
     $params = @{
       uri         = "$CollectionUri/$ProjectName/_apis/policy/configurations?api-version=7.2-preview.1"
       Method      = 'POST'
-      Headers     = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+      Headers     = $script:header
       body        = $Body | ConvertTo-Json -Depth 99
       ContentType = 'application/json'
     }
