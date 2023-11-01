@@ -12,7 +12,7 @@
   RootModule        = 'AzureDevOpsPowerShellAPI.psm1'
 
   # Version number of this module.
-  ModuleVersion     = '0.1.0'
+  ModuleVersion     = '0.2.0'
 
   # Supported PSEditions
   # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@
   Copyright         = '(c) InSpark. All rights reserved.'
 
   # Description of the functionality provided by this module
-  Description       = 'PowerShell module to deploy and adjust services on Azure DevOps and Azure AD'
+  Description       = 'PowerShell module to deploy and adjust services on Azure DevOps'
 
   # Minimum version of the PowerShell engine required by this module
   PowerShellVersion = '5.1'
@@ -51,7 +51,7 @@
   # ProcessorArchitecture = ''
 
   # Modules that must be imported into the global environment prior to importing this module
-  RequiredModules   = @(  )
+  RequiredModules   = @()
 
   # Assemblies that must be loaded prior to importing this module
   # RequiredAssemblies = @()
@@ -69,7 +69,7 @@
   # NestedModules = @()
 
   # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-  FunctionsToExport = @()
+  # FunctionsToExport = @()
 
   # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
   CmdletsToExport   = @()
@@ -117,10 +117,7 @@
 
       # External dependent modules of this module
       ExternalModuleDependencies = @(
-        'Microsoft.Graph.Applications',
-        'Microsoft.Graph.Groups',
-        'Az.Accounts',
-        'Az.KeyVault'
+        'Az.Accounts'
       )
 
     } # End of PSData hashtable

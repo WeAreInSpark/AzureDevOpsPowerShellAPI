@@ -9,16 +9,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: Get Next Version
-        id: semver
-        uses: ietf-tools/semver-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
 
       - name: Conventional Changelog Action
         id: changelog
@@ -26,27 +19,39 @@ jobs:
         with:
           output-file: "false"
           skip-version-file: "false"
+          skip-commit: "true"
+          skip-git-pull: "true"
 
-      - name: Create Release
-        uses: actions/create-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.semver.outputs.next }}
-          release_name: Release ${{ steps.semver.outputs.next }}
-          body: ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: false
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          name: Release ${{ steps.changelog.outputs.tag }}
 
-      - name: Release pipeline to Azure Artifact
+      # - name: Create Release
+      #   uses: actions/create-release@v1
+      #   if: ${{ steps.changelog.outputs.skipped == 'false' }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ steps.changelog.outputs.tag }}
+      #     release_name: Release ${{ steps.changelog.outputs.tag }}
+      #     body: ${{ steps.changelog.outputs.clean_changelog }}
+      #     draft: false
+      #     prerelease: false
+
+      - name: Release module to PSGallery
         shell: pwsh
         env:
-          PAT: ${{ secrets.PAT }}
+          PSGALLERY_API_KEY: ${{ secrets.PAT }}
         run: |
-          $Parameters = @{
-            "PSRepositoryApiKey" = '$env:PAT'
-            "ScriptAnalysisEnabled" = $true
-            "TestEnabled" = $false
-          }
-          ./build.ps1 -Task Init,Publish -Bootstrap -parameters $Parameters
+          $version = "${{ steps.changelog.outputs.tag }}" -replace "v", ""
+          $public = @(Get-ChildItem -Path (Join-Path -Path ".\AzureDevOpsPowerShellAPI" -ChildPath 'Public\*.ps1')  -Recurse -ErrorAction Stop)
+
+          Update-ModuleManifest -Path ".\AzureDevOpsPowerShellAPI\AzureDevOpsPowerShellAPI.psd1" -ModuleVersion "$version"
+          Update-ModuleManifest -Path ".\AzureDevOpsPowerShellAPI\AzureDevOpsPowerShellAPI.psd1" -FunctionsToExport $public.Basename
+
+          Publish-Module  -NuGetApiKey "$env:PSGALLERY_API_KEY" -Repository PSGallery -path ".\AzureDevOpsPowerShellAPI"
