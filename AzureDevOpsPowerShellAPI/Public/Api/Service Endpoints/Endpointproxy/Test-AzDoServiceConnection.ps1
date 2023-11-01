@@ -73,6 +73,7 @@ function Test-AzDoServiceConnection {
     $ProjectId = (Get-AzDoProject -CollectionUri = $CollectionUri -PAT $PAT | Where-Object ProjectName -EQ $ProjectName).Projectid
     $Connections = Get-AzDoServiceConnection -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT
   }
+
   process {
     $connectioninfo = $connections | Where-Object ServiceConnectionName -EQ $ServiceConnectionName
 
