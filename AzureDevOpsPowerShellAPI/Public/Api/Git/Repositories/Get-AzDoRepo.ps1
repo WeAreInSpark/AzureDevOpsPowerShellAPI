@@ -52,7 +52,7 @@ function Get-AzDoRepo {
     # Name of the Repo to get information about
     [Parameter()]
     [string]
-    $RepoName,
+    $Name,
 
     # Project where the Repos are contained
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
@@ -72,48 +72,32 @@ function Get-AzDoRepo {
   }
 
   Process {
-    if ($RepoName) {
-      $uri = "$CollectionUri/$ProjectName/_apis/git/repositories/$($RepoName)?api-version=7.1-preview.1"
-    } else {
-      $uri = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
-    }
 
     $params = @{
-      uri         = $uri
+      uri         = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
       Method      = 'GET'
       Headers     = $script:header
       ContentType = 'application/json'
     }
 
-    if ($RepoName) {
-        (Invoke-RestMethod @params) | ForEach-Object {
-        [PSCustomObject]@{
-          RepoName      = $_.name
-          RepoId        = $_.id
-          RepoURL       = $_.url
-          ProjectName   = $ProjectName
-          DefaultBranch = $_.defaultBranch
-          WebUrl        = $_.webUrl
-          HttpsUrl      = $_.remoteUrl
-          SshUrl        = $_.sshUrl
-          CollectionURI = $CollectionUri
-          IsDisabled    = $_.IsDisabled
-        }
-      }
+    if ($Name) {
+      $result = (Invoke-RestMethod @params).value | Where-Object { $_.name -eq $Name }
     } else {
-            (Invoke-RestMethod @params).value | ForEach-Object {
-        [PSCustomObject]@{
-          RepoName      = $_.name
-          RepoId        = $_.id
-          RepoURL       = $_.url
-          ProjectName   = $ProjectName
-          DefaultBranch = $_.defaultBranch
-          WebUrl        = $_.webUrl
-          HttpsUrl      = $_.remoteUrl
-          SshUrl        = $_.sshUrl
-          CollectionURI = $CollectionUri
-          IsDisabled    = $_.IsDisabled
-        }
+      $result = (Invoke-RestMethod @params).value
+    }
+
+    $result | ForEach-Object {
+      [PSCustomObject]@{
+        Name          = $_.name
+        Id            = $_.id
+        URL           = $_.url
+        ProjectName   = $ProjectName
+        DefaultBranch = $_.defaultBranch
+        WebUrl        = $_.webUrl
+        HttpsUrl      = $_.remoteUrl
+        SshUrl        = $_.sshUrl
+        CollectionURI = $CollectionUri
+        IsDisabled    = $_.IsDisabled
       }
     }
   }
