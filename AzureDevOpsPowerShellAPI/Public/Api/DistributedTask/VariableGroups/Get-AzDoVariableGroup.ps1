@@ -48,7 +48,7 @@ function Get-AzDoVariableGroup {
     # Name of the variable group
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
-    $VariableGroupName
+    $Name
   )
 
   Begin {
@@ -76,18 +76,20 @@ function Get-AzDoVariableGroup {
 
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
 
-      $result = (Invoke-RestMethod @params).value
-      [PSCustomObject]@{
-        VariableGroupName = $result.name
-        VariableGroupId   = $result.id
-        Variables         = $result.variables
-        CreatedOn         = $result.createdOn
-        IsShared          = $result.isShared
-        ProjectName       = $ProjectName
-        CollectionURI     = $CollectionUri
+      $result = (Invoke-RestMethod @params).value | ForEach-Object {
+        [PSCustomObject]@{
+          Name          = $_.name
+          Id            = $_.id
+          Variables     = $_.variables
+          CreatedOn     = $_.createdOn
+          IsShared      = $_.isShared
+          ProjectName   = $ProjectName
+          CollectionURI = $CollectionUri
+        }
       }
-      if ($VariableGroupName) {
-        $result | Where-Object { $VariableGroupName -eq $_.VariableGroupName }
+
+      if ($Name) {
+        $result | Where-Object { $Name -eq $_.Name }
       } else {
         $result
       }
