@@ -7,7 +7,7 @@ function New-ADOAuthHeader {
     $PAT
   )
   Write-Verbose "Function: New-ADOAuthHeader"
-  if ($PAT -eq '') {
+  if ([string]::IsNullOrWhiteSpace($PAT)) {
     # validate if user is logged in to Azure PowerShell
     Write-Verbose "Using Access Token"
     try {
