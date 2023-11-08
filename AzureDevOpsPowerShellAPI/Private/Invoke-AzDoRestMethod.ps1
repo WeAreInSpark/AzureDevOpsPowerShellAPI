@@ -12,31 +12,26 @@ function Invoke-AzDoRestMethod {
   Test-MyTestFunction -Verbose
   Explanation of the function or its result. You can include multiple examples with additional .EXAMPLE lines
 #>
-  [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'GET')]
+  [CmdletBinding(SupportsShouldProcess)]
   param (
-    [Parameter(Mandatory, ParameterSetName = 'POST')]
-    [Parameter(Mandatory, ParameterSetName = 'GET')]
+    [Parameter(Mandatory)]
     [string]
     $Uri,
 
-    [Parameter(Mandatory, ParameterSetName = 'POST')]
-    [Parameter(Mandatory, ParameterSetName = 'GET')]
+    [Parameter(Mandatory)]
     [string]
     $Version,
 
-    [Parameter(Mandatory, ParameterSetName = 'POST')]
-    [Parameter(Mandatory, ParameterSetName = 'GET')]
-    [ValidateSet('GET', 'POST', 'PUT')]
+    [Parameter(Mandatory)]
+    [ValidateSet('GET', 'POST', 'PATCH')]
     [string]
     $Method,
 
-    [Parameter(ParameterSetName = 'POST')]
-    [Parameter(ParameterSetName = 'GET')]
+    [Parameter()]
     [string]
     $PAT,
 
-    [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName , Mandatory, ParameterSetName = 'POST')]
-    [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName , Mandatory, ParameterSetName = 'PUT')]
+    [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
     [PSCustomObject[]]
     $Body
   )
@@ -64,7 +59,7 @@ function Invoke-AzDoRestMethod {
   }
 
   process {
-    if ($Method -eq 'POST' -or ($Method -eq 'PUT')) {
+    if ($Method -eq 'POST' -or ($Method -eq 'PATCH')) {
       Write-Verbose "Body: $($Body | ConvertTo-Json -Depth 10)"
       $params.Body = $Body | ConvertTo-Json -Depth 10
     }
