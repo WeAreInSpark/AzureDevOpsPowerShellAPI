@@ -34,15 +34,15 @@ function New-AzDoEnvironment {
     }
 .NOTES
 #>
-  [CmdletBinding(SupportsShouldProcess)]
+  [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $CollectionUri,
 
     # Project where the pipeline will be created.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
@@ -53,8 +53,8 @@ function New-AzDoEnvironment {
 
     # Name of the Build Validation policy. Default is the name of the Build Definition
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
-    [string]
-    $Name,
+    [string[]]
+    $EnvironmentName,
 
     # Valid duration of the Build Validation policy. Default is 720 minutes
     [Parameter()]
@@ -63,52 +63,33 @@ function New-AzDoEnvironment {
   )
 
   begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-
-    $api = "pipelines/environments"
-    $apiVersion = "7.2-preview.1"
-    $apiMethod = "POST"
+    $body = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
-    $projectId = (Get-AzDoproject -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT).projectId
-
-    $body = @{
-      name        = $Name
-      description = $Description
-    }
-
     $params = @{
-      uri         = "$CollectionUri/$projectId/_apis/pipelines/environments?api-version=$apiVersion"
-      Method      = $apiMethod
-      Headers     = $script:header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
+      uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"
+      version = "7.2-preview.1"
+      method  = "POST"
     }
 
-    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-      try {
-        Write-Information "Creating Environment on $RepoName/$branch"
-        Invoke-RestMethod @params
-        [PSCustomObject]@{
-          CollectionUri = $CollectionUri
-          ProjectName   = $ProjectName
-          RepoName      = $RepoName
-          Id            = $result.id
-        }
-      } catch {
-        $body | Format-List
-        throw ($_.ErrorDetails.Message | ConvertFrom-Json).message
+    foreach ($name in $EnvironmentName) {
+      $body = @{
+        name        = $name
+        description = $Description
       }
-    } else {
-      $Body | Format-List
+
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create envrironment named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+        $body | Invoke-AzDoRestMethod @params | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionUri = $CollectionUri
+            ProjectName   = $ProjectName
+            Id            = $_.id
+          }
+        }
+      } else {
+        $Body | Format-List
+      }
     }
   }
 }

@@ -52,60 +52,55 @@ function Get-AzDoEnvironment {
     $PAT,
 
     # Name of the Build Validation policy. Default is the name of the Build Definition
-    [Parameter()]
-    [string]
-    $Name
+    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [string[]]
+    $EnvironmentName
   )
 
   begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-
-    $api = "pipelines/environments"
-    $apiVersion = "7.2-preview.1"
-    $apiMethod = "GET"
+    $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
-    $projectId = (Get-AzDoproject -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT).projectId
 
     $params = @{
-      uri         = "$CollectionUri/$projectId/_apis/pipelines/environments?api-version=$apiVersion"
-      Method      = $apiMethod
-      Headers     = $script:header
-      ContentType = 'application/json'
+      uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"
+      version = "7.2-preview.1"
+      Method  = "GET"
     }
 
-    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-      try {
-        Write-Information "Creating Environment on $RepoName/$branch"
+    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      $environments = (Invoke-AzDoRestMethod @params).value
 
-        if ($name) {
-          $result = (Invoke-RestMethod @params).value | Where-Object { $_.name -eq $name }
-        } else {
-          $result = (Invoke-RestMethod @params).value
-        }
-
-        $result | ForEach-Object {
-          [PSCustomObject]@{
-            CollectionUri   = $CollectionUri
-            ProjectName     = $ProjectName
-            Id              = $_.id
-            environmentName = $_.name
+      if ($EnvironmentName) {
+        foreach ($name in $EnvironmentName) {
+          $env = $environments | Where-Object { $_.name -eq $name }
+          if (-not($env)) {
+            Write-Error "Environment $name not found"
+            continue
+          } else {
+            $result.add($env ) | Out-Null
           }
         }
-      } catch {
-        $body | Format-List
-        throw ($_.ErrorDetails.Message | ConvertFrom-Json).message
+      } else {
+        $result.add($environments) | Out-Null
       }
+
     } else {
       $body | Format-List
+    }
+  }
+
+  end {
+    if ($result) {
+      $result | ForEach-Object {
+        [PSCustomObject]@{
+          CollectionUri   = $CollectionUri
+          ProjectName     = $ProjectName
+          Id              = $_.id
+          EnvironmentName = $_.name
+        }
+      }
     }
   }
 }
