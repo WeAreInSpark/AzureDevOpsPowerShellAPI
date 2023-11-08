@@ -34,15 +34,15 @@ function Set-AzDoPipelineBranchControl {
     }
 .NOTES
 #>
-  [CmdletBinding(SupportsShouldProcess)]
+  [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $CollectionUri,
 
     # Project where the pipeline will be created.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
@@ -54,7 +54,7 @@ function Set-AzDoPipelineBranchControl {
     # Name of the Build Validation policy. Default is the name of the Build Definition
     [Parameter()]
     [string]
-    $Name = "Branch Control",
+    $PolicyName = "Branch Control",
 
     # Valid duration of the Build Validation policy. Default is 720 minutes
     [Parameter(Mandatory)]
@@ -64,7 +64,7 @@ function Set-AzDoPipelineBranchControl {
 
     # Valid duration of the Build Validation policy. Default is 720 minutes
     [Parameter(Mandatory)]
-    [string]
+    [string[]]
     $ResourceName,
 
     # Valid duration of the Build Validation policy. Default is 720 minutes
@@ -90,80 +90,73 @@ function Set-AzDoPipelineBranchControl {
   )
 
   begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-
-    $api = "pipelines/checks/configurations"
-    $apiVersion = "7.2-preview.1"
-    $apiMethod = "POST"
+    $body = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
     $projectId = (Get-AzDoproject -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT).projectId
 
-    switch ($ResourceType) {
-      "environment" { $resourceId = (Get-AzDoEnvironment -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -Name $ResourceName).id }
-      "variablegroup" { $resourceId = (Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -Name $ResourceName).id }
-      "repository" { $resourceId = "$projectId.$((Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -Name $ResourceName).id)" }
-      Default {
-        throw "ResourceType $ResourceType is not supported"
-      }
-    }
+    foreach ($name in $ResourceName) {
 
-    $body = @{
-      type     = @{
-        name = "Task Check"
-        id   = "fe1de3ee-a436-41b4-bb20-f6eb4cb879a7"
-      }
-      settings = @{
-        displayName   = $Name
-        definitionRef = @{
-          id      = "86b05a0c-73e6-4f7d-b3cf-e38f3b39a75b"
-          name    = "evaluatebranchProtection"
-          version = "0.0.1"
+      switch ($ResourceType) {
+        "environment" {
+          $resourceId = (Get-AzDoEnvironment -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -EnvironmentName $name).id
         }
-        inputs        = @{
-          allowUnknownStatusBranches = $AllowUnknownStatusBranches
-          allowedBranches            = $AllowedBranches
-          ensureProtectionOfBranch   = $EnsureProtectionOfBranch
+        "variablegroup" {
+          $resourceId = (Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -Name $name).id
         }
+        "repository" {
+          $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -Name $name).id
+          $resourceId = "$($projectId).$($repoId)"
+        }
+        Default {}
       }
-      timeout  = $Timeout
-      resource = @{
-        type = $ResourceType
-        id   = $resourceId
-      }
-    }
 
-    $params = @{
-      uri         = "$CollectionUri/$projectId/_apis/pipelines/checks/configurations?api-version=$apiVersion"
-      Method      = $apiMethod
-      Headers     = $script:header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
-    }
+      #TODO: Check if policy already exists
 
-    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-      try {
-        Write-Information "Creating Environment on $RepoName/$branch"
-        $result = Invoke-RestMethod @params
-        [PSCustomObject]@{
-          CollectionUri = $CollectionUri
-          ProjectName   = $ProjectName
-          Id            = $result.id
+      $body = @{
+        type     = @{
+          name = "Task Check"
+          id   = "fe1de3ee-a436-41b4-bb20-f6eb4cb879a7"
         }
-      } catch {
-        $body | Format-List
-        throw ($_.ErrorDetails.Message | ConvertFrom-Json).message
+        settings = @{
+          displayName   = $PolicyName
+          definitionRef = @{
+            id      = "86b05a0c-73e6-4f7d-b3cf-e38f3b39a75b"
+            name    = "evaluatebranchProtection"
+            version = "0.0.1"
+          }
+          inputs        = @{
+            allowUnknownStatusBranches = $AllowUnknownStatusBranches
+            allowedBranches            = $AllowedBranches
+            ensureProtectionOfBranch   = $EnsureProtectionOfBranch
+          }
+        }
+        timeout  = $Timeout
+        resource = @{
+          type = $ResourceType
+          id   = $resourceId
+        }
       }
-    } else {
-      $Body | Format-List
+
+      $params = @{
+        uri     = "$CollectionUri/$projectId/_apis/pipelines/checks/configurations"
+        version = "7.2-preview.1"
+        Method  = "POST"
+        body    = $body | ConvertTo-Json -Depth 99
+      }
+
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create envrironment named: $($PSStyle.Bold)$PolicyName$($PSStyle.Reset)")) {
+        Invoke-AzDoRestMethod @params | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionUri = $CollectionUri
+            ProjectName   = $ProjectName
+            Id            = $_.id
+          }
+        }
+      } else {
+        $Body | Format-List
+      }
     }
   }
 }
