@@ -49,39 +49,20 @@ function Remove-AzDoProject {
     $ProjectName
   )
 
-  Begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-
-    $projects = Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT
-  }
-
   Process {
+    foreach ($name in $ProjectName) {
 
-    $project = $projects | Where-Object -Property ProjectName -EQ -Value $ProjectName
+      $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $name -PAT $PAT).ProjectID
 
-    $params = @{
-      uri         = "$CollectionUri/_apis/projects/$($project.ProjectID)?api-version=6.0"
-      Method      = 'DELETE'
-      Headers     = $script:header
-      ContentType = 'application/json'
-      ErrorAction = 'Stop'
-    }
-    if ($PSCmdlet.ShouldProcess($project.ProjectName, "Remove Azure DevOps Project")) {
-      Write-Verbose "Trying to remove the project"
-      try {
-                    (Invoke-RestMethod @params | Out-Null)
-      } catch {
-        $message = $_
-        Write-Error "Failed to create the project [$name]"
-        Write-Error $message.ErrorDetails.Message
-        continue
+      $params = @{
+        uri     = "$CollectionUri/_apis/projects/$projectID"
+        version = "7.1-preview.4"
+        method  = 'DELETE'
+        pat     = $PAT
+      }
+
+      if ($PSCmdlet.ShouldProcess($CollectionUri, "Delete project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+        Invoke-AzDoRestMethod @params
       }
     }
   }

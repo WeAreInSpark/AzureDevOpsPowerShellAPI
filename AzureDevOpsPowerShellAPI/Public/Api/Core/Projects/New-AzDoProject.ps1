@@ -128,17 +128,20 @@ function New-AzDoProject {
     [string]
     $Visibility = 'private'
   )
-  Begin {
-    if (-not($script:header)) {
 
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
+  begin {
+    $body = New-Object -TypeName "System.Collections.ArrayList"
   }
+
   Process {
+
+    $params = @{
+      uri     = "$CollectionUri/_apis/projects"
+      version = "7.2-preview.4"
+      method  = 'POST'
+      pat     = $PAT
+    }
+
     foreach ($name in $ProjectName) {
 
       $Body = @{
@@ -155,49 +158,24 @@ function New-AzDoProject {
         }
       }
 
-      $params = @{
-        uri         = "$CollectionUri/_apis/projects?api-version=6.0"
-        Method      = 'POST'
-        Headers     = $script:header
-        body        = $Body | ConvertTo-Json
-        ContentType = 'application/json'
-        ErrorAction = 'Stop'
-      }
-
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Verbose "Trying to create the project"
-        try {
-                    (Invoke-RestMethod @params | Out-Null)
-        } catch {
-          $message = $_
-          Write-Error "Failed to create the project [$name]"
-          Write-Error $message.ErrorDetails.Message
-          continue
-        }
-      } else {
-        $Body | Format-List
-        return
-      }
 
-      do {
-        Start-Sleep 5
-        Write-Verbose "Fetching creation state of $name"
-        $getAzDoProjectSplat = @{
-          CollectionUri = $CollectionUri
-          ProjectName   = $name
-        }
-        if ($PAT) {
-          $getAzDoProjectSplat += @{
-            PAT    = $PAT
-            UsePAT = $true
+        $body | Invoke-AzDoRestMethod @params | Out-Null
+
+        do {
+          Start-Sleep 5
+          Write-Verbose "Fetching creation state of $name"
+          $getAzDoProjectSplat = @{
+            CollectionUri = $CollectionUri
+            ProjectName   = $name
           }
-        }
 
-        $response = Get-AzDoProject @getAzDoProjectSplat
-      } while (
-        $Response.State -ne 'wellFormed'
-      )
-      $Response
+          $response = Get-AzDoProject @getAzDoProjectSplat
+        } while (
+          $Response.State -ne 'wellFormed'
+        )
+        $Response
+      }
     }
   }
 }

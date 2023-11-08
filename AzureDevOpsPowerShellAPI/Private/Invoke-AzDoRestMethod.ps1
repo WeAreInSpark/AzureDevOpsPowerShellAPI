@@ -23,7 +23,7 @@ function Invoke-AzDoRestMethod {
     $Version,
 
     [Parameter(Mandatory)]
-    [ValidateSet('GET', 'POST', 'PATCH')]
+    [ValidateSet('GET', 'POST', 'PATCH', 'DELETE')]
     [string]
     $Method,
 

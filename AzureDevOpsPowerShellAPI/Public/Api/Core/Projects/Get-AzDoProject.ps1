@@ -53,7 +53,7 @@ function Get-AzDoProject {
   [CmdletBinding()]
   param (
     # Collection Uri of the organization
-    [Parameter()]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $CollectionUri,
 
@@ -64,53 +64,53 @@ function Get-AzDoProject {
 
     # Project where the Repos are contained
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
-    [string]
+    [string[]]
     $ProjectName
   )
 
-  Begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
+  begin {
+    $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
-    if ($ProjectName) {
-      $uri = "$CollectionUri/_apis/projects/$($ProjectName)?api-version=7.1-preview.4"
-    } else {
-      $uri = "$CollectionUri/_apis/projects?api-version=7.1-preview.4"
-    }
 
     $params = @{
-      uri         = $uri
-      Method      = 'GET'
-      Headers     = $script:header
-      ContentType = 'application/json'
+      uri     = "$CollectionUri/_apis/projects"
+      version = "7.1-preview.4"
+      method  = 'GET'
+      pat     = $PAT
     }
 
-    if ($ProjectName) {
-            (Invoke-RestMethod @params) | ForEach-Object {
-        [PSCustomObject]@{
-          ProjectName       = $_.name
-          ProjectID         = $_.id
-          ProjectURL        = $_.url
-          CollectionURI     = $CollectionUri
-          ProjectVisibility = $_.visibility
-          State             = $_.state
+    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      $projects = (Invoke-AzDoRestMethod @params).value
+
+      if ($ProjectName) {
+        foreach ($name in $ProjectName) {
+          $project = $projects | Where-Object { $_.name -eq $name }
+          if (-not($project)) {
+            Write-Error "Project $name not found"
+            continue
+          } else {
+            $result.add($project ) | Out-Null
+          }
         }
+      } else {
+        $result.add($projects) | Out-Null
       }
+
     } else {
-            (Invoke-RestMethod @params).value | ForEach-Object {
+      $body | Format-List
+    }
+  }
+
+  end {
+    if ($result) {
+      $result | ForEach-Object {
         [PSCustomObject]@{
+          CollectionURI     = $CollectionUri
           ProjectName       = $_.name
           ProjectID         = $_.id
           ProjectURL        = $_.url
-          CollectionURI     = $CollectionUri
           ProjectVisibility = $_.visibility
           State             = $_.state
         }
