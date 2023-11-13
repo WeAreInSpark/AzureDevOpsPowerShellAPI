@@ -44,60 +44,66 @@ function Get-AzDoRepo {
     [string]
     $CollectionUri,
 
-    # PAT to authenticate with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
-    # Name of the Repo to get information about
-    [Parameter()]
-    [string]
-    $Name,
-
     # Project where the Repos are contained
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
-    $ProjectName
+    $ProjectName,
+
+    # Name of the Repo to get information about
+    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [string[]]
+    $RepoName
   )
 
-  Begin {
-    if (-not($script:header)) {
+  begin {
+    $result = New-Object -TypeName "System.Collections.ArrayList"
+  }
 
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
+  process {
+
+    $params = @{
+      uri     = "$CollectionUri/$ProjectName/_apis/git/repositories"
+      version = "7.1-preview.1"
+      method  = 'GET'
+    }
+
+    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      $repos = (Invoke-AzDoRestMethod @params).value
+
+      if ($RepoName) {
+        foreach ($name in $RepoName) {
+          $repo = $repos | Where-Object { $_.name -eq $name }
+          if (-not($repo)) {
+            Write-Error "Environment $name not found"
+            continue
+          } else {
+            $result.add($repo ) | Out-Null
+          }
+        }
+      } else {
+        $result.add($repos) | Out-Null
       }
+
+    } else {
+      $body | Format-List
     }
   }
 
-  Process {
-
-    $params = @{
-      uri         = "$CollectionUri/$ProjectName/_apis/git/repositories?api-version=7.1-preview.1"
-      Method      = 'GET'
-      Headers     = $script:header
-      ContentType = 'application/json'
-    }
-
-    if ($Name) {
-      $result = (Invoke-RestMethod @params).value | Where-Object { $_.name -eq $Name }
-    } else {
-      $result = (Invoke-RestMethod @params).value
-    }
-
-    $result | ForEach-Object {
-      [PSCustomObject]@{
-        Name          = $_.name
-        Id            = $_.id
-        URL           = $_.url
-        ProjectName   = $ProjectName
-        DefaultBranch = $_.defaultBranch
-        WebUrl        = $_.webUrl
-        HttpsUrl      = $_.remoteUrl
-        SshUrl        = $_.sshUrl
-        CollectionURI = $CollectionUri
-        IsDisabled    = $_.IsDisabled
+  end {
+    if ($result) {
+      $result | ForEach-Object {
+        [PSCustomObject]@{
+          CollectionURI = $CollectionUri
+          ProjectName   = $ProjectName
+          RepoName      = $_.name
+          RepoId        = $_.id
+          URL           = $_.url
+          DefaultBranch = $_.defaultBranch
+          WebUrl        = $_.webUrl
+          HttpsUrl      = $_.remoteUrl
+          SshUrl        = $_.sshUrl
+          IsDisabled    = $_.IsDisabled
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-function New-ADOAuthHeader {
+function New-AzDoAuthHeader {
   [CmdletBinding()]
   param (
     # PAT to authenticate with the organization

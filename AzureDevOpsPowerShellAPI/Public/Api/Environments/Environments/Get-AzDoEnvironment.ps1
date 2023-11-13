@@ -46,11 +46,6 @@ function Get-AzDoEnvironment {
     [string]
     $ProjectName,
 
-    # PAT to authentice with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the Build Validation policy. Default is the name of the Build Definition
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
@@ -67,7 +62,6 @@ function Get-AzDoEnvironment {
       uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"
       version = "7.2-preview.1"
       Method  = "GET"
-      Pat     = $PAT
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {

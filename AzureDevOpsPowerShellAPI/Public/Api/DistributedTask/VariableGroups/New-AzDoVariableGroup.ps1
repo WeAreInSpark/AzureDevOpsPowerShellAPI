@@ -44,11 +44,6 @@ function New-AzDoVariableGroup {
     [string]
     $CollectionUri,
 
-    # PAT to authentice with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Project where the variable group has to be created
     [Parameter(Mandatory)]
     [string]
@@ -72,6 +67,7 @@ function New-AzDoVariableGroup {
 
   Begin {
     $body = New-Object -TypeName "System.Collections.ArrayList"
+    $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
@@ -80,7 +76,6 @@ function New-AzDoVariableGroup {
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
       version = "7.2-preview.2"
       method  = 'POST'
-      pat     = $PAT
     }
 
     $trimmedvars = @{}
@@ -105,21 +100,25 @@ function New-AzDoVariableGroup {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-
-        $result = $body | Invoke-AzDoRestMethod @params
-
-        [PSCustomObject]@{
-          VariableGroupName = $result.name
-          VariableGroupId   = $result.id
-          Variables         = $result.variables
-          CreatedOn         = $result.createdOn
-          IsShared          = $result.isShared
-          ProjectName       = $ProjectName
-          CollectionURI     = $CollectionUri
-        }
-
+        $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
       } else {
         $body | Out-String
+      }
+    }
+  }
+
+  end {
+    if ($result) {
+      $result | ForEach-Object {
+        [PSCustomObject]@{
+          CollectionURI     = $CollectionUri
+          ProjectName       = $ProjectName
+          VariableGroupName = $_.name
+          VariableGroupId   = $_.id
+          Variables         = $_.variables
+          CreatedOn         = $_.createdOn
+          IsShared          = $_.isShared
+        }
       }
     }
   }

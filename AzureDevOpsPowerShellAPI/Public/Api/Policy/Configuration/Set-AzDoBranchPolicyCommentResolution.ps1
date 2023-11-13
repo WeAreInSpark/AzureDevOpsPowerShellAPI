@@ -33,23 +33,18 @@ function Set-AzDoBranchPolicyCommentResolution {
   [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $CollectionUri,
 
     # Project where the pipeline will be created.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
-    # PAT to authentice with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the Repository containing the YAML-sourcecode
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
-    [string]
+    [string[]]
     $RepoName,
 
     # Branch to create the policy on
@@ -64,76 +59,59 @@ function Set-AzDoBranchPolicyCommentResolution {
   )
 
   begin {
-    if (-not($script:header)) {
+    $result = New-Object -TypeName "System.Collections.ArrayList"
+  }
 
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
+  process {
+
+    $params = @{
+      uri     = "$CollectionUri/$ProjectName/_apis/policy/configurations"
+      version = "7.2-preview.1"
+      method  = 'POST'
+    }
+
+    $policyId = (Get-AzDoBranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PolicyType "Comment requirements").policyId
+
+    foreach ($name in $RepoName) {
+      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -RepoName $name).RepoId
+
+      $body = @{
+        isEnabled  = $true
+        isBlocking = $Required
+        type       = @{
+          id = $policyId
+        }
+        settings   = @{
+          scope = @(
+            @{
+              repositoryId = $repoId
+              refName      = "refs/heads/$branch"
+              matchKind    = "exact"
+            }
+          )
+        }
+      }
+
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create Branch policy named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+        Write-Information "Creating 'Comment requirements' policy on $RepoName/$branch"
+        $result.add(($body | Invoke-AzDoRestMethod @params))
+      } else {
+        $Body | Format-List
       }
     }
   }
 
-  Process {
-    Write-Debug "CollectionUri: $CollectionUri"
-    Write-Debug "ProjectName: $ProjectName"
-    Write-Debug "RepoName: $RepoName"
-    Write-Debug "branch: $branch"
-    Write-Debug "Required: $Required"
-
-    try {
-      $policyId = Get-BranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -PolicyType "Comment requirements"
-    } catch {
-      throw $_.Exception.Message
-    }
-
-    try {
-      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -RepoName $RepoName).RepoId
-    } catch {
-      throw $_.Exception.Message
-    }
-
-    $body = @{
-      isEnabled  = $true
-      isBlocking = $Required
-      type       = @{
-        id = $policyId
-      }
-      settings   = @{
-        scope = @(
-          @{
-            repositoryId = $repoId
-            refName      = "refs/heads/$branch"
-            matchKind    = "exact"
-          }
-        )
-      }
-    }
-
-    $params = @{
-      uri         = "$CollectionUri/$ProjectName/_apis/policy/configurations?api-version=7.2-preview.1"
-      Method      = 'POST'
-      Headers     = $script:header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
-    }
-
-    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-      try {
-        Write-Information "Creating 'Comment requirements' policy on $RepoName/$branch"
-        $res = Invoke-RestMethod @params
+  end {
+    if ($result) {
+      $result | ForEach-Object {
         [PSCustomObject]@{
           CollectionUri = $CollectionUri
           ProjectName   = $ProjectName
           RepoName      = $RepoName
-          id            = $res.id
+          PolicyId      = $_.id
+          Url           = $_.url
         }
-      } catch {
-        Write-Warning "Policy on $RepoName/$branch already exists. It is not possible to update policies"
       }
-    } else {
-      $Body | Format-List
     }
-
   }
 }

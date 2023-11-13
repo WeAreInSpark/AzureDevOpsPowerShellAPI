@@ -38,9 +38,8 @@ function Invoke-AzDoRestMethod {
 
   begin {
     if (-not($script:header)) {
-
       try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
+        New-AzDoAuthHeader -PAT $PAT -ErrorAction Stop
       } catch {
         $PSCmdlet.ThrowTerminatingError($_)
       }

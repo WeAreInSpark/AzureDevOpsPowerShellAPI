@@ -35,11 +35,6 @@ function Get-AzDoVariableGroup {
     [string]
     $CollectionUri,
 
-    # PAT to authentice with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Project where the variable group has to be created
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
@@ -60,7 +55,6 @@ function Get-AzDoVariableGroup {
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
       version = "7.1-preview.2"
       method  = 'GET'
-      pat     = $PAT
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Variable groups from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
@@ -88,13 +82,13 @@ function Get-AzDoVariableGroup {
     if ($result) {
       $result | ForEach-Object {
         [PSCustomObject]@{
+          CollectionURI = $CollectionUri
+          ProjectName   = $ProjectName
           Name          = $_.name
           Id            = $_.id
           Variables     = $_.variables
           CreatedOn     = $_.createdOn
           IsShared      = $_.isShared
-          ProjectName   = $ProjectName
-          CollectionURI = $CollectionUri
         }
       }
     }

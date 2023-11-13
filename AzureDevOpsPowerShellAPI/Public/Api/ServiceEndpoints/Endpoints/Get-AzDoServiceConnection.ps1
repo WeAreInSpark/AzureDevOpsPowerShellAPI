@@ -59,52 +59,61 @@ function Get-AzDoServiceConnection {
     [string[]]
     $ServiceConnectionName
   )
-  Begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
+  begin {
+    $result = New-Object -TypeName "System.Collections.ArrayList"
   }
+
   Process {
     $params = @{
-      uri         = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints?api-version=7.2-preview.4"
-      Method      = 'GET'
-      Headers     = $script:header
-      ContentType = 'application/json'
+      uri     = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints"
+      version = "7.2-preview.4"
+      method  = 'GET'
     }
+    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      $serviceConnections = (Invoke-AzDoRestMethod @params).value
 
-    if ($ServiceConnectionName) {
-      foreach ($name in $ServiceConnectionName) {
-
-        $params.uri = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints?endpointNames=$($name)?api-version=7.2-preview.4"
-            (Invoke-RestMethod @params) | ForEach-Object {
-          [PSCustomObject]@{
-            ServiceConnectionName            = $_.name
-            ServiceConnectionId              = $_.id
-            ServiceConnectionType            = $_.type
-            ServiceConnectionDescription     = $_.description
-            ServiceConnectionScheme          = $_.authorization.scheme
-            IsShared                         = $_.isShared
-            IsReady                          = $_.isReady
-            ServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
+      if ($ServiceConnectionName) {
+        foreach ($name in $ServiceConnectionName) {
+          $conn = $serviceConnections | Where-Object { $_.name -eq $name }
+          if (-not($conn)) {
+            Write-Error "Environment $name not found"
+            continue
+          } else {
+            $result.add($conn ) | Out-Null
           }
         }
+      } else {
+        $result.add($serviceConnections) | Out-Null
       }
+
     } else {
-                (Invoke-RestMethod @params).value | ForEach-Object {
+      $body | Format-List
+    }
+  }
+
+  end {
+    if ($result) {
+      $result | ForEach-Object {
         [PSCustomObject]@{
-          ServiceConnectionName            = $_.name
-          ServiceConnectionId              = $_.id
-          ServiceConnectionType            = $_.type
-          ServiceConnectionDescription     = $_.description
-          ServiceConnectionScheme          = $_.authorization.scheme
-          IsShared                         = $_.isShared
-          IsReady                          = $_.isReady
-          ServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
+          CollectionUri                                     = $CollectionUri
+          ProjectName                                       = $ProjectName
+          ServiceConnectionName                             = $_.name
+          ServiceConnectionId                               = $_.id
+          ServiceConnectionType                             = $_.type
+          ServiceConnectionUrl                              = $_.url
+          ServiceConnectionDescription                      = $_.description
+          ServiceConnectionCreatedBy                        = $_.createdBy.displayName
+          ServiceConnectionCreatedOn                        = $_.createdOn
+          ServiceConnectionModifiedBy                       = $_.modifiedBy.displayName
+          ServiceConnectionModifiedOn                       = $_.modifiedOn
+          ServiceConnectionAuthorization                    = $_.authorization.parameters
+          ServiceConnectionData                             = $_.data
+          ServiceConnectionIsShared                         = $_.isShared
+          ServiceConnectionOwner                            = $_.owner
+          ServiceConnectionReadersGroup                     = $_.readersGroup
+          ServiceConnectionServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
+          ServiceConnectionServiceEndpointType              = $_.serviceEndpointType
+          ServiceConnectionVersion                          = $_.version
         }
       }
     }

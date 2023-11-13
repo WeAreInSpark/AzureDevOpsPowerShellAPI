@@ -57,11 +57,6 @@ function Get-AzDoProject {
     [string]
     $CollectionUri,
 
-    # PAT to authenticate with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Project where the Repos are contained
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
@@ -78,7 +73,6 @@ function Get-AzDoProject {
       uri     = "$CollectionUri/_apis/projects"
       version = "7.1-preview.4"
       method  = 'GET'
-      pat     = $PAT
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {

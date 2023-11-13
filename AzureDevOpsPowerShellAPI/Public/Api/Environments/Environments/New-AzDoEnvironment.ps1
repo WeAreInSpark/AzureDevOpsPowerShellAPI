@@ -46,11 +46,6 @@ function New-AzDoEnvironment {
     [string]
     $ProjectName,
 
-    # PAT to authentice with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the Build Validation policy. Default is the name of the Build Definition
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
@@ -62,8 +57,9 @@ function New-AzDoEnvironment {
     $Description
   )
 
-  begin {
+  Begin {
     $body = New-Object -TypeName "System.Collections.ArrayList"
+    $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
@@ -71,7 +67,6 @@ function New-AzDoEnvironment {
       uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"
       version = "7.2-preview.1"
       method  = "POST"
-      Pat     = $PAT
     }
 
     foreach ($name in $EnvironmentName) {
@@ -81,15 +76,23 @@ function New-AzDoEnvironment {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create envrironment named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        $body | Invoke-AzDoRestMethod @params | ForEach-Object {
-          [PSCustomObject]@{
-            CollectionUri = $CollectionUri
-            ProjectName   = $ProjectName
-            Id            = $_.id
-          }
-        }
+        Write-Information "Creating Environment on Project $ProjectName"
+        $result.add(($body | Invoke-AzDoRestMethod @params -ErrorAction continue)) | Out-Null
       } else {
         $Body | Format-List
+      }
+    }
+  }
+
+  End {
+    if ($result) {
+      $result | ForEach-Object {
+        [PSCustomObject]@{
+          CollectionUri   = $CollectionUri
+          ProjectName     = $ProjectName
+          EnvironmentName = $_.name
+          Id              = $_.id
+        }
       }
     }
   }

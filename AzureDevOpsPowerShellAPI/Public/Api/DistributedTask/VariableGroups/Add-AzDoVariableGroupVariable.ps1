@@ -45,11 +45,6 @@ function Add-AzDoVariableGroupVariable {
     [string]
     $CollectionUri,
 
-    # PAT to authenticate with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Project where the variable group has to be created
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
@@ -67,20 +62,11 @@ function Add-AzDoVariableGroupVariable {
   )
 
   Begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-
-    $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT | Where-Object ProjectName -EQ $ProjectName).Projectid
+    $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
-    $groups = Get-AzDoVariableGroup -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName
+    $groups = Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName
 
     # Get the variable group based on it's name and match to ID for URI
     $group = $groups | Where-Object { $_.VariableGroupName -eq $VariableGroupName }
@@ -98,7 +84,7 @@ function Add-AzDoVariableGroupVariable {
     }
 
     $params = @{
-      uri         = "$CollectionUri/$ProjectId/_apis/distributedtask/variablegroups/$($group.VariableGroupId)?api-version=7.1-preview.1"
+      uri         = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups/$($group.VariableGroupId)?api-version=7.1-preview.1"
       Method      = 'PUT'
       Headers     = $script:header
       body        = $Body | ConvertTo-Json -Depth 99
@@ -106,21 +92,26 @@ function Add-AzDoVariableGroupVariable {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Add Variables to Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-
-      $res = (Invoke-RestMethod @params)
-      [PSCustomObject]@{
-        VariableGroupName = $res.name
-        VariableGroupId   = $res.id
-        Variables         = $res.variables
-        CreatedOn         = $res.createdOn
-        IsShared          = $res.isShared
-        ProjectName       = $ProjectName
-        CollectionURI     = $CollectionUri
-      }
-
+      Write-Information "Creating variables in variable group $VariableGroupName"
+      $result.add((Invoke-AzDoRestMethod @params)) | Out-Null
     } else {
       $body | Out-String
     }
   }
 
+  End {
+    if ($result) {
+      $result | ForEach-Object {
+        [PSCustomObject]@{
+          CollectionURI     = $CollectionUri
+          ProjectName       = $ProjectName
+          VariableGroupName = $_.name
+          VariableGroupId   = $_.id
+          Variables         = $_.variables
+          CreatedOn         = $_.createdOn
+          IsShared          = $_.isShared
+        }
+      }
+    }
+  }
 }

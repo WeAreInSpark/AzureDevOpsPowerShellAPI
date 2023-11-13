@@ -38,11 +38,6 @@ function Remove-AzDoProject {
     [string]
     $CollectionUri,
 
-    # PAT to get access to Azure DevOps.
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the project.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
@@ -52,13 +47,12 @@ function Remove-AzDoProject {
   Process {
     foreach ($name in $ProjectName) {
 
-      $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $name -PAT $PAT).ProjectID
+      $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $name).ProjectID
 
       $params = @{
         uri     = "$CollectionUri/_apis/projects/$projectID"
         version = "7.1-preview.4"
         method  = 'DELETE'
-        pat     = $PAT
       }
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Delete project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {

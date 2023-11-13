@@ -59,27 +59,17 @@ function New-AzDoPipeline {
     $Path = '/main.yaml'
   )
 
-  Begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-  }
-
   Process {
     $getAzDoRepoSplat = @{
-      ProjectName = $ProjectName
-      RepoName    = $RepoName
-      PAT         = $PAT
+      CollectionUri = $CollectionUri
+      ProjectName   = $ProjectName
+      RepoName      = $RepoName
+      PAT           = $PAT
     }
 
     $RepoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
-    $Body = @{
+    $body = @{
       name          = $PipelineName
       folder        = $null
       configuration = @{
@@ -93,16 +83,17 @@ function New-AzDoPipeline {
     }
 
     $params = @{
-      uri         = "$CollectionUri/$ProjectName/_apis/pipelines?api-version=7.1-preview.1"
-      Method      = 'POST'
-      Headers     = $header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
+      uri     = "$CollectionUri/$ProjectName/_apis/pipelines"
+      version = "7.1-preview.1"
+      Method  = 'POST'
+      pat     = $PAT
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Create pipeline named: $($PSStyle.Bold)$Pipeline$($PSStyle.Reset)")) {
-      Invoke-RestMethod @params | ForEach-Object {
+      $body | Invoke-AzDoRestMethod @params | ForEach-Object {
         [PSCustomObject]@{
+          CollectionUri  = $CollectionUri
+          ProjectName    = $ProjectName
           PipelineName   = $_.name
           PipelineFolder = $_.folder
           PipelineUrl    = $_.url

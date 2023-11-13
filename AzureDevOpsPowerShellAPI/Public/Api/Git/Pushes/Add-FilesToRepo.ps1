@@ -39,11 +39,6 @@ function Add-FilesToRepo {
     [string]
     $CollectionUri,
 
-    # PAT to authenticate with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the new repository
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
@@ -60,29 +55,7 @@ function Add-FilesToRepo {
     $Path
   )
 
-  begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-  }
-
   process {
-    $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName).Projectid
-    $RepoId = (Get-AzDoRepo -CollectionUri $CollectionUri -PAT $PAT -ProjectName $ProjectName -RepoName $RepoName).RepoId
-
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -AccessToken:($UsePAT ? $false : $true) -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
 
     $changes = @()
     $files = Get-ChildItem -Path $Path -Recurse -File
@@ -114,43 +87,25 @@ function Add-FilesToRepo {
       refUpdates = @(
         @{
           name        = "refs/heads/main"
-          oldObjectId = "d2b15d0782516a571cba4c53822a3ce4ec3576da"
+          oldObjectId = "0000000000000000000000000000000000000000"
         }
       )
       commits    = @(
         @{
-          comment = "Updating active tasks and adding a few new files."
+          comment = "Initial commit"
           changes = $changes
         }
       )
     }
 
     $params = @{
-      uri         = "$CollectionUri/$ProjectId/_apis/git/repositories/$RepoId/pushes?api-version=7.1-preview.2"
-      Method      = 'POST'
-      Headers     = $script:header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
+      uri     = "$CollectionUri/$ProjectName/_apis/git/repositories/$RepoName/pushes"
+      version = "7.1-preview.2"
+      Method  = 'POST'
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-      try {
-        Write-Information "Creating Repo on Project $RepoName"
-        $res = Invoke-RestMethod @params
-      } catch {
-        Write-Error $Body
-      }
-      $res
-      # [PSCustomObject]@{
-      #   CollectionUri = $CollectionUri
-      #   ProjectName   = $ProjectName
-      #   RepoName      = $res.name
-      #   RepoId        = $res.id
-      #   RepoURL       = $res.url
-      #   WebUrl        = $res.webUrl
-      #   HttpsUrl      = $res.remoteUrl
-      #   SshUrl        = $res.sshUrl
-      # }
+      Invoke-RestMethod @params
     } else {
       $Body | Format-List
     }

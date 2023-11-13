@@ -38,11 +38,6 @@ function New-AzDoProject {
     [string]
     $CollectionUri,
 
-    # PAT to get access to Azure DevOps.
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the project.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
@@ -139,7 +134,6 @@ function New-AzDoProject {
       uri     = "$CollectionUri/_apis/projects"
       version = "7.2-preview.4"
       method  = 'POST'
-      pat     = $PAT
     }
 
     foreach ($name in $ProjectName) {
@@ -170,11 +164,11 @@ function New-AzDoProject {
             ProjectName   = $name
           }
 
-          $response = Get-AzDoProject @getAzDoProjectSplat
+          $result = Get-AzDoProject @getAzDoProjectSplat
         } while (
-          $Response.State -ne 'wellFormed'
+          $result.State -ne 'wellFormed'
         )
-        $Response
+        $result
       }
     }
   }

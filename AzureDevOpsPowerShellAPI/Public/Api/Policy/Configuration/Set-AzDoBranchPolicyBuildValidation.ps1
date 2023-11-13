@@ -37,19 +37,14 @@ function Set-AzDoBranchPolicyBuildValidation {
   [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $CollectionUri,
 
     # Project where the pipeline will be created.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
-
-    # PAT to authentice with the organization
-    [Parameter()]
-    [string]
-    $PAT,
 
     # Name of the Repository containing the YAML-sourcecode
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
@@ -66,12 +61,12 @@ function Set-AzDoBranchPolicyBuildValidation {
     $Required = $true,
 
     # Id of the Build Definition (Pipeline)
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [int]
     $Id,
 
     # Name of the Build Validation policy. Default is the name of the Build Definition
-    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(ValueFromPipelineByPropertyName)]
     [AllowNull()]
     [string]
     $Name,
@@ -89,95 +84,72 @@ function Set-AzDoBranchPolicyBuildValidation {
   )
 
   begin {
-    if (-not($script:header)) {
+    $result = New-Object -TypeName "System.Collections.ArrayList"
+  }
 
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
+  Process {
+
+    $params = @{
+      uri     = "$CollectionUri/$ProjectName/_apis/policy/configurations"
+      version = "7.2-preview.1"
+      method  = 'POST'
+    }
+
+    $policyId = (Get-AzDoBranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PolicyType "Build").policyId
+
+    foreach ($name in $RepoName) {
+      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -RepoName $name).RepoId
+
+      $body = @{
+        isEnabled  = $true
+        isBlocking = $Required
+        type       = @{
+          id = $policyId
+        }
+        settings   = @{
+          buildDefinitionId       = $Id
+          displayName             = $Name
+          filenamePatterns        = $FilenamePatterns
+          queueOnSourceUpdateOnly = $true
+          manualQueueOnly         = $false
+          validDuration           = $validDuration
+          scope                   = @(
+            @{
+              repositoryId = $repoId
+              refName      = "refs/heads/$branch"
+              matchKind    = "exact"
+            }
+          )
+        }
+      }
+
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create Branch policy named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+        $existingPolicy = Get-AzDoBranchPolicy -CollectionUri $CollectionUri -ProjectName $ProjectName -ErrorAction SilentlyContinue |
+          Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) -and ($_.settings.displayName -eq $name) }
+
+        if ($null -eq $existingPolicy) {
+          Write-Information "Creating 'Build' policy on $name/$branch"
+          $result.add(($body | Invoke-AzDoRestMethod @params))
+        } else {
+          Write-Error "Policy on $name/$branch already exists. It is not possible to update policies"
+        }
+      } else {
+        $Body | Format-List
       }
     }
   }
 
-  Process {
-    Write-Debug "CollectionUri: $CollectionUri"
-    Write-Debug "ProjectName: $ProjectName"
-    Write-Debug "RepoName: $RepoName"
-    Write-Debug "branch: $branch"
-    Write-Debug "Required: $Required"
-    Write-Debug "BuildDefinitionId: $Id"
-    Write-Debug "Name: $Name"
-
-    try {
-      $policyId = Get-BranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -PolicyType "Build"
-      Write-Debug "PolicyId: $policyId"
-    } catch {
-      throw $_.Exception.Message
-    }
-
-    try {
-      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -RepoName $RepoName).RepoId
-      Write-Debug "RepoId: $repoId"
-    } catch {
-      throw $_.Exception.Message
-    }
-
-    $body = @{
-      isEnabled  = $true
-      isBlocking = $Required
-      type       = @{
-        id = $policyId
-      }
-      settings   = @{
-        buildDefinitionId       = $Id
-        displayName             = $Name
-        filenamePatterns        = $FilenamePatterns
-        queueOnSourceUpdateOnly = $true
-        manualQueueOnly         = $false
-        validDuration           = $validDuration
-        scope                   = @(
-          @{
-            repositoryId = $repoId
-            refName      = "refs/heads/$branch"
-            matchKind    = "exact"
-          }
-        )
-      }
-    }
-
-    $params = @{
-      uri         = "$CollectionUri/$ProjectName/_apis/policy/configurations?api-version=7.2-preview.1"
-      Method      = 'POST'
-      Headers     = $script:header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
-    }
-
-    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-      $existingPolicy = Get-BranchPolicy -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -ErrorAction SilentlyContinue |
-        Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) -and ($_.settings.displayName -eq $name) }
-
-      if ($null -eq $existingPolicy) {
-        try {
-          Write-Information "Creating 'Build' policy on $RepoName/$branch"
-          $result = Invoke-RestMethod @params | Select-Object createdDate, settings, id, url
-          [PSCustomObject]@{
-            CollectionUri = $CollectionUri
-            ProjectName   = $ProjectName
-            RepoName      = $RepoName
-            Id            = $result.id
-            Url           = $result.url
-          }
-        } catch {
-          $body | Format-List
-          throw $_.Exception
+  end {
+    if ($result) {
+      $result | ForEach-Object {
+        [PSCustomObject]@{
+          CollectionUri = $CollectionUri
+          ProjectName   = $ProjectName
+          RepoName      = $RepoName
+          PolicyId      = $_.id
+          Url           = $_.url
         }
-      } else {
-        Write-Error "Policy on $RepoName/$branch already exists. It is not possible to update policies"
       }
-    } else {
-      $Body | Format-List
     }
-
   }
 }

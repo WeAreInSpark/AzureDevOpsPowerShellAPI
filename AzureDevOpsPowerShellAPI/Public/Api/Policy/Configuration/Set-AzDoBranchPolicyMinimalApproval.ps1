@@ -50,14 +50,9 @@ function Set-AzDoBranchPolicyMinimalApproval {
     [string]
     $ProjectName,
 
-    # PAT to authentice with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the Repository containing the YAML-sourcecode
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
-    [string]
+    [string[]]
     $RepoName,
 
     # Branch to create the policy on
@@ -77,92 +72,67 @@ function Set-AzDoBranchPolicyMinimalApproval {
   )
 
   begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
+    $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
 
-    Write-Debug "CollectionUri: $CollectionUri"
-    Write-Debug "ProjectName: $ProjectName"
-    Write-Debug "RepoName: $RepoName"
-    Write-Debug "branch: $branch"
-
-    try {
-      $policyId = Get-BranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -PolicyType "Minimum number of reviewers"
-    } catch {
-      throw $_.Exception.Message
-    }
-
-    try {
-      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -RepoName $RepoName).RepoId
-    } catch {
-      throw $_.Exception.Message
-    }
-
-    $body = @{
-      isEnabled  = $true
-      isBlocking = $true
-      type       = @{
-        id = $policyId
-      }
-      settings   = @{
-        minimumApproverCount        = $minimumApproverCount
-        creatorVoteCounts           = $true
-        allowDownvotes              = $false
-        resetOnSourcePush           = $false
-        requireVoteOnLastIteration  = $false
-        resetRejectionsOnSourcePush = $false
-        blockLastPusherVote         = $false
-        requireVoteOnEachIteration  = $false
-        scope                       = @(
-          @{
-            repositoryId = $repoId
-            refName      = "refs/heads/$branch"
-            matchKind    = "exact"
-          }
-        )
-      }
-    }
-
     $params = @{
-      uri         = "$CollectionUri/$ProjectName/_apis/policy/configurations?api-version=7.2-preview.1"
-      Method      = 'POST'
-      Headers     = $script:header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
+      uri     = "$CollectionUri/$ProjectName/_apis/policy/configurations"
+      version = "7.2-preview.1"
+      method  = 'POST'
     }
 
-    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-      try {
-        Write-Information "Creating 'Minimum number of reviewers' policy on $RepoName/$branch"
-        $res = Invoke-RestMethod @params
-        [PSCustomObject]@{
-          CollectionUri               = $CollectionUri
-          ProjectName                 = $ProjectName
-          RepoName                    = $RepoName
-          id                          = $res.id
-          minimumApproverCount        = $res.settings.minimumApproverCount
-          creatorVoteCounts           = $res.settings.creatorVoteCounts
-          allowDownvotes              = $res.settings.allowDownvotes
-          resetOnSourcePush           = $res.settings.resetOnSourcePush
-          requireVoteOnLastIteration  = $res.settings.requireVoteOnLastIteration
-          resetRejectionsOnSourcePush = $res.settings.resetRejectionsOnSourcePush
-          blockLastPusherVote         = $res.settings.blockLastPusherVote
-          requireVoteOnEachIteration  = $res.settings.requireVoteOnEachIteration
+    $policyId = (Get-AzDoBranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PolicyType "Minimum number of reviewers").policyId
+
+    foreach ($name in $RepoName) {
+      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -RepoName $name).RepoId
+
+      $body = @{
+        isEnabled  = $true
+        isBlocking = $true
+        type       = @{
+          id = $policyId
         }
-      } catch {
-        Write-Warning "Policy on $RepoName/$branch already exists. It is not possible to update policies"
+        settings   = @{
+          minimumApproverCount        = $minimumApproverCount
+          creatorVoteCounts           = $true
+          allowDownvotes              = $false
+          resetOnSourcePush           = $false
+          requireVoteOnLastIteration  = $false
+          resetRejectionsOnSourcePush = $false
+          blockLastPusherVote         = $false
+          requireVoteOnEachIteration  = $false
+          scope                       = @(
+            @{
+              repositoryId = $repoId
+              refName      = "refs/heads/$branch"
+              matchKind    = "exact"
+            }
+          )
+        }
       }
-    } else {
-      $Body | Format-List
-    }
 
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create Branch policy named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+        Write-Information "Creating 'Minimum number of reviewers' policy on $RepoName/$branch"
+        $result.add(($body | Invoke-AzDoRestMethod @params))
+      } else {
+        $Body | Format-List
+      }
+    }
+  }
+
+  end {
+    if ($result) {
+      $result | ForEach-Object {
+        [PSCustomObject]@{
+          CollectionUri = $CollectionUri
+          ProjectName   = $ProjectName
+          RepoName      = $RepoName
+          PolicyId      = $_.id
+          url           = $_.url
+        }
+      }
+    }
   }
 }
