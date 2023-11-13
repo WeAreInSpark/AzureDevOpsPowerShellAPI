@@ -47,36 +47,46 @@ function Get-AzDoVariableGroup {
 
     # Name of the variable group
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
-    [string]
-    $Name
+    [string[]]
+    $VariableGroupName
   )
 
   Begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-
-    $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT | Where-Object ProjectName -EQ $ProjectName).Projectid
-
+    $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
     $params = @{
-      uri         = "$CollectionUri/$ProjectId/_apis/distributedtask/variablegroups?api-version=7.1-preview.2"
-      Method      = 'GET'
-      Headers     = $script:header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
+      uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
+      version = "7.1-preview.2"
+      method  = 'GET'
+      pat     = $PAT
     }
 
-    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Variable groups from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      $variableGroups = (Invoke-AzDoRestMethod @params).value
 
-      $result = (Invoke-RestMethod @params).value | ForEach-Object {
+      if ($VariableGroupName) {
+        foreach ($name in $VariableGroupName) {
+          $variableGroup = $variableGroups | Where-Object { $_.name -eq $name }
+          if (-not($variableGroup)) {
+            Write-Error "Variable group $name not found"
+          } else {
+            $result.add($variableGroup ) | Out-Null
+          }
+        }
+      } else {
+        $result.add($variableGroups) | Out-Null
+      }
+
+    } else {
+      $body | Out-String
+    }
+  }
+
+  End {
+    if ($result) {
+      $result | ForEach-Object {
         [PSCustomObject]@{
           Name          = $_.name
           Id            = $_.id
@@ -87,14 +97,6 @@ function Get-AzDoVariableGroup {
           CollectionURI = $CollectionUri
         }
       }
-
-      if ($Name) {
-        $result | Where-Object { $Name -eq $_.Name }
-      } else {
-        $result
-      }
-    } else {
-      $body | Out-String
     }
   }
 }

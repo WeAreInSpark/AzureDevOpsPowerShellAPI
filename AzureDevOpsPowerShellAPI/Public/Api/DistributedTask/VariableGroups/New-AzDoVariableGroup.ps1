@@ -71,62 +71,56 @@ function New-AzDoVariableGroup {
   )
 
   Begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-
-    $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -PAT $PAT | Where-Object ProjectName -EQ $ProjectName).Projectid
+    $body = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
+
+    $params = @{
+      uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
+      version = "7.2-preview.2"
+      method  = 'POST'
+      pat     = $PAT
+    }
+
     $trimmedvars = @{}
     foreach ($variable in $Variables.GetEnumerator()) {
       $trimmedvars += @{ $variable.Key = @{ value = $variable.Value } }
     }
 
-    $body = @{
-      description                    = $Description
-      name                           = $VariableGroupName
-      variables                      = $trimmedvars
-      variableGroupProjectReferences = @(
-        @{
-          name             = $ProjectName
-          description      = $Description
-          projectReference = @{
-            id = $ProjectId
+    foreach ($name in $VariableGroupName) {
+      $body = @{
+        description                    = $Description
+        name                           = $name
+        variables                      = $trimmedvars
+        variableGroupProjectReferences = @(
+          @{
+            name             = $name
+            description      = $Description
+            projectReference = @{
+              name = $ProjectName
+            }
           }
-        }
-      )
-    }
-
-    $params = @{
-      uri         = "$CollectionUri/$ProjectId/_apis/distributedtask/variablegroups?api-version=7.2-preview.2"
-      Method      = 'POST'
-      Headers     = $script:header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
-    }
-
-    if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-
-      $result = (Invoke-RestMethod @params)
-      [PSCustomObject]@{
-        VariableGroupName = $result.name
-        VariableGroupId   = $result.id
-        Variables         = $result.variables
-        CreatedOn         = $result.createdOn
-        IsShared          = $result.isShared
-        ProjectName       = $ProjectName
-        CollectionURI     = $CollectionUri
+        )
       }
 
-    } else {
-      $body | Out-String
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+
+        $result = $body | Invoke-AzDoRestMethod @params
+
+        [PSCustomObject]@{
+          VariableGroupName = $result.name
+          VariableGroupId   = $result.id
+          Variables         = $result.variables
+          CreatedOn         = $result.createdOn
+          IsShared          = $result.isShared
+          ProjectName       = $ProjectName
+          CollectionURI     = $CollectionUri
+        }
+
+      } else {
+        $body | Out-String
+      }
     }
   }
 }
