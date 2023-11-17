@@ -32,20 +32,20 @@ function Add-FilesToRepo {
       }
 .NOTES
 #>
-  [CmdletBinding(SupportsShouldProcess)]
+  [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $CollectionUri,
 
-    # Name of the new repository
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    # Name of the repository to add files to
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $RepoName,
 
-    # Name of the project where the new repository has to be created
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    # Name of the project containing the repository where files need to be added
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
@@ -104,7 +104,7 @@ function Add-FilesToRepo {
       Method  = 'POST'
     }
 
-    if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+    if ($PSCmdlet.ShouldProcess($RepoName, "Add path named: $($PSStyle.Bold)$($file.name)$($PSStyle.Reset)")) {
       $body | Invoke-AzDoRestMethod @params
     } else {
       $Body | Format-List

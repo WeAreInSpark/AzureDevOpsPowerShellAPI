@@ -125,7 +125,6 @@ function New-AzDoProject {
   )
 
   begin {
-    $body = New-Object -TypeName "System.Collections.ArrayList"
     $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 

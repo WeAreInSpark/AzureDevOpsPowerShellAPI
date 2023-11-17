@@ -74,7 +74,7 @@ function Get-AzDoRepo {
         foreach ($name in $RepoName) {
           $repo = $repos | Where-Object { $_.name -eq $name }
           if (-not($repo)) {
-            Write-Error "Environment $name not found"
+            Write-Error "Repo $name not found"
             continue
           } else {
             $result.add($repo ) | Out-Null

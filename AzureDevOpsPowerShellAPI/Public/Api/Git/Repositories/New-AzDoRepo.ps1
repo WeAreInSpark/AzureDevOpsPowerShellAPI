@@ -32,7 +32,7 @@ function New-AzDoRepo {
       }
 .NOTES
 #>
-  [CmdletBinding(SupportsShouldProcess)]
+  [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
@@ -51,7 +51,6 @@ function New-AzDoRepo {
   )
 
   Begin {
-    $body = New-Object -TypeName "System.Collections.ArrayList"
     $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
