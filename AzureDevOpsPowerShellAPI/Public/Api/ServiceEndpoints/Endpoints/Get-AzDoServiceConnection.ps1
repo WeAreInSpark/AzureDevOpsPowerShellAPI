@@ -44,17 +44,12 @@ function Get-AzDoServiceConnection {
     [string]
     $CollectionUri,
 
-    # Project where the Repos are contained
+    # Project where the Service Connection is used
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
-    # PAT to authenticate with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
-    # Name of the Repo to get information about
+    # Name of the Service Connection to get information about
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
     $ServiceConnectionName

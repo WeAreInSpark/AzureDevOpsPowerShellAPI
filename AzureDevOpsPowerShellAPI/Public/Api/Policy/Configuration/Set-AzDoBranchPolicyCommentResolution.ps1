@@ -30,7 +30,7 @@ function Set-AzDoBranchPolicyCommentResolution {
     }
 .NOTES
 #>
-  [CmdletBinding(SupportsShouldProcess)]
+  [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]

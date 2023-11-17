@@ -34,14 +34,14 @@ function Set-AzDoBranchPolicyMergeStrategy {
     }
 .NOTES
 #>
-  [CmdletBinding(SupportsShouldProcess)]
+  [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $CollectionUri,
 
-    # Project where the pipeline will be created.
+    # Project where the branch policy merge strategy will be setup
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
@@ -115,7 +115,7 @@ function Set-AzDoBranchPolicyMergeStrategy {
         }
       }
 
-      if ($PSCmdlet.ShouldProcess($ProjectName, "Create Branch policy named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create Merge strategy policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating 'Require a merge strategy' policy on $name/$branch"
         $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
       } else {

@@ -21,12 +21,12 @@ function Get-AzDoBranchPolicy {
     [string]
     $CollectionUri,
 
-    # Project where the pipeline will be created.
+    # Name of the project containing the branch policy
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
-    # Name of the variable group
+    # Name of the Branch Policy
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
     $PolicyName

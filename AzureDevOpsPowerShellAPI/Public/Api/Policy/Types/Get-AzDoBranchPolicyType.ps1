@@ -21,14 +21,33 @@ function Get-AzDoBranchPolicyType {
     [string]
     $CollectionUri,
 
-    # Project where the variable group has to be created
+    # Project where the get the branch policy from
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
-    # Name of the variable group
+    # Type of branch policy
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
+    [validateset(
+      'Build',
+      'Build validation',
+      'Comment requirements',
+      'Comment resolution',
+      'Commit author email validation',
+      'File name restriction',
+      'File size restriction',
+      'Git Commit Hard Limits Push Policy',
+      'Git repository settings',
+      'GitRepositorySettingsPolicyName',
+      'Minimum number of reviewers',
+      'Path Length restriction',
+      'Require a merge strategy',
+      'Required reviewers',
+      'Reserved names restriction',
+      'Secrets scanning restriction',
+      'Status',
+      'Work item linking')]
     $PolicyType
   )
 

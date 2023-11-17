@@ -38,15 +38,15 @@ function Set-AzDoBranchPolicyMinimalApproval {
     }
 .NOTES
 #>
-  [CmdletBinding(SupportsShouldProcess)]
+  [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $CollectionUri,
 
     # Project where the pipeline will be created.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
@@ -113,7 +113,7 @@ function Set-AzDoBranchPolicyMinimalApproval {
         }
       }
 
-      if ($PSCmdlet.ShouldProcess($ProjectName, "Create Branch policy named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create Minimal approval policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating 'Minimum number of reviewers' policy on $RepoName/$branch"
         $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
       } else {

@@ -41,7 +41,7 @@ function Set-AzDoBranchPolicyBuildValidation {
     [string]
     $CollectionUri,
 
-    # Project where the pipeline will be created.
+    # Project where the branch policy build validation will be set up
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
