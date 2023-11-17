@@ -103,17 +103,21 @@ function New-AzDoServiceConnection {
     [string]
     $CertName,
 
+    # Create the service connection as draft (useful when creating a WorkloadIdentityFederation based service connection).
     [Parameter(ValueFromPipelineByPropertyName)]
     [switch]
-    $AsDraft
+    $AsDraft,
+
+    # Parameter help description
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [Switch]
+    $Force
   )
 
-  begin {
-    $body = New-Object -TypeName "System.Collections.ArrayList"
-    $result = New-Object -TypeName "System.Collections.ArrayList"
-  }
-
   process {
+    if ($Force -and -not $Confirm) {
+      $ConfirmPreference = 'None'
+    }
 
     $Projects = Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName
     $ProjectId = ($Projects | Where-Object ProjectName -EQ $ProjectName).Projectid
@@ -228,21 +232,13 @@ function New-AzDoServiceConnection {
 
     $Params = @{
       uri     = "$CollectionUri/_apis/serviceendpoint/endpoints"
-      version = "7.1-preview.4"
+      version = "7.2-preview.4"
       Method  = 'POST'
       body    = $Body | ConvertTo-Json -Depth 99
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Create Service Connection named: $($PSStyle.Bold)$serviceconnectionname$($PSStyle.Reset)")) {
-      $result.add((Invoke-AzDoRestMethod @params))
-    } else {
-      $body
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
+      Invoke-AzDoRestMethod @params | ForEach-Object {
         [PSCustomObject]@{
           Name                              = $_.name
           Type                              = $_.Type
@@ -252,6 +248,8 @@ function New-AzDoServiceConnection {
           workloadIdentityFederationIssuer  = $_.authorization.parameters.workloadIdentityFederationIssuer
         }
       }
+    } else {
+      $body
     }
   }
 }
