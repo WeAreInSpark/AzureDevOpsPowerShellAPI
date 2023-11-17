@@ -1,43 +1,74 @@
 function Get-AzDoServiceConnection {
   <#
 .SYNOPSIS
-    Gets information about a repo in Azure DevOps.
+    Gets information about service connection in an Azure DevOps project.
 .DESCRIPTION
-    Gets information about 1 repo if the parameter $Name is filled in. Otherwise it will list all the repo's.
+    Gets information about specific service connection if the parameter $ServiceConnectionName is filled in. Otherwise it will list all the service connections.
 .EXAMPLE
-    $Params = @{
-        CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
-        ProjectName = "Project 1"
-        Name "Repo 1"
+    $getAzDoServiceConnectionSplat = @{
+      CollectionUri = "https://dev.azure.com/contoso"
+      ProjectName = "Project 1"
     }
-    Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1"
+    Get-AzDoServiceConnection @getAzDoServiceConnectionSplat
 
-    This example will list all the repo's contained in 'Project 1'.
+    This example will list all the service connections contained in 'Project 1'.
 .EXAMPLE
-    $Params = @{
-        CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
-        ProjectName = "Project 1"
-        Name "Repo 1"
+    $getAzDoServiceConnectionSplat = @{
+      CollectionUri = "https://dev.azure.com/contoso"
+      ProjectName = "Project 1"
+      ServiceConnectionName = 'ServiceConnection1', 'ServiceConnection2'
     }
-    Get-AzDoRepo -CollectionUri = "https://dev.azure.com/contoso" -PAT = "***" -ProjectName = "Project 1" -Name "Repo 1"
+    Get-AzDoServiceConnection @getAzDoServiceConnectionSplat
 
-    This example will fetch information about the repo with the name 'Repo 1'.
+    This example will fetch information about the service connections 'ServiceConnection1', 'ServiceConnection2' in the project 'Project 1'.
 .EXAMPLE
-    $Params = @{
-        CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
-        Name "Repo 1"
+    $getAzDoServiceConnectionSplat = @{
+      CollectionUri = "https://dev.azure.com/contoso"
+      ProjectName = "Project 1"
     }
-    get-AzDoProject -pat $pat -CollectionUri $collectionuri | Get-AzDoRepo -PAT $PAT
+   'ServiceConnection1', 'ServiceConnection2' | Get-AzDoServiceConnection @getAzDoServiceConnectionSplat
 
-    This example will fetch information about the repo with the name 'Repo 1'.
+    This example will fetch information about the service connections 'ServiceConnection1', 'ServiceConnection2' in the project 'Project 1'.
+
+.EXAMPLE
+    [PSCustomObject]@{
+      CollectionUri = "https://dev.azure.com/contoso"
+      ProjectName = "Project 1"
+      ServiceConnectionName = "Service Connection 1", "Service Connection 2"
+    } | Get-AzDoServiceConnection
+
+    This example will fetch information about the service connections 'ServiceConnection1', 'ServiceConnection2' in the project 'Project 1'.
+
+.EXAMPLE
+    [PSCustomObject]@{
+      CollectionUri = "https://dev.azure.com/contoso"
+      ProjectName = "Project 1"
+      ServiceConnectionName = "Service Connection 1", "Service Connection 2"
+    } | Get-AzDoServiceConnection
+
+    This example will fetch information about the service connections 'ServiceConnection1', 'ServiceConnection2' in the project 'Project 1'.
+
+.EXAMPLE
+  @(
+    [PSCustomObject]@{
+    CollectionUri = "https://dev.azure.com/contoso"
+    ProjectName = "Project 1"
+    ServiceConnectionName = "Service Connection 1"
+  },
+    [PSCustomObject]@{
+      CollectionUri = "https://dev.azure.com/contoso"
+      ProjectName = "Project 1"
+      ServiceConnectionName = "Service Connection 2"
+  }
+  ) | Get-AzDoServiceConnection
+
+  This example will fetch information about the service connections 'ServiceConnection1', 'ServiceConnection2' in the project 'Project 1'.
+
 .OUTPUTS
-    PSObject with repo(s).
+    PSCustomObject(s) with serviceconnections(s).
 .NOTES
 #>
-  [CmdletBinding()]
+  [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
@@ -54,61 +85,46 @@ function Get-AzDoServiceConnection {
     [string[]]
     $ServiceConnectionName
   )
-  begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
-  }
 
   Process {
+    $result = @()
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints"
       version = "7.2-preview.4"
       method  = 'GET'
     }
-    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Service Connections from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
       $serviceConnections = (Invoke-AzDoRestMethod @params).value
-
       if ($ServiceConnectionName) {
         foreach ($name in $ServiceConnectionName) {
           $conn = $serviceConnections | Where-Object { $_.name -eq $name }
           if (-not($conn)) {
-            Write-Error "Environment $name not found"
+            Write-Error "Service Connection $name not found"
             continue
           } else {
-            $result.add($conn ) | Out-Null
+            $result += $conn
           }
         }
       } else {
-        $result.add($serviceConnections) | Out-Null
+        $result += $serviceConnections
       }
-
-    } else {
-      $body | Format-List
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri                                     = $CollectionUri
-          ProjectName                                       = $ProjectName
-          ServiceConnectionName                             = $_.name
-          ServiceConnectionId                               = $_.id
-          ServiceConnectionType                             = $_.type
-          ServiceConnectionUrl                              = $_.url
-          ServiceConnectionDescription                      = $_.description
-          ServiceConnectionCreatedBy                        = $_.createdBy.displayName
-          ServiceConnectionCreatedOn                        = $_.createdOn
-          ServiceConnectionModifiedBy                       = $_.modifiedBy.displayName
-          ServiceConnectionModifiedOn                       = $_.modifiedOn
-          ServiceConnectionAuthorization                    = $_.authorization.parameters
-          ServiceConnectionData                             = $_.data
-          ServiceConnectionIsShared                         = $_.isShared
-          ServiceConnectionOwner                            = $_.owner
-          ServiceConnectionReadersGroup                     = $_.readersGroup
-          ServiceConnectionServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
-          ServiceConnectionServiceEndpointType              = $_.serviceEndpointType
-          ServiceConnectionVersion                          = $_.version
+      if ($result) {
+        $result | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionUri                                     = $CollectionUri
+            ProjectName                                       = $ProjectName
+            ServiceConnectionName                             = $_.name
+            ServiceConnectionId                               = $_.id
+            ServiceConnectionType                             = $_.type
+            ServiceConnectionUrl                              = $_.url
+            ServiceConnectionDescription                      = $_.description
+            ServiceConnectionCreatedBy                        = $_.createdBy.displayName
+            ServiceConnectionAuthorization                    = $_.authorization.parameters
+            ServiceConnectionData                             = $_.data
+            ServiceConnectionIsShared                         = $_.isShared
+            ServiceConnectionOwner                            = $_.owner
+            ServiceConnectionServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
+          }
         }
       }
     }
