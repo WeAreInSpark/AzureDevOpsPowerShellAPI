@@ -6,7 +6,7 @@ function New-AzDoAuthHeader {
     [String]
     $PAT
   )
-  Write-Verbose "Function: New-ADOAuthHeader"
+  Write-Verbose "Function: New-AzDoAuthHeader"
   if ($PAT -eq '') {
     # validate if user is logged in to Azure PowerShell
     Write-Verbose "Using Access Token"

@@ -126,6 +126,7 @@ function New-AzDoProject {
 
   begin {
     $body = New-Object -TypeName "System.Collections.ArrayList"
+    $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
   Process {
@@ -164,12 +165,18 @@ function New-AzDoProject {
             ProjectName   = $name
           }
 
-          $result = Get-AzDoProject @getAzDoProjectSplat
+          $response = Get-AzDoProject @getAzDoProjectSplat
         } while (
-          $result.State -ne 'wellFormed'
+          $response.State -ne 'wellFormed'
         )
-        $result
+        $result.add(($response)) | Out-Null
       }
+    }
+  }
+
+  End {
+    if ($result) {
+      $result
     }
   }
 }

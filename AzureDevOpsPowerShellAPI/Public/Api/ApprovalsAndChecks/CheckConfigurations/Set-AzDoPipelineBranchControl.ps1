@@ -1,4 +1,4 @@
-function Set-AzDoPipelineBranchControl {
+function Add-AzDoPipelineBranchControl {
   <#
 .SYNOPSIS
     Creates a Build Validation policy on a branch
@@ -51,13 +51,13 @@ function Set-AzDoPipelineBranchControl {
     [string]
     $PolicyName = "Branch Control",
 
-    # Valid duration of the Build Validation policy. Default is 720 minutes
+    # The type of Azure DevOps resource to be protected by a build validation policy
     [Parameter(Mandatory)]
     [string]
     [ValidateSet("environment", "variablegroup", "repository")]
     $ResourceType,
 
-    # Valid duration of the Build Validation policy. Default is 720 minutes
+    # Name of the resource to be protected by a build validation policy
     [Parameter(Mandatory)]
     [string[]]
     $ResourceName,
@@ -67,12 +67,12 @@ function Set-AzDoPipelineBranchControl {
     [string]
     $AllowUnknownStatusBranches = "false",
 
-    # Valid duration of the Build Validation policy. Default is 720 minutes
+    # Setup an allow list of branches from which a pipeline must be run to access this resource
     [Parameter()]
     [string]
     $AllowedBranches = "refs/head/main",
 
-    # Valid duration of the Build Validation policy. Default is 720 minutes
+    # Setup a requirement of branch protection policies for the branch from which a pipeline will be run to access this resource
     [Parameter()]
     [string]
     [validateset("true", "false")]
@@ -104,7 +104,6 @@ function Set-AzDoPipelineBranchControl {
           $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -Name $name).id
           $resourceId = "$($projectId).$($repoId)"
         }
-        Default {}
       }
 
       #TODO: Check if policy already exists

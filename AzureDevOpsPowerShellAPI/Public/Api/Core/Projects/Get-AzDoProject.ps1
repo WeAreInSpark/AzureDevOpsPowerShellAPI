@@ -109,6 +109,8 @@ function Get-AzDoProject {
           State             = $_.state
         }
       }
+    } else {
+      Write-Warning "No projects found with the arguments: CollectionURI ($CollectionURI) and Projectname ($ProjectName)"
     }
   }
 }

@@ -87,7 +87,7 @@ function New-AzDoPipeline {
       Method  = 'POST'
     }
 
-    if ($PSCmdlet.ShouldProcess($ProjectName, "Create pipeline named: $($PSStyle.Bold)$Pipeline$($PSStyle.Reset)")) {
+    if ($PSCmdlet.ShouldProcess($ProjectName, "Create pipeline named: $($PSStyle.Bold)$PipelineName$($PSStyle.Reset)")) {
       $body | Invoke-AzDoRestMethod @params | ForEach-Object {
         [PSCustomObject]@{
           CollectionUri  = $CollectionUri
@@ -96,6 +96,7 @@ function New-AzDoPipeline {
           PipelineName   = $_.name
           PipelineFolder = $_.folder
           PipelineUrl    = $_.url
+          PipelineId     = $_.id
         }
       }
     } else {

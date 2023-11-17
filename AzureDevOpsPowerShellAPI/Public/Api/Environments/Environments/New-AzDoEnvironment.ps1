@@ -75,7 +75,7 @@ function New-AzDoEnvironment {
         description = $Description
       }
 
-      if ($PSCmdlet.ShouldProcess($ProjectName, "Create envrironment named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create environment named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating Environment on Project $ProjectName"
         $result.add(($body | Invoke-AzDoRestMethod @params -ErrorAction continue)) | Out-Null
       } else {
