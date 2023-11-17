@@ -46,11 +46,6 @@ function Set-AzDoPipelineBranchControl {
     [string]
     $ProjectName,
 
-    # PAT to authentice with the organization
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the Build Validation policy. Default is the name of the Build Definition
     [Parameter()]
     [string]
@@ -94,19 +89,19 @@ function Set-AzDoPipelineBranchControl {
   }
 
   Process {
-    $projectId = (Get-AzDoproject -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT).projectId
+    $projectId = (Get-AzDoproject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId
 
     foreach ($name in $ResourceName) {
 
       switch ($ResourceType) {
         "environment" {
-          $resourceId = (Get-AzDoEnvironment -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -EnvironmentName $name).id
+          $resourceId = (Get-AzDoEnvironment -CollectionUri $CollectionUri -ProjectName $ProjectName -EnvironmentName $name).id
         }
         "variablegroup" {
-          $resourceId = (Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -Name $name).id
+          $resourceId = (Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName -Name $name).id
         }
         "repository" {
-          $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -PAT $PAT -Name $name).id
+          $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -Name $name).id
           $resourceId = "$($projectId).$($repoId)"
         }
         Default {}

@@ -64,7 +64,6 @@ function New-AzDoPipeline {
       CollectionUri = $CollectionUri
       ProjectName   = $ProjectName
       RepoName      = $RepoName
-      PAT           = $PAT
     }
 
     $RepoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
@@ -86,7 +85,6 @@ function New-AzDoPipeline {
       uri     = "$CollectionUri/$ProjectName/_apis/pipelines"
       version = "7.1-preview.1"
       Method  = 'POST'
-      pat     = $PAT
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Create pipeline named: $($PSStyle.Bold)$Pipeline$($PSStyle.Reset)")) {
@@ -94,6 +92,7 @@ function New-AzDoPipeline {
         [PSCustomObject]@{
           CollectionUri  = $CollectionUri
           ProjectName    = $ProjectName
+          RepoName       = $RepoName
           PipelineName   = $_.name
           PipelineFolder = $_.folder
           PipelineUrl    = $_.url

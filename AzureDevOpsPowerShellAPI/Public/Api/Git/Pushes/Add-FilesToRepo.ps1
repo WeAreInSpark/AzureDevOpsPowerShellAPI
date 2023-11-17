@@ -105,7 +105,7 @@ function Add-FilesToRepo {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-      Invoke-RestMethod @params
+      $body | Invoke-AzDoRestMethod @params
     } else {
       $Body | Format-List
     }

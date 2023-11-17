@@ -115,7 +115,7 @@ function Set-AzDoBranchPolicyMinimalApproval {
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Branch policy named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating 'Minimum number of reviewers' policy on $RepoName/$branch"
-        $result.add(($body | Invoke-AzDoRestMethod @params))
+        $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
       } else {
         $Body | Format-List
       }
