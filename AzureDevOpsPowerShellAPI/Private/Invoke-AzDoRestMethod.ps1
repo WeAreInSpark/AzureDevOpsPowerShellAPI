@@ -45,7 +45,6 @@ function Invoke-AzDoRestMethod {
       }
     }
 
-    $result = New-Object -TypeName "System.Collections.ArrayList"
     $params = @{
       Uri         = "$($Uri)?api-version=$($Version)"
       Method      = $Method
@@ -64,13 +63,9 @@ function Invoke-AzDoRestMethod {
     }
 
     try {
-      $result.add((Invoke-RestMethod @params)) | Out-Null
+      Invoke-RestMethod @params
     } catch {
-      throw ($_.ErrorDetails.Message | ConvertFrom-Json -Depth 10).Message
+      $PSCmdlet.ThrowTerminatingError($_)
     }
-  }
-
-  end {
-    $result
   }
 }
