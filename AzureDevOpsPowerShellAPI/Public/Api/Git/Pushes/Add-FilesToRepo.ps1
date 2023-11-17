@@ -70,7 +70,12 @@ function Add-FilesToRepo {
         $contentType = "rawtext"
       }
 
-      $filePath = ($file.fullName).replace("$($pwd.path)\", '')
+      if ($content -eq $null) {
+        Write-Warning "File $($file.FullName) is empty, skipping"
+        continue
+      }
+
+      $filePath = ($file.fullName).replace("$($path)", '')
       $changes += [PSCustomObject]@{
         changeType = "add"
         item       = @{

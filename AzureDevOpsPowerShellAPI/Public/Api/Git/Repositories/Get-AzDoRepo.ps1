@@ -55,10 +55,6 @@ function Get-AzDoRepo {
     $RepoName
   )
 
-  begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
-  }
-
   process {
 
     $params = @{
@@ -77,11 +73,11 @@ function Get-AzDoRepo {
             Write-Error "Repo $name not found"
             continue
           } else {
-            $result.add($repo ) | Out-Null
+            $result += $repo
           }
         }
       } else {
-        $result.add($repos) | Out-Null
+        $result += $repos
       }
 
     } else {

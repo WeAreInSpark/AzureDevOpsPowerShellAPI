@@ -63,10 +63,6 @@ function Get-AzDoProject {
     $ProjectName
   )
 
-  begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
-  }
-
   Process {
 
     $params = @{
@@ -82,14 +78,13 @@ function Get-AzDoProject {
         foreach ($name in $ProjectName) {
           $project = $projects | Where-Object { $_.name -eq $name }
           if (-not($project)) {
-            Write-Error "Project $name not found"
-            continue
+            Write-Warning "Project $name not found"
           } else {
-            $result.add($project ) | Out-Null
+            $result += $project
           }
         }
       } else {
-        $result.add($projects) | Out-Null
+        $result += $projects
       }
 
     } else {
@@ -109,8 +104,6 @@ function Get-AzDoProject {
           State             = $_.state
         }
       }
-    } else {
-      Write-Warning "No projects found with the arguments: CollectionURI ($CollectionURI) and Projectname ($ProjectName)"
     }
   }
 }

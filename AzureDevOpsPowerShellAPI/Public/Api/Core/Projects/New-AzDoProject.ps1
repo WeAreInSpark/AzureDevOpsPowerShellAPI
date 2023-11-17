@@ -124,10 +124,6 @@ function New-AzDoProject {
     $Visibility = 'private'
   )
 
-  begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
-  }
-
   Process {
 
     $params = @{
@@ -168,7 +164,7 @@ function New-AzDoProject {
         } while (
           $response.State -ne 'wellFormed'
         )
-        $result.add(($response)) | Out-Null
+        $result += ($response)
       }
     }
   }

@@ -50,10 +50,6 @@ function New-AzDoRepo {
     $ProjectName
   )
 
-  Begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
-  }
-
   Process {
     $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
 
@@ -73,7 +69,7 @@ function New-AzDoRepo {
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create repo named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating Repo on Project $ProjectName"
-        $result.add(($body | Invoke-AzDoRestMethod @params))
+        $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
         $Body | Format-List
       }
