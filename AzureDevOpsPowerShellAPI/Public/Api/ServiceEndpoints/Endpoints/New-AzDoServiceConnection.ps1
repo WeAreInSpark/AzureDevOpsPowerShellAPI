@@ -22,6 +22,24 @@ function New-AzDoServiceConnection {
       New-AzDoServiceConnection @params
 
       This example creates a new Azure DevOps service connection with a Certificate from a KeyVault in Azure.
+
+  .EXAMPLE
+    $params = @{
+      CollectionUri         = "https://dev.azure.com/contoso"
+      ProjectName           = "Project 1"
+      ServiceConnectionName = "ServiceConnection1"
+      Description           = 'Service connection for Azure Resource Manager'
+      SubscriptionId        = "00000-00000-00000-00000-00000"
+      SubscriptionName      = "Subscription 1"
+      TenantId              = 'aee976c7-a678-4b4b-884a-cc6cfccad0f9'
+      Serviceprincipalid    = "1c03163f-7e4e-4fab-8b41-6f040a8361b9"
+      AuthenticationType    = 'WorkloadIdentityFederation'
+      AsDraft               = $true
+      Force                 = $true
+    }
+    New-AzDoServiceConnection @params
+
+    This example creates a new Azure DevOps service connection with WorkloadIdentityFederation as authentication type.
   #>
 
   [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
@@ -113,6 +131,7 @@ function New-AzDoServiceConnection {
     [Switch]
     $Force
   )
+
 
   process {
     if ($Force -and -not $Confirm) {
@@ -249,7 +268,8 @@ function New-AzDoServiceConnection {
         }
       }
     } else {
-      $body
+      Write-Information "This request will call $($Params.uri) with the following body:"
+      $body | ConvertTo-Json -Depth 99
     }
   }
 }
