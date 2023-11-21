@@ -137,7 +137,7 @@ function Add-AzDoPipelineBranchControl {
         uri     = "$CollectionUri/$projectId/_apis/pipelines/checks/configurations"
         version = "7.2-preview.1"
         Method  = "POST"
-        body    = $body | ConvertTo-Json -Depth 99
+        body    = $body
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create envrironment named: $($PSStyle.Bold)$PolicyName$($PSStyle.Reset)")) {

@@ -176,7 +176,7 @@ function Set-AzDoProjectSetting {
       uri         = "$CollectionUri/$ProjectId/_apis/build/generalsettings?api-version=7.2-preview.1"
       Method      = 'PATCH'
       Headers     = $script:header
-      body        = $Body | ConvertTo-Json
+      body        = $Body
       ContentType = 'application/json'
     }
 
