@@ -41,7 +41,7 @@ function Invoke-AzDoRestMethod {
       try {
         New-AzDoAuthHeader -PAT $PAT -ErrorAction Stop
       } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
+        throw $_
       }
     }
 
@@ -65,7 +65,7 @@ function Invoke-AzDoRestMethod {
     try {
       Invoke-RestMethod @params
     } catch {
-      $PSCmdlet.ThrowTerminatingError($_)
+      Write-AzdoError -Message ($_ | ConvertFrom-Json).message
     }
   }
 }

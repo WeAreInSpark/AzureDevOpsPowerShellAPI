@@ -234,7 +234,7 @@ function New-AzDoServiceConnection {
       uri     = "$CollectionUri/_apis/serviceendpoint/endpoints"
       version = "7.2-preview.4"
       Method  = 'POST'
-      body    = $Body | ConvertTo-Json -Depth 99
+      body    = $Body
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Create Service Connection named: $($PSStyle.Bold)$serviceconnectionname$($PSStyle.Reset)")) {

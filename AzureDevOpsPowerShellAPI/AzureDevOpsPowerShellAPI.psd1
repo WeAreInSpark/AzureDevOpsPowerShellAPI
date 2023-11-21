@@ -33,7 +33,7 @@
   Description       = 'PowerShell module to deploy and adjust services on Azure DevOps'
 
   # Minimum version of the PowerShell engine required by this module
-  PowerShellVersion = '5.1'
+  PowerShellVersion = '7.3'
 
   # Name of the PowerShell host required by this module
   # PowerShellHostName = ''
