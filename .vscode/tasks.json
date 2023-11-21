@@ -51,10 +51,10 @@
             "command": "${cwd}/build.ps1 -Task Analyze -Verbose"
         },
         {
-            "label": "Pester",
-            "type": "shell",
-            "command": "${cwd}/build.ps1 -Task Pester -Verbose",
-            "problemMatcher": "$pester"
+          "label": "Pester",
+          "type": "shell",
+          "command": "${cwd}/tests/pester.ps1 -Verbose",
+          "problemMatcher": "$pester"
         },
         {
             "label": "Build",
