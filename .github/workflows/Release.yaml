@@ -49,9 +49,9 @@ jobs:
           PSGALLERY_API_KEY: ${{ secrets.PAT }}
         run: |
           $version = "${{ steps.changelog.outputs.tag }}" -replace "v", ""
-          $public = @(Get-ChildItem -Path (Join-Path -Path ".\AzureDevOpsPowerShellAPI" -ChildPath 'Public\*.ps1')  -Recurse -ErrorAction Stop)
+          $public = @(Get-ChildItem -Path (Join-Path -Path ".\AzureDevOpsPowerShell" -ChildPath 'Public\*.ps1')  -Recurse -ErrorAction Stop)
 
-          Update-ModuleManifest -Path ".\AzureDevOpsPowerShellAPI\AzureDevOpsPowerShellAPI.psd1" -ModuleVersion "$version"
-          Update-ModuleManifest -Path ".\AzureDevOpsPowerShellAPI\AzureDevOpsPowerShellAPI.psd1" -FunctionsToExport $public.Basename
+          Update-ModuleManifest -Path ".\AzureDevOpsPowerShell\AzureDevOpsPowerShell.psd1" -ModuleVersion "$version"
+          Update-ModuleManifest -Path ".\AzureDevOpsPowerShell\AzureDevOpsPowerShell.psd1" -FunctionsToExport $public.Basename
 
-          Publish-Module  -NuGetApiKey "$env:PSGALLERY_API_KEY" -Repository PSGallery -path ".\AzureDevOpsPowerShellAPI"
+          Publish-Module  -NuGetApiKey "$env:PSGALLERY_API_KEY" -Repository PSGallery -path ".\AzureDevOpsPowerShell"
