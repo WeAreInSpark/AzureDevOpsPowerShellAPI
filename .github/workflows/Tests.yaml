@@ -1,4 +1,4 @@
-name: Tests
+name: ⚗️ Tests
 on: [pull_request]
 jobs:
   test:
@@ -13,10 +13,7 @@ jobs:
       - name: Test
         shell: pwsh
         run: |
-          Install-Module -Name Microsoft.Graph.Applications -Force
-          Install-Module -Name Az.Accounts -Force
-          Install-Module -Name Az.KeyVault -Force
-          ./build.ps1 -Task Test -Bootstrap
+          ./build.ps1 -task GenerateMarkdown -Bootstrap
   validate-commits:
     runs-on: ubuntu-latest
     steps:
