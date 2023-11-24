@@ -1,10 +1,10 @@
-name: CI
+name: 📄 Documentation
 on:
   push:
     branches:
       - main
     paths:
-      - "AzureDevOpsPowerShellAPI/**"
+      - "AzureDevOpsPowerShell/**"
       - "docs/**"
 jobs:
   Docs:
@@ -16,7 +16,7 @@ jobs:
       - name: Test
         shell: pwsh
         run: |
-          ./build.ps1 -Task Build -Bootstrap
+          ./build.ps1 -task GenerateMarkdown -Bootstrap
       - name: Build
         uses: Tiryoh/actions-mkdocs@v0
         with:

@@ -1,7 +1,5 @@
 mkdocs-awesome-pages-plugin
-mkdocs==1.4.2
-mkdocs-material==8.5.9
-pymdown-extensions==9.8
+mkdocs-material==9.4.11
 mike==1.1.2
 mkdocs-simple-hooks==0.1.5
 mkdocs-git-revision-date-plugin==0.3.2
