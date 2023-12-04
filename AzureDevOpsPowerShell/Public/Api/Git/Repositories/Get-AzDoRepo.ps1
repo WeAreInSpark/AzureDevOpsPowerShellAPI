@@ -96,7 +96,7 @@ function Get-AzDoRepo {
           URL           = $_.url
           DefaultBranch = $_.defaultBranch
           WebUrl        = $_.webUrl
-          HttpsUrl      = $_.remoteUrl
+          RemoteUrl     = $_.remoteUrl
           SshUrl        = $_.sshUrl
           IsDisabled    = $_.IsDisabled
         }

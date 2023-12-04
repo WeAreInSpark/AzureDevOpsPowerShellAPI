@@ -69,7 +69,17 @@ function New-AzDoRepo {
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create repo named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating Repo on Project $ProjectName"
-        $result += ($body | Invoke-AzDoRestMethod @params)
+        try {
+          $ErrorActionPreference = 'Continue'
+          $result += ($body | Invoke-AzDoRestMethod @params)
+        } catch {
+          if ($_ -match 'TF400948') {
+            $params.Method = 'GET'
+            $result += (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name }
+          } else {
+            Write-AzDoError -message $_
+          }
+        }
       } else {
         $Body | Format-List
       }
@@ -86,7 +96,7 @@ function New-AzDoRepo {
           RepoId        = $_.id
           RepoURL       = $_.url
           WebUrl        = $_.webUrl
-          HttpsUrl      = $_.remoteUrl
+          RemoteUrl     = $_.remoteUrl
           SshUrl        = $_.sshUrl
         }
       }
