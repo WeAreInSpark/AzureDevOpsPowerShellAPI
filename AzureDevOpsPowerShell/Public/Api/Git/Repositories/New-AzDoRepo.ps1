@@ -74,6 +74,7 @@ function New-AzDoRepo {
           $result += ($body | Invoke-AzDoRestMethod @params)
         } catch {
           if ($_ -match 'TF400948') {
+            Write-Warning "Repo $name already exists, trying to get it"
             $params.Method = 'GET'
             $result += (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name }
           } else {
