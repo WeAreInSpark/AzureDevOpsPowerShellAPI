@@ -5,7 +5,6 @@ function Add-AzDoPipelineBranchControl {
 .DESCRIPTION
     Creates a Build Validation policy on a branch
 .EXAMPLE
-    ```powershell
     $params = @{
         CollectionUri = "https://dev.azure.com/contoso"
         PAT = "***"
@@ -14,7 +13,7 @@ function Add-AzDoPipelineBranchControl {
         ProjectName = "Project 1"
         Id = 1
     }
-    ```
+
     Set-AzDoBranchPolicyBuildValidation @params
 
     This example creates a policy with splatting parameters
@@ -89,7 +88,7 @@ function Add-AzDoPipelineBranchControl {
   }
 
   Process {
-    $projectId = (Get-AzDoproject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId
+    $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId
 
     foreach ($name in $ResourceName) {
 
