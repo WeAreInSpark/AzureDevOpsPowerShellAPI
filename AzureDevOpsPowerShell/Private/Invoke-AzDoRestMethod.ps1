@@ -29,7 +29,7 @@ function Invoke-AzDoRestMethod {
 
     [Parameter()]
     [string]
-    $PAT,
+    $Pat,
 
     [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
     [PSCustomObject[]]
@@ -39,7 +39,7 @@ function Invoke-AzDoRestMethod {
   begin {
     if (-not($script:header)) {
       try {
-        New-AzDoAuthHeader -PAT $PAT -ErrorAction Stop
+        New-AzDoAuthHeader -PAT $Pat -ErrorAction Stop
       } catch {
         throw $_
       }

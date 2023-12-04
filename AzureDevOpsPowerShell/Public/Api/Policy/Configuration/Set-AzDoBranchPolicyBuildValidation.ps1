@@ -87,7 +87,7 @@ function Set-AzDoBranchPolicyBuildValidation {
     $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
-  Process {
+  process {
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/policy/configurations"

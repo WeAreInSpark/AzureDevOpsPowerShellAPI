@@ -88,8 +88,8 @@ function Add-AzDoPipelineBranchControl {
     $body = New-Object -TypeName "System.Collections.ArrayList"
   }
 
-  Process {
-    $projectId = (Get-AzDoproject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId
+  process {
+    $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId
 
     foreach ($name in $ResourceName) {
 
@@ -149,7 +149,7 @@ function Add-AzDoPipelineBranchControl {
           }
         }
       } else {
-        $Body | Format-List
+        $body | Format-List
       }
     }
   }

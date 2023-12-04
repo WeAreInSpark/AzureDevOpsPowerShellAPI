@@ -65,12 +65,12 @@ function New-AzDoVariableGroup {
     $Description
   )
 
-  Begin {
+  begin {
     $body = New-Object -TypeName "System.Collections.ArrayList"
     $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
-  Process {
+  process {
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"

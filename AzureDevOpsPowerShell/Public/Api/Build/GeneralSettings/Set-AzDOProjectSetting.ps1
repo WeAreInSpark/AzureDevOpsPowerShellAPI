@@ -31,11 +31,6 @@ function Set-AzDoProjectSetting {
     [string]
     $CollectionUri,
 
-    # PAT to get access to Azure DevOps.
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the project
     [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
     [string]
@@ -136,22 +131,10 @@ function Set-AzDoProjectSetting {
     [switch]
     $StatusBadgesArePrivate
   )
-  Begin {
-    begin {
-      if (-not($script:header)) {
 
-        try {
-          New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-        } catch {
-          $PSCmdlet.ThrowTerminatingError($_)
-        }
-      }
-    }
+  process {
 
-    $Projects = (Get-AzDoProject -CollectionUri = $CollectionUri -ProjectName $ProjectName -PAT $PAT | Where-Object ProjectName -EQ $ProjectName).Projectid
-  }
-  Process {
-    $Body = @{
+    $body = @{
       buildsEnabledForForks                             = [bool]$BuildsEnabledForForks
       disableClassicBuildPipelineCreation               = [bool]$DisableClassicBuildPipelineCreation
       disableClassicPipelineCreation                    = [bool]$DisableClassicPipelineCreation
@@ -174,10 +157,10 @@ function Set-AzDoProjectSetting {
     }
 
     $params = @{
-      uri         = "$CollectionUri/$ProjectId/_apis/build/generalsettings?api-version=7.2-preview.1"
+      uri         = "$CollectionUri/$ProjectName/_apis/build/generalsettings?api-version=7.2-preview.1"
       Method      = 'PATCH'
       Headers     = $script:header
-      body        = $Body
+      body        = $body
       ContentType = 'application/json'
     }
 

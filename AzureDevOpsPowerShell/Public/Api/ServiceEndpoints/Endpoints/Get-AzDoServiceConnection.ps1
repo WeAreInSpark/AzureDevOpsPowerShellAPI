@@ -86,7 +86,7 @@ function Get-AzDoServiceConnection {
     $ServiceConnectionName
   )
 
-  Process {
+  process {
     $result = @()
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints"

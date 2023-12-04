@@ -46,6 +46,7 @@ function Test-AzDoServiceConnection {
     [string]
     $ServiceConnectionName
   )
+
   begin {
     # Validate if the user is logged into azure
     if ($KeyVaultName) {
@@ -53,17 +54,6 @@ function Test-AzDoServiceConnection {
         try {
           Write-Error 'Please login to Azure first'
           throw
-        } catch {
-          $PSCmdlet.ThrowTerminatingError($_)
-        }
-      }
-    }
-
-    begin {
-      if (-not($script:header)) {
-
-        try {
-          New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
         } catch {
           $PSCmdlet.ThrowTerminatingError($_)
         }
@@ -84,13 +74,14 @@ function Test-AzDoServiceConnection {
       }
     }
 
-    $Params = @{
+    $params = @{
       uri         = "$CollectionUri/$ProjectId/_apis/serviceendpoint/endpointproxy?endpointId=$($connectioninfo.ServiceConnectionId)&api-version=7.2-preview.1"
       Method      = 'POST'
       Headers     = $script:header
       body        = $Body | ConvertTo-Json -Depth 99
       ContentType = 'application/json'
     }
+
     if ($PSCmdlet.ShouldProcess($ProjectName, "Test service connection on: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
       $response = Invoke-RestMethod @Params
       if ($response.statusCode -eq 'badRequest') {

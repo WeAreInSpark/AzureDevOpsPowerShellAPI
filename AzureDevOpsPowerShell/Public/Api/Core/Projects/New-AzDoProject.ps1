@@ -124,7 +124,7 @@ function New-AzDoProject {
     $Visibility = 'private'
   )
 
-  Process {
+  process {
 
     $params = @{
       uri     = "$CollectionUri/_apis/projects"
@@ -134,7 +134,7 @@ function New-AzDoProject {
 
     foreach ($name in $ProjectName) {
 
-      $Body = @{
+      $body = @{
         name         = $name
         description  = $Description
         visibility   = $Visibility
@@ -169,7 +169,7 @@ function New-AzDoProject {
     }
   }
 
-  End {
+  end {
     if ($result) {
       $result
     }

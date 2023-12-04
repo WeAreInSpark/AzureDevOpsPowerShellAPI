@@ -138,8 +138,8 @@ function New-AzDoServiceConnection {
       $ConfirmPreference = 'None'
     }
 
-    $Projects = Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName
-    $ProjectId = ($Projects | Where-Object ProjectName -EQ $ProjectName).Projectid
+    $projects = Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName
+    $projectId = ($Projects | Where-Object ProjectName -EQ $ProjectName).Projectid
 
     if (($AuthenticationType -eq 'spnSecret') -and !$ServiceprincipalSecret ) {
       Write-Error 'Parameter ServiceprincipalSecret should not be empty'
@@ -152,7 +152,7 @@ function New-AzDoServiceConnection {
     }
 
     if ($scopeLevel -eq 'Subscription') {
-      $Data = @{
+      $data = @{
         subscriptionId   = $SubscriptionId
         subscriptionName = $SubscriptionName
         environment      = 'AzureCloud'
@@ -160,7 +160,7 @@ function New-AzDoServiceConnection {
         creationMode     = 'Manual'
       }
     } else {
-      $Data = @{
+      $data = @{
         managementGroupId   = $ManagementGroupId
         managementGroupName = $ManagementGroupName
         environment         = 'AzureCloud'
@@ -169,7 +169,7 @@ function New-AzDoServiceConnection {
       }
     }
     if ($AuthenticationType -eq 'WorkloadIdentityFederation' -and $AsDraft) {
-      $Data += @{
+      $data += @{
         isDraft = "True"
       }
     }
@@ -185,11 +185,11 @@ function New-AzDoServiceConnection {
         scheme     = 'ServicePrincipal'
       }
     } elseif ($AuthenticationType -eq 'spnCertificate') {
-      $CertName = ($CertName -replace ' ', '')
-      $KeyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $CertName
-      $Secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
-      $SecretValueText = ''
-      $SsPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secret.SecretValue)
+      $certName = ($CertName -replace ' ', '')
+      $leyVaultCert = Get-AzKeyVaultCertificate -VaultName $KeyVaultName -Name $certName
+      $secret = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyVaultCert.Name
+      $secretValueText = ''
+      $ssPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secret.SecretValue)
 
       try {
         $secretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($SsPtr)
@@ -197,15 +197,15 @@ function New-AzDoServiceConnection {
         [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($SsPtr)
       }
 
-      $SecretByte = [Convert]::FromBase64String($secretValueText)
-      $Cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($SecretByte, '', 'Exportable,PersistKeySet')
+      $secretByte = [Convert]::FromBase64String($secretValueText)
+      $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($secretByte, '', 'Exportable,PersistKeySet')
 
-      $Pem = New-Object System.Text.StringBuilder
-      $Pem.AppendLine('-----BEGIN CERTIFICATE-----') | Out-Null
-      $Pem.AppendLine([System.Convert]::ToBase64String($cert.RawData, 1)) | Out-Null
-      $Pem.AppendLine('-----END CERTIFICATE-----') | Out-Null
+      $pem = New-Object System.Text.StringBuilder
+      $pem.AppendLine('-----BEGIN CERTIFICATE-----') | Out-Null
+      $pem.AppendLine([System.Convert]::ToBase64String($cert.RawData, 1)) | Out-Null
+      $pem.AppendLine('-----END CERTIFICATE-----') | Out-Null
 
-      $Authorization = @{
+      $authorization = @{
         parameters = @{
           tenantid                    = $Tenantid
           serviceprincipalid          = $Serviceprincipalid
@@ -229,14 +229,14 @@ function New-AzDoServiceConnection {
       type                             = 'AzureRM'
       url                              = 'https://management.azure.com/'
       description                      = $Description
-      data                             = $Data
-      authorization                    = $Authorization
+      data                             = $data
+      authorization                    = $authorization
       isShared                         = $false
       serviceEndpointProjectReferences = @(
         @{
           projectReference = @{
-            id   = $ProjectID
-            name = $ProjectName
+            id   = $projectID
+            name = $projectName
           }
           name             = $ServiceConnectionName
         }

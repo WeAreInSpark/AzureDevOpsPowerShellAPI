@@ -50,7 +50,7 @@ function New-AzDoRepo {
     $ProjectName
   )
 
-  Process {
+  process {
     $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
 
     $params = @{
@@ -76,7 +76,7 @@ function New-AzDoRepo {
     }
   }
 
-  End {
+  end {
     if ($result) {
       $result | ForEach-Object {
         [PSCustomObject]@{

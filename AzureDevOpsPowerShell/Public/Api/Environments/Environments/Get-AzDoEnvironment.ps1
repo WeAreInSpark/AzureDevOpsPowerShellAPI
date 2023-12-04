@@ -56,7 +56,7 @@ function Get-AzDoEnvironment {
     $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
-  Process {
+  process {
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"

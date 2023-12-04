@@ -4,11 +4,11 @@ function New-AzDoAuthHeader {
     # PAT to authenticate with the organization
     [Parameter()]
     [String]
-    $PAT
+    $Pat
   )
   if ($PSCmdlet.ShouldProcess("Creating new authentication header")) {
     Write-Verbose "Function: New-AzDoAuthHeader"
-    if ($PAT -eq '') {
+    if ($Pat -eq '') {
       # validate if user is logged in to Azure PowerShell
       Write-Verbose "Using Access Token"
       try {

@@ -46,11 +46,11 @@ function Get-AzDoVariableGroup {
     $VariableGroupName
   )
 
-  Begin {
+  begin {
     $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
-  Process {
+  process {
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
       version = "7.1-preview.2"
@@ -78,7 +78,7 @@ function Get-AzDoVariableGroup {
     }
   }
 
-  End {
+  end {
     if ($result) {
       $result | ForEach-Object {
         [PSCustomObject]@{

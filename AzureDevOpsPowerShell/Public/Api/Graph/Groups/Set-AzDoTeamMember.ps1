@@ -54,13 +54,13 @@ function Set-AzDoTeamMember {
   process {
     $params = @{
       uri     = "https://vssps.dev.azure.com/$OrganizationName/_apis/graph/groups?api-version=7.1-preview.1"
-      Method  = 'GET'
-      Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
+      method  = 'GET'
+      headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$($PAT)")) }
     }
 
-    $Team = (Invoke-RestMethod @params).value | Where-Object { $_.principalName -match "$ProjectName Team" }
+    $team = (Invoke-RestMethod @params).value | Where-Object { $_.principalName -match "$ProjectName Team" }
 
-    $Body = @{
+    $body = @{
       originId = $ObjectId
     }
 

@@ -63,7 +63,7 @@ function Get-AzDoProject {
     $ProjectName
   )
 
-  Process {
+  process {
 
     $params = @{
       uri     = "$CollectionUri/_apis/projects"

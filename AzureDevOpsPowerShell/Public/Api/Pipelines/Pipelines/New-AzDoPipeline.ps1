@@ -54,7 +54,7 @@ function New-AzDoPipeline {
     $Path = '/main.yaml'
   )
 
-  Process {
+  process {
     $getAzDoRepoSplat = @{
       CollectionUri = $CollectionUri
       ProjectName   = $ProjectName

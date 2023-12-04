@@ -61,11 +61,11 @@ function Add-AzDoVariableGroupVariable {
     $Variables
   )
 
-  Begin {
+  begin {
     $result = New-Object -TypeName "System.Collections.ArrayList"
   }
 
-  Process {
+  process {
     $groups = Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName
 
     # Get the variable group based on it's name and match to ID for URI
@@ -99,7 +99,7 @@ function Add-AzDoVariableGroupVariable {
     }
   }
 
-  End {
+  end {
     if ($result) {
       $result | ForEach-Object {
         [PSCustomObject]@{
