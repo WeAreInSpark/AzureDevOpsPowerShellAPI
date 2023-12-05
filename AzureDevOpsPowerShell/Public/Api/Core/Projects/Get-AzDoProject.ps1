@@ -71,27 +71,18 @@ function Get-AzDoProject {
       method  = 'GET'
     }
 
-    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $projects = (Invoke-AzDoRestMethod @params).value
-
-      if ($ProjectName) {
-        foreach ($name in $ProjectName) {
-          $project = $projects | Where-Object { $_.name -eq $name }
-          if (-not($project)) {
-            Write-Warning "Project $name not found"
-          } else {
-            $result += $project
-          }
-        }
-      } else {
-        $result += $projects
+    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Project(s)")) {
+      if ($PSBoundParameters.Debug -eq $true) {
+        Write-Debug "Calling Invoke-AzDoRestMethod with"
+        Write-Debug ($params | Out-String)
       }
+      $result = (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ProjectName -or $_.Name -in $ProjectName }
+
 
     } else {
-      $body | Format-List
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
-
   end {
     if ($result) {
       $result | ForEach-Object {
@@ -107,3 +98,4 @@ function Get-AzDoProject {
     }
   }
 }
+
