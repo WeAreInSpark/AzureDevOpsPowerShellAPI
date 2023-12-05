@@ -72,10 +72,9 @@ function Get-AzDoProject {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Project(s)")) {
-      if ($PSBoundParameters.Debug -eq $true) {
-        Write-Debug "Calling Invoke-AzDoRestMethod with"
-        Write-Debug ($params | Out-String)
-      }
+      Write-Debug "Calling Invoke-AzDoRestMethod with"
+      Write-Debug ($params | Out-String)
+
       $result = (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ProjectName -or $_.Name -in $ProjectName }
 
 
