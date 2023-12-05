@@ -59,6 +59,11 @@ InModuleScope $ModuleName {
     It "Outputs just the matching ProjectName when an array was supplied" {
       (Get-AzDoProject -CollectionUri $collectionUri -ProjectName "ProjectTest", "NonExistantProject").Count | Should -Be 1
     }
+
+    It "Doesn't output when no matching ProjectName was supplied" {
+      (Get-AzDoProject -CollectionUri $collectionUri -ProjectName "NonExistantProject", "NonExistantProject2") | Should -BeNullOrEmpty
+
+    }
   }
   Describe "E2E Projects" -Tag E2E {
     Context "New-AzDoProject" {
