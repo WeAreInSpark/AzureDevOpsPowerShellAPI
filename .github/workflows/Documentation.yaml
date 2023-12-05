@@ -1,5 +1,6 @@
 name: 📄 Documentation
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -11,6 +12,9 @@ jobs:
     name: Deploy docs to GitHub Pages
     runs-on: ubuntu-latest
     steps:
+      - name: Update ubuntu runner
+        uses: ./.github/actions/update-ubuntu-runner
+        id: update-ubuntu-runner
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
