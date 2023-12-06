@@ -27,7 +27,7 @@ InModuleScope $ModuleName {
             [PSCustomObject]@{
               CollectionURI     = $CollectionUri
               name              = "ProjectTest"
-              ProjectID         = $_.id
+              Id                = $_.id
               ProjectURL        = $_.url
               ProjectVisibility = $_.visibility
               State             = "wellFormed"
@@ -35,7 +35,7 @@ InModuleScope $ModuleName {
             [PSCustomObject]@{
               CollectionURI     = $CollectionUri
               name              = "ProjectTest2"
-              ProjectID         = $_.id
+              Id                = $_.id
               ProjectURL        = $_.url
               ProjectVisibility = $_.visibility
               State             = "wellFormed"
@@ -79,7 +79,7 @@ InModuleScope $ModuleName {
             [PSCustomObject]@{
               CollectionURI     = $CollectionUri
               name              = "ProjectTest"
-              ProjectID         = $_.id
+              Id                = $_.id
               ProjectURL        = $_.url
               ProjectVisibility = $_.visibility
               State             = "wellFormed"
@@ -87,7 +87,7 @@ InModuleScope $ModuleName {
             [PSCustomObject]@{
               CollectionURI     = $CollectionUri
               name              = "ProjectTest2"
-              ProjectID         = $_.id
+              Id                = $_.id
               ProjectURL        = $_.url
               ProjectVisibility = $_.visibility
               State             = "wellFormed"
