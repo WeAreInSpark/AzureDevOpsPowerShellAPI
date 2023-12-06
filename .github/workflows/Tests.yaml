@@ -15,7 +15,7 @@ jobs:
         shell: pwsh
         run: |
           $invokeScriptAnalyzerSplat = @{
-            Path = 'SentinelAutomationTool'
+            Path = 'AzureDevOpsPowerShell'
             ReportSummary = $true
             Recurse = $true
             Settings = 'tests/ScriptAnalyzerSettings.psd1'
