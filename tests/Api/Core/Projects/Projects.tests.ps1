@@ -170,3 +170,63 @@ InModuleScope $ModuleName {
 #     (Remove-AzDoProject -CollectionUri $collectionUri -ProjectName "NonExistantProject", "NonExistantProject2") | Should -BeNullOrEmpty
 #   }
 # }
+
+Describe "E2E Projects" -Tag E2E {
+  Context "New-AzDoProject" {
+    BeforeAll {
+      $project = New-AzDoProject @params -Confirm:$false
+    }
+
+    It "Creates a new project" {
+      $project.ProjectName | Should -Be "ProjectTest"
+    }
+
+    It "Creates a new project with the correct visibility" {
+      $project.ProjectVisibility | Should -Be "private"
+    }
+
+    It "Creates a new project with the correct state" {
+      $project.State | Should -Be "wellFormed"
+    }
+  }
+
+  Context "Get-AzDoProject" {
+    BeforeAll {
+      $params = @{
+        CollectionUri = $collectionUri
+        ProjectName   = "ProjectTest"
+      }
+
+      $project = Get-AzDoProject @params
+    }
+
+    It "Gets the correct project" {
+      $project.ProjectName | Should -Be "ProjectTest"
+    }
+
+    It "Gets the correct project with the correct visibility" {
+      $project.ProjectVisibility | Should -Be "private"
+    }
+
+    It "Gets the correct project with the correct state" {
+      $project.State | Should -Be "wellFormed"
+    }
+  }
+
+  Context "Remove-AzDoProject" {
+    BeforeAll {
+      $params = @{
+        CollectionUri = $collectionUri
+        ProjectName   = "ProjectTest"
+      }
+
+      $project = Remove-AzDoProject @params -Confirm:$false
+    }
+
+    It "Removes the correct project" {
+      $project.id | Should -Not -Be $null
+      $project.status | Should -Not -Be $null
+      $project.url | Should -Not -Be $null
+    }
+  }
+}
