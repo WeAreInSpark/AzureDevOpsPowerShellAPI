@@ -5,21 +5,22 @@ online version:
 schema: 2.0.0
 ---
 
-# Set-AzDoBranchPolicyMergeStrategy
+# Add-AzDoPipelineBranchControl
 
 ## SYNOPSIS
-Creates a Merge strategy policy on a branch
+Creates a Build Validation policy on a branch
 
 ## SYNTAX
 
 ```
-Set-AzDoBranchPolicyMergeStrategy [-CollectionUri] <String> [-ProjectName] <String> [-RepoName] <String[]>
- [[-Branch] <String>] [[-AllowSquash] <Boolean>] [[-AllowNoFastForward] <Boolean>] [[-AllowRebase] <Boolean>]
- [[-AllowRebaseMerge] <Boolean>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Add-AzDoPipelineBranchControl [-CollectionUri] <String> [-ProjectName] <String> [[-PolicyName] <String>]
+ [-ResourceType] <String> [-ResourceName] <String[]> [[-AllowUnknownStatusBranches] <String>]
+ [[-AllowedBranches] <String>] [[-EnsureProtectionOfBranch] <String>] [[-Timeout] <Int32>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates a Merge strategy policy on a branch
+Creates a Build Validation policy on a branch
 
 ## EXAMPLES
 
@@ -28,21 +29,25 @@ Creates a Merge strategy policy on a branch
 $params = @{
     CollectionUri = "https://dev.azure.com/contoso"
     PAT = "***"
+    Name = "Policy 1"
     RepoName = "Repo 1"
     ProjectName = "Project 1"
+    Id = 1
 }
-Set-AzDoBranchPolicyMergeStrategy @params
 ```
 
-This example creates a 'Require a merge strategy' policy with splatting parameters
+Set-AzDoBranchPolicyBuildValidation @params
+
+This example creates a policy with splatting parameters
 
 ### EXAMPLE 2
 ```
-'repo1', 'repo2' |
-Set-AzDoBranchPolicyMergeStrategy -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -PAT "***"
+$env:SYSTEM_ACCESSTOKEN = '***'
+New-AzDoPipeline -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -Name "Pipeline 1" -RepoName "Repo 1" -Path "main.yml"
+| Set-AzDoBranchPolicyBuildValidation
 ```
 
-This example creates a 'Require a merge strategy' policy on the main branch of repo1 and repo2
+This example creates a new Azure Pipeline and sets this pipeline as Build Validation policy on the main branch
 
 ## PARAMETERS
 
@@ -76,23 +81,9 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -RepoName
-Name of the Repository containing the YAML-sourcecode
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 3
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -Branch
-Branch to create the policy on
+### -PolicyName
+Name of the Build Validation policy.
+Default is the name of the Build Definition
 
 ```yaml
 Type: String
@@ -100,32 +91,48 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
-Default value: Main
+Position: 3
+Default value: Branch Control
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AllowSquash
-Allow squash merge
+### -ResourceType
+The type of Azure DevOps resource to be protected by a build validation policy
 
 ```yaml
-Type: Boolean
+Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 5
-Default value: True
+Required: True
+Position: 4
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AllowNoFastForward
-Allow no fast forward merge
+### -ResourceName
+Name of the resource to be protected by a build validation policy
 
 ```yaml
-Type: Boolean
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowUnknownStatusBranches
+Valid duration of the Build Validation policy.
+Default is 720 minutes
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -136,32 +143,48 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AllowRebase
-Allow rebase merge
+### -AllowedBranches
+Setup an allow list of branches from which a pipeline must be run to access this resource
 
 ```yaml
-Type: Boolean
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 7
-Default value: False
+Default value: Refs/head/main
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AllowRebaseMerge
-Allow rebase merge message
+### -EnsureProtectionOfBranch
+Setup a requirement of branch protection policies for the branch from which a pipeline will be run to access this resource
 
 ```yaml
-Type: Boolean
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 8
-Default value: False
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Timeout
+Valid duration of the Build Validation policy.
+Default is 720 minutes
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: 1440
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -220,14 +243,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### [PSCustomObject]@{
-### CollectionUri      = $CollectionUri
-### ProjectName        = $ProjectName
-### RepoName           = $RepoName
-### id                 = $res.id
-### allowSquash        = $res.settings.allowSquash
-### allowNoFastForward = $res.settings.allowNoFastForward
-### allowRebase        = $res.settings.allowRebase
-### allowRebaseMerge   = $res.settings.allowRebaseMerge
+###   CollectionUri = $CollectionUri
+###   ProjectName   = $ProjectName
+###   Id            = $_.id
 ### }
 ## NOTES
 

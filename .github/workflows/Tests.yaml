@@ -1,22 +1,45 @@
 name: ⚗️ Tests
 on: [pull_request]
 jobs:
-  test:
-    name: Run Tests
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
+  scriptanalyzer:
+    permissions:
+      contents: read
+    name: PSScriptAnalyzer Tests
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Update ubuntu runner
         uses: ./.github/actions/update-ubuntu-runner
         id: update-ubuntu-runner
-      - name: Test
+      - name: Run PSScriptAnalyzer
         shell: pwsh
         run: |
-          ./build.ps1 -task GenerateMarkdown -Bootstrap
+          $invokeScriptAnalyzerSplat = @{
+            Path = 'AzureDevOpsPowerShell'
+            ReportSummary = $true
+            Recurse = $true
+            Settings = 'tests/ScriptAnalyzerSettings.psd1'
+            EnableExit = $true
+          }
+          Invoke-ScriptAnalyzer @invokeScriptAnalyzerSplat
+  pester:
+    permissions:
+      contents: read
+    name: Pester Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update ubuntu runner
+        uses: ./.github/actions/update-ubuntu-runner
+        id: update-ubuntu-runner
+      - name: Build
+        shell: pwsh
+        run: |
+          ./build.ps1 -Task Build -Bootstrap
+      - name: Run Pester
+        shell: pwsh
+        run: |
+          .github/scripts/pester.ps1
   validate-commits:
     runs-on: ubuntu-latest
     steps:
