@@ -62,6 +62,8 @@ function Set-AzDoTeamMember {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
+      Write-Debug "Calling Invoke-RestMethod with"
+      Write-Debug ($params | Select-Object -ExcludeProperty Headers | Out-String)
       $Response = Invoke-RestMethod @params
 
       [PSCustomObject]@{
@@ -70,8 +72,7 @@ function Set-AzDoTeamMember {
         Origin        = $Response.origin
       }
     } else {
-      $Body
-      return
+      Write-Verbose "Calling Invoke-RestMethod with $($params | Select-Object -ExcludeProperty Headers| ConvertTo-Json -Depth 10)"
     }
   }
 }

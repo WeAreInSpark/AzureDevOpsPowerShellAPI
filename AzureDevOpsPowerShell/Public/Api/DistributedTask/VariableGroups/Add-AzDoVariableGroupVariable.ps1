@@ -86,16 +86,17 @@ function Add-AzDoVariableGroupVariable {
     $params = @{
       uri         = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups/$($group.VariableGroupId)?api-version=7.1-preview.1"
       Method      = 'PUT'
-      Headers     = $script:header
       body        = $Body | ConvertTo-Json -Depth 99
       ContentType = 'application/json'
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Add Variables to Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+      Write-Debug "Calling Invoke-AzDoRestMethod with"
+      Write-Debug ($params | Out-String)
       Write-Information "Creating variables in variable group $VariableGroupName"
       $result += Invoke-AzDoRestMethod @params
     } else {
-      $body | Out-String
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 

@@ -83,10 +83,22 @@ function Set-AzDoBranchPolicyMinimalApproval {
       method  = 'POST'
     }
 
-    $policyId = (Get-AzDoBranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PolicyType "Minimum number of reviewers").policyId
+    $getAzDoBranchPolicyTypeSplat = @{
+      CollectionUri = $CollectionUri
+      ProjectName   = $ProjectName
+      PolicyType    = "Minimum number of reviewers"
+    }
+
+    $policyId = (Get-AzDoBranchPolicyType @getAzDoBranchPolicyTypeSplat).policyId
 
     foreach ($name in $RepoName) {
-      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -RepoName $name).RepoId
+      $getAzDoRepoSplat = @{
+        CollectionUri = $CollectionUri
+        ProjectName   = $ProjectName
+        RepoName      = $name
+      }
+
+      $repoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
       $body = @{
         isEnabled  = $true
@@ -115,9 +127,13 @@ function Set-AzDoBranchPolicyMinimalApproval {
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Minimal approval policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating 'Minimum number of reviewers' policy on $RepoName/$branch"
+
+        Write-Debug "Calling Invoke-AzDoRestMethod with"
+        Write-Debug ($params | Out-String)
+
         $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
-        $Body | Format-List
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

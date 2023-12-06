@@ -78,7 +78,7 @@ function Set-AzDoBranchPolicyMergeStrategy {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   process {
@@ -89,10 +89,26 @@ function Set-AzDoBranchPolicyMergeStrategy {
       Method  = 'POST'
     }
 
-    $policyId = (Get-AzDoBranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PolicyType "Require a merge strategy").policyId
+    $getAzDoBranchPolicyTypeSplat = @{
+      CollectionUri = $CollectionUri
+      ProjectName   = $ProjectName
+      PolicyType    = "Require a merge strategy"
+    }
+    Write-Debug "Calling Get-AzDoBranchPolicyType with"
+    Write-Debug ($getAzDoBranchPolicyTypeSplat | Out-String)
+
+    $policyId = (Get-AzDoBranchPolicyType @getAzDoBranchPolicyTypeSplat).policyId
 
     foreach ($name in $RepoName) {
-      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -RepoName $name).RepoId
+      $getAzDoRepoSplat = @{
+        CollectionUri = $CollectionUri
+        ProjectName   = $ProjectName
+        RepoName      = $name
+      }
+      Write-Debug "Calling Get-AzDoBranchPolicyType with"
+      Write-Debug ($getAzDoRepoSplat | Out-String)
+
+      $repoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
       $body = @{
         isEnabled  = $true
@@ -117,9 +133,14 @@ function Set-AzDoBranchPolicyMergeStrategy {
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Merge strategy policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating 'Require a merge strategy' policy on $name/$branch"
+
+        Write-Debug "Calling Invoke-AzDoRestMethod with"
+        Write-Debug ($params | Out-String)
+
+
         $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
-        $Body | Format-List
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

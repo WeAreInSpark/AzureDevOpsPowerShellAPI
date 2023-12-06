@@ -60,6 +60,8 @@ function New-AzDoPipeline {
       ProjectName   = $ProjectName
       RepoName      = $RepoName
     }
+    Write-Debug "Calling Get-AzDoRepo with"
+    Write-Debug ($getAzDoRepoSplat | Out-String)
 
     $RepoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
@@ -83,6 +85,9 @@ function New-AzDoPipeline {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Create pipeline named: $($PSStyle.Bold)$PipelineName$($PSStyle.Reset)")) {
+      Write-Debug "Calling Invoke-AzDoRestMethod with"
+      Write-Debug ($params | Out-String)
+
       $body | Invoke-AzDoRestMethod @params | ForEach-Object {
         [PSCustomObject]@{
           CollectionUri  = $CollectionUri
@@ -95,8 +100,7 @@ function New-AzDoPipeline {
         }
       }
     } else {
-      $Body | Format-List
-      return
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }

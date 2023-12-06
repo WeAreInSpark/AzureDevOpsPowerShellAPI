@@ -94,20 +94,11 @@ function Get-AzDoServiceConnection {
       method  = 'GET'
     }
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Service Connections from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $serviceConnections = (Invoke-AzDoRestMethod @params).value
-      if ($ServiceConnectionName) {
-        foreach ($name in $ServiceConnectionName) {
-          $conn = $serviceConnections | Where-Object { $_.name -eq $name }
-          if (-not($conn)) {
-            Write-Error "Service Connection $name not found"
-            continue
-          } else {
-            $result += $conn
-          }
-        }
-      } else {
-        $result += $serviceConnections
-      }
+      Write-Debug "Calling Invoke-AzDoRestMethod with"
+      Write-Debug ($params | Out-String)
+
+      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ServiceConnectionName -or $_.Name -in $ServiceConnectionName }
+
       if ($result) {
         $result | ForEach-Object {
           [PSCustomObject]@{

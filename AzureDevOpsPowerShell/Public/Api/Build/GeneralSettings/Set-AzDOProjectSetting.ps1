@@ -165,6 +165,9 @@ function Set-AzDoProjectSetting {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Set provided settings at the project named: $($PSStyle.Bold)$Projectname$($PSStyle.Reset)")) {
+      Write-Debug "Calling Invoke-AzDoRestMethod with"
+      Write-Debug ($params | Out-String)
+
       $response = Invoke-RestMethod @params
 
       [PSCustomObject]@{
@@ -190,7 +193,7 @@ function Set-AzDoProjectSetting {
         StatusBadgesArePrivate                            = $response.statusBadgesArePrivate
       }
     } else {
-      $body
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }

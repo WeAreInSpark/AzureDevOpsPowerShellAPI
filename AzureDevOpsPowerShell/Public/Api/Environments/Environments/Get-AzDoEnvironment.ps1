@@ -65,24 +65,12 @@ function Get-AzDoEnvironment {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $environments = (Invoke-AzDoRestMethod @params).value
-
-      if ($EnvironmentName) {
-        foreach ($name in $EnvironmentName) {
-          $env = $environments | Where-Object { $_.name -eq $name }
-          if (-not($env)) {
-            Write-Error "Environment $name not found"
-            continue
-          } else {
-            $result += $env
-          }
-        }
-      } else {
-        $result += $environments
-      }
+      Write-Debug "Calling Invoke-AzDoRestMethod with"
+      Write-Debug ($params | Out-String)
+      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $EnvironmentName -or $_.Name -in $EnvironmentName }
 
     } else {
-      $body | Format-List
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 

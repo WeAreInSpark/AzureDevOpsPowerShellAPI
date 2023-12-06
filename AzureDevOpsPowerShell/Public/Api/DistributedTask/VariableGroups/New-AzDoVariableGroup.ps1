@@ -99,9 +99,11 @@ function New-AzDoVariableGroup {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+        Write-Debug "Calling Invoke-AzDoRestMethod with"
+        Write-Debug ($params | Out-String)
         $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
-        $body | Out-String
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

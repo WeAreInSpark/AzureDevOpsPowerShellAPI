@@ -63,24 +63,15 @@ function Get-AzDoBranchPolicyType {
       method  = 'GET'
     }
 
-    if ($PSCmdlet.ShouldProcess($ProjectName, "Get Policy ID from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $types = (Invoke-AzDoRestMethod @params).value
-      if ($PolicyType) {
-        foreach ($name in $PolicyType) {
-          $type = $types | Where-Object { $_.displayName -eq $name }
-          if (-not($type)) {
-            Write-Error "policy $name not found"
-            continue
-          } else {
-            $result += $type
-          }
-        }
-      } else {
-        $result += $types
-      }
+    if ($PSCmdlet.ShouldProcess($ProjectName, "Get Branch Policies from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      Write-Debug "Calling Invoke-AzDoRestMethod with"
+      Write-Debug ($params | Out-String)
+
+      $types = (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PolicyType -or $_.Name -in $PolicyType }
+
 
     } else {
-      $body | Format-List
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 

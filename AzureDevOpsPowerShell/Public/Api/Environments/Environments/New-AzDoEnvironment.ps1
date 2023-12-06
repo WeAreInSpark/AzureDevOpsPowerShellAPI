@@ -75,10 +75,12 @@ function New-AzDoEnvironment {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create environment named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+        Write-Debug "Calling Invoke-AzDoRestMethod with"
+        Write-Debug ($params | Out-String)
         Write-Information "Creating Environment on Project $ProjectName"
         $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
-        $Body | Format-List
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

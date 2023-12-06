@@ -60,7 +60,7 @@ function New-AzDoRepo {
     }
 
     foreach ($name in $RepoName) {
-      $Body = @{
+      $body = @{
         name    = $name
         project = @{
           id = $ProjectId
@@ -71,6 +71,10 @@ function New-AzDoRepo {
         Write-Information "Creating Repo on Project $ProjectName"
         try {
           $ErrorActionPreference = 'Continue'
+
+          Write-Debug "Calling Invoke-AzDoRestMethod with"
+          Write-Debug ($params | Out-String)
+
           $result += ($body | Invoke-AzDoRestMethod @params)
         } catch {
           if ($_ -match 'TF400948') {
@@ -82,7 +86,7 @@ function New-AzDoRepo {
           }
         }
       } else {
-        $Body | Format-List
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }
