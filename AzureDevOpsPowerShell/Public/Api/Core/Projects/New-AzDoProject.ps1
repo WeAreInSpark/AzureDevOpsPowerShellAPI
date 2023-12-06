@@ -149,8 +149,18 @@ function New-AzDoProject {
       }
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+        Write-Debug "Calling Invoke-AzDoRestMethod with"
+        Write-Debug ($params | Out-String)
 
-        $body | Invoke-AzDoRestMethod @params | Out-Null
+        try {
+          $body | Invoke-AzDoRestMethod @params | Out-Null
+        } catch {
+          if ($_ -match 'TF200019') {
+            Write-Warning "Project $name already exists, trying to get it"
+          } else {
+            Write-AzDoError -message $_
+          }
+        }
 
         do {
           Start-Sleep 5
@@ -165,6 +175,8 @@ function New-AzDoProject {
           $response.State -ne 'wellFormed'
         )
         $result += ($response)
+      } else {
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

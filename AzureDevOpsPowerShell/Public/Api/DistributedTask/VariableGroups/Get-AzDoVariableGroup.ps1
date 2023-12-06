@@ -47,7 +47,7 @@ function Get-AzDoVariableGroup {
   )
 
   Begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   Process {
@@ -58,23 +58,20 @@ function Get-AzDoVariableGroup {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Variable groups from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $variableGroups = (Invoke-AzDoRestMethod @params).value
+      Write-Debug "Calling Invoke-AzDoRestMethod with"
+      Write-Debug ($params | Out-String)
 
+      $variableGroups = (Invoke-AzDoRestMethod @params).value
       if ($VariableGroupName) {
         foreach ($name in $VariableGroupName) {
-          $variableGroup = $variableGroups | Where-Object { $_.name -eq $name }
-          if (-not($variableGroup)) {
-            Write-Error "Variable group $name not found"
-          } else {
-            $result.add($variableGroup ) | Out-Null
-          }
+          $result += $variableGroups | Where-Object { -not $name -or $_.Name -in $name }
         }
       } else {
-        $result.add($variableGroups) | Out-Null
+        $result += $variableGroups
       }
 
     } else {
-      $body | Out-String
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 

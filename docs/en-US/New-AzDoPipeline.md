@@ -1,6 +1,6 @@
 ---
-external help file: AzureDevOpsPowerShellAPI-help.xml
-Module Name: AzureDevOpsPowerShellAPI
+external help file: AzureDevOpsPowerShell-help.xml
+Module Name: AzureDevOpsPowerShell
 online version:
 schema: 2.0.0
 ---
@@ -13,8 +13,9 @@ Creates an Azure Pipeline
 ## SYNTAX
 
 ```
-New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [[-PAT] <String>] [-PipelineName] <String>
- [-RepoName] <Object> [[-Path] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [-PipelineName] <String>
+ [-RepoName] <Object> [[-Path] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -77,21 +78,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -PAT
-PAT to authentice with the organization
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -PipelineName
 Name of the Pipeline
 
@@ -101,7 +87,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -116,7 +102,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 5
+Position: 4
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -131,7 +117,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 5
 Default value: /main.yaml
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -160,6 +146,21 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

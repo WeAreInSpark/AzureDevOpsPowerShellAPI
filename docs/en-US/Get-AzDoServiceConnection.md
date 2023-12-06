@@ -1,6 +1,6 @@
 ---
-external help file: AzureDevOpsPowerShellAPI-help.xml
-Module Name: AzureDevOpsPowerShellAPI
+external help file: AzureDevOpsPowerShell-help.xml
+Module Name: AzureDevOpsPowerShell
 online version:
 schema: 2.0.0
 ---
@@ -13,8 +13,9 @@ Gets information about a repo in Azure DevOps.
 ## SYNTAX
 
 ```
-Get-AzDoServiceConnection [-CollectionUri] <String> [-ProjectName] <String> [[-PAT] <String>]
- [[-ServiceConnectionName] <String[]>] [<CommonParameters>]
+Get-AzDoServiceConnection [-CollectionUri] <String> [-ProjectName] <String>
+ [[-ServiceConnectionName] <String[]>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -93,21 +94,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -PAT
-PAT to authenticate with the organization
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ServiceConnectionName
 Name of the Repo to get information about
 
@@ -117,9 +103,54 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

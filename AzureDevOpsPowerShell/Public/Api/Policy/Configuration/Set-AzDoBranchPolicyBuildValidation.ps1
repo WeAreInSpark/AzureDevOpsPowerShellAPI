@@ -56,6 +56,7 @@ function Set-AzDoBranchPolicyBuildValidation {
     [string]
     $Branch = "main",
 
+    # Should the PR block if the pipeline fails
     [Parameter()]
     [bool]
     $Required = $true,
