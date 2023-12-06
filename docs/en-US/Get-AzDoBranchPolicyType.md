@@ -5,73 +5,29 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-AzDoProject
+# Get-AzDoBranchPolicyType
 
 ## SYNOPSIS
-Gets information about projects in Azure DevOps.
+A short one-line action-based description, e.g.
+'Tests if a function is valid'
 
 ## SYNTAX
 
 ```
-Get-AzDoProject [-CollectionUri] <String> [[-ProjectName] <String[]>] [-ProgressAction <ActionPreference>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-AzDoBranchPolicyType [-CollectionUri] <String> [-ProjectName] <String> [[-PolicyType] <String[]>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets information about all the projects in Azure DevOps.
+A longer description of the function, its purpose, common use cases, etc.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$Params = @{
-    CollectionUri = "https://dev.azure.com/contoso"
-    PAT = "***"
-}
-Get-AzDoProject @params
+Test-MyTestFunction -Verbose
+Explanation of the function or its result. You can include multiple examples with additional .EXAMPLE lines
 ```
-
-This example will List all the projects contained in the collection ('https://dev.azure.com/contoso').
-
-### EXAMPLE 2
-```
-$Params = @{
-    CollectionUri = "https://dev.azure.com/contoso"
-    PAT = "***"
-    ProjectName = 'Project1'
-}
-Get-AzDoProject @params
-```
-
-This example will get the details of 'Project1' contained in the collection ('https://dev.azure.com/contoso').
-
-### EXAMPLE 3
-```
-$params = @{
-    collectionuri = "https://dev.azure.com/contoso"
-    PAT = "***"
-}
-$somedifferentobject = [PSCustomObject]@{
-    ProjectName = 'Project1'
-}
-$somedifferentobject | Get-AzDoProject @params
-```
-
-This example will get the details of 'Project1' contained in the collection ('https://dev.azure.com/contoso').
-
-### EXAMPLE 4
-```
-$params = @{
-    collectionuri = "https://dev.azure.com/contoso"
-    PAT = "***"
-}
-@(
-    'Project1',
-    'Project2'
-) | Get-AzDoProject @params
-```
-
-This example will get the details of 'Project1' contained in the collection ('https://dev.azure.com/contoso').
 
 ## PARAMETERS
 
@@ -91,7 +47,22 @@ Accept wildcard characters: False
 ```
 
 ### -ProjectName
-Project where the Repos are contained
+Project where the get the branch policy from
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -PolicyType
+Type of branch policy
 
 ```yaml
 Type: String[]
@@ -99,14 +70,15 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -157,7 +129,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PSObject with repo(s).
 ## NOTES
+Information or caveats about the function e.g.
+'This function is not supported in Linux'
 
 ## RELATED LINKS
+
+[Specify a URI to a help page, this will show when Get-Help -Online is used.]()
+
