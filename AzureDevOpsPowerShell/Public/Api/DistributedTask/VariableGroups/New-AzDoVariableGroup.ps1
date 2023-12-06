@@ -66,8 +66,7 @@ function New-AzDoVariableGroup {
   )
 
   begin {
-    $body = New-Object -TypeName "System.Collections.ArrayList"
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   process {
@@ -100,7 +99,7 @@ function New-AzDoVariableGroup {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
+        $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
         $body | Out-String
       }

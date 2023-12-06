@@ -85,7 +85,7 @@ function Set-AzDoBranchPolicyBuildValidation {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   process {
@@ -130,7 +130,7 @@ function Set-AzDoBranchPolicyBuildValidation {
 
         if ($null -eq $existingPolicy) {
           Write-Information "Creating 'Build' policy on $name/$branch"
-          $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
+          $result += ($body | Invoke-AzDoRestMethod @params)
         } else {
           Write-Error "Policy on $name/$branch already exists. It is not possible to update policies"
         }

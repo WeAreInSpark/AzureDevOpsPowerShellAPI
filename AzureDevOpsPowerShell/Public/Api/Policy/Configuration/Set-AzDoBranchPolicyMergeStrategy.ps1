@@ -117,7 +117,7 @@ function Set-AzDoBranchPolicyMergeStrategy {
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Merge strategy policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating 'Require a merge strategy' policy on $name/$branch"
-        $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
+        $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
         $Body | Format-List
       }

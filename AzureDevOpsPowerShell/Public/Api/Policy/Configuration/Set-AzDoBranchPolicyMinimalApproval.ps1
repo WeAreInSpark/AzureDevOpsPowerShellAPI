@@ -72,7 +72,7 @@ function Set-AzDoBranchPolicyMinimalApproval {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   process {
@@ -115,7 +115,7 @@ function Set-AzDoBranchPolicyMinimalApproval {
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Minimal approval policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating 'Minimum number of reviewers' policy on $RepoName/$branch"
-        $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
+        $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
         $Body | Format-List
       }

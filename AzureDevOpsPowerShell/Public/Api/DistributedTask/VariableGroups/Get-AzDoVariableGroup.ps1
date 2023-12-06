@@ -47,7 +47,7 @@ function Get-AzDoVariableGroup {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   process {

@@ -53,7 +53,7 @@ function Get-AzDoBranchPolicyType {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   process {
@@ -72,11 +72,11 @@ function Get-AzDoBranchPolicyType {
             Write-Error "policy $name not found"
             continue
           } else {
-            $result.add($type ) | Out-Null
+            $result += $type
           }
         }
       } else {
-        $result.add($types) | Out-Null
+        $result += $types
       }
 
     } else {

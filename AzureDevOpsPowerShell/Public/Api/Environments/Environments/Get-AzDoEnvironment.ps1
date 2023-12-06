@@ -53,7 +53,7 @@ function Get-AzDoEnvironment {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   process {
@@ -74,11 +74,11 @@ function Get-AzDoEnvironment {
             Write-Error "Environment $name not found"
             continue
           } else {
-            $result.add($env ) | Out-Null
+            $result += $env
           }
         }
       } else {
-        $result.add($environments) | Out-Null
+        $result += $environments
       }
 
     } else {

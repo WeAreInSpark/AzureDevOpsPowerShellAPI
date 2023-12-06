@@ -83,9 +83,6 @@ function Add-AzDoPipelineBranchControl {
     $Timeout = 1440
   )
 
-  begin {
-    $body = New-Object -TypeName "System.Collections.ArrayList"
-  }
 
   process {
     $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId

@@ -58,8 +58,7 @@ function New-AzDoEnvironment {
   )
 
   Begin {
-    $body = New-Object -TypeName "System.Collections.ArrayList"
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   Process {
@@ -77,7 +76,7 @@ function New-AzDoEnvironment {
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create environment named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         Write-Information "Creating Environment on Project $ProjectName"
-        $result.add(($body | Invoke-AzDoRestMethod @params -ErrorAction continue)) | Out-Null
+        $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
         $Body | Format-List
       }

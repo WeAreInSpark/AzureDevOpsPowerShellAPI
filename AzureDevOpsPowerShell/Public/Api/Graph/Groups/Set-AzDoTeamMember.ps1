@@ -40,17 +40,6 @@ function Set-AzDoTeamMember {
     $ObjectId
   )
 
-  begin {
-    if (-not($script:header)) {
-
-      try {
-        New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-      } catch {
-        $PSCmdlet.ThrowTerminatingError($_)
-      }
-    }
-  }
-
   process {
     $params = @{
       uri     = "https://vssps.dev.azure.com/$OrganizationName/_apis/graph/groups?api-version=7.1-preview.1"
