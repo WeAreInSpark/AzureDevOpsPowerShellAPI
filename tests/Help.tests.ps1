@@ -7,26 +7,20 @@ BeforeDiscovery {
     $commonParams = @(
       'Debug', 'ErrorAction', 'ErrorVariable', 'InformationAction', 'InformationVariable',
       'OutBuffer', 'OutVariable', 'PipelineVariable', 'Verbose', 'WarningAction',
-      'WarningVariable', 'Confirm', 'Whatif'
+      'WarningVariable', 'Confirm', 'Whatif', "ProgressAction"
     )
     $params | Where-Object { $_.Name -notin $commonParams } | Sort-Object -Property Name -Unique
   }
-
-  $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
-  $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
-  $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
-  $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
-  $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
 
   # Get module commands
   # Remove all versions of the module from the session. Pester can't handle multiple versions.
   $ModuleName = 'AzureDevOpsPowerShell'
   Get-Module $ModuleName | Remove-Module -Force -ErrorAction Ignore
-  $path = Join-Path -Path $PSScriptRoot -ChildPath "..\..\$ModuleName\$ModuleName.psm1" | Resolve-Path
+  $path = Join-Path -Path $PSScriptRoot -ChildPath "..\$ModuleName\$ModuleName.psm1" | Resolve-Path
   Import-Module -Name $path -Verbose:$false -ErrorAction Stop
 
   $params = @{
-    Module      = (Get-Module $env:BHProjectName)
+    Module      = (Get-Module "AzureDevOpsPowerShell")
     CommandType = [System.Management.Automation.CommandTypes[]]'Cmdlet, Function' # Not alias
   }
   if ($PSVersionTable.PSVersion.Major -lt 6) {
