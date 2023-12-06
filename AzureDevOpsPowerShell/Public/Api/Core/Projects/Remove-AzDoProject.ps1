@@ -46,7 +46,7 @@ function Remove-AzDoProject {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
   }
 
   Process {
@@ -61,7 +61,12 @@ function Remove-AzDoProject {
       }
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Delete project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        $result.add((Invoke-AzDoRestMethod @params)) | Out-Null
+        Write-Debug "Calling Invoke-AzDoRestMethod with"
+        Write-Debug ($params | Out-String)
+
+        $result += Invoke-AzDoRestMethod @params
+      } else {
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

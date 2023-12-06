@@ -1,6 +1,6 @@
 ---
-external help file: AzureDevOpsPowerShellAPI-help.xml
-Module Name: AzureDevOpsPowerShellAPI
+external help file: AzureDevOpsPowerShell-help.xml
+Module Name: AzureDevOpsPowerShell
 online version:
 schema: 2.0.0
 ---
@@ -13,8 +13,8 @@ Function to create an Azure DevOps project
 ## SYNTAX
 
 ```
-Remove-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String[]> [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Remove-AzDoProject [-CollectionUri] <String> [-ProjectName] <String[]> [-ProgressAction <ActionPreference>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -78,21 +78,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -PAT
-PAT to get access to Azure DevOps.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ProjectName
 Name of the project.
 
@@ -102,7 +87,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
@@ -131,6 +116,21 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

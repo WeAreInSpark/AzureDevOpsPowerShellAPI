@@ -1,6 +1,6 @@
 ---
-external help file: AzureDevOpsPowerShellAPI-help.xml
-Module Name: AzureDevOpsPowerShellAPI
+external help file: AzureDevOpsPowerShell-help.xml
+Module Name: AzureDevOpsPowerShell
 online version:
 schema: 2.0.0
 ---
@@ -13,8 +13,8 @@ Creates a Build Validation policy on a branch
 ## SYNTAX
 
 ```
-Get-AzDoEnvironment [-CollectionUri] <String> [-ProjectName] <String> [[-PAT] <String>] [[-Name] <String>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-AzDoEnvironment [-CollectionUri] <String> [-ProjectName] <String> [[-EnvironmentName] <String[]>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -78,34 +78,18 @@ Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
-### -PAT
-PAT to authentice with the organization
+### -EnvironmentName
+Name of the Build Validation policy. Default is the name of the Build Definition
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 3
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Name
-Name of the Build Validation policy.
-Default is the name of the Build Definition
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
@@ -132,6 +116,21 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

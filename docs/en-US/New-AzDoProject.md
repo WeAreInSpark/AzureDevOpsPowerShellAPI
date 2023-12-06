@@ -1,6 +1,6 @@
 ---
-external help file: AzureDevOpsPowerShellAPI-help.xml
-Module Name: AzureDevOpsPowerShellAPI
+external help file: AzureDevOpsPowerShell-help.xml
+Module Name: AzureDevOpsPowerShell
 online version:
 schema: 2.0.0
 ---
@@ -13,8 +13,9 @@ Function to create an Azure DevOps project
 ## SYNTAX
 
 ```
-New-AzDoProject [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String[]> [[-Description] <String>]
- [[-SourceControlType] <String>] [[-Visibility] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-AzDoProject [-CollectionUri] <String> [-ProjectName] <String[]> [[-Description] <String>]
+ [[-SourceControlType] <String>] [[-Visibility] <String>] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -78,21 +79,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -PAT
-PAT to get access to Azure DevOps.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ProjectName
 Name of the project.
 Length
@@ -110,7 +96,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
@@ -125,7 +111,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -140,7 +126,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 4
 Default value: GIT
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -155,7 +141,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 5
 Default value: Private
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -184,6 +170,21 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named
