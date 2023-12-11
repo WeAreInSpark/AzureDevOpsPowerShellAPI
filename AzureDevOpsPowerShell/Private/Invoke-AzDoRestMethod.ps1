@@ -37,6 +37,12 @@ function Invoke-AzDoRestMethod {
   )
 
   begin {
+    Write-Verbose "Starting function: Invoke-AzDoRestMethod"
+    Write-Debug "uri: $uri"
+    Write-Debug "version: $Version"
+    Write-Debug "method: $Method"
+    Write-Debug "body: $($body | ConvertTo-Json -Depth 10)"
+
     if (-not($script:header)) {
       try {
         New-AzDoAuthHeader -PAT $Pat -ErrorAction Stop

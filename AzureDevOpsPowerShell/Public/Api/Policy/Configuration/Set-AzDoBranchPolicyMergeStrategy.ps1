@@ -78,7 +78,7 @@ function Set-AzDoBranchPolicyMergeStrategy {
   )
 
   begin {
-    $result = @()
+    Write-Verbose "Starting function: Set-AzDoBranchPolicyMergeStrategy"
   }
 
   process {
@@ -94,8 +94,6 @@ function Set-AzDoBranchPolicyMergeStrategy {
       ProjectName   = $ProjectName
       PolicyType    = "Require a merge strategy"
     }
-    Write-Debug "Calling Get-AzDoBranchPolicyType with"
-    Write-Debug ($getAzDoBranchPolicyTypeSplat | Out-String)
 
     $policyId = (Get-AzDoBranchPolicyType @getAzDoBranchPolicyTypeSplat).policyId
 
@@ -105,8 +103,6 @@ function Set-AzDoBranchPolicyMergeStrategy {
         ProjectName   = $ProjectName
         RepoName      = $name
       }
-      Write-Debug "Calling Get-AzDoBranchPolicyType with"
-      Write-Debug ($getAzDoRepoSplat | Out-String)
 
       $repoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
@@ -132,12 +128,6 @@ function Set-AzDoBranchPolicyMergeStrategy {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Merge strategy policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Information "Creating 'Require a merge strategy' policy on $name/$branch"
-
-        Write-Debug "Calling Invoke-AzDoRestMethod with"
-        Write-Debug ($params | Out-String)
-
-
         $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"

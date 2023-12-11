@@ -54,6 +54,7 @@ function Get-AzDoEnvironment {
 
   begin {
     $result = @()
+    Write-Verbose "Starting function: Get-AzDoEnvironment"
   }
 
   process {
@@ -65,10 +66,7 @@ function Get-AzDoEnvironment {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      Write-Debug "Calling Invoke-AzDoRestMethod with"
-      Write-Debug ($params | Out-String)
       $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $EnvironmentName -or $_.Name -in $EnvironmentName }
-
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }

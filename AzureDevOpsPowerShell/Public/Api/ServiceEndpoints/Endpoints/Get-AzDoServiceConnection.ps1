@@ -86,6 +86,11 @@ function Get-AzDoServiceConnection {
     $ServiceConnectionName
   )
 
+  begin {
+    $result = @()
+    Write-Verbose "Starting function: Get-AzDoServiceConnection"
+  }
+
   process {
     $result = @()
     $params = @{
@@ -94,9 +99,6 @@ function Get-AzDoServiceConnection {
       method  = 'GET'
     }
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Service Connections from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      Write-Debug "Calling Invoke-AzDoRestMethod with"
-      Write-Debug ($params | Out-String)
-
       $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ServiceConnectionName -or $_.Name -in $ServiceConnectionName }
 
       if ($result) {
@@ -118,6 +120,8 @@ function Get-AzDoServiceConnection {
           }
         }
       }
+    } else {
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }

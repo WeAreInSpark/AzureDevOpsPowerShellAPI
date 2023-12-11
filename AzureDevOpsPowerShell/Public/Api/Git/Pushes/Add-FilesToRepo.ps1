@@ -55,6 +55,10 @@ function Add-FilesToRepo {
     $Path
   )
 
+  begin {
+    Write-Information "Starting function: Add-FilesToRepo"
+  }
+
   process {
 
     $changes = @()
@@ -112,7 +116,7 @@ function Add-FilesToRepo {
     if ($PSCmdlet.ShouldProcess($RepoName, "Add path named: $($PSStyle.Bold)$($file.name)$($PSStyle.Reset)")) {
       $body | Invoke-AzDoRestMethod @params
     } else {
-      $Body | Format-List
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }

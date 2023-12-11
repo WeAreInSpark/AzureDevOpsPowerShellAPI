@@ -54,6 +54,7 @@ function Get-AzDoBranchPolicyType {
 
   begin {
     $result = @()
+    Write-Verbose "Starting function: Get-AzDoBranchPolicyType"
   }
 
   process {
@@ -64,12 +65,7 @@ function Get-AzDoBranchPolicyType {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Get Branch Policies from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      Write-Debug "Calling Invoke-AzDoRestMethod with"
-      Write-Debug ($params | Out-String)
-
       $types = (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PolicyType -or $_.Name -in $PolicyType }
-
-
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }

@@ -63,9 +63,11 @@ function Add-AzDoVariableGroupVariable {
 
   begin {
     $result = @()
+    Write-Verbose "Starting function: Add-AzDoVariableGroupVariable"
   }
 
   process {
+    Write-Information "Starting function: Add-AzDoVariableGroupVariable"
     $groups = Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName
 
     # Get the variable group based on it's name and match to ID for URI
@@ -91,9 +93,6 @@ function Add-AzDoVariableGroupVariable {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Add Variables to Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-      Write-Debug "Calling Invoke-AzDoRestMethod with"
-      Write-Debug ($params | Out-String)
-      Write-Information "Creating variables in variable group $VariableGroupName"
       $result += Invoke-AzDoRestMethod @params
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"

@@ -54,15 +54,18 @@ function New-AzDoPipeline {
     $Path = '/main.yaml'
   )
 
+  begin {
+    Write-Verbose "Starting function: New-AzDoPipeline"
+  }
+
   process {
     $getAzDoRepoSplat = @{
       CollectionUri = $CollectionUri
       ProjectName   = $ProjectName
       RepoName      = $RepoName
     }
-    Write-Debug "Calling Get-AzDoRepo with"
-    Write-Debug ($getAzDoRepoSplat | Out-String)
 
+    Write-Debug "Calling Get-AzDoRepo with"
     $RepoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
     $body = @{
@@ -85,9 +88,6 @@ function New-AzDoPipeline {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Create pipeline named: $($PSStyle.Bold)$PipelineName$($PSStyle.Reset)")) {
-      Write-Debug "Calling Invoke-AzDoRestMethod with"
-      Write-Debug ($params | Out-String)
-
       $body | Invoke-AzDoRestMethod @params | ForEach-Object {
         [PSCustomObject]@{
           CollectionUri  = $CollectionUri

@@ -48,19 +48,16 @@ function Test-AzDoServiceConnection {
   )
 
   begin {
+    Write-Verbose "Starting function: Test-AzDoServiceConnection"
     $getAzDoProjectSplat = @{
       CollectionUri = $CollectionUri
     }
-    Write-Debug "Calling Get-AzDoProject with"
-    Write-Debug ($getAzDoProjectSplat | Out-String)
     $ProjectId = (Get-AzDoProject @getAzDoProjectSplat | Where-Object ProjectName -EQ $ProjectName).Projectid
 
     $getAzDoServiceConnectionSplat = @{
       CollectionUri = $CollectionUri
       ProjectName   = $ProjectName
     }
-    Write-Debug "Calling Get-AzDoServiceConnection with"
-    Write-Debug ($getAzDoServiceConnectionSplat | Out-String)
 
     $Connections = Get-AzDoServiceConnection @getAzDoServiceConnectionSplat
   }
@@ -83,9 +80,6 @@ function Test-AzDoServiceConnection {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Test service connection on: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      Write-Debug "Calling Invoke-RestMethod with"
-      Write-Debug ($params | Out-String)
-
       $response = Invoke-RestMethod @Params
       if ($response.statusCode -eq 'badRequest') {
         Write-Error "Connection $($connectioninfo.ServiceConnectionName) is not working: error $($response.errorMessage)"

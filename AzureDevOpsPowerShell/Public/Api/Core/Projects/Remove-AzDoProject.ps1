@@ -46,10 +46,12 @@ function Remove-AzDoProject {
   )
 
   begin {
+    Write-Verbose "Starting function: Remove-AzDoProject"
     $result = @()
   }
 
   Process {
+
     foreach ($name in $ProjectName) {
 
       $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $name).ProjectID
@@ -61,9 +63,6 @@ function Remove-AzDoProject {
       }
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Delete project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Debug "Calling Invoke-AzDoRestMethod with"
-        Write-Debug ($params | Out-String)
-
         $result += Invoke-AzDoRestMethod @params
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"

@@ -132,6 +132,10 @@ function New-AzDoServiceConnection {
     $Force
   )
 
+  begin {
+    $result = @()
+    Write-Verbose "Starting function: New-AzDoServiceConnection"
+  }
 
   process {
     if ($Force -and -not $Confirm) {
@@ -268,8 +272,7 @@ function New-AzDoServiceConnection {
         }
       }
     } else {
-      Write-Information "This request will call $($Params.uri) with the following body:"
-      $body | ConvertTo-Json -Depth 99
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }

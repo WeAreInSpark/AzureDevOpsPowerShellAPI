@@ -35,7 +35,7 @@ function Get-AzDoBranchPolicy {
   )
 
   begin {
-    $result = @()
+    Write-Verbose "Starting function: Get-AzDoBranchPolicy"
   }
 
   process {
@@ -46,8 +46,6 @@ function Get-AzDoBranchPolicy {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Get Policy ID from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      Write-Debug "Calling Invoke-AzDoRestMethod with"
-      Write-Debug ($params | Out-String)
       $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PolicyName -or $_.Name -in $PolicyName }
 
     } else {

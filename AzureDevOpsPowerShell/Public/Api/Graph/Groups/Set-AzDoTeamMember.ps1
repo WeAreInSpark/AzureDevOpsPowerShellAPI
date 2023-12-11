@@ -40,6 +40,10 @@ function Set-AzDoTeamMember {
     $ObjectId
   )
 
+  begin {
+    Write-Verbose "Starting function: Set-AzDoTeamMember"
+  }
+
   process {
     $params = @{
       uri     = "https://vssps.dev.azure.com/$OrganizationName/_apis/graph/groups?api-version=7.1-preview.1"
@@ -62,8 +66,6 @@ function Set-AzDoTeamMember {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri)) {
-      Write-Debug "Calling Invoke-RestMethod with"
-      Write-Debug ($params | Select-Object -ExcludeProperty Headers | Out-String)
       $Response = Invoke-RestMethod @params
 
       [PSCustomObject]@{

@@ -124,6 +124,10 @@ function New-AzDoProject {
     $Visibility = 'private'
   )
 
+  begin {
+    Write-Verbose "Starting function: New-AzDoProject"
+  }
+
   process {
 
     $params = @{
@@ -149,9 +153,6 @@ function New-AzDoProject {
       }
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Debug "Calling Invoke-AzDoRestMethod with"
-        Write-Debug ($params | Out-String)
-
         try {
           $body | Invoke-AzDoRestMethod @params | Out-Null
         } catch {

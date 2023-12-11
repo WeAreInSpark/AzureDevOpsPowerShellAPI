@@ -67,6 +67,7 @@ function New-AzDoVariableGroup {
 
   begin {
     $result = @()
+    Write-Verbose "Starting function: New-AzDoVariableGroupVariable"
   }
 
   process {
@@ -99,8 +100,6 @@ function New-AzDoVariableGroup {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Debug "Calling Invoke-AzDoRestMethod with"
-        Write-Debug ($params | Out-String)
         $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"

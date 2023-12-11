@@ -132,6 +132,10 @@ function Set-AzDoProjectSetting {
     $StatusBadgesArePrivate
   )
 
+begin {
+  Write-Verbose "Starting function: Set-AzDOProjectSetting"
+}
+
   process {
 
     $body = @{
@@ -165,8 +169,6 @@ function Set-AzDoProjectSetting {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Set provided settings at the project named: $($PSStyle.Bold)$Projectname$($PSStyle.Reset)")) {
-      Write-Debug "Calling Invoke-AzDoRestMethod with"
-      Write-Debug ($params | Out-String)
 
       $response = Invoke-RestMethod @params
 

@@ -83,8 +83,12 @@ function Add-AzDoPipelineBranchControl {
     $Timeout = 1440
   )
 
+  begin {
+    Write-Verbose "Starting function: Add-AzDoPipelineBranchControl"
+  }
 
   process {
+
     $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId
 
     foreach ($name in $ResourceName) {
@@ -137,8 +141,6 @@ function Add-AzDoPipelineBranchControl {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create build-validation policy named: $($PSStyle.Bold)$PolicyName$($PSStyle.Reset)")) {
-        Write-Debug "Calling Invoke-AzDoRestMethod with"
-        Write-Debug ($params | Out-String)
         Invoke-AzDoRestMethod @params | ForEach-Object {
           [PSCustomObject]@{
             CollectionUri = $CollectionUri

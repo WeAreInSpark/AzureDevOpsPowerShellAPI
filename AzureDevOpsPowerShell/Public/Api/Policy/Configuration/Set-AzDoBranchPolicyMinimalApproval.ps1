@@ -73,6 +73,7 @@ function Set-AzDoBranchPolicyMinimalApproval {
 
   begin {
     $result = @()
+    Write-Verbose "Starting function: Set-AzDoBranchPolicyMinimalApproval"
   }
 
   process {
@@ -126,11 +127,6 @@ function Set-AzDoBranchPolicyMinimalApproval {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Minimal approval policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Information "Creating 'Minimum number of reviewers' policy on $RepoName/$branch"
-
-        Write-Debug "Calling Invoke-AzDoRestMethod with"
-        Write-Debug ($params | Out-String)
-
         $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"

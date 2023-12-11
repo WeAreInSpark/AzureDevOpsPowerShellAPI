@@ -85,7 +85,7 @@ function Set-AzDoBranchPolicyBuildValidation {
   )
 
   begin {
-    $result = @()
+    Write-Verbose "Starting function: Set-AzDoBranchPolicyBuildValidation"
   }
 
   process {
@@ -141,9 +141,6 @@ function Set-AzDoBranchPolicyBuildValidation {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Branch policy named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Debug "Calling Get-AzDoBranchPolicyType with"
-        Write-Debug ($getAzDoBranchPolicySplat | Out-String)
-
         $getAzDoBranchPolicySplat = @{
           CollectionUri = $CollectionUri
           ProjectName   = $ProjectName
@@ -151,14 +148,9 @@ function Set-AzDoBranchPolicyBuildValidation {
         }
 
         $existingPolicy = Get-AzDoBranchPolicy @getAzDoBranchPolicySplat |
-        Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) -and ($_.settings.displayName -eq $name) }
+          Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) -and ($_.settings.displayName -eq $name) }
 
         if ($null -eq $existingPolicy) {
-          Write-Information "Creating 'Build' policy on $name/$branch"
-
-          Write-Debug "Calling Invoke-AzDoRestMethod with"
-          Write-Debug ($params | Out-String)
-
           $result += ($body | Invoke-AzDoRestMethod @params)
         } else {
           Write-Error "Policy on $name/$branch already exists. It is not possible to update policies"
