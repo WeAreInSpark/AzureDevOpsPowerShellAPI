@@ -73,8 +73,6 @@ function New-AzDoRepo {
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create repo named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         try {
-          $ErrorActionPreference = 'Continue'
-
           $result += ($body | Invoke-AzDoRestMethod @params)
         } catch {
           if ($_ -match 'TF400948') {

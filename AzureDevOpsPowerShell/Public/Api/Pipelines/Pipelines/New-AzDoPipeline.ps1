@@ -101,7 +101,7 @@ function New-AzDoPipeline {
           }
         }
       } catch {
-        if ($_ -match 'Build pipeline testPipeline already exists for project') {
+        if ($_ -match 'already exists for project') {
           Write-Warning "Pipeline $name already exists, trying to get it"
           $params.Method = 'GET'
           (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $PipelineName } | ForEach-Object {

@@ -1,4 +1,4 @@
-function New-AzDoEnvironment {
+function Get-AzDoPipeline {
   <#
 .SYNOPSIS
     Creates a Build Validation policy on a branch
@@ -34,74 +34,52 @@ function New-AzDoEnvironment {
     }
 .NOTES
 #>
-  [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+  [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $CollectionUri,
 
     # Project where the pipeline will be created.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $ProjectName,
 
     # Name of the Build Validation policy. Default is the name of the Build Definition
     [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string[]]
-    $EnvironmentName,
-
-    # Valid duration of the Build Validation policy. Default is 720 minutes
-    [Parameter()]
-    [string]
-    $Description
+    $PipelineName
   )
 
-  Begin {
+  begin {
     $result = @()
-    Write-Verbose "Starting function: New-AzDoEnvironment"
+    Write-Verbose "Starting function: Get-AzDoPipeline"
   }
 
-  Process {
+  process {
 
     $params = @{
-      uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"
-      version = "7.2-preview.1"
-      method  = "POST"
+      uri     = "$CollectionUri/$ProjectName/_apis/pipelines"
+      version = "7.1-preview.1"
+      Method  = "GET"
     }
 
-    foreach ($name in $EnvironmentName) {
-      $body = @{
-        name        = $name
-        description = $Description
-      }
-
-      if ($PSCmdlet.ShouldProcess($ProjectName, "Create environment named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        try {
-          $result += ($body | Invoke-AzDoRestMethod @params)
-        } catch {
-          if ($_ -match 'exists in current project') {
-            Write-Warning "Environment $name already exists, trying to get it"
-            $params.Method = 'GET'
-            $result += (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name }
-          } else {
-            Write-AzDoError -message $_
-          }
-        }
-      } else {
-        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-      }
+    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PipelineName -or $_.Name -in $PipelineName }
+    } else {
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 
-  End {
+  end {
     if ($result) {
       $result | ForEach-Object {
         [PSCustomObject]@{
-          CollectionUri   = $CollectionUri
-          ProjectName     = $ProjectName
-          EnvironmentName = $_.name
-          Id              = $_.id
+          CollectionUri = $CollectionUri
+          ProjectName   = $ProjectName
+          Id            = $_.id
+          PipelineName  = $_.name
         }
       }
     }
