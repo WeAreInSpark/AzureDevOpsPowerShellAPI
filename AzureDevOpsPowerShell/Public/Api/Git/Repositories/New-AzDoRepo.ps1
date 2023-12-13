@@ -51,7 +51,7 @@ function New-AzDoRepo {
   )
 
   begin {
-    Write-Information "Starting function: New-AzDoRepo"
+    Write-Verbose "Starting function: New-AzDoRepo"
   }
 
   process {

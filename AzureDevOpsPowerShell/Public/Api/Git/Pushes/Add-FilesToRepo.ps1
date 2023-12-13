@@ -56,7 +56,7 @@ function Add-FilesToRepo {
   )
 
   begin {
-    Write-Information "Starting function: Add-FilesToRepo"
+    Write-Verbose "Starting function: Add-FilesToRepo"
   }
 
   process {
@@ -114,7 +114,15 @@ function Add-FilesToRepo {
     }
 
     if ($PSCmdlet.ShouldProcess($RepoName, "Add path named: $($PSStyle.Bold)$($file.name)$($PSStyle.Reset)")) {
-      $body | Invoke-AzDoRestMethod @params
+      try {
+        $body | Invoke-AzDoRestMethod @params
+      } catch {
+        if ($_ -match 'TF401028') {
+          Write-Warning "Repo is already initialized, skip uploading files"
+        } else {
+          Write-AzDoError -message $_
+        }
+      }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }

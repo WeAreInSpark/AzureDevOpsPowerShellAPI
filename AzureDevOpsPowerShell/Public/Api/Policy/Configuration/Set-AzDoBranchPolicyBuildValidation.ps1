@@ -85,7 +85,7 @@ function Set-AzDoBranchPolicyBuildValidation {
   )
 
   begin {
-    Write-Verbose "Starting function: Set-AzDoBranchPolicyBuildValidation"
+    Write-Debug "Starting function: Set-AzDoBranchPolicyBuildValidation"
   }
 
   process {
@@ -101,8 +101,6 @@ function Set-AzDoBranchPolicyBuildValidation {
       ProjectName   = $ProjectName
       PolicyType    = "Build"
     }
-    Write-Debug "Calling Get-AzDoBranchPolicyType with"
-    Write-Debug ($getAzDoBranchPolicyTypeSplat | Out-String)
 
     $policyId = (Get-AzDoBranchPolicyType @getAzDoBranchPolicyTypeSplat).policyId
 
@@ -112,8 +110,6 @@ function Set-AzDoBranchPolicyBuildValidation {
         ProjectName   = $ProjectName
         RepoName      = $name
       }
-      Write-Debug "Calling Get-AzDoBranchPolicyType with"
-      Write-Debug ($getAzDoRepoSplat | Out-String)
 
       $repoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
@@ -153,7 +149,7 @@ function Set-AzDoBranchPolicyBuildValidation {
         if ($null -eq $existingPolicy) {
           $result += ($body | Invoke-AzDoRestMethod @params)
         } else {
-          Write-Error "Policy on $name/$branch already exists. It is not possible to update policies"
+          Write-Warning "Policy on $name/$branch already exists. It is not possible to update policies"
         }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"

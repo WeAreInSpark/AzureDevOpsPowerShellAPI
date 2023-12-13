@@ -128,7 +128,20 @@ function Set-AzDoBranchPolicyMergeStrategy {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Merge strategy policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        $result += ($body | Invoke-AzDoRestMethod @params)
+        $getAzDoBranchPolicySplat = @{
+          CollectionUri = $CollectionUri
+          ProjectName   = $ProjectName
+          ErrorAction   = 'SilentlyContinue'
+        }
+
+        $existingPolicy = Get-AzDoBranchPolicy @getAzDoBranchPolicySplat |
+          Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) }
+
+        if ($null -eq $existingPolicy) {
+          $result += ($body | Invoke-AzDoRestMethod @params)
+        } else {
+          Write-Warning "Policy on $name/$branch already exists. It is not possible to update policies"
+        }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
