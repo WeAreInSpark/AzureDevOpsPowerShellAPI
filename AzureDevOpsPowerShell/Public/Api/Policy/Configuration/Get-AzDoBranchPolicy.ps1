@@ -46,16 +46,11 @@ function Get-AzDoBranchPolicy {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Get Policy ID from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PolicyName -or $_.Name -in $PolicyName }
+      (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PolicyName -or $_.Name -in $PolicyName }
 
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 
-  end {
-    if ($result) {
-      $result
-    }
-  }
 }
