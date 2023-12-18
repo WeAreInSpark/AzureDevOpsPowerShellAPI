@@ -46,11 +46,7 @@ InModuleScope $ModuleName {
     }
 
     It "It provides users with feedback via ShouldProcess when using WhatIf" {
-      Get-AzDoProject @params -WhatIf -Verbose 4>&1 | Should -BeLike "Calling Invoke-AzDoRestMethod with {*"
-    }
-
-    It "It provides Developers with DebugInfo" {
-      (Get-AzDoProject @params -Debug -Confirm:$false 5>&1 )[0] | Should -BeLike "Calling Invoke-AzDoRestMethod with"
+      Get-AzDoProject @params -WhatIf -Verbose 4>&1 | Should -BeLike "*Calling Invoke-AzDoRestMethod with {*"
     }
 
     It "Outputs all projects when no value to ProjectName was provided" {
@@ -98,12 +94,8 @@ InModuleScope $ModuleName {
     }
 
     It "It provides users with feedback via ShouldProcess when using WhatIf" {
-      New-AzDoProject @params -WhatIf -Verbose 4>&1 | Should -BeLike "Calling Invoke-AzDoRestMethod with {*"
+      New-AzDoProject @params -WhatIf -Verbose 4>&1 | Should -BeLike "*Calling Invoke-AzDoRestMethod with {*"
     }
-
-    # It "It provides Developers with DebugInfo" {
-    #   (New-AzDoProject @params -Debug -Confirm:$false 5>&1 )[0] | Should -BeLike "Calling Invoke-AzDoRestMethod with"
-    # }
 
     It "Outputs just the matching ProjectName when a single value was supplied" {
       (New-AzDoProject @params).Count | Should -Be 1

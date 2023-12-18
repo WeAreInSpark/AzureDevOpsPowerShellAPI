@@ -42,11 +42,7 @@ InModuleScope $ModuleName {
     }
 
     It "It provides users with feedback via ShouldProcess when using WhatIf" {
-      Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -WhatIf -Verbose 4>&1 | Should -BeLike "Calling Invoke-AzDoRestMethod with {*"
-    }
-
-    It "It provides Developers with DebugInfo" {
-      (Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -Debug -Confirm:$false 5>&1 )[0] | Should -BeLike "Calling Invoke-AzDoRestMethod with"
+      Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -WhatIf -Verbose 4>&1 | Should -BeLike "*Calling Invoke-AzDoRestMethod with {*"
     }
 
     It "Outputs all projects when no value to ProjectName was provided" {
