@@ -124,7 +124,11 @@ function New-AzDoProject {
     $Visibility = 'private'
   )
 
-  Process {
+  begin {
+    Write-Verbose "Starting function: New-AzDoProject"
+  }
+
+  process {
 
     $params = @{
       uri     = "$CollectionUri/_apis/projects"
@@ -134,7 +138,7 @@ function New-AzDoProject {
 
     foreach ($name in $ProjectName) {
 
-      $Body = @{
+      $body = @{
         name         = $name
         description  = $Description
         visibility   = $Visibility
@@ -149,9 +153,6 @@ function New-AzDoProject {
       }
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Debug "Calling Invoke-AzDoRestMethod with"
-        Write-Debug ($params | Out-String)
-
         try {
           $body | Invoke-AzDoRestMethod @params | Out-Null
         } catch {
@@ -181,7 +182,7 @@ function New-AzDoProject {
     }
   }
 
-  End {
+  end {
     if ($result) {
       $result
     }

@@ -55,6 +55,10 @@ function Get-AzDoRepo {
     $RepoName
   )
 
+  begin {
+    Write-Verbose "Starting function: Get-AzDoRepo"
+  }
+
   process {
 
     $params = @{
@@ -81,7 +85,7 @@ function Get-AzDoRepo {
       }
 
     } else {
-      $body | Format-List
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 

@@ -50,7 +50,11 @@ function New-AzDoRepo {
     $ProjectName
   )
 
-  Process {
+  begin {
+    Write-Verbose "Starting function: New-AzDoRepo"
+  }
+
+  process {
     $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
 
     $params = @{
@@ -60,7 +64,7 @@ function New-AzDoRepo {
     }
 
     foreach ($name in $RepoName) {
-      $Body = @{
+      $body = @{
         name    = $name
         project = @{
           id = $ProjectId
@@ -68,9 +72,7 @@ function New-AzDoRepo {
       }
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create repo named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Information "Creating Repo on Project $ProjectName"
         try {
-          $ErrorActionPreference = 'Continue'
           $result += ($body | Invoke-AzDoRestMethod @params)
         } catch {
           if ($_ -match 'TF400948') {
@@ -82,12 +84,12 @@ function New-AzDoRepo {
           }
         }
       } else {
-        $Body | Format-List
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }
 
-  End {
+  end {
     if ($result) {
       $result | ForEach-Object {
         [PSCustomObject]@{

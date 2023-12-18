@@ -54,13 +54,18 @@ function New-AzDoPipeline {
     $Path = '/main.yaml'
   )
 
-  Process {
+  begin {
+    Write-Verbose "Starting function: New-AzDoPipeline"
+  }
+
+  process {
     $getAzDoRepoSplat = @{
       CollectionUri = $CollectionUri
       ProjectName   = $ProjectName
       RepoName      = $RepoName
     }
 
+    Write-Debug "Calling Get-AzDoRepo with"
     $RepoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
     $body = @{
@@ -83,20 +88,40 @@ function New-AzDoPipeline {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Create pipeline named: $($PSStyle.Bold)$PipelineName$($PSStyle.Reset)")) {
-      $body | Invoke-AzDoRestMethod @params | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri  = $CollectionUri
-          ProjectName    = $ProjectName
-          RepoName       = $RepoName
-          PipelineName   = $_.name
-          PipelineFolder = $_.folder
-          PipelineUrl    = $_.url
-          PipelineId     = $_.id
+      try {
+        $body | Invoke-AzDoRestMethod @params | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionUri  = $CollectionUri
+            ProjectName    = $ProjectName
+            RepoName       = $RepoName
+            PipelineName   = $_.name
+            PipelineFolder = $_.folder
+            PipelineUrl    = $_.url
+            PipelineId     = $_.id
+          }
+        }
+      } catch {
+        if ($_ -match 'already exists for project') {
+          Write-Warning "Pipeline $name already exists, trying to get it"
+          $params.Method = 'GET'
+          (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $PipelineName } | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionUri  = $CollectionUri
+              ProjectName    = $ProjectName
+              RepoName       = $RepoName
+              PipelineName   = $_.name
+              PipelineFolder = $_.folder
+              PipelineUrl    = $_.url
+              PipelineId     = $_.id
+            }
+          }
+        } else {
+          Write-AzDoError -message $_
         }
       }
+
     } else {
-      $Body | Format-List
-      return
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }

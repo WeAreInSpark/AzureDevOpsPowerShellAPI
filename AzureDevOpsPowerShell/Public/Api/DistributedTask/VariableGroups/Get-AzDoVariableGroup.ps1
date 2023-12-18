@@ -46,11 +46,13 @@ function Get-AzDoVariableGroup {
     $VariableGroupName
   )
 
-  Begin {
+  begin {
     $result = @()
+    Write-Verbose "Starting function: Get-AzDoVariableGroupVariable"
   }
 
-  Process {
+  process {
+
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
       version = "7.1-preview.2"
@@ -58,9 +60,6 @@ function Get-AzDoVariableGroup {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Variable groups from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      Write-Debug "Calling Invoke-AzDoRestMethod with"
-      Write-Debug ($params | Out-String)
-
       $variableGroups = (Invoke-AzDoRestMethod @params).value
       if ($VariableGroupName) {
         foreach ($name in $VariableGroupName) {
@@ -75,7 +74,7 @@ function Get-AzDoVariableGroup {
     }
   }
 
-  End {
+  end {
     if ($result) {
       $result | ForEach-Object {
         [PSCustomObject]@{

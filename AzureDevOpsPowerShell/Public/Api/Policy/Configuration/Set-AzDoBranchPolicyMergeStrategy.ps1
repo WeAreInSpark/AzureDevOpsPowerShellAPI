@@ -78,10 +78,10 @@ function Set-AzDoBranchPolicyMergeStrategy {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    Write-Verbose "Starting function: Set-AzDoBranchPolicyMergeStrategy"
   }
 
-  Process {
+  process {
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/policy/configurations"
@@ -89,10 +89,22 @@ function Set-AzDoBranchPolicyMergeStrategy {
       Method  = 'POST'
     }
 
-    $policyId = (Get-AzDoBranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PolicyType "Require a merge strategy").policyId
+    $getAzDoBranchPolicyTypeSplat = @{
+      CollectionUri = $CollectionUri
+      ProjectName   = $ProjectName
+      PolicyType    = "Require a merge strategy"
+    }
+
+    $policyId = (Get-AzDoBranchPolicyType @getAzDoBranchPolicyTypeSplat).policyId
 
     foreach ($name in $RepoName) {
-      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -RepoName $name).RepoId
+      $getAzDoRepoSplat = @{
+        CollectionUri = $CollectionUri
+        ProjectName   = $ProjectName
+        RepoName      = $name
+      }
+
+      $repoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
       $body = @{
         isEnabled  = $true
@@ -116,10 +128,22 @@ function Set-AzDoBranchPolicyMergeStrategy {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Merge strategy policy on: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Information "Creating 'Require a merge strategy' policy on $name/$branch"
-        $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
+        $getAzDoBranchPolicySplat = @{
+          CollectionUri = $CollectionUri
+          ProjectName   = $ProjectName
+          ErrorAction   = 'SilentlyContinue'
+        }
+
+        $existingPolicy = Get-AzDoBranchPolicy @getAzDoBranchPolicySplat |
+          Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) }
+
+        if ($null -eq $existingPolicy) {
+          $result += ($body | Invoke-AzDoRestMethod @params)
+        } else {
+          Write-Warning "Policy on $name/$branch already exists. It is not possible to update policies"
+        }
       } else {
-        $Body | Format-List
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

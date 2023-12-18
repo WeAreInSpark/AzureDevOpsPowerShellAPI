@@ -85,10 +85,10 @@ function Set-AzDoBranchPolicyBuildValidation {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    Write-Debug "Starting function: Set-AzDoBranchPolicyBuildValidation"
   }
 
-  Process {
+  process {
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/policy/configurations"
@@ -96,10 +96,22 @@ function Set-AzDoBranchPolicyBuildValidation {
       method  = 'POST'
     }
 
-    $policyId = (Get-AzDoBranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PolicyType "Build").policyId
+    $getAzDoBranchPolicyTypeSplat = @{
+      CollectionUri = $CollectionUri
+      ProjectName   = $ProjectName
+      PolicyType    = "Build"
+    }
+
+    $policyId = (Get-AzDoBranchPolicyType @getAzDoBranchPolicyTypeSplat).policyId
 
     foreach ($name in $RepoName) {
-      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -RepoName $name).RepoId
+      $getAzDoRepoSplat = @{
+        CollectionUri = $CollectionUri
+        ProjectName   = $ProjectName
+        RepoName      = $name
+      }
+
+      $repoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
       $body = @{
         isEnabled  = $true
@@ -125,17 +137,22 @@ function Set-AzDoBranchPolicyBuildValidation {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Branch policy named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        $existingPolicy = Get-AzDoBranchPolicy -CollectionUri $CollectionUri -ProjectName $ProjectName -ErrorAction SilentlyContinue |
+        $getAzDoBranchPolicySplat = @{
+          CollectionUri = $CollectionUri
+          ProjectName   = $ProjectName
+          ErrorAction   = 'SilentlyContinue'
+        }
+
+        $existingPolicy = Get-AzDoBranchPolicy @getAzDoBranchPolicySplat |
           Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) -and ($_.settings.displayName -eq $name) }
 
         if ($null -eq $existingPolicy) {
-          Write-Information "Creating 'Build' policy on $name/$branch"
-          $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
+          $result += ($body | Invoke-AzDoRestMethod @params)
         } else {
-          Write-Error "Policy on $name/$branch already exists. It is not possible to update policies"
+          Write-Warning "Policy on $name/$branch already exists. It is not possible to update policies"
         }
       } else {
-        $Body | Format-List
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

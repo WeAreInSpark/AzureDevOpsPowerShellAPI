@@ -53,10 +53,11 @@ function Get-AzDoEnvironment {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    $result = @()
+    Write-Verbose "Starting function: Get-AzDoEnvironment"
   }
 
-  Process {
+  process {
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"
@@ -65,24 +66,9 @@ function Get-AzDoEnvironment {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $environments = (Invoke-AzDoRestMethod @params).value
-
-      if ($EnvironmentName) {
-        foreach ($name in $EnvironmentName) {
-          $env = $environments | Where-Object { $_.name -eq $name }
-          if (-not($env)) {
-            Write-Error "Environment $name not found"
-            continue
-          } else {
-            $result.add($env ) | Out-Null
-          }
-        }
-      } else {
-        $result.add($environments) | Out-Null
-      }
-
+      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $EnvironmentName -or $_.Name -in $EnvironmentName }
     } else {
-      $body | Format-List
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 

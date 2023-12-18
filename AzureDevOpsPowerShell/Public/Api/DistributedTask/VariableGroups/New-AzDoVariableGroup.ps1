@@ -65,12 +65,12 @@ function New-AzDoVariableGroup {
     $Description
   )
 
-  Begin {
-    $body = New-Object -TypeName "System.Collections.ArrayList"
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+  begin {
+    $result = @()
+    Write-Verbose "Starting function: New-AzDoVariableGroupVariable"
   }
 
-  Process {
+  process {
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
@@ -100,9 +100,9 @@ function New-AzDoVariableGroup {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
+        $result += ($body | Invoke-AzDoRestMethod @params)
       } else {
-        $body | Out-String
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

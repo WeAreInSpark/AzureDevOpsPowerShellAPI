@@ -35,7 +35,7 @@ function Get-AzDoBranchPolicy {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    Write-Verbose "Starting function: Get-AzDoBranchPolicy"
   }
 
   process {
@@ -46,29 +46,11 @@ function Get-AzDoBranchPolicy {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Get Policy ID from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $policies = (Invoke-AzDoRestMethod @params).value
-      if ($PolicyName) {
-        foreach ($name in $PolicyName) {
-          $policy = $policies | Where-Object { $_.name -eq $name }
-          if (-not($policy)) {
-            Write-Error "policy $name not found"
-            continue
-          } else {
-            $result.add($policy) | Out-Null
-          }
-        }
-      } else {
-        $result.add($policies) | Out-Null
-      }
+      (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PolicyName -or $_.Name -in $PolicyName }
 
     } else {
-      $body | Format-List
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 
-  end {
-    if ($result) {
-      $result
-    }
-  }
 }

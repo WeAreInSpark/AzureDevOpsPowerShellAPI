@@ -59,7 +59,7 @@ function Set-AzDoBranchPolicyCommentResolution {
   )
 
   begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+    Write-Verbose "Starting function: Set-AzDoBranchPolicyBuildValidation"
   }
 
   process {
@@ -70,10 +70,22 @@ function Set-AzDoBranchPolicyCommentResolution {
       method  = 'POST'
     }
 
-    $policyId = (Get-AzDoBranchPolicyType -CollectionUri $CollectionUri -ProjectName $ProjectName -PolicyType "Comment requirements").policyId
+    $getAzDoBranchPolicyTypeSplat = @{
+      CollectionUri = $CollectionUri
+      ProjectName   = $ProjectName
+      PolicyType    = "Comment requirements"
+    }
+
+    $policyId = (Get-AzDoBranchPolicyType @getAzDoBranchPolicyTypeSplat).policyId
 
     foreach ($name in $RepoName) {
-      $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -RepoName $name).RepoId
+      $getAzDoRepoSplat = @{
+        CollectionUri = $CollectionUri
+        ProjectName   = $ProjectName
+        RepoName      = $name
+      }
+
+      $repoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
 
       $body = @{
         isEnabled  = $true
@@ -93,10 +105,22 @@ function Set-AzDoBranchPolicyCommentResolution {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Branch policy named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        Write-Information "Creating 'Comment requirements' policy on $RepoName/$branch"
-        $result.add(($body | Invoke-AzDoRestMethod @params)) | Out-Null
+        $getAzDoBranchPolicySplat = @{
+          CollectionUri = $CollectionUri
+          ProjectName   = $ProjectName
+          ErrorAction   = 'SilentlyContinue'
+        }
+
+        $existingPolicy = Get-AzDoBranchPolicy @getAzDoBranchPolicySplat |
+          Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) }
+
+        if ($null -eq $existingPolicy) {
+          $result += ($body | Invoke-AzDoRestMethod @params)
+        } else {
+          Write-Warning "Policy on $name/$branch already exists. It is not possible to update policies"
+        }
       } else {
-        $Body | Format-List
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

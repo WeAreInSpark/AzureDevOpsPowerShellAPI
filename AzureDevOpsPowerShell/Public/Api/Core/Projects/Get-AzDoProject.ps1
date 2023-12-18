@@ -63,7 +63,11 @@ function Get-AzDoProject {
     $ProjectName
   )
 
-  Process {
+  begin {
+    Write-Verbose "Starting function: Get-AzDoProject"
+  }
+
+  process {
 
     $params = @{
       uri     = "$CollectionUri/_apis/projects"
@@ -72,12 +76,7 @@ function Get-AzDoProject {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Project(s)")) {
-      Write-Debug "Calling Invoke-AzDoRestMethod with"
-      Write-Debug ($params | Out-String)
-
       $result = (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ProjectName -or $_.Name -in $ProjectName }
-
-
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }

@@ -31,11 +31,6 @@ function Set-AzDoProjectSetting {
     [string]
     $CollectionUri,
 
-    # PAT to get access to Azure DevOps.
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Name of the project
     [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
     [string]
@@ -136,22 +131,14 @@ function Set-AzDoProjectSetting {
     [switch]
     $StatusBadgesArePrivate
   )
-  Begin {
-    begin {
-      if (-not($script:header)) {
 
-        try {
-          New-ADOAuthHeader -PAT $PAT -ErrorAction Stop
-        } catch {
-          $PSCmdlet.ThrowTerminatingError($_)
-        }
-      }
-    }
+begin {
+  Write-Verbose "Starting function: Set-AzDOProjectSetting"
+}
 
-    $Projects = (Get-AzDoProject -CollectionUri = $CollectionUri -ProjectName $ProjectName -PAT $PAT | Where-Object ProjectName -EQ $ProjectName).Projectid
-  }
-  Process {
-    $Body = @{
+  process {
+
+    $body = @{
       buildsEnabledForForks                             = [bool]$BuildsEnabledForForks
       disableClassicBuildPipelineCreation               = [bool]$DisableClassicBuildPipelineCreation
       disableClassicPipelineCreation                    = [bool]$DisableClassicPipelineCreation
@@ -174,14 +161,15 @@ function Set-AzDoProjectSetting {
     }
 
     $params = @{
-      uri         = "$CollectionUri/$ProjectId/_apis/build/generalsettings?api-version=7.2-preview.1"
+      uri         = "$CollectionUri/$ProjectName/_apis/build/generalsettings?api-version=7.2-preview.1"
       Method      = 'PATCH'
       Headers     = $script:header
-      body        = $Body
+      body        = $body
       ContentType = 'application/json'
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Set provided settings at the project named: $($PSStyle.Bold)$Projectname$($PSStyle.Reset)")) {
+
       $response = Invoke-RestMethod @params
 
       [PSCustomObject]@{
@@ -207,7 +195,7 @@ function Set-AzDoProjectSetting {
         StatusBadgesArePrivate                            = $response.statusBadgesArePrivate
       }
     } else {
-      $body
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }

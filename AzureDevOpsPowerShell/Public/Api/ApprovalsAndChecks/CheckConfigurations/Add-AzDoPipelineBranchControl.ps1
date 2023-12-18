@@ -84,10 +84,11 @@ function Add-AzDoPipelineBranchControl {
   )
 
   begin {
-    $body = New-Object -TypeName "System.Collections.ArrayList"
+    Write-Verbose "Starting function: Add-AzDoPipelineBranchControl"
   }
 
-  Process {
+  process {
+
     $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId
 
     foreach ($name in $ResourceName) {
@@ -139,7 +140,7 @@ function Add-AzDoPipelineBranchControl {
         body    = $body
       }
 
-      if ($PSCmdlet.ShouldProcess($ProjectName, "Create envrironment named: $($PSStyle.Bold)$PolicyName$($PSStyle.Reset)")) {
+      if ($PSCmdlet.ShouldProcess($ProjectName, "Create build-validation policy named: $($PSStyle.Bold)$PolicyName$($PSStyle.Reset)")) {
         Invoke-AzDoRestMethod @params | ForEach-Object {
           [PSCustomObject]@{
             CollectionUri = $CollectionUri
@@ -148,7 +149,7 @@ function Add-AzDoPipelineBranchControl {
           }
         }
       } else {
-        $Body | Format-List
+        Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }

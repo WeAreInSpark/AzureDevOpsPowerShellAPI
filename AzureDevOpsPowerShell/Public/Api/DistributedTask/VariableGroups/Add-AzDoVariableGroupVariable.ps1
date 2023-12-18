@@ -61,11 +61,13 @@ function Add-AzDoVariableGroupVariable {
     $Variables
   )
 
-  Begin {
-    $result = New-Object -TypeName "System.Collections.ArrayList"
+  begin {
+    $result = @()
+    Write-Verbose "Starting function: Add-AzDoVariableGroupVariable"
   }
 
-  Process {
+  process {
+    Write-Information "Starting function: Add-AzDoVariableGroupVariable"
     $groups = Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName
 
     # Get the variable group based on it's name and match to ID for URI
@@ -86,20 +88,18 @@ function Add-AzDoVariableGroupVariable {
     $params = @{
       uri         = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups/$($group.VariableGroupId)?api-version=7.1-preview.1"
       Method      = 'PUT'
-      Headers     = $script:header
       body        = $Body | ConvertTo-Json -Depth 99
       ContentType = 'application/json'
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Add Variables to Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-      Write-Information "Creating variables in variable group $VariableGroupName"
-      $result.add((Invoke-AzDoRestMethod @params)) | Out-Null
+      $result += Invoke-AzDoRestMethod @params
     } else {
-      $body | Out-String
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 
-  End {
+  end {
     if ($result) {
       $result | ForEach-Object {
         [PSCustomObject]@{
