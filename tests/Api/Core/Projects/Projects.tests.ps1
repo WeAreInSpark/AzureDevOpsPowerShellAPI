@@ -94,7 +94,7 @@ InModuleScope $ModuleName {
     }
 
     It "It provides users with feedback via ShouldProcess when using WhatIf" {
-      New-AzDoProject @params -WhatIf -Verbose 4>&1 | Should -BeLike "*Calling Invoke-AzDoRestMethod with {*"
+      New-AzDoProject @params -WhatIf -Verbose 4>&1 | Out-String | Should -Match "Calling Invoke-AzDoRestMethod with {"
     }
 
     It "Outputs just the matching ProjectName when a single value was supplied" {
