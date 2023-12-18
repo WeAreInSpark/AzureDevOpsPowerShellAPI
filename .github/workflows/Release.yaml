@@ -8,14 +8,13 @@ jobs:
     name: Release module
     runs-on: ubuntu-latest
     steps:
-      - name: Update ubuntu runner
-        uses: ./.github/actions/update-ubuntu-runner
-        id: update-ubuntu-runner
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
+      - name: Update ubuntu runner
+        uses: ./.github/actions/update-ubuntu-runner
+        id: update-ubuntu-runner
       - name: Conventional Changelog Action
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
