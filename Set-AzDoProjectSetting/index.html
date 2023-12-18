@@ -810,15 +810,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-pat" class="md-nav__link">
-    <span class="md-ellipsis">
-      -PAT
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#-projectname" class="md-nav__link">
     <span class="md-ellipsis">
       -ProjectName
@@ -1947,6 +1938,8 @@
       
         
       
+        
+      
     
     
     
@@ -1976,6 +1969,26 @@
             Pipelines
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Get-AzDoPipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Get-AzDoPipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2599,15 +2612,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-pat" class="md-nav__link">
-    <span class="md-ellipsis">
-      -PAT
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#-projectname" class="md-nav__link">
     <span class="md-ellipsis">
       -ProjectName
@@ -2902,8 +2906,8 @@
 <h2 id="synopsis">SYNOPSIS<a class="headerlink" href="#synopsis" title="Permanent link">#</a></h2>
 <p>Sets the project settings for the given project.</p>
 <h2 id="syntax">SYNTAX<a class="headerlink" href="#syntax" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code>Set-AzDoProjectSetting [-CollectionUri] &lt;String&gt; [[-PAT] &lt;String&gt;] [-ProjectName] &lt;String&gt;
- [-BuildsEnabledForForks] [-DisableClassicBuildPipelineCreation] [-DisableClassicPipelineCreation]
+<div class="highlight"><pre><span></span><code>Set-AzDoProjectSetting [-CollectionUri] &lt;String&gt; [-ProjectName] &lt;String&gt; [-BuildsEnabledForForks]
+ [-DisableClassicBuildPipelineCreation] [-DisableClassicPipelineCreation]
  [-DisableClassicReleasePipelineCreation] [-DisableImpliedYAMLCiTrigger] [-EnableShellTasksArgsSanitizing]
  [-EnableShellTasksArgsSanitizingAudit] [-EnforceJobAuthScope] [-EnforceJobAuthScopeForForks]
  [-EnforceJobAuthScopeForReleases] [-EnforceNoAccessToSecretsFromForks] [-EnforceReferencedRepoScopedToken]
@@ -2943,18 +2947,6 @@ Can be set with the predefined variable from Azure DevOps.</p>
 <span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
-<h3 id="-pat">-PAT<a class="headerlink" href="#-pat" title="Permanent link">#</a></h3>
-<p>PAT to get access to Azure DevOps.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-</code></pre></div>
 <h3 id="-projectname">-ProjectName<a class="headerlink" href="#-projectname" title="Permanent link">#</a></h3>
 <p>Name of the project</p>
 <div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
@@ -2962,7 +2954,7 @@ Can be set with the predefined variable from Azure DevOps.</p>
 <span class="nt">Aliases</span><span class="p">:</span>
 
 <span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
 <span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName, ByValue)</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
