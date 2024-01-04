@@ -112,7 +112,7 @@ function Get-AzDoServiceConnection {
             ServiceConnectionUrl                              = $_.url
             ServiceConnectionDescription                      = $_.description
             ServiceConnectionCreatedBy                        = $_.createdBy.displayName
-            ServiceConnectionAuthorization                    = $_.authorization.parameters
+            ServiceConnectionAuthorization                    = $_.authorization
             ServiceConnectionData                             = $_.data
             ServiceConnectionIsShared                         = $_.isShared
             ServiceConnectionOwner                            = $_.owner
