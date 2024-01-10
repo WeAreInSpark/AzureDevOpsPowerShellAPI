@@ -36,11 +36,6 @@ function Test-AzDoServiceConnection {
     [string]
     $CollectionUri,
 
-    # PAT to get access to Azure DevOps.
-    [Parameter()]
-    [string]
-    $PAT,
-
     # Collection Uri. e.g. https://dev.azure.com/contoso.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
@@ -48,22 +43,21 @@ function Test-AzDoServiceConnection {
   )
 
   begin {
-    Write-Verbose "Starting function: Test-AzDoServiceConnection"
-    $getAzDoProjectSplat = @{
-      CollectionUri = $CollectionUri
-    }
-    $ProjectId = (Get-AzDoProject @getAzDoProjectSplat | Where-Object ProjectName -EQ $ProjectName).Projectid
-
-    $getAzDoServiceConnectionSplat = @{
-      CollectionUri = $CollectionUri
-      ProjectName   = $ProjectName
-    }
-
-    $Connections = Get-AzDoServiceConnection @getAzDoServiceConnectionSplat
+    $result = @()
+    Write-Verbose "Starting function: Get-AzDoServiceConnection"
   }
 
   process {
-    $connectioninfo = $connections | Where-Object ServiceConnectionName -EQ $ServiceConnectionName
+
+    $getAzDoServiceConnectionSplat = @{
+      CollectionUri         = $CollectionUri
+      ProjectName           = $ProjectName
+      ServiceConnectionName = $ServiceConnectionName
+    }
+
+    $Connections = Get-AzDoServiceConnection @getAzDoServiceConnectionSplat
+
+    $connectioninfo = Get-AzDoServiceConnection @getAzDoServiceConnectionSplat
 
     $body = @{
       dataSourceDetails = @{
@@ -73,14 +67,15 @@ function Test-AzDoServiceConnection {
     }
 
     $params = @{
-      uri         = "$CollectionUri/$ProjectId/_apis/serviceendpoint/endpointproxy?endpointId=$($connectioninfo.ServiceConnectionId)&api-version=7.2-preview.1"
+      uri         = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpointproxy?endpointId=$($connectioninfo.ServiceConnectionId)&api-version=7.2-preview.1"
       Method      = 'POST'
+      Headers     = $script:header
       body        = $Body | ConvertTo-Json -Depth 99
       ContentType = 'application/json'
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Test service connection on: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $response = Invoke-RestMethod @Params
+      $result = Invoke-RestMethod @Params
       if ($response.statusCode -eq 'badRequest') {
         Write-Error "Connection $($connectioninfo.ServiceConnectionName) is not working: error $($response.errorMessage)"
       } else {
