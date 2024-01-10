@@ -2131,15 +2131,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-pat" class="md-nav__link">
-    <span class="md-ellipsis">
-      -PAT
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#-serviceconnectionname" class="md-nav__link">
     <span class="md-ellipsis">
       -ServiceConnectionName
@@ -2453,15 +2444,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-pat" class="md-nav__link">
-    <span class="md-ellipsis">
-      -PAT
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#-serviceconnectionname" class="md-nav__link">
     <span class="md-ellipsis">
       -ServiceConnectionName
@@ -2570,9 +2552,8 @@
 <h2 id="synopsis">SYNOPSIS<a class="headerlink" href="#synopsis" title="Permanent link">#</a></h2>
 <p>Function to create a service connection in Azure DevOps</p>
 <h2 id="syntax">SYNTAX<a class="headerlink" href="#syntax" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code>Test-AzDoServiceConnection [-ProjectName] &lt;String&gt; [-CollectionUri] &lt;String&gt; [[-PAT] &lt;String&gt;]
- [-ServiceConnectionName] &lt;String&gt; [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm]
- [&lt;CommonParameters&gt;]
+<div class="highlight"><pre><span></span><code>Test-AzDoServiceConnection [-ProjectName] &lt;String&gt; [-CollectionUri] &lt;String&gt; [-ServiceConnectionName] &lt;String&gt;
+ [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre></div>
 <h2 id="description">DESCRIPTION<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
 <p>Function to create a service connection in Azure DevOps</p>
@@ -2622,18 +2603,6 @@ https://dev.azure.com/contoso.</p>
 <span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
-<h3 id="-pat">-PAT<a class="headerlink" href="#-pat" title="Permanent link">#</a></h3>
-<p>PAT to get access to Azure DevOps.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-</code></pre></div>
 <h3 id="-serviceconnectionname">-ServiceConnectionName<a class="headerlink" href="#-serviceconnectionname" title="Permanent link">#</a></h3>
 <p>Collection Uri.
 e.g.
@@ -2643,7 +2612,7 @@ https://dev.azure.com/contoso.</p>
 <span class="nt">Aliases</span><span class="p">:</span>
 
 <span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
 <span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName, ByValue)</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
@@ -2697,7 +2666,7 @@ The cmdlet is not run.</p>
   <small>
     
       Last update:
-      2024-01-04
+      2024-01-10
     
   </small>
 </div>
