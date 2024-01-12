@@ -22,6 +22,10 @@ function Invoke-AzDoRestMethod {
     [string]
     $Version,
 
+    [Parameter()]
+    [string]
+    $QueryParameters,
+
     [Parameter(Mandatory)]
     [ValidateSet('GET', 'POST', 'PATCH', 'DELETE')]
     [string]
@@ -43,6 +47,25 @@ function Invoke-AzDoRestMethod {
     Write-Debug "method: $Method"
     Write-Debug "body: $($body | ConvertTo-Json -Depth 10)"
 
+    if (-not($Pat) -and $script:header) {
+      $params = @{
+        Uri         = "https://app.vssps.visualstudio.com/_apis/profile/profiles/me?api-version=6.0"
+        Method      = 'GET'
+        Headers     = $script:header
+        ContentType = 'application/json'
+      }
+      try {
+        $profileData = Invoke-RestMethod @params
+
+        if (!$profileData.id) {
+          throw
+        }
+      } catch {
+        Write-Verbose "Refreshing authentication header"
+        Clear-AzDoAuthHeader
+      }
+    }
+
     if (-not($script:header)) {
       try {
         New-AzDoAuthHeader -PAT $Pat -ErrorAction Stop
@@ -52,10 +75,15 @@ function Invoke-AzDoRestMethod {
     }
 
     $params = @{
-      Uri         = "$($Uri)?api-version=$($Version)"
       Method      = $Method
       Headers     = $script:header
       ContentType = 'application/json'
+    }
+
+    if ($QueryParameters) {
+      $params.Uri = "$($Uri)?$($QueryParameters)&api-version=$($Version)"
+    } else {
+      $params.Uri = "$($Uri)?api-version=$($Version)"
     }
 
     Write-Verbose "Uri: $($params.Uri)"
