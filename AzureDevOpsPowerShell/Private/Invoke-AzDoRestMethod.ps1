@@ -31,10 +31,6 @@ function Invoke-AzDoRestMethod {
     [string]
     $Method,
 
-    [Parameter()]
-    [string]
-    $Pat,
-
     [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
     [PSCustomObject[]]
     $Body
@@ -47,7 +43,7 @@ function Invoke-AzDoRestMethod {
     Write-Debug "method: $Method"
     Write-Debug "body: $($body | ConvertTo-Json -Depth 10)"
 
-    if (-not($Pat) -and $script:header) {
+    if ($script:header.Authorization -match "Bearer") {
       $params = @{
         Uri         = "https://app.vssps.visualstudio.com/_apis/profile/profiles/me?api-version=6.0"
         Method      = 'GET'
@@ -62,13 +58,13 @@ function Invoke-AzDoRestMethod {
         }
       } catch {
         Write-Verbose "Refreshing authentication header"
-        Clear-AzDoAuthHeader
+        $script:header = $null
       }
     }
 
     if (-not($script:header)) {
       try {
-        New-AzDoAuthHeader -PAT $Pat -ErrorAction Stop
+        New-AzDoAuthHeader -ErrorAction Stop
       } catch {
         throw $_
       }
