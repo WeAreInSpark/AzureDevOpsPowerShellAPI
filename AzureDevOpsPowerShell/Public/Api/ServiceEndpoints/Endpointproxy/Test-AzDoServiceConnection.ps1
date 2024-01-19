@@ -55,8 +55,6 @@ function Test-AzDoServiceConnection {
       ServiceConnectionName = $ServiceConnectionName
     }
 
-    $Connections = Get-AzDoServiceConnection @getAzDoServiceConnectionSplat
-
     $connectioninfo = Get-AzDoServiceConnection @getAzDoServiceConnectionSplat
 
     $body = @{
@@ -67,22 +65,22 @@ function Test-AzDoServiceConnection {
     }
 
     $params = @{
-      uri         = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpointproxy?endpointId=$($connectioninfo.ServiceConnectionId)&api-version=7.2-preview.1"
-      Method      = 'POST'
-      Headers     = $script:header
-      body        = $Body | ConvertTo-Json -Depth 99
-      ContentType = 'application/json'
+      uri             = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpointproxy"
+      version         = "7.2-preview.1"
+      queryParameters = "endpointId=$($connectioninfo.ServiceConnectionId)"
+      method          = 'POST'
+      body            = $body
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Test service connection on: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $result = Invoke-RestMethod @Params
-      if ($response.statusCode -eq 'badRequest') {
-        Write-Error "Connection $($connectioninfo.ServiceConnectionName) is not working: error $($response.errorMessage)"
+      $result = Invoke-AzDoRestMethod @params
+      if ($result.statusCode -eq 'badRequest') {
+        Write-Error "Connection $($connectioninfo.ServiceConnectionName) is not working: error $($result.errorMessage)"
       } else {
         [PSCustomObject]@{
           Result = "Connection [$($connectioninfo.ServiceConnectionName)] is working as expected"
         }
-        Write-Verbose ($response.result | ConvertFrom-Json -Depth 10 | ConvertTo-Json -Depth 10 -Compress)
+        Write-Verbose ($result.result | ConvertFrom-Json -Depth 10 | ConvertTo-Json -Depth 10 -Compress)
       }
     }
   }
