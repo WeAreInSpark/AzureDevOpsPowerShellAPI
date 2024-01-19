@@ -243,9 +243,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### [PSCustomObject]@{
-###   CollectionUri = $CollectionUri
-###   ProjectName   = $ProjectName
-###   Id            = $_.id
+### CollectionUri = $CollectionUri
+### ProjectName   = $ProjectName
+### Id            = $_.id
 ### }
 ## NOTES
 

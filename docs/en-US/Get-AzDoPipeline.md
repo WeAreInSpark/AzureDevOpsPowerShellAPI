@@ -5,48 +5,51 @@ online version:
 schema: 2.0.0
 ---
 
-# Test-AzDoServiceConnection
+# Get-AzDoPipeline
 
 ## SYNOPSIS
-Function to create a service connection in Azure DevOps
+Creates a Build Validation policy on a branch
 
 ## SYNTAX
 
 ```
-Test-AzDoServiceConnection [-ProjectName] <String> [-CollectionUri] <String> [-ServiceConnectionName] <String>
+Get-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [[-PipelineName] <String[]>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Function to create a service connection in Azure DevOps
+Creates a Build Validation policy on a branch
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 $params = @{
-    CollectionUri               = "https://dev.azure.com/contoso"
-    PAT                         = "***"
-    ProjectName                 = "Project 1"
-    SubscriptionId              = "00000-00000-00000-00000-00000"
-    SubscriptionName            = "Subscription 1"
-    Tenantid                    = "11111-11111-11111-11111-11111"
-    Serviceprincipalid          = "1c03163f-7e4e-4fab-8b41-6f040a8361b9"
-    KeyVaultName                = "kv01"
-    CertName                    = "Cert01"
-    AuthenticationType          = "spnCertificate"
-    ProjectID                   = "1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2"
-    Name                        = "Project 1"
+    CollectionUri = "https://dev.azure.com/contoso"
+    PAT = "***"
+    Name = "Policy 1"
+    RepoName = "Repo 1"
+    ProjectName = "Project 1"
+    Id = 1
 }
-Test-AzDoServiceConnection @params
+Set-AzDoBranchPolicyBuildValidation @params
 ```
 
-This example creates a new Azure DevOps service connection with a Certificate from a KeyVault in Azure.
+This example creates a policy with splatting parameters
+
+### EXAMPLE 2
+```
+$env:SYSTEM_ACCESSTOKEN = '***'
+New-AzDoPipeline -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -Name "Pipeline 1" -RepoName "Repo 1" -Path "main.yml"
+| Set-AzDoBranchPolicyBuildValidation
+```
+
+This example creates a new Azure Pipeline and sets this pipeline as Build Validation policy on the main branch
 
 ## PARAMETERS
 
-### -ProjectName
-Name of the Project in Azure DevOps.
+### -CollectionUri
+Collection Uri of the organization
 
 ```yaml
 Type: String
@@ -56,14 +59,12 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
-### -CollectionUri
-Collection Uri.
-e.g.
-https://dev.azure.com/contoso.
+### -ProjectName
+Project where the pipeline will be created.
 
 ```yaml
 Type: String
@@ -73,21 +74,20 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
-### -ServiceConnectionName
-Collection Uri.
-e.g.
-https://dev.azure.com/contoso.
+### -PipelineName
+Name of the Build Validation policy.
+Default is the name of the Build Definition
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
@@ -147,6 +147,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### [PSCustomObject]@{
+### CollectionUri = $CollectionUri
+### ProjectName   = $ProjectName
+### RepoName      = $RepoName
+### Id            = $result.id
+### Url           = $result.url
+### }
 ## NOTES
 
 ## RELATED LINKS
