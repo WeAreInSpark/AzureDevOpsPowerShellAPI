@@ -66,7 +66,7 @@ function New-AzDoPipeline {
     }
 
     Write-Debug "Calling Get-AzDoRepo with"
-    $RepoId = (Get-AzDoRepo @getAzDoRepoSplat).RepoId
+    $RepoId = (Get-AzDoRepo @getAzDoRepoSplat -ErrorAction Stop).RepoId
 
     $body = @{
       name          = $PipelineName
