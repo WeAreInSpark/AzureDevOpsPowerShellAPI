@@ -64,47 +64,67 @@ function New-AzDoServiceConnection {
     [string]
     $Description = '',
 
-    # Scope level (Subscription or ManagementGroup).
+    # Parameter help description
     [Parameter(ValueFromPipelineByPropertyName)]
+    [Switch]
+    $Force,
+
+    # Create the service connection as draft (useful when creating a WorkloadIdentityFederation based service connection).
+    [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'WorkloadIdentityFederation')]
+    [switch]
+    $AsDraft,
+
+    # Scope level (Subscription or ManagementGroup).
+    [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'WorkloadIdentityFederation')]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalSecret')]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalCertificate')]
     [ValidateSet('Subscription', 'ManagementGroup')]
     [string]
-    $ScopeLevel = 'Subscription',
-
-    # ID of the subscriptionn.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'Subscription')]
-    [string]
-    $SubscriptionId,
-
-    # Name of the subscription.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'Subscription')]
-    [string]
-    $SubscriptionName,
-
-    # ID of the Management group.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ManagementGroup')]
-    [string]
-    $ManagementGroupId,
-
-    # Name of the Management group.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ManagementGroup')]
-    [string]
-    $ManagementGroupName,
-
-    # ID of the tenant.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
-    [string]
-    $TenantId,
-
-    # Client ID of the app registration.
-    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
-    [string]
-    $ServiceprincipalId,
+    $ScopeLevel,
 
     # AuthenticationType (spnSecret or spnCertificate).
     [Parameter(ValueFromPipelineByPropertyName)]
     [ValidateSet('spnSecret', 'spnCertificate', 'WorkloadIdentityFederation')]
     [string]
     $AuthenticationType = 'WorkloadIdentityFederation',
+
+    # ID of the subscriptionn.
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'Subscription')]
+    [string]
+    $SubscriptionId,
+
+    # Name of the subscription.
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'Subscription')]
+    [string]
+    $SubscriptionName,
+
+    # ID of the Management group.
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ManagementGroup')]
+    [string]
+    $ManagementGroupId,
+
+    # Name of the Management group.
+    [Parameter(ValueFromPipelineByPropertyName)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ManagementGroup')]
+    [string]
+    $ManagementGroupName,
+
+    # ID of the tenant.
+    [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'WorkloadIdentityFederation')]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalSecret')]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalCertificate')]
+    [string]
+    $TenantId,
+
+    # Client ID of the app registration.
+    [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'WorkloadIdentityFederation')]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalSecret')]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalCertificate')]
+    [string]
+    $ServiceprincipalId,
 
     # App secret of the app registation.
     [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalSecret')]
@@ -119,17 +139,7 @@ function New-AzDoServiceConnection {
     # Name of the certificate
     [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalCertificate')]
     [string]
-    $CertName,
-
-    # Create the service connection as draft (useful when creating a WorkloadIdentityFederation based service connection).
-    [Parameter(ValueFromPipelineByPropertyName)]
-    [switch]
-    $AsDraft,
-
-    # Parameter help description
-    [Parameter(ValueFromPipelineByPropertyName)]
-    [Switch]
-    $Force
+    $CertName
   )
 
   begin {
