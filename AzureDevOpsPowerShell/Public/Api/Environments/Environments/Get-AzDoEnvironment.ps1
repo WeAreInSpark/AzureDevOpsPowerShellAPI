@@ -78,7 +78,7 @@ function Get-AzDoEnvironment {
         [PSCustomObject]@{
           CollectionUri   = $CollectionUri
           ProjectName     = $ProjectName
-          Id              = $_.id
+          EnvironmentId   = $_.id
           EnvironmentName = $_.name
         }
       }
