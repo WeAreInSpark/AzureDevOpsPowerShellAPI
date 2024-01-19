@@ -13,8 +13,8 @@ Sets the project settings for the given project.
 ## SYNTAX
 
 ```
-Set-AzDoProjectSetting [-CollectionUri] <String> [[-PAT] <String>] [-ProjectName] <String>
- [-BuildsEnabledForForks] [-DisableClassicBuildPipelineCreation] [-DisableClassicPipelineCreation]
+Set-AzDoProjectSetting [-CollectionUri] <String> [-ProjectName] <String> [-BuildsEnabledForForks]
+ [-DisableClassicBuildPipelineCreation] [-DisableClassicPipelineCreation]
  [-DisableClassicReleasePipelineCreation] [-DisableImpliedYAMLCiTrigger] [-EnableShellTasksArgsSanitizing]
  [-EnableShellTasksArgsSanitizingAudit] [-EnforceJobAuthScope] [-EnforceJobAuthScopeForForks]
  [-EnforceJobAuthScopeForReleases] [-EnforceNoAccessToSecretsFromForks] [-EnforceReferencedRepoScopedToken]
@@ -64,21 +64,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PAT
-PAT to get access to Azure DevOps.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ProjectName
 Name of the project
 
@@ -88,7 +73,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False

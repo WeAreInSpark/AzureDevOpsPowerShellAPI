@@ -12,36 +12,42 @@ Function to create a service connection in Azure DevOps
 
 ## SYNTAX
 
-### Subscription
+### WorkloadIdentityFederation
 ```
 New-AzDoServiceConnection -CollectionUri <String> -ProjectName <String> -ServiceConnectionName <String>
- [-Description <String>] [-ScopeLevel <String>] -SubscriptionId <String> -SubscriptionName <String>
- -TenantId <String> -ServiceprincipalId <String> [-AuthenticationType <String>] [-AsDraft] [-Force]
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Description <String>] [-Force] [-AsDraft] [-ScopeLevel <String>] [-AuthenticationType <String>]
+ [-TenantId <String>] [-ServiceprincipalId <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
-### ManagementGroup
+### ServiceprincipalCertificate
 ```
 New-AzDoServiceConnection -CollectionUri <String> -ProjectName <String> -ServiceConnectionName <String>
- [-Description <String>] [-ScopeLevel <String>] -ManagementGroupId <String> -ManagementGroupName <String>
- -TenantId <String> -ServiceprincipalId <String> [-AuthenticationType <String>] [-AsDraft] [-Force]
+ [-Description <String>] [-Force] -ScopeLevel <String> [-AuthenticationType <String>] -TenantId <String>
+ -ServiceprincipalId <String> [-KeyVaultName <String>] [-CertName <String>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ServiceprincipalSecret
 ```
 New-AzDoServiceConnection -CollectionUri <String> -ProjectName <String> -ServiceConnectionName <String>
- [-Description <String>] [-ScopeLevel <String>] -TenantId <String> -ServiceprincipalId <String>
- [-AuthenticationType <String>] [-ServiceprincipalSecret <String>] [-AsDraft] [-Force]
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Description <String>] [-Force] -ScopeLevel <String> [-AuthenticationType <String>] -TenantId <String>
+ -ServiceprincipalId <String> [-ServiceprincipalSecret <String>] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
-### ServiceprincipalCertificate
+### Subscription
 ```
 New-AzDoServiceConnection -CollectionUri <String> -ProjectName <String> -ServiceConnectionName <String>
- [-Description <String>] [-ScopeLevel <String>] -TenantId <String> -ServiceprincipalId <String>
- [-AuthenticationType <String>] [-KeyVaultName <String>] [-CertName <String>] [-AsDraft] [-Force]
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Description <String>] [-Force] [-AuthenticationType <String>] -SubscriptionId <String>
+ -SubscriptionName <String> [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### ManagementGroup
+```
+New-AzDoServiceConnection -CollectionUri <String> -ProjectName <String> -ServiceConnectionName <String>
+ [-Description <String>] [-Force] [-AuthenticationType <String>] -ManagementGroupId <String>
+ -ManagementGroupName <String> [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -154,8 +160,65 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Force
+Parameter help description
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -AsDraft
+Create the service connection as draft (useful when creating a WorkloadIdentityFederation based service connection).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: WorkloadIdentityFederation
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -ScopeLevel
 Scope level (Subscription or ManagementGroup).
+
+```yaml
+Type: String
+Parameter Sets: WorkloadIdentityFederation
+Aliases:
+
+Required: False
+Position: Named
+Default value: Subscription
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: ServiceprincipalCertificate, ServiceprincipalSecret
+Aliases:
+
+Required: True
+Position: Named
+Default value: Subscription
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -AuthenticationType
+AuthenticationType (spnSecret or spnCertificate).
 
 ```yaml
 Type: String
@@ -164,7 +227,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: Subscription
+Default value: WorkloadIdentityFederation
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -234,7 +297,19 @@ ID of the tenant.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: WorkloadIdentityFederation
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: ServiceprincipalCertificate, ServiceprincipalSecret
 Aliases:
 
 Required: True
@@ -249,27 +324,24 @@ Client ID of the app registration.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: WorkloadIdentityFederation
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -AuthenticationType
-AuthenticationType (spnSecret or spnCertificate).
-
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: ServiceprincipalCertificate, ServiceprincipalSecret
 Aliases:
 
-Required: False
+Required: True
 Position: Named
-Default value: WorkloadIdentityFederation
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -315,36 +387,6 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -AsDraft
-Create the service connection as draft (useful when creating a WorkloadIdentityFederation based service connection).
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Force
-Parameter help description
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
