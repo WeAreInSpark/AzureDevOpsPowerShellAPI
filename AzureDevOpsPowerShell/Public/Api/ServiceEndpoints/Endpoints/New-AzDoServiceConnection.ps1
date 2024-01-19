@@ -89,25 +89,21 @@ function New-AzDoServiceConnection {
     $AuthenticationType = 'WorkloadIdentityFederation',
 
     # ID of the subscriptionn.
-    [Parameter(ValueFromPipelineByPropertyName)]
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'Subscription')]
     [string]
     $SubscriptionId,
 
     # Name of the subscription.
-    [Parameter(ValueFromPipelineByPropertyName)]
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'Subscription')]
     [string]
     $SubscriptionName,
 
     # ID of the Management group.
-    [Parameter(ValueFromPipelineByPropertyName)]
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ManagementGroup')]
     [string]
     $ManagementGroupId,
 
     # Name of the Management group.
-    [Parameter(ValueFromPipelineByPropertyName)]
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ManagementGroup')]
     [string]
     $ManagementGroupName,
