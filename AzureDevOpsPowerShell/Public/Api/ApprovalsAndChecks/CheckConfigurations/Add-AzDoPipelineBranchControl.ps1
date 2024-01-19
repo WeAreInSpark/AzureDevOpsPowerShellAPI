@@ -7,29 +7,30 @@ function Add-AzDoPipelineBranchControl {
 .EXAMPLE
     $params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
-        Name = "Policy 1"
-        RepoName = "Repo 1"
-        ProjectName = "Project 1"
-        Id = 1
+        ProjectName   = "Project 1"
+        ResourceType  = "environment"
+        ResourceName  = "MyEnvironment"
     }
+    Add-AzDoPipelineBranchControl @params
 
-    Set-AzDoBranchPolicyBuildValidation @params
-
-    This example creates a policy with splatting parameters
-
+    Default usage
 .EXAMPLE
-    $env:SYSTEM_ACCESSTOKEN = '***'
-    New-AzDoPipeline -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -Name "Pipeline 1" -RepoName "Repo 1" -Path "main.yml"
-    | Set-AzDoBranchPolicyBuildValidation
+    $params = @{
+        CollectionUri            = "https://dev.azure.com/contoso"
+        ProjectName              = "Project 1"
+        ResourceType             = "repository"
+        ResourceName             = "MyRepo"
+        AllowedBranches          = "refs/heads/main,refs/heads/develop"
+        EnsureProtectionOfBranch = "true"
+    }
+    Add-AzDoPipelineBranchControl @params
 
-    This example creates a new Azure Pipeline and sets this pipeline as Build Validation policy on the main branch
-
+    Add allowed branches and ensure branch protection
 .OUTPUTS
     [PSCustomObject]@{
       CollectionUri = $CollectionUri
       ProjectName   = $ProjectName
-      Id            = $_.id
+      CheckId            = $_.id
     }
 .NOTES
 #>
@@ -61,23 +62,23 @@ function Add-AzDoPipelineBranchControl {
     [string[]]
     $ResourceName,
 
-    # Valid duration of the Build Validation policy. Default is 720 minutes
+    # Allow deployment from branches for which protection status could not be obtained.
     [Parameter()]
     [string]
     $AllowUnknownStatusBranches = "false",
 
-    # Setup an allow list of branches from which a pipeline must be run to access this resource
+    # Setup a comma separated list of branches from which a pipeline must be run to access this resource
     [Parameter()]
     [string]
     $AllowedBranches = "refs/head/main",
 
-    # Setup a requirement of branch protection policies for the branch from which a pipeline will be run to access this resource
+    # Validate the branches being deployed are protected.
     [Parameter()]
     [string]
     [validateset("true", "false")]
     $EnsureProtectionOfBranch = "true",
 
-    # Valid duration of the Build Validation policy. Default is 720 minutes
+    # Valid duration of the Build Validation policy. Default is 1440 minutes
     [Parameter()]
     [int]
     $Timeout = 1440
@@ -89,19 +90,19 @@ function Add-AzDoPipelineBranchControl {
 
   process {
 
-    $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId
-
     foreach ($name in $ResourceName) {
 
       switch ($ResourceType) {
         "environment" {
-          $resourceId = (Get-AzDoEnvironment -CollectionUri $CollectionUri -ProjectName $ProjectName -EnvironmentName $name).id
+          $resourceId = (Get-AzDoEnvironment -CollectionUri $CollectionUri -ProjectName $ProjectName -EnvironmentName $name).EnvironmentId
         }
         "variablegroup" {
-          $resourceId = (Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName -Name $name).id
+          $resourceId = (Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName -VariableGroupName $name).VariableGroupId
         }
         "repository" {
-          $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -Name $name).id
+          $projectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).projectId
+
+          $repoId = (Get-AzDoRepo -CollectionUri $CollectionUri -ProjectName $ProjectName -RepoName $name).RepoId
           $resourceId = "$($projectId).$($repoId)"
         }
       }
@@ -134,7 +135,7 @@ function Add-AzDoPipelineBranchControl {
       }
 
       $params = @{
-        uri     = "$CollectionUri/$projectId/_apis/pipelines/checks/configurations"
+        uri     = "$CollectionUri/$ProjectName/_apis/pipelines/checks/configurations"
         version = "7.2-preview.1"
         Method  = "POST"
         body    = $body
@@ -145,7 +146,7 @@ function Add-AzDoPipelineBranchControl {
           [PSCustomObject]@{
             CollectionUri = $CollectionUri
             ProjectName   = $ProjectName
-            Id            = $_.id
+            CheckId            = $_.id
           }
         }
       } else {

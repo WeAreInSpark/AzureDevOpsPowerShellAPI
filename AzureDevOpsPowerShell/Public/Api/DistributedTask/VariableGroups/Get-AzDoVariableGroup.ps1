@@ -78,13 +78,13 @@ function Get-AzDoVariableGroup {
     if ($result) {
       $result | ForEach-Object {
         [PSCustomObject]@{
-          CollectionURI = $CollectionUri
-          ProjectName   = $ProjectName
-          Name          = $_.name
-          Id            = $_.id
-          Variables     = $_.variables
-          CreatedOn     = $_.createdOn
-          IsShared      = $_.isShared
+          CollectionURI   = $CollectionUri
+          ProjectName     = $ProjectName
+          Name            = $_.name
+          VariableGroupId = $_.id
+          Variables       = $_.variables
+          CreatedOn       = $_.createdOn
+          IsShared        = $_.isShared
         }
       }
     }
