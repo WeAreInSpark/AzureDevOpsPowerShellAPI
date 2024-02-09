@@ -18,17 +18,18 @@
 
 ## Overview
 
-Automate tasks in Azure DevOps and Azure AD. Works on Windows Linux and MacOS.
+Automate tasks in Azure DevOps. Works on Windows, Linux and MacOS. There are a few good open-source projects already going on this topic (Like VS-Team),
+but we believe that this project in more user-friendly.
 
 ## Installation
 
 ```powershell
+# PowerShell 7.3 and below
+Install-Module -Name AzureDevOpsPowerShellAPI -Scope CurrentUser
 
-Install-Module -Name AzureDevOpsPowerShellAPI -Scope CurrentUser -Repository InSpark -Credential $InSparkAzureDevopsArtifacts
-
+# PowerShell 7.4 and up
+Install-PSresource -Name AzureDevOpsPowerShellAPI -Scope CurrentUser
 ```
-
-For more information on how to setup access to our repository, please checkout [our guide](https://weareinspark.github.io/AzureDevOpsPowerShellAPI/about_InstallingModule/). The [source documentation on installation can also be found here](https://github.com/WeAreInSpark/AzureDevOpsPowerShellAPI/blob/main/docs/en-US/about_InstallingModule.md).
 
 ## Basic Usage
 
@@ -37,7 +38,6 @@ For more information on how to setup access to our repository, please checkout [
 ```powershell
 $Params = @{
     CollectionUri = "https://dev.azure.com/contoso"
-    PAT = "***"
 }
 Get-AzDoProject @params
 ```
@@ -45,7 +45,7 @@ Get-AzDoProject @params
 ### Create an Azure DevOps Project
 
 ```powershell
-New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
+New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1"
 ```
 
 ## Contributing

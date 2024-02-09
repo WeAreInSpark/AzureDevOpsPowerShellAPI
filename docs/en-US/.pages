@@ -1,7 +1,7 @@
 nav:
   - Home:
     - index.md
-    - ...| about*.md
+    - ...| About*.md
   - Modules:
     - Approvals And Checks:
       - Check Configurations:
@@ -23,9 +23,6 @@ nav:
         - Add-FilesToRepo.md
       - Repositories:
         - ... | *AzDoRepo.md
-    - Graph:
-      - Groups:
-        - Set-AzDoTeamMember.md
     - Pipelines:
       - Pipelines:
         - ... | *AzDoPipeline.md

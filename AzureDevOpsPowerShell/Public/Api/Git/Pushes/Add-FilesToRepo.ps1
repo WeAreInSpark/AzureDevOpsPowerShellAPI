@@ -7,7 +7,6 @@ function Add-FilesToRepo {
 .EXAMPLE
     $params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT           = "***"
         Name          = "Repo 1"
         ProjectName   = "Project 1"
     }
