@@ -5,15 +5,15 @@ function Remove-AzDoProject {
     .DESCRIPTION
         Function to create an Azure DevOps project
     .EXAMPLE
-        New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1"
+        New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1"
 
         This example creates a new private Azure DevOps project
     .EXAMPLE
-        New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***" -ProjectName "Project 1" -Visibility 'public'
+        New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -Visibility 'public'
 
         This example creates a new public Azure DevOps project
     .EXAMPLE
-        @("MyProject1","Myproject2") | New-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT "***"
+        @("MyProject1","Myproject2") | New-AzDoProject -CollectionUri "https://dev.azure.com/contoso"
 
         This example creates two new Azure DevOps projects using the pipeline.
 

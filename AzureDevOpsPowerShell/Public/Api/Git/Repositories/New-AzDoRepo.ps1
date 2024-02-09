@@ -7,7 +7,6 @@ function New-AzDoRepo {
 .EXAMPLE
     $params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT           = "***"
         Name          = "Repo 1"
         ProjectName   = "Project 1"
     }
@@ -15,7 +14,6 @@ function New-AzDoRepo {
 
     This example creates a new Azure DevOps repo with splatting parameters
 .EXAMPLE
-    $env:SYSTEM_ACCESSTOKEN = '***'
     'test', 'test2' | New-AzDoRepo -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1"
 
     This example creates a new Azure DevOps repo for each in pipeline

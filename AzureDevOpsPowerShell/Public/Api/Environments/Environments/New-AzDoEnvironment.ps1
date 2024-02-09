@@ -7,7 +7,6 @@ function New-AzDoEnvironment {
 .EXAMPLE
     $params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
         Name = "Policy 1"
         RepoName = "Repo 1"
         ProjectName = "Project 1"

@@ -7,7 +7,6 @@ function Set-AzDoProjectSetting {
     .EXAMPLE
         $params = @{
             CollectionUri = "https://dev.azure.com/contoso"
-            PAT = "***"
             ProjectName = "Project01"
             EnforceJobAuthScope = $true
             EnforceJobAuthScopeForReleases = $true

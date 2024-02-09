@@ -7,7 +7,6 @@ function Set-AzDoBranchPolicyMergeStrategy {
 .EXAMPLE
     $params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
         RepoName = "Repo 1"
         ProjectName = "Project 1"
     }

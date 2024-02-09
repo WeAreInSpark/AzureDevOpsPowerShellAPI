@@ -8,7 +8,6 @@ function Get-AzDoVariableGroup {
     .EXAMPLE
         $params = @{
             Collectionuri = 'https://dev.azure.com/weareinspark/'
-            PAT = '*******************'
             ProjectName = 'Project 1'
             VariableGroupName = 'VariableGroup1','VariableGroup2'
         }

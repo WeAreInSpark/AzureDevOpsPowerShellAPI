@@ -7,7 +7,6 @@ function Get-AzDoProject {
 .EXAMPLE
     $Params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
     }
     Get-AzDoProject @params
 
@@ -16,7 +15,6 @@ function Get-AzDoProject {
 .EXAMPLE
     $Params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
         ProjectName = 'Project1'
     }
     Get-AzDoProject @params
@@ -26,7 +24,6 @@ function Get-AzDoProject {
 .EXAMPLE
     $params = @{
         collectionuri = "https://dev.azure.com/contoso"
-        PAT = "***"
     }
     $somedifferentobject = [PSCustomObject]@{
         ProjectName = 'Project1'
@@ -38,7 +35,6 @@ function Get-AzDoProject {
 .EXAMPLE
     $params = @{
         collectionuri = "https://dev.azure.com/contoso"
-        PAT = "***"
     }
     @(
         'Project1',
