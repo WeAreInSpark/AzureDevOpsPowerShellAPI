@@ -7,7 +7,6 @@ function New-AzDoPipeline {
 .EXAMPLE
   $newAzDoPipelineSplat = @{
       CollectionUri = "https://dev.azure.com/contoso"
-      PAT = "***"
       PipelineName = "Pipeline 1"
       RepoName = "Repo 1"
       ProjectName = "Project 1"

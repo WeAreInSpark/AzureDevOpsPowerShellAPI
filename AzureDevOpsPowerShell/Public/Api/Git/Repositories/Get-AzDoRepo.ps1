@@ -7,7 +7,6 @@ function Get-AzDoRepo {
 .EXAMPLE
     $Params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
         ProjectName = "Project 1"
         Name "Repo 1"
     }
@@ -17,7 +16,6 @@ function Get-AzDoRepo {
 .EXAMPLE
     $Params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
         ProjectName = "Project 1"
         Name "Repo 1"
     }
@@ -27,7 +25,6 @@ function Get-AzDoRepo {
 .EXAMPLE
     $Params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        PAT = "***"
         Name "Repo 1"
     }
     get-AzDoProject -pat $pat -CollectionUri $collectionuri | Get-AzDoRepo -PAT $PAT

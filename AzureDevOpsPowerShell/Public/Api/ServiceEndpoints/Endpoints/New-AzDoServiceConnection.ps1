@@ -7,7 +7,6 @@ function New-AzDoServiceConnection {
   .EXAMPLE
       $params = @{
           CollectionUri               = "https://dev.azure.com/contoso"
-          PAT                         = "***"
           ProjectName                 = "Project 1"
           SubscriptionId              = "00000-00000-00000-00000-00000"
           SubscriptionName            = "Subscription 1"

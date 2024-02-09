@@ -9,7 +9,6 @@ function Add-AzDoVariableGroupVariable {
         $splat = @{
             CollectionUri     = 'https://dev.azure.com/ChristianPiet0452/'
             ProjectName       = 'Ditproject'
-            PAT = '*******************'
             VariableGroupName = @('Group1', 'Group2')
             Variables         = @{
                 test = @{
