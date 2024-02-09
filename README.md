@@ -5,16 +5,29 @@
   <br>AzureDevOpsPowerShellAPI<br>
 </h1>
 
- <p align="center">
-    PowerShell module to automate tasks in Azure DevOps.
-    <br />
-    <a href="https://weareinspark.github.io/AzureDevOpsPowerShellAPI/"><strong>Explore the docs »</strong></a>
-  </p>
+<p align="center">
+  PowerShell module to automate tasks in Azure DevOps.
+  <br />
+  <a href="https://weareinspark.github.io/AzureDevOpsPowerShellAPI/"><strong>Explore the docs »</strong></a>
+</p>
 
 <p align="center">
-  <a href="https://weareinspark.github.io/AzureDevOpsPowerShellAPI/about_InstallingModule/">Installation</a> |
-  <a href="https://weareinspark.github.io/AzureDevOpsPowerShellAPI/">Module Documentation</a> |
-  <a href="LICENSE">License</a> |
+  <a href="https://github.com/WeAreInSpark/AzureDevOpsPowerShellAPI/issues">
+    <img alt="GitHub Workflow Status" src="https://img.shields.io/github/issues/WeAreInSpark/AzureDevOpsPowerShellAPI?style=flat-square">
+  </a>
+  <a href="https://www.powershellgallery.com/packages/AzureDevOpsPowerShell">
+    <img alt="PowerShell Gallery" src="https://img.shields.io/powershellgallery/dt/AzureDevOpsPowerShell?label=PowerShell%20Gallery&logo=PowerShell%20Gallery%20Downloads&style=flat-square">
+  </a>
+  <a href="https://www.powershellgallery.com/packages/AzureDevOpsPowerShell">
+    <img alt="PowerShell Gallery Version" src="https://img.shields.io/powershellgallery/v/AzureDevOpsPowerShell?label=released%20version&style=flat-square">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/WeAreInSpark/AzureDevOpsPowerShellAPI/blob/main/LICENSE">
+    <img alt="GitHub" src="https://img.shields.io/github/license/WeAreInSpark/AzureDevOpsPowerShellAPI?style=flat-square">
+  </a>
+</p>
 
 ## Overview
 
