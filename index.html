@@ -10,7 +10,7 @@
       
       
       
-        <link rel="next" href="about_InstallingModule/">
+        <link rel="next" href="About_Authentication/">
       
       
       <link rel="icon" href="assets/inspark-logo-semi.svg">
@@ -329,8 +329,6 @@
       
         
       
-        
-      
     
     
     
@@ -380,31 +378,11 @@
   
   
     <li class="md-nav__item">
-      <a href="about_InstallingModule/" class="md-nav__link">
+      <a href="About_Authentication/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Installing module
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="about_workflow/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Workflow
+    Authentication
   </span>
   
 
@@ -2150,15 +2128,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
       Installation
@@ -2229,23 +2198,24 @@
 
 
 <h1 id="home">Home<a class="headerlink" href="#home" title="Permanent link">#</a></h1>
-<p>Powershell module for API to DevOps services</p>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>Automate tasks in Azure DevOps and Azure AD. Works on Windows Linux and MacOS.</p>
+<p>Automate tasks in Azure DevOps. Works on Windows, Linux and MacOS. There are a few good open-source projects already going on this topic (Like VS-Team),
+but we believe that this project in more user-friendly.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code><span class="nb">Install-Module</span> <span class="n">-Name</span> <span class="n">InSpark</span><span class="p">.</span><span class="n">InfrastructureAsCode</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span> <span class="n">-Repository</span> <span class="n">InSpark</span> <span class="n">-Credential</span> <span class="nv">$InSparkAzureDevopsArtifacts</span>
+<div class="highlight"><pre><span></span><code><span class="c"># PowerShell 7.3 and below</span>
+<span class="nb">Install-Module</span> <span class="n">-Name</span> <span class="n">AzureDevOpsPowerShellAPI</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span>
+
+<span class="c"># PowerShell 7.4 and up</span>
+<span class="nb">Install-PSresource</span> <span class="n">-Name</span> <span class="n">AzureDevOpsPowerShellAPI</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span>
 </code></pre></div>
-<p>For more information on how to setup access to our repository, please checkout <a href="https://weareinspark.github.io/BRC.PS.InfrastructureAsCode/about_InstallingModule/">our guide</a>. The <a href="https://github.com/WeAreInSpark/BRC.PS.InfrastructureAsCode/blob/main/docs/en-US/about_InstallingModule.md">source documentation on installation can also be found here</a>.</p>
 <h2 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">#</a></h2>
 <h3 id="list-all-azure-devops-projects">List all Azure DevOps projects<a class="headerlink" href="#list-all-azure-devops-projects" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nv">$Params</span> <span class="p">=</span> <span class="p">@{</span>
     <span class="n">CollectionUri</span> <span class="p">=</span> <span class="s2">&quot;https://dev.azure.com/contoso&quot;</span>
-    <span class="n">PAT</span> <span class="p">=</span> <span class="s2">&quot;***&quot;</span>
 <span class="p">}</span>
 <span class="nb">Get-AzDoProject</span> <span class="nv">@params</span>
 </code></pre></div>
 <h3 id="create-an-azure-devops-project">Create an Azure DevOps Project<a class="headerlink" href="#create-an-azure-devops-project" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nb">New-AzDoProject</span> <span class="n">-CollectionUri</span> <span class="s2">&quot;https://dev.azure.com/contoso&quot;</span> <span class="n">-PAT</span> <span class="s2">&quot;***&quot;</span> <span class="n">-ProjectName</span> <span class="s2">&quot;Project 1&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">New-AzDoProject</span> <span class="n">-CollectionUri</span> <span class="s2">&quot;https://dev.azure.com/contoso&quot;</span> <span class="n">-ProjectName</span> <span class="s2">&quot;Project 1&quot;</span>
 </code></pre></div>
 <h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">#</a></h2>
 <p>Contributions are welcome! Open a pull request to fix a bug, or open an issue to discuss a new feature or change.</p>
@@ -2255,7 +2225,7 @@
   <small>
     
       Last update:
-      2024-01-19
+      2024-02-09
     
   </small>
 </div>
