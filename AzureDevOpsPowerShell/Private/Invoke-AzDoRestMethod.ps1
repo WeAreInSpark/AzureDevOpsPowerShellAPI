@@ -1,16 +1,20 @@
 function Invoke-AzDoRestMethod {
   <#
 .SYNOPSIS
-  A short one-line action-based description, e.g. 'Tests if a function is valid'
+  General function to invoke Azure DevOps REST API methods
 .DESCRIPTION
-  A longer description of the function, its purpose, common use cases, etc.
-.NOTES
-  Information or caveats about the function e.g. 'This function is not supported in Linux'
-.LINK
-  Specify a URI to a help page, this will show when Get-Help -Online is used.
+  We use this function to invoke Azure DevOps REST API methods. It will handle the authentication and refresh the token if needed.
+  This way we standarize the logging and error handling.
 .EXAMPLE
-  Test-MyTestFunction -Verbose
-  Explanation of the function or its result. You can include multiple examples with additional .EXAMPLE lines
+  $params = @{
+    uri     = "$CollectionUri/$ProjectName/_apis/pipelines/checks/configurations"
+    version = "7.2-preview.1"
+    Method  = "POST"
+    body    = $body
+  }
+  Invoke-AzDoRestMethod @params
+
+  This example will invoke the REST API method to create a new pipeline check configuration.
 #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
@@ -43,6 +47,7 @@ function Invoke-AzDoRestMethod {
     Write-Debug "method: $Method"
     Write-Debug "body: $($body | ConvertTo-Json -Depth 10)"
 
+    # Check if we have a valid authentication header
     if ($script:header.Authorization -match "Bearer") {
       $params = @{
         Uri         = "https://app.vssps.visualstudio.com/_apis/profile/profiles/me?api-version=6.0"
@@ -62,6 +67,7 @@ function Invoke-AzDoRestMethod {
       }
     }
 
+    # If we don't have a valid authentication header, we create a new one
     if (-not($script:header)) {
       try {
         New-AzDoAuthHeader -ErrorAction Stop
@@ -76,6 +82,7 @@ function Invoke-AzDoRestMethod {
       ContentType = 'application/json'
     }
 
+    # Add the query parameters to the uri
     if ($QueryParameters) {
       $params.Uri = "$($Uri)?$($QueryParameters)&api-version=$($Version)"
     } else {
@@ -87,10 +94,13 @@ function Invoke-AzDoRestMethod {
   }
 
   process {
+    # Add the body to the parameters if we have one
     if ($Method -eq 'POST' -or ($Method -eq 'PATCH')) {
       Write-Verbose "Body: $($Body | ConvertTo-Json -Depth 10)"
       $params.Body = $Body | ConvertTo-Json -Depth 10
     }
+
+    # Invoke the REST method
     if ($PSCmdlet.ShouldProcess($ProjectName, "Invoke Rest method on: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
       try {
         Invoke-RestMethod @params
