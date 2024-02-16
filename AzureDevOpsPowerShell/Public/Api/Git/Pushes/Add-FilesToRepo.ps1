@@ -3,32 +3,23 @@ function Add-FilesToRepo {
 .SYNOPSIS
     Upload path to a repo in Azure DevOps.
 .DESCRIPTION
-    Upload path to a repo in Azure DevOps.
+    Upload path to a repo in Azure DevOps. Only works if the repo isn't initialized yet.
 .EXAMPLE
     $params = @{
         CollectionUri = "https://dev.azure.com/contoso"
         Name          = "Repo 1"
         ProjectName   = "Project 1"
+        Path          = "C:\git\BRC\AzureDevOpsPowerShellAPI"
     }
-    New-AzDoRepo @params
+    Add-FilesToRepo @params
 
-    This example creates a new Azure DevOps repo with splatting parameters
+    This example adds the files in the path to the repository
 .EXAMPLE
-    $env:SYSTEM_ACCESSTOKEN = '***'
-    'test', 'test2' | New-AzDoRepo -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1"
+    'test', 'test2' | New-AzDoRepo -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -Path "C:\git\BRC\AzureDevOpsPowerShellAPI"
 
-    This example creates a new Azure DevOps repo for each in pipeline
+    This example adds the files in the path to the repositories 'test' and 'test2'
 .OUTPUTS
-    [PSCustomObject]@{
-        CollectionUri = $CollectionUri
-        ProjectName   = $ProjectName
-        RepoName      = $res.name
-        RepoId        = $res.id
-        RepoURL       = $res.url
-        WebUrl        = $res.webUrl
-        HttpsUrl      = $res.remoteUrl
-        SshUrl        = $res.sshUrl
-      }
+    [PSCustomObject]. An object containing information about the commit and repository
 .NOTES
 #>
   [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]

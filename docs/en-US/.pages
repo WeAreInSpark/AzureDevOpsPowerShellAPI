@@ -1,43 +1,44 @@
 nav:
   - Home:
-    - index.md
-    - ...| About*.md
+      - index.md
+      - ...| About*.md
+      - ...| Example*.md
   - Modules:
-    - Approvals And Checks:
-      - Check Configurations:
-        - Add-AzDoPipelineBranchControl.md
-    - Build:
-      - General Settings:
-        - Set-AzDoProjectSetting.md
-    - Core:
-      - Projects:
-        - ... | *AzDoProject.md
-    - Distributed Task:
-      - VariableGroups:
-        - ... | *AzDoVariableGroup*.md
-    - Environments:
+      - Approvals And Checks:
+          - Check Configurations:
+              - Add-AzDoPipelineBranchControl.md
+      - Build:
+          - General Settings:
+              - Set-AzDoProjectSetting.md
+      - Core:
+          - Projects:
+              - ... | *AzDoProject.md
+      - Distributed Task:
+          - VariableGroups:
+              - ... | *AzDoVariableGroup*.md
       - Environments:
-        - ... | *AzDoEnvironment.md
-    - Git:
-      - Pushes:
-        - Add-FilesToRepo.md
-      - Repositories:
-        - ... | *AzDoRepo.md
-    - Pipelines:
+          - Environments:
+              - ... | *AzDoEnvironment.md
+      - Git:
+          - Pushes:
+              - Add-FilesToRepo.md
+          - Repositories:
+              - ... | *AzDoRepo.md
       - Pipelines:
-        - ... | *AzDoPipeline.md
-    - Policy:
-      - Configuration:
-        - Get-AzDoBranchPolicy.md
-        - Set-AzDoBranchPolicyBuildValidation.md
-        - Set-AzDoBranchPolicyCommentResolution.md
-        - Set-AzDoBranchPolicyMergeStrategy.md
-        - Set-AzDoBranchPolicyMinimalApproval.md
-      - Types:
-        - Get-AzDoBranchPolicyType.md
-    - Service Endpoints:
-      - Endpoint proxy:
-        - Test-AzDoServiceConnection.md
-      - Endpoints:
-        - Get-AzDoServiceConnection.md
-        - New-AzDoServiceConnection.md
+          - Pipelines:
+              - ... | *AzDoPipeline.md
+      - Policy:
+          - Configuration:
+              - Get-AzDoBranchPolicy.md
+              - Set-AzDoBranchPolicyBuildValidation.md
+              - Set-AzDoBranchPolicyCommentResolution.md
+              - Set-AzDoBranchPolicyMergeStrategy.md
+              - Set-AzDoBranchPolicyMinimalApproval.md
+          - Types:
+              - Get-AzDoBranchPolicyType.md
+      - Service Endpoints:
+          - Endpoint proxy:
+              - Test-AzDoServiceConnection.md
+          - Endpoints:
+              - Get-AzDoServiceConnection.md
+              - New-AzDoServiceConnection.md

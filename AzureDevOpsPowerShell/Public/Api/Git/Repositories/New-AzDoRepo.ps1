@@ -43,7 +43,7 @@ function New-AzDoRepo {
     $RepoName,
 
     # Name of the project where the new repository has to be created
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName
   )
