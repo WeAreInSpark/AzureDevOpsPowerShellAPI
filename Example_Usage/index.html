@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../Get-AzDoBranchPolicyType/">
+        <link rel="prev" href="../About_Authentication/">
       
       
-        <link rel="next" href="../Get-AzDoServiceConnection/">
+        <link rel="next" href="../Add-AzDoPipelineBranchControl/">
       
       
       <link rel="icon" href="../assets/inspark-logo-semi.svg">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Test-AzDoServiceConnection - InfrastuctureAsCode</title>
+        <title>Example usage - InfrastuctureAsCode</title>
       
     
     
@@ -69,7 +69,7 @@
   <!-- Open graph meta tags -->
   <meta property="og:site_name" content="InfrastuctureAsCode" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="InfrastuctureAsCode - Test-AzDoServiceConnection" />
+  <meta property="og:title" content="InfrastuctureAsCode - Example usage" />
   <meta property="og:description" content="None" />
   <meta property="og:url" content="None" />
   <meta property="og:image" content="https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654" />
@@ -81,7 +81,7 @@
   <!-- Twitter meta tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@github" />
-  <meta name="twitter:title" content="InfrastuctureAsCode - Test-AzDoServiceConnection" />
+  <meta name="twitter:title" content="InfrastuctureAsCode - Example usage" />
   <meta name="twitter:description" content="None" />
   <meta name="twitter:image" content="https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654" />
 
@@ -98,7 +98,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#test-azdoserviceconnection" class="md-skip">
+        <a href="#example-usage" class="md-skip">
           Skip to content
         </a>
       
@@ -135,7 +135,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Test-AzDoServiceConnection
+              Example usage
             
           </span>
         </div>
@@ -214,10 +214,12 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href=".." class="md-tabs__link">
           
   
@@ -234,7 +236,11 @@
         
   
   
+  
     
+    
+      
+  
   
   
     
@@ -242,20 +248,10 @@
       
   
   
-    
-  
   
     
     
-      
-  
-  
-    
-  
-  
-    
-    
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../Add-AzDoPipelineBranchControl/" class="md-tabs__link">
           
   
@@ -323,6 +319,8 @@
       
   
   
+    
+  
   
   
     
@@ -343,12 +341,12 @@
       
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
         
           
           
@@ -370,7 +368,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             Home
@@ -404,10 +402,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../Example_Usage/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Example usage
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -416,6 +434,62 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#get-azure-devops-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Azure DevOps project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a repository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-files-to-your-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add files to your repository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-pipeline-in-your-azure-devops-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a pipeline in your Azure DevOps Project
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -432,10 +506,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -464,12 +536,12 @@
       
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -483,7 +555,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Modules
@@ -1843,10 +1915,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -1858,12 +1928,12 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9" >
         
           
           <label class="md-nav__link" for="__nav_2_9" id="__nav_2_9_label" tabindex="0">
@@ -1877,7 +1947,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_9_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_9_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_9">
             <span class="md-nav__icon md-icon"></span>
             Service Endpoints
@@ -1888,8 +1958,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1901,12 +1969,12 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_1" >
         
           
           <label class="md-nav__link" for="__nav_2_9_1" id="__nav_2_9_1_label" tabindex="0">
@@ -1920,7 +1988,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_9_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_9_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_9_1">
             <span class="md-nav__icon md-icon"></span>
             Endpoint proxy
@@ -1931,30 +1999,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Test-AzDoServiceConnection
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../Test-AzDoServiceConnection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1963,191 +2011,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#synopsis" class="md-nav__link">
-    <span class="md-ellipsis">
-      SYNOPSIS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#syntax" class="md-nav__link">
-    <span class="md-ellipsis">
-      SYNTAX
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    <span class="md-ellipsis">
-      DESCRIPTION
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      EXAMPLES
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="EXAMPLES">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      EXAMPLE 1
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      PARAMETERS
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="PARAMETERS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#-projectname" class="md-nav__link">
-    <span class="md-ellipsis">
-      -ProjectName
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-collectionuri" class="md-nav__link">
-    <span class="md-ellipsis">
-      -CollectionUri
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-serviceconnectionname" class="md-nav__link">
-    <span class="md-ellipsis">
-      -ServiceConnectionName
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-whatif" class="md-nav__link">
-    <span class="md-ellipsis">
-      -WhatIf
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-confirm" class="md-nav__link">
-    <span class="md-ellipsis">
-      -Confirm
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-progressaction" class="md-nav__link">
-    <span class="md-ellipsis">
-      -ProgressAction
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#commonparameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      CommonParameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      INPUTS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      OUTPUTS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      NOTES
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-links" class="md-nav__link">
-    <span class="md-ellipsis">
-      RELATED LINKS
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2296,165 +2159,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#synopsis" class="md-nav__link">
+  <a href="#get-azure-devops-project" class="md-nav__link">
     <span class="md-ellipsis">
-      SYNOPSIS
+      Get Azure DevOps project
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#syntax" class="md-nav__link">
+  <a href="#create-a-repository" class="md-nav__link">
     <span class="md-ellipsis">
-      SYNTAX
+      Create a repository
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
+  <a href="#add-files-to-your-repository" class="md-nav__link">
     <span class="md-ellipsis">
-      DESCRIPTION
+      Add files to your repository
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#create-a-pipeline-in-your-azure-devops-project" class="md-nav__link">
     <span class="md-ellipsis">
-      EXAMPLES
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="EXAMPLES">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      EXAMPLE 1
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      PARAMETERS
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="PARAMETERS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#-projectname" class="md-nav__link">
-    <span class="md-ellipsis">
-      -ProjectName
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-collectionuri" class="md-nav__link">
-    <span class="md-ellipsis">
-      -CollectionUri
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-serviceconnectionname" class="md-nav__link">
-    <span class="md-ellipsis">
-      -ServiceConnectionName
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-whatif" class="md-nav__link">
-    <span class="md-ellipsis">
-      -WhatIf
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-confirm" class="md-nav__link">
-    <span class="md-ellipsis">
-      -Confirm
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-progressaction" class="md-nav__link">
-    <span class="md-ellipsis">
-      -ProgressAction
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#commonparameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      CommonParameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      INPUTS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      OUTPUTS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      NOTES
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-links" class="md-nav__link">
-    <span class="md-ellipsis">
-      RELATED LINKS
+      Create a pipeline in your Azure DevOps Project
     </span>
   </a>
   
@@ -2479,117 +2213,22 @@
   
 
 
-<h1 id="test-azdoserviceconnection">Test-AzDoServiceConnection<a class="headerlink" href="#test-azdoserviceconnection" title="Permanent link">#</a></h1>
-<h2 id="synopsis">SYNOPSIS<a class="headerlink" href="#synopsis" title="Permanent link">#</a></h2>
-<p>Function to create a service connection in Azure DevOps</p>
-<h2 id="syntax">SYNTAX<a class="headerlink" href="#syntax" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code>Test-AzDoServiceConnection [-ProjectName] &lt;String&gt; [-CollectionUri] &lt;String&gt; [-ServiceConnectionName] &lt;String&gt;
- [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
-</code></pre></div>
-<h2 id="description">DESCRIPTION<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>Function to create a service connection in Azure DevOps</p>
-<h2 id="examples">EXAMPLES<a class="headerlink" href="#examples" title="Permanent link">#</a></h2>
-<h3 id="example-1">EXAMPLE 1<a class="headerlink" href="#example-1" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>$params = @{
-    CollectionUri               = &quot;https://dev.azure.com/contoso&quot;
-    ProjectName                 = &quot;Project 1&quot;
-    SubscriptionId              = &quot;00000-00000-00000-00000-00000&quot;
-    SubscriptionName            = &quot;Subscription 1&quot;
-    Tenantid                    = &quot;11111-11111-11111-11111-11111&quot;
-    Serviceprincipalid          = &quot;1c03163f-7e4e-4fab-8b41-6f040a8361b9&quot;
-    KeyVaultName                = &quot;kv01&quot;
-    CertName                    = &quot;Cert01&quot;
-    AuthenticationType          = &quot;spnCertificate&quot;
-    ProjectID                   = &quot;1f31cb4d-5a69-419f-86f0-ee3a8ed9ced2&quot;
-    Name                        = &quot;Project 1&quot;
-}
-Test-AzDoServiceConnection @params
-</code></pre></div>
-<p>This example creates a new Azure DevOps service connection with a Certificate from a KeyVault in Azure.</p>
-<h2 id="parameters">PARAMETERS<a class="headerlink" href="#parameters" title="Permanent link">#</a></h2>
-<h3 id="-projectname">-ProjectName<a class="headerlink" href="#-projectname" title="Permanent link">#</a></h3>
-<p>Name of the Project in Azure DevOps.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span>
+<h1 id="example-usage">Example usage<a class="headerlink" href="#example-usage" title="Permanent link">#</a></h1>
+<p>This example shows you how can you can add a repository to your existing Azure DevOps project, add files to it, and create pipelines from those files.</p>
+<h2 id="get-azure-devops-project">Get Azure DevOps project<a class="headerlink" href="#get-azure-devops-project" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nb">Connect-AzAccount</span>
 
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="nv">$project</span> <span class="p">=</span> <span class="nb">Get-AzDoProject</span> <span class="n">-CollectionUri</span> <span class="s2">&quot;https://dev.azure.com/contoso&quot;</span> <span class="n">-ProjectName</span> <span class="s2">&quot;MyProject&quot;</span>
 </code></pre></div>
-<h3 id="-collectionuri">-CollectionUri<a class="headerlink" href="#-collectionuri" title="Permanent link">#</a></h3>
-<p>Collection Uri.
-e.g.
-https://dev.azure.com/contoso.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<h2 id="create-a-repository">Create a repository<a class="headerlink" href="#create-a-repository" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nv">$repo</span> <span class="p">=</span> <span class="nv">$project</span> <span class="p">|</span> <span class="nb">New-AzDoRepo</span> <span class="n">-RepoName</span> <span class="s2">&quot;RepoTest&quot;</span>
 </code></pre></div>
-<h3 id="-serviceconnectionname">-ServiceConnectionName<a class="headerlink" href="#-serviceconnectionname" title="Permanent link">#</a></h3>
-<p>Collection Uri.
-e.g.
-https://dev.azure.com/contoso.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName, ByValue)</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<h2 id="add-files-to-your-repository">Add files to your repository<a class="headerlink" href="#add-files-to-your-repository" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nv">$repo</span> <span class="p">|</span> <span class="nb">Add-FilesToRepo</span> <span class="n">-Path</span> <span class="s2">&quot;C:/git/MyProject/MyRepo&quot;</span>
 </code></pre></div>
-<h3 id="-whatif">-WhatIf<a class="headerlink" href="#-whatif" title="Permanent link">#</a></h3>
-<p>Shows what would happen if the cmdlet runs.
-The cmdlet is not run.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SwitchParameter</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wi</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<h2 id="create-a-pipeline-in-your-azure-devops-project">Create a pipeline in your Azure DevOps Project<a class="headerlink" href="#create-a-pipeline-in-your-azure-devops-project" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nv">$repo</span> <span class="p">|</span> <span class="nb">New-AzDoPipeline</span> <span class="n">-PipelineName</span> <span class="s2">&quot;TestPipeline&quot;</span> <span class="n">-Path</span> <span class="s2">&quot;/pipelines/pipeline1.yml&quot;</span>
 </code></pre></div>
-<h3 id="-confirm">-Confirm<a class="headerlink" href="#-confirm" title="Permanent link">#</a></h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SwitchParameter</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cf</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-</code></pre></div>
-<h3 id="-progressaction">-ProgressAction<a class="headerlink" href="#-progressaction" title="Permanent link">#</a></h3>
-<p>{{ Fill ProgressAction Description }}</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ActionPreference</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">proga</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-</code></pre></div>
-<h3 id="commonparameters">CommonParameters<a class="headerlink" href="#commonparameters" title="Permanent link">#</a></h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
-<h2 id="inputs">INPUTS<a class="headerlink" href="#inputs" title="Permanent link">#</a></h2>
-<h2 id="outputs">OUTPUTS<a class="headerlink" href="#outputs" title="Permanent link">#</a></h2>
-<h2 id="notes">NOTES<a class="headerlink" href="#notes" title="Permanent link">#</a></h2>
-<h2 id="related-links">RELATED LINKS<a class="headerlink" href="#related-links" title="Permanent link">#</a></h2>
 
 
 
