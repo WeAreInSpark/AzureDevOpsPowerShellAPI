@@ -14,10 +14,6 @@ function Add-FilesToRepo {
     Add-FilesToRepo @params
 
     This example adds the files in the path to the repository
-.EXAMPLE
-    'test', 'test2' | New-AzDoRepo -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -Path "C:\git\BRC\AzureDevOpsPowerShellAPI"
-
-    This example adds the files in the path to the repositories 'test' and 'test2'
 .OUTPUTS
     [PSCustomObject]. An object containing information about the commit and repository
 .NOTES
