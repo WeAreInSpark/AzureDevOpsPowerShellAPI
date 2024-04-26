@@ -27,6 +27,7 @@ function Set-AzDoProjectSetting {
   param (
     # Collection uri of the organization. Can be set with the predefined variable from Azure DevOps.
     [Parameter(Mandatory)]
+    [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 

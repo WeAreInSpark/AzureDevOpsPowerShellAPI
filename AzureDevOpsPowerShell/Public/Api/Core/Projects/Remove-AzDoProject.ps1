@@ -36,6 +36,7 @@ function Remove-AzDoProject {
     # Collection URI. e.g. https://dev.azure.com/contoso.
     # Azure Pipelines has a predefined variable for this.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+    [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 

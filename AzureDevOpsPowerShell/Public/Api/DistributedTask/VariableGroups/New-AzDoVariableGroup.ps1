@@ -40,6 +40,7 @@ function New-AzDoVariableGroup {
   param (
     # Collection Uri of the organization
     [Parameter(Mandatory)]
+    [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
