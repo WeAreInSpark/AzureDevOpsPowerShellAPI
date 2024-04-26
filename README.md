@@ -25,10 +25,10 @@ but we believe that this project in more user-friendly.
 
 ```powershell
 # PowerShell 7.3 and below
-Install-Module -Name AzureDevOpsPowerShellAPI -Scope CurrentUser
+Install-Module -Name AzureDevOpsPowerShell -Scope CurrentUser
 
 # PowerShell 7.4 and up
-Install-PSresource -Name AzureDevOpsPowerShellAPI -Scope CurrentUser
+Install-PSresource -Name AzureDevOpsPowerShell -Scope CurrentUser
 ```
 
 ## Basic Usage
