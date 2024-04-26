@@ -32,6 +32,7 @@ function Test-AzDoServiceConnection {
 
     # Collection Uri. e.g. https://dev.azure.com/contoso.
     [Parameter(Mandatory)]
+    [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 

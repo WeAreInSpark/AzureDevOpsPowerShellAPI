@@ -37,6 +37,7 @@ function Set-AzDoBranchPolicyBuildValidation {
   param (
     # Collection Uri of the organization
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+    [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 

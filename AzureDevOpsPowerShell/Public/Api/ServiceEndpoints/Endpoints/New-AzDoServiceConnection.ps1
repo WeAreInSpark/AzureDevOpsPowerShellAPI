@@ -45,6 +45,7 @@ function New-AzDoServiceConnection {
   param (
     # Collection Uri. e.g. https://dev.azure.com/contoso.
     [Parameter(Mandatory)]
+    [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 

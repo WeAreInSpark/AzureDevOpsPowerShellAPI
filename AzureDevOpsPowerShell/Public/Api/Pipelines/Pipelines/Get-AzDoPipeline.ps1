@@ -37,6 +37,7 @@ function Get-AzDoPipeline {
   param (
     # Collection Uri of the organization
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
