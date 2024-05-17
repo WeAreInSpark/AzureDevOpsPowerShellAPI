@@ -77,6 +77,7 @@ function New-AzDoServiceConnection {
     # Scope level (Subscription or ManagementGroup).
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalSecret')]
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ServiceprincipalCertificate')]
+    [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'WorkloadIdentityFederation')]
     [ValidateSet('Subscription', 'ManagementGroup')]
     [string]
     $ScopeLevel,
@@ -89,11 +90,13 @@ function New-AzDoServiceConnection {
 
     # ID of the subscriptionn.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'Subscription')]
+    [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'WorkloadIdentityFederation')]
     [string]
     $SubscriptionId,
 
     # Name of the subscription.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'Subscription')]
+    [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'WorkloadIdentityFederation')]
     [string]
     $SubscriptionName,
 

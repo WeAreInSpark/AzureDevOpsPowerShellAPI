@@ -33,7 +33,12 @@ function Invoke-AzDoRestMethod {
 
     [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
     [PSCustomObject[]]
-    $Body
+    $Body,
+
+    [Parameter()]
+    [ValidateSet('application/json', 'application/json-patch+json')]
+    [string]
+    $ContentType = 'application/json'
   )
 
   begin {
@@ -73,7 +78,7 @@ function Invoke-AzDoRestMethod {
     $params = @{
       Method      = $Method
       Headers     = $script:header
-      ContentType = 'application/json'
+      ContentType = $ContentType
     }
 
     if ($QueryParameters) {
