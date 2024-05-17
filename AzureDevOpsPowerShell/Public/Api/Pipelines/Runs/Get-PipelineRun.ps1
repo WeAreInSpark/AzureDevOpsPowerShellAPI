@@ -9,9 +9,11 @@ function Get-PipelineRun {
   Azure DevOps and returns the run details.
 .EXAMPLE
   Get-PipelineRun -CollectionUri "https://dev.azure.com/YourOrg" -ProjectName "YourProject" -PipelineId 123
+
   Retrieves all runs for the specified pipeline in the given project.
 .EXAMPLE
   Get-PipelineRun -CollectionUri "https://dev.azure.com/YourOrg" -ProjectName "YourProject" -PipelineId 123 -RunId 456
+
   Retrieves the details of the specified run (with ID 456) for the given pipeline.
 .OUTPUTS
   Returns an array of pipeline run objects. If specific run IDs are provided, only the matching runs are returned.
