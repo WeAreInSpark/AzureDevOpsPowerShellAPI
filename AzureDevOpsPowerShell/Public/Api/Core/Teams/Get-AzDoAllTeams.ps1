@@ -98,19 +98,3 @@ function Get-AzDoAllTeams {
     }
   }
 }
-
-<#
-$params = @{
-  CollectionUri  = 'https://dev.azure.com/yuhnix2'
-  ExpandIdentity = $true
-  Mine           = $true
-}
-
-$allteamsMine = Get-AzDoAllTeams @params
-$params = @{
-  CollectionUri  = 'https://dev.azure.com/yuhnix2'
-  ExpandIdentity = $true
-  Mine           = $false
-}
-$allteams = Get-AzDoAllTeams @params
-#>

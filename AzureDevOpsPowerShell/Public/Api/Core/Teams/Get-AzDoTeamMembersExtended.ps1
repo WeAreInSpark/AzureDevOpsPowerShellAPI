@@ -7,7 +7,7 @@ function Get-AzDoTeamMembersExtended {
       When used in a pipeline, you can use the pre-defined CollectionUri, ProjectName, and AccessToken (PAT) variables.
   .EXAMPLE
       $params = @{
-          CollectionUri = 'https://dev.azure.com/weareinspark/'
+          CollectionUri = 'https://dev.azure.com/contos0'
           ProjectName = 'Project 1'
           TeamName = 'testteam'
       }
@@ -95,20 +95,9 @@ function Get-AzDoTeamMembersExtended {
           MemberId    = $_.identity.id
           DisplayName = $_.identity.displayName
           UniqueName  = $_.identity.uniqueName
-          Email       = $_.identity.mailAddress
           IsTeamAdmin = $_.isTeamAdmin
         }
       }
     }
   }
 }
-
-<#
-# Example usage
-$params = @{
-    CollectionUri = 'https://dev.azure.com/yuhnix2'
-    ProjectName   = 'Test'
-    TeamName      = 'test Team'
-}
-Get-AzDoTeamMembersExtended @params
-#>

@@ -7,19 +7,19 @@ function Get-AzDoProjectTeams {
           When used in a pipeline, you can use the pre-defined CollectionUri, ProjectName, and AccessToken (PAT) variables.
       .EXAMPLE
           $params = @{
-              CollectionUri = 'https://dev.azure.com/weareinspark/'
+              CollectionUri = 'https://dev.azure.com/contoso/'
               ProjectName = 'Project 1'
               TeamName = 'testteam'
           }
-          Get-AzDoTeams @params
+          Get-AzDoProjectTeams @params
 
           This example gets the team 'testteam' in 'Project 1'.
       .EXAMPLE
           $params = @{
-              CollectionUri = 'https://dev.azure.com/weareinspark/'
+              CollectionUri = 'https://dev.azure.com/contoso/'
               ProjectName = 'Project 1'
           }
-          Get-AzDoTeams @params
+          Get-AzDoProjectTeams @params
 
           This example gets all teams in 'Project 1'.
       .OUTPUTS

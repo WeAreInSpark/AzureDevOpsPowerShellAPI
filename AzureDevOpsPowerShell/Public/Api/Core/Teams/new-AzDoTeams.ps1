@@ -101,14 +101,3 @@ function New-AzDoTeams {
     Write-Verbose "Ending function: New-AzDoTeam"
   }
 }
-
-
-
-<#
-$newAzDoTeamSplat = @{
-  CollectionUri = "https://dev.azure.com/yuhnix2"
-  Project       = "test"
-  TeamName      = "nogEenasddsdfrdr33"
-}
-New-AzDoTeams @newAzDoTeamSplat
-#>
