@@ -20,7 +20,7 @@ function Set-AzDoPAT {
   )
 
   process {
-    if ($PSCmdlet.ShouldProcess()) {
+    if ($PSCmdlet.ShouldProcess("AzureDevopsPowerShell module", "Set PAT")) {
       New-AzDoAuthHeader -Pat $Pat
     } else {
       Write-Verbose "Calling New-AzDoAuthHeader with pat"
