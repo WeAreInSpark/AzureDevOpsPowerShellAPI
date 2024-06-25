@@ -111,15 +111,3 @@ function Update-AzDoTeams {
     Write-Verbose "Ending function: Update-AzDoTeams"
   }
 }
-
-<#
-# Example usage
-$params = @{
-  CollectionUri = 'https://dev.azure.com/yuhnix2'
-  ProjectName   = 'Test'
-  TeamName      = 'test Team'
-  NewTeamName   = 'updated Test Team'
-  Description   = 'Updated description for test team'
-}
-Update-AzDoTeams @params
-#>
