@@ -2855,8 +2855,9 @@
 <h2 id="syntax">SYNTAX<a class="headerlink" href="#syntax" title="Permanent link">#</a></h2>
 <h3 id="workloadidentityfederation">WorkloadIdentityFederation<a class="headerlink" href="#workloadidentityfederation" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code>New-AzDoServiceConnection -CollectionUri &lt;String&gt; -ProjectName &lt;String&gt; -ServiceConnectionName &lt;String&gt;
- [-Description &lt;String&gt;] [-Force] [-AsDraft] [-AuthenticationType &lt;String&gt;] [-TenantId &lt;String&gt;]
- [-ServiceprincipalId &lt;String&gt;] [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+ [-Description &lt;String&gt;] [-Force] [-AsDraft] [-ScopeLevel &lt;String&gt;] [-AuthenticationType &lt;String&gt;]
+ [-SubscriptionId &lt;String&gt;] [-SubscriptionName &lt;String&gt;] [-TenantId &lt;String&gt;] [-ServiceprincipalId &lt;String&gt;]
+ [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre></div>
 <h3 id="serviceprincipalcertificate">ServiceprincipalCertificate<a class="headerlink" href="#serviceprincipalcertificate" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code>New-AzDoServiceConnection -CollectionUri &lt;String&gt; -ProjectName &lt;String&gt; -ServiceConnectionName &lt;String&gt;
@@ -2995,6 +2996,16 @@ https://dev.azure.com/contoso.</p>
 <h3 id="-scopelevel">-ScopeLevel<a class="headerlink" href="#-scopelevel" title="Permanent link">#</a></h3>
 <p>Scope level (Subscription or ManagementGroup).</p>
 <div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
+<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WorkloadIdentityFederation</span>
+<span class="nt">Aliases</span><span class="p">:</span>
+
+<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
+<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
+<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
 <span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceprincipalCertificate, ServiceprincipalSecret</span>
 <span class="nt">Aliases</span><span class="p">:</span>
 
@@ -3019,6 +3030,16 @@ https://dev.azure.com/contoso.</p>
 <h3 id="-subscriptionid">-SubscriptionId<a class="headerlink" href="#-subscriptionid" title="Permanent link">#</a></h3>
 <p>ID of the subscriptionn.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
+<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WorkloadIdentityFederation</span>
+<span class="nt">Aliases</span><span class="p">:</span>
+
+<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
+<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
+<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
 <span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Subscription</span>
 <span class="nt">Aliases</span><span class="p">:</span>
 
@@ -3030,6 +3051,16 @@ https://dev.azure.com/contoso.</p>
 </code></pre></div>
 <h3 id="-subscriptionname">-SubscriptionName<a class="headerlink" href="#-subscriptionname" title="Permanent link">#</a></h3>
 <p>Name of the subscription.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
+<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WorkloadIdentityFederation</span>
+<span class="nt">Aliases</span><span class="p">:</span>
+
+<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
+<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
+<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+</code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
 <span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Subscription</span>
 <span class="nt">Aliases</span><span class="p">:</span>
@@ -3207,7 +3238,7 @@ The cmdlet is not run.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    2024-06-20
+    2024-07-08
   </span>
 
     
