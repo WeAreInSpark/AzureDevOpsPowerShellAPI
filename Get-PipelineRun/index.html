@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../Get-PipelineRun/">
+        <link rel="prev" href="../Get-AzDoVariableGroup/">
       
       
-        <link rel="next" href="../New-AzDoEnvironment/">
+        <link rel="next" href="../New-AzDoClassificationNode/">
       
       
       <link rel="icon" href="../assets/inspark-logo-semi.svg">
@@ -20,7 +20,7 @@
     
     
       
-        <title>New-AzDoClassificationNode - InfrastuctureAsCode</title>
+        <title>Get-PipelineRun - InfrastuctureAsCode</title>
       
     
     
@@ -69,7 +69,7 @@
   <!-- Open graph meta tags -->
   <meta property="og:site_name" content="InfrastuctureAsCode" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="InfrastuctureAsCode - New-AzDoClassificationNode" />
+  <meta property="og:title" content="InfrastuctureAsCode - Get-PipelineRun" />
   <meta property="og:description" content="None" />
   <meta property="og:url" content="None" />
   <meta property="og:image" content="https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654" />
@@ -81,7 +81,7 @@
   <!-- Twitter meta tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@github" />
-  <meta name="twitter:title" content="InfrastuctureAsCode - New-AzDoClassificationNode" />
+  <meta name="twitter:title" content="InfrastuctureAsCode - Get-PipelineRun" />
   <meta name="twitter:description" content="None" />
   <meta name="twitter:image" content="https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654" />
 
@@ -98,7 +98,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#new-azdoclassificationnode" class="md-skip">
+        <a href="#get-pipelinerun" class="md-skip">
           Skip to content
         </a>
       
@@ -135,7 +135,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              New-AzDoClassificationNode
+              Get-PipelineRun
             
           </span>
         </div>
@@ -2133,24 +2133,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#example-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      EXAMPLE 3
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-4" class="md-nav__link">
-    <span class="md-ellipsis">
-      EXAMPLE 4
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2185,45 +2167,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-structuregroup" class="md-nav__link">
+  <a href="#-pipelineid" class="md-nav__link">
     <span class="md-ellipsis">
-      -StructureGroup
+      -PipelineId
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#-path" class="md-nav__link">
+  <a href="#-runid" class="md-nav__link">
     <span class="md-ellipsis">
-      -Path
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-name" class="md-nav__link">
-    <span class="md-ellipsis">
-      -Name
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-startdate" class="md-nav__link">
-    <span class="md-ellipsis">
-      -startDate
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-finishdate" class="md-nav__link">
-    <span class="md-ellipsis">
-      -finishDate
+      -RunId
     </span>
   </a>
   
@@ -2290,108 +2245,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#pscustomobject" class="md-nav__link">
+  <a href="#returns-an-array-of-pipeline-run-objects-if-specific-run-ids-are-provided-only-the-matching-runs-are-returned" class="md-nav__link">
     <span class="md-ellipsis">
-      [PSCustomObject]@{
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#collectionuri-collectionuri" class="md-nav__link">
-    <span class="md-ellipsis">
-      CollectionUri = $CollectionUri
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#projectname-projectname" class="md-nav__link">
-    <span class="md-ellipsis">
-      ProjectName   = $ProjectName
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#id-_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      Id            = $_.id
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#identifier-_identifier" class="md-nav__link">
-    <span class="md-ellipsis">
-      Identifier    = $_.identifier
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#name-_name" class="md-nav__link">
-    <span class="md-ellipsis">
-      Name          = $_.name
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#structuretype-_structuretype" class="md-nav__link">
-    <span class="md-ellipsis">
-      StructureType = $_.structureType
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#haschildren-_haschildren" class="md-nav__link">
-    <span class="md-ellipsis">
-      HasChildren   = $_.hasChildren
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#path-_path" class="md-nav__link">
-    <span class="md-ellipsis">
-      Path          = $_.path
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#links-__links" class="md-nav__link">
-    <span class="md-ellipsis">
-      Links         = $_._links
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#url-_url" class="md-nav__link">
-    <span class="md-ellipsis">
-      Url           = $_.url
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      }
+      Returns an array of pipeline run objects. If specific run IDs are provided, only the matching runs are returned.
     </span>
   </a>
   
@@ -2439,62 +2295,29 @@
   
 
 
-<h1 id="new-azdoclassificationnode">New-AzDoClassificationNode<a class="headerlink" href="#new-azdoclassificationnode" title="Permanent link">#</a></h1>
+<h1 id="get-pipelinerun">Get-PipelineRun<a class="headerlink" href="#get-pipelinerun" title="Permanent link">#</a></h1>
 <h2 id="synopsis">SYNOPSIS<a class="headerlink" href="#synopsis" title="Permanent link">#</a></h2>
-<p>Creates a Classification Node in Azure DevOps.</p>
+<p>Retrieves pipeline run information from Azure DevOps for a specified pipeline within a project.</p>
 <h2 id="syntax">SYNTAX<a class="headerlink" href="#syntax" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code>New-AzDoClassificationNode [-CollectionUri] &lt;String&gt; [-ProjectName] &lt;String&gt; [-StructureGroup] &lt;String&gt;
- [[-Path] &lt;String&gt;] [-Name] &lt;String&gt; [[-startDate] &lt;String&gt;] [[-finishDate] &lt;String&gt;]
+<div class="highlight"><pre><span></span><code>Get-PipelineRun [-CollectionUri] &lt;String&gt; [-ProjectName] &lt;String&gt; [-PipelineId] &lt;Int32&gt; [[-RunId] &lt;Int32[]&gt;]
  [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre></div>
 <h2 id="description">DESCRIPTION<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>Creates a Classification Node in Azure DevOps.
-This could be an area or an iteration.</p>
+<p>The `Get-PipelineRun` function fetches details about one or more pipeline runs from an Azure DevOps project.
+It requires the collection URI, project name, and pipeline ID.
+Optionally, specific run IDs can be provided
+to filter the results.
+The function uses the `Invoke-AzDoRestMethod` cmdlet to make the REST API call to
+Azure DevOps and returns the run details.</p>
 <h2 id="examples">EXAMPLES<a class="headerlink" href="#examples" title="Permanent link">#</a></h2>
 <h3 id="example-1">EXAMPLE 1<a class="headerlink" href="#example-1" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>$Params = @{
-  CollectionUri  = &quot;https://dev.azure.com/cantoso&quot;
-  ProjectName    = &quot;Playground&quot;
-  StructureGroup = &quot;areas&quot;
-  Name           = &quot;Area1&quot;
-}
+<div class="highlight"><pre><span></span><code>Get-PipelineRun -CollectionUri &quot;https://dev.azure.com/YourOrg&quot; -ProjectName &quot;YourProject&quot; -PipelineId 123
 </code></pre></div>
-<p>New-AzDoClassificationNode @Params</p>
-<p>This example creates a Classification Node of the type 'areas' within the Project.</p>
+<p>Retrieves all runs for the specified pipeline in the given project.</p>
 <h3 id="example-2">EXAMPLE 2<a class="headerlink" href="#example-2" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>$Params = @{
-  CollectionUri  = &quot;https://dev.azure.com/cantoso&quot;
-  ProjectName    = &quot;Playground&quot;
-  StructureGroup = &quot;areas&quot;
-  Name           = &quot;Area1&quot;
-  Path           = &quot;Path1&quot;
-}
+<div class="highlight"><pre><span></span><code>Get-PipelineRun -CollectionUri &quot;https://dev.azure.com/YourOrg&quot; -ProjectName &quot;YourProject&quot; -PipelineId 123 -RunId 456
 </code></pre></div>
-<p>New-AzDoClassificationNode @Params</p>
-<p>This example creates a Classification Node of the type 'areas' within the specified path.</p>
-<h3 id="example-3">EXAMPLE 3<a class="headerlink" href="#example-3" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>$Params = @{
-  CollectionUri  = &quot;https://dev.azure.com/cantoso&quot;
-  ProjectName    = &quot;Playground&quot;
-  StructureGroup = &quot;iterations&quot;
-  Name           = &quot;Iteration1&quot;
-}
-</code></pre></div>
-<p>New-AzDoClassificationNode @Params</p>
-<p>This example creates a Classification Node of the type 'iterations' within the Project.</p>
-<h3 id="example-4">EXAMPLE 4<a class="headerlink" href="#example-4" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>$Params = @{
-  CollectionUri  = &quot;https://dev.azure.com/cantoso&quot;
-  ProjectName    = &quot;Playground&quot;
-  StructureGroup = &quot;iterations&quot;
-  Name           = &quot;Iteration1&quot;
-  Path           = &quot;Path1&quot;
-  startDate      = &quot;10//701001 00:00:00
-  finishDate     = &quot;10//701008 00:00:00
-}
-</code></pre></div>
-<p>New-AzDoClassificationNode @Params</p>
-<p>This example creates a Classification Node of the type 'iterations' within the specified path, it is also possible to use a start and finish date of the iteration by adding the optional parameters 'startDate' and 'finishDate'.</p>
+<p>Retrieves the details of the specified run (with ID 456) for the given pipeline.</p>
 <h2 id="parameters">PARAMETERS<a class="headerlink" href="#parameters" title="Permanent link">#</a></h2>
 <h3 id="-collectionuri">-CollectionUri<a class="headerlink" href="#-collectionuri" title="Permanent link">#</a></h3>
 <p>Collection Uri of the organization</p>
@@ -2509,7 +2332,7 @@ This could be an area or an iteration.</p>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
 <h3 id="-projectname">-ProjectName<a class="headerlink" href="#-projectname" title="Permanent link">#</a></h3>
-<p>Name of the project where the new repository has to be created</p>
+<p>The name of the project containing the pipeline</p>
 <div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
 <span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
 <span class="nt">Aliases</span><span class="p">:</span>
@@ -2520,62 +2343,27 @@ This could be an area or an iteration.</p>
 <span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
-<h3 id="-structuregroup">-StructureGroup<a class="headerlink" href="#-structuregroup" title="Permanent link">#</a></h3>
-<p>Name of the project where the new repository has to be created</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
+<h3 id="-pipelineid">-PipelineId<a class="headerlink" href="#-pipelineid" title="Permanent link">#</a></h3>
+<p>The ID of the pipeline to retrieve the run for</p>
+<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Int32</span>
 <span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
 <span class="nt">Aliases</span><span class="p">:</span>
 
 <span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
 <span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
+<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 <span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
-<h3 id="-path">-Path<a class="headerlink" href="#-path" title="Permanent link">#</a></h3>
-<p>Path of the classification node (optional)</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
+<h3 id="-runid">-RunId<a class="headerlink" href="#-runid" title="Permanent link">#</a></h3>
+<p>The ID of the run to retrieve.
+If not provided, all runs for the pipeline are returned.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Int32[]</span>
 <span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
 <span class="nt">Aliases</span><span class="p">:</span>
 
 <span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 <span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-</code></pre></div>
-<h3 id="-name">-Name<a class="headerlink" href="#-name" title="Permanent link">#</a></h3>
-<p>Name of the classification node</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-</code></pre></div>
-<h3 id="-startdate">-startDate<a class="headerlink" href="#-startdate" title="Permanent link">#</a></h3>
-<p>Start date of the iteration (optional)</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-</code></pre></div>
-<h3 id="-finishdate">-finishDate<a class="headerlink" href="#-finishdate" title="Permanent link">#</a></h3>
-<p>Finish date of the iteration (optional)</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
-<span class="nt">Aliases</span><span class="p">:</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7</span>
 <span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
 <span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
@@ -2621,18 +2409,7 @@ The cmdlet is not run.</p>
 <p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="inputs">INPUTS<a class="headerlink" href="#inputs" title="Permanent link">#</a></h2>
 <h2 id="outputs">OUTPUTS<a class="headerlink" href="#outputs" title="Permanent link">#</a></h2>
-<h3 id="pscustomobject">[PSCustomObject]@{<a class="headerlink" href="#pscustomobject" title="Permanent link">#</a></h3>
-<h3 id="collectionuri-collectionuri">CollectionUri = $CollectionUri<a class="headerlink" href="#collectionuri-collectionuri" title="Permanent link">#</a></h3>
-<h3 id="projectname-projectname">ProjectName   = $ProjectName<a class="headerlink" href="#projectname-projectname" title="Permanent link">#</a></h3>
-<h3 id="id-_id">Id            = $_.id<a class="headerlink" href="#id-_id" title="Permanent link">#</a></h3>
-<h3 id="identifier-_identifier">Identifier    = $_.identifier<a class="headerlink" href="#identifier-_identifier" title="Permanent link">#</a></h3>
-<h3 id="name-_name">Name          = $_.name<a class="headerlink" href="#name-_name" title="Permanent link">#</a></h3>
-<h3 id="structuretype-_structuretype">StructureType = $_.structureType<a class="headerlink" href="#structuretype-_structuretype" title="Permanent link">#</a></h3>
-<h3 id="haschildren-_haschildren">HasChildren   = $_.hasChildren<a class="headerlink" href="#haschildren-_haschildren" title="Permanent link">#</a></h3>
-<h3 id="path-_path">Path          = $_.path<a class="headerlink" href="#path-_path" title="Permanent link">#</a></h3>
-<h3 id="links-__links">Links         = $_._links<a class="headerlink" href="#links-__links" title="Permanent link">#</a></h3>
-<h3 id="url-_url">Url           = $_.url<a class="headerlink" href="#url-_url" title="Permanent link">#</a></h3>
-<h3 id="_1">}<a class="headerlink" href="#_1" title="Permanent link">#</a></h3>
+<h3 id="returns-an-array-of-pipeline-run-objects-if-specific-run-ids-are-provided-only-the-matching-runs-are-returned">Returns an array of pipeline run objects. If specific run IDs are provided, only the matching runs are returned.<a class="headerlink" href="#returns-an-array-of-pipeline-run-objects-if-specific-run-ids-are-provided-only-the-matching-runs-are-returned" title="Permanent link">#</a></h3>
 <h2 id="notes">NOTES<a class="headerlink" href="#notes" title="Permanent link">#</a></h2>
 <h2 id="related-links">RELATED LINKS<a class="headerlink" href="#related-links" title="Permanent link">#</a></h2>
 
