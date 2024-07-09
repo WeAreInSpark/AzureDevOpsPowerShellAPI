@@ -28,15 +28,18 @@ function Get-AzDoProjectTeams {
   #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
+    # collection URI
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
+    # project name of the project
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
+    # team name
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
     $TeamName

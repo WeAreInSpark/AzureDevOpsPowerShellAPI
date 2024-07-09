@@ -20,15 +20,18 @@ function Get-AzDoTeamMembersExtended {
   #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
+    #  Collection Uri of the organization
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
+    # the projectName
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
+    # Team name of the team
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $TeamName

@@ -7,7 +7,7 @@ function Update-AzDoTeams {
           When used in a pipeline, you can use the pre-defined CollectionUri, ProjectName, TeamName, and AccessToken (PAT) variables.
       .EXAMPLE
           $params = @{
-              CollectionUri = 'https://dev.azure.com/weareinspark/'
+              CollectionUri = 'https://dev.azure.com/contoso/'
               ProjectName = 'Project 1'
               TeamName = 'testteam'
               NewTeamName = 'newTestTeam'
@@ -22,23 +22,28 @@ function Update-AzDoTeams {
   #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
+    # the collectionUri
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
+    # the name of the project
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
+    # the (old) name of the team
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $TeamName,
 
+    # the new name of the team
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
     $NewTeamName,
 
+    # the (new) description
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
     $Description

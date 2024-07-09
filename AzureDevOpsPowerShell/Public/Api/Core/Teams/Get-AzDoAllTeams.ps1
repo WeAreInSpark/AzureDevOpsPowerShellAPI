@@ -12,30 +12,35 @@ function Get-AzDoAllTeams {
       }
       Get-AzDoAllTeams @params
 
-      This example gets all teams within 'weareinspark' where the requesting user is a member.
+      This example gets all teams within 'contoso' where the requesting user is a member.
   .OUTPUTS
       PSObject
   .NOTES
   #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
+    # Collection URI. e.g. https://dev.azure.com/contoso.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
+    # whether or not to return detailed identity info
     [Parameter(ValueFromPipelineByPropertyName)]
     [bool]
     $ExpandIdentity = $false,
 
+    #filter only teams I'm member of
     [Parameter(ValueFromPipelineByPropertyName)]
     [bool]
     $Mine = $false,
 
+    # skip number N of results
     [Parameter(ValueFromPipelineByPropertyName)]
     [int]
     $Skip = 0,
 
+    # show only top N results
     [Parameter(ValueFromPipelineByPropertyName)]
     [int]
     $Top = 0
