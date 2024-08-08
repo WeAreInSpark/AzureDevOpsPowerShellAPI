@@ -48,6 +48,10 @@ function New-AzDoPipeline {
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     $RepoName,
 
+    # Folder to put Azure Devops Pipeline in
+    [Parameter(ValueFromPipelineByPropertyName)]
+    $PipelineFolderPath = $null,
+
     # Path of the YAML-sourcecode in the Repository
     [Parameter(ValueFromPipelineByPropertyName)]
     [string]
@@ -70,7 +74,7 @@ function New-AzDoPipeline {
 
     $body = @{
       name          = $PipelineName
-      folder        = $null
+      folder        = $PipelineFolderPath
       configuration = @{
         type       = "yaml"
         path       = $Path
