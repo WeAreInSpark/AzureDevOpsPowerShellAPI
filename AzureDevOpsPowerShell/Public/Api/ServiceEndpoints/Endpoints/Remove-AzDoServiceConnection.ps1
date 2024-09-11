@@ -16,7 +16,7 @@ function Remove-AzDoServiceConnection {
 
 .OUPUTS
     System.Management.Automation.PSCustomObject
-#>
+  #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
     [Parameter(Mandatory)]
