@@ -17,7 +17,8 @@ function New-AzDoAuthHeader {
           $PSCmdlet.ThrowTerminatingError($PSItem)
         }
         Write-Verbose "Getting Access Token"
-        $script:header = @{Authorization = 'Bearer ' + (Get-AzAccessToken -Resource 499b84ac-1321-427f-aa17-267ca6975798).token
+        $script:header = @{
+          Authorization = 'Bearer ' + ((Get-AzAccessToken -Resource 499b84ac-1321-427f-aa17-267ca6975798 -AsSecureString).token | ConvertFrom-SecureString -AsPlainText)
         }
       } catch {
         throw 'Please login to Azure PowerShell first'
