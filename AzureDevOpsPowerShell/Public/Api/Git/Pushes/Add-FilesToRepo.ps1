@@ -49,7 +49,7 @@ function Add-FilesToRepo {
   process {
 
     $changes = @()
-    $files = Get-ChildItem -Path $Path -Recurse -File
+    $files = Get-ChildItem -Path $Path -Recurse -File -Force | Where-Object {$_.FullName -notmatch ".git"}
     foreach ($file in $files) {
 
       if (($file.Extension -in '.png', '.svg, .jpg', '.jpeg')) {
