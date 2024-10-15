@@ -1,4 +1,40 @@
+
 function Get-AzDoExtension {
+  <#
+.SYNOPSIS
+Retrieves installed Azure DevOps extensions for a given organization.
+
+.DESCRIPTION
+The Get-AzDoExtension function retrieves installed extensions from an Azure DevOps organization.
+It supports filtering by extension name and extension ID. The function uses the Azure DevOps REST API
+to fetch the extensions and returns detailed information about each extension.
+
+.PARAMETER CollectionUri
+The URI of the Azure DevOps organization collection. This parameter is mandatory and accepts a string.
+
+.PARAMETER ExtensionName
+The name(s) of the extension(s) to look for. This parameter accepts an array of strings and is optional.
+
+.PARAMETER ExtensionId
+The ID(s) of the extension(s) to look for. This parameter accepts an array of strings and is optional.
+
+.EXAMPLE
+PS> Get-AzDoExtension -CollectionUri "https://dev.azure.com/organization" -ExtensionName "extension1"
+
+Retrieves the extension named "extension1" from the specified Azure DevOps organization.
+
+.EXAMPLE
+PS> Get-AzDoExtension -CollectionUri "https://dev.azure.com/organization" -ExtensionId "extension-id-123"
+
+Retrieves the extension with the ID "extension-id-123" from the specified Azure DevOps organization.
+
+.NOTES
+This function uses the Azure DevOps REST API to fetch the installed extensions.
+Ensure you have the necessary permissions to access the API.
+
+.LINK
+https://learn.microsoft.com/en-us/rest/api/azure/devops/extensionmanagement/installed-extensions/get?view=azure-devops-rest-7.1&tabs=HTTP
+#>
   [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization

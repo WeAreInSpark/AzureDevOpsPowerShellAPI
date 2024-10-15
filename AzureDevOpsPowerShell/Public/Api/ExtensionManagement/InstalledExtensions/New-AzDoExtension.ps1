@@ -1,4 +1,40 @@
 function New-AzDoExtension {
+  <#
+.SYNOPSIS
+Installs an Azure DevOps extension in the specified organization.
+
+.DESCRIPTION
+The New-AzDoExtension cmdlet installs an Azure DevOps extension in the specified organization.
+It uses the Azure DevOps REST API to perform the installation.
+
+.PARAMETER CollectionUri
+The URI of the Azure DevOps organization.
+
+.PARAMETER ExtensionId
+The ID of the extension to install.
+
+.PARAMETER ExtensionPublisherId
+The publisher ID of the extension to install.
+
+.PARAMETER ExtensionVersion
+The version of the extension to install. If not specified, the latest version will be installed.
+
+.EXAMPLE
+PS> New-AzDoExtension -CollectionUri "https://dev.azure.com/yourorganization" -ExtensionId "extensionId" -ExtensionPublisherId "publisherId"
+
+This command installs the specified extension in the given Azure DevOps organization.
+
+.EXAMPLE
+PS> New-AzDoExtension -CollectionUri "https://dev.azure.com/yourorganization" -ExtensionId "extensionId" -ExtensionPublisherId "publisherId" -ExtensionVersion "1.0.0"
+
+This command installs version 1.0.0 of the specified extension in the given Azure DevOps organization.
+
+.NOTES
+This cmdlet requires the Azure DevOps REST API and appropriate permissions to install extensions.
+
+.LINK
+https://learn.microsoft.com/en-us/rest/api/azure/devops/extensionmanagement/installed-extensions/get?view=azure-devops-rest-7.1&tabs=HTTP
+#>
   [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization
