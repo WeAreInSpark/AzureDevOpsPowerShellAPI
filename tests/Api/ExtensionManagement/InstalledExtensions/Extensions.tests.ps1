@@ -114,9 +114,6 @@ InModuleScope $ModuleName {
   Describe "Remove-AzDoExtension" -Tag Local {
     BeforeAll {
 
-      $params.Add("ExtensionId", "vss-testextension")
-      $params.Add("ExtensionPublisherId", "rbnmk")
-
       Mock Invoke-AzDoRestMethod { $null }
 
     }
@@ -126,6 +123,8 @@ InModuleScope $ModuleName {
     }
 
     It "Removes AzDo extension when ExtensionId and ExtensionPublisherId are provided and returns null or empty" {
+      $params.Add("ExtensionId", "vss-testextension")
+      $params.Add("ExtensionPublisherId", "rbnmk")
       (New-AzDoExtension @params) | Should -BeNullOrEmpty
     }
   }
