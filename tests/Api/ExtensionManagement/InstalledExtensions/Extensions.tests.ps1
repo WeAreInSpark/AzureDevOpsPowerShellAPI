@@ -113,19 +113,16 @@ InModuleScope $ModuleName {
 
   Describe "Remove-AzDoExtension" -Tag Local {
     BeforeAll {
-
       Mock Invoke-AzDoRestMethod { $null }
-
+      $params.Remove("ExtensionVersion")
     }
 
     It "It provides users with feedback via ShouldProcess when using WhatIf" {
-      Remove-AzDoExtension @params -WhatIf -Verbose 4>&1 | Out-String | Should -BeLike "*Calling Invoke-AzDoRestMethod with {*"
+      Remove-AzDoExtension @params -ExtensionId "vss-testextension" -ExtensionPublisherid "pesterpublisher" -WhatIf -Verbose 4>&1 | Out-String | Should -BeLike "*Calling Invoke-AzDoRestMethod with {*"
     }
 
     It "Removes AzDo extension when ExtensionId and ExtensionPublisherId are provided and returns null or empty" {
-      $params.Add("ExtensionId", "vss-testextension")
-      $params.Add("ExtensionPublisherId", "rbnmk")
-      (New-AzDoExtension @params) | Should -BeNullOrEmpty
+      (New-AzDoExtension @params -ExtensionId "vss-testextension" -ExtensionPublisherid "pesterpublisher") | Should -BeNullOrEmpty
     }
   }
 }
