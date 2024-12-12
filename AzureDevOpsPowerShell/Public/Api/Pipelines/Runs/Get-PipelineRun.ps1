@@ -29,9 +29,6 @@ function Get-PipelineRun {
   Retrieves the details of the specified run (with ID 456) for the given pipeline.
 .OUTPUTS
   System.Management.Automation.PSCustomObject
-
-  Returns an array of pipeline run objects. If specific run IDs are provided, only the matching runs are returned.
-.NOTES
 #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
