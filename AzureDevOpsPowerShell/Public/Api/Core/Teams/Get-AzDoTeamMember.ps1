@@ -40,7 +40,7 @@ function Get-AzDoTeamMember {
   process {
     Write-Verbose "Starting function: Get-AzDoTeamMember"
 
-    # Get the team ID using the Get-AzDoProjectTeams function
+    # Get the team ID using the Get-AzDoProjectTeam function
     $teamParams = @{
       CollectionUri = $CollectionUri
       ProjectName   = $ProjectName
@@ -48,7 +48,7 @@ function Get-AzDoTeamMember {
     }
 
     try {
-      $team = Get-AzDoProjectTeams @teamParams | Where-Object { $_.TeamName -eq $TeamName }
+      $team = Get-AzDoProjectTeam @teamParams | Where-Object { $_.TeamName -eq $TeamName }
       if (-not $team) {
         Write-AzDoError "Team '$TeamName' not found in project '$ProjectName'."
       }
@@ -75,12 +75,13 @@ function Get-AzDoTeamMember {
         } else {
           $members | ForEach-Object {
             [PSCustomObject]@{
-              TeamName    = $TeamName
-              ProjectName = $ProjectName
-              MemberId    = $_.identity.id
-              DisplayName = $_.identity.displayName
-              UniqueName  = $_.identity.uniqueName
-              IsTeamAdmin = $_.isTeamAdmin
+              CollectionUri = $CollectionUri
+              TeamName      = $TeamName
+              ProjectName   = $ProjectName
+              MemberId      = $_.identity.id
+              DisplayName   = $_.identity.displayName
+              UniqueName    = $_.identity.uniqueName
+              IsTeamAdmin   = $_.isTeamAdmin ? $true : $false
             }
           }
         }
