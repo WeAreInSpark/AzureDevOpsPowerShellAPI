@@ -1,4 +1,4 @@
-function Get-AzDoTeamMembersExtended {
+function Get-AzDoTeamMembers {
   <#
   .SYNOPSIS
       This script gets team members with extended properties in a given project and team.
@@ -11,7 +11,7 @@ function Get-AzDoTeamMembersExtended {
           ProjectName = 'Project 1'
           TeamName = 'testteam'
       }
-      Get-AzDoTeamMembersExtended @params
+      Get-AzDoTeamMembers @params
 
       This example gets the team members with extended properties in 'testteam' within 'Project 1'.
   .OUTPUTS
@@ -37,12 +37,9 @@ function Get-AzDoTeamMembersExtended {
     $TeamName
   )
 
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoTeamMembersExtended"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoTeamMembers"
+
     # Get the team ID using the Get-AzDoProjectTeams function
     $teamParams = @{
       CollectionUri = $CollectionUri
@@ -53,15 +50,13 @@ function Get-AzDoTeamMembersExtended {
     try {
       $team = Get-AzDoProjectTeams @teamParams | Where-Object { $_.TeamName -eq $TeamName }
       if (-not $team) {
-        Write-Error "Team '$TeamName' not found in project '$ProjectName'."
-        return
+        Write-AzDoError "Team '$TeamName' not found in project '$ProjectName'."
       }
 
       $teamId = $team.TeamId
       Write-Verbose "Retrieved Team ID: $teamId"
     } catch {
-      Write-Error "Error retrieving team details: $_"
-      return
+      Write-AzDoError "Error retrieving team details: $_"
     }
 
     $params = @{
@@ -78,29 +73,22 @@ function Get-AzDoTeamMembersExtended {
         if (-not $members) {
           Write-Verbose "No members found for team '$TeamName'."
         } else {
-          $result += $members
+          $members | ForEach-Object {
+            [PSCustomObject]@{
+              TeamName    = $TeamName
+              ProjectName = $ProjectName
+              MemberId    = $_.identity.id
+              DisplayName = $_.identity.displayName
+              UniqueName  = $_.identity.uniqueName
+              IsTeamAdmin = $_.isTeamAdmin
+            }
+          }
         }
       } catch {
-        Write-Error "Error retrieving team members: $_"
-        return
+        Write-AzDoError "Error retrieving team members: $_"
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params | ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          TeamName    = $TeamName
-          ProjectName = $ProjectName
-          MemberId    = $_.identity.id
-          DisplayName = $_.identity.displayName
-          UniqueName  = $_.identity.uniqueName
-          IsTeamAdmin = $_.isTeamAdmin
-        }
-      }
     }
   }
 }
