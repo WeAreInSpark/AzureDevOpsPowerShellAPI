@@ -1,4 +1,4 @@
-function Get-AzDoTeamMembers {
+function Get-AzDoTeamMember {
   <#
   .SYNOPSIS
       This script gets team members with extended properties in a given project and team.
@@ -11,7 +11,7 @@ function Get-AzDoTeamMembers {
           ProjectName = 'Project 1'
           TeamName = 'testteam'
       }
-      Get-AzDoTeamMembers @params
+      Get-AzDoTeamMember @params
 
       This example gets the team members with extended properties in 'testteam' within 'Project 1'.
   .OUTPUTS
@@ -38,7 +38,7 @@ function Get-AzDoTeamMembers {
   )
 
   process {
-    Write-Verbose "Starting function: Get-AzDoTeamMembers"
+    Write-Verbose "Starting function: Get-AzDoTeamMember"
 
     # Get the team ID using the Get-AzDoProjectTeams function
     $teamParams = @{
