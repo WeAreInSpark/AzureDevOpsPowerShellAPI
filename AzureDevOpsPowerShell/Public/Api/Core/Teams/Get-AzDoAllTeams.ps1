@@ -22,31 +22,30 @@ function Get-AzDoAllTeams {
     # Collection URI. e.g. https://dev.azure.com/contoso.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
-    [string]
+    [String]
     $CollectionUri,
 
-    # whether or not to return detailed identity info
+    # Whether or not to return detailed identity info
     [Parameter(ValueFromPipelineByPropertyName)]
-    [bool]
+    [Switch]
     $ExpandIdentity = $false,
 
-    #filter only teams I'm member of
+    # Filter only teams your identity is member of
     [Parameter(ValueFromPipelineByPropertyName)]
-    [bool]
+    [Switch]
     $Mine = $false,
 
-    # skip number N of results
+    # Skip number N of results
     [Parameter(ValueFromPipelineByPropertyName)]
-    [int]
+    [Int]
     $Skip = 0,
 
-    # show only top N results
+    # Show only top N results
     [Parameter(ValueFromPipelineByPropertyName)]
-    [int]
+    [Int]
     $Top = 0
   )
-
-  begin {
+  process {
     $result = @()
     Write-Verbose "Starting function: Get-AzDoAllTeams"
 
@@ -64,9 +63,7 @@ function Get-AzDoAllTeams {
       $queryParams += "`$top=$Top"
     }
     $queryParams = $queryParams -join "&"
-  }
 
-  process {
     $uri = "$CollectionUri/_apis/teams"
     $version = "7.1-preview.3"
 
@@ -77,29 +74,20 @@ function Get-AzDoAllTeams {
       Method          = 'GET'
     }
 
-    # Extract organization name from the last part of the CollectionUri
-    $Organization = $CollectionUri.Split('/')[-1]
-
-    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get all teams in organization: $($PSStyle.Bold)$Organization$($PSStyle.Reset)")) {
-      $teams = (Invoke-AzDoRestMethod @params).value
-      $result += $teams
-    } else {
-      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params | ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
+    if ($PSCmdlet.ShouldProcess($CollectionUri, "Get all teams in organization")) {
+      (Invoke-AzDoRestMethod @params).value | ForEach-Object {
         [PSCustomObject]@{
-          Organization = $Organization
-          TeamName     = $_.name
-          TeamId       = $_.id
-          Description  = $_.description
-          Url          = $_.url
-          IdentityUrl  = $_.identityUrl
+          CollectionUri = $CollectionUri
+          ProjectName   = $_.projectName
+          TeamName      = $_.name
+          TeamId        = $_.id
+          Description   = $_.description
+          Url           = $_.url
+          IdentityUrl   = $_.identityUrl
         }
       }
+    } else {
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params | ConvertTo-Json -Depth 10)"
     }
   }
 }
