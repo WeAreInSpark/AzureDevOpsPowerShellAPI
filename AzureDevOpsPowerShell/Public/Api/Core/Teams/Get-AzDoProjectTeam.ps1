@@ -1,4 +1,4 @@
-function Get-AzDoProjectTeams {
+function Get-AzDoProjectTeam {
   <#
   .SYNOPSIS
       This script gets team details in a given project.
@@ -11,7 +11,7 @@ function Get-AzDoProjectTeams {
           ProjectName = 'Project 1'
           TeamName = 'testteam'
       }
-      Get-AzDoProjectTeams @params
+      Get-AzDoProjectTeam @params
 
       This example gets the team 'testteam' in 'Project 1'.
   .EXAMPLE
@@ -19,7 +19,7 @@ function Get-AzDoProjectTeams {
           CollectionUri = 'https://dev.azure.com/contoso/'
           ProjectName = 'Project 1'
       }
-      Get-AzDoProjectTeams @params
+      Get-AzDoProjectTeam @params
 
       This example gets all teams in 'Project 1'.
   .OUTPUTS
@@ -44,7 +44,7 @@ function Get-AzDoProjectTeams {
     $TeamName
   )
   process {
-    Write-Verbose "Starting function: Get-AzDoProjectTeams"
+    Write-Verbose "Starting function: Get-AzDoProjectTeam"
 
     $params = @{
       uri     = "$CollectionUri/_apis/projects/$ProjectName/teams"
