@@ -57,14 +57,18 @@ function Remove-AzDoWorkItem {
       $params.uri = $Uri -f $id
       try {
         Invoke-AzDoRestMethod @params
-        Write-Host "Work item $id deleted successfully."
+        Write-Verbose "Work item $id deleted successfully."
+        [PSCustomObject]@{
+          CollectionUri = $CollectionUri
+          ProjectName   = $ProjectName
+          WorkItemId    = $id
+          DeletedItem   = $true
+        }
       } catch {
-        Write-AzdoError -Message $_
+        Write-Error "Error deleting work item $id in project '$projectname' Error: $_"
+        continue
       }
     }
-  }
-
-  end {
     Write-Verbose "Ending 'Remove-AzDoWorkItem' function."
   }
 }

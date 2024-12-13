@@ -81,92 +81,94 @@ function Set-AzDoTeamSettings {
   }
 
   process {
-    $Team = Get-AzDoTeam -CollectionUri $CollectionUri -ProjectName $ProjectName -TeamName $TeamName -ErrorAction SilentlyContinue
-    if ($Team) {
-      # Set the team settings
-      $Settings = @{}
-      if ($BacklogIteration) {
-        $Settings.backlogIteration = $BacklogIteration
+    try {
+      $getAzDoTeamSplat = @{
+        CollectionUri = $CollectionUri
+        ProjectName   = $ProjectName
+        TeamName      = $TeamName
       }
-      if ($BugsBehavior) {
-        $Settings.bugsBehavior = $BugsBehavior
-      }
-      if ($WorkingDays) {
-        $Settings.workingDays = $WorkingDays
-      }
-      $SettingsParams = @{
-        uri     = "$CollectionUri/$ProjectName/$TeamName/_apis/work/teamSettings"
+      Get-AzDoTeam @getAzDoTeamSplat
+    } catch {
+      $PSCmdlet.ThrowTerminatingError((Write-AzdoError -Message "Error getting team '$teamName' in project '$projectName' Error: $_"))
+    }
+
+    # Set the team settings
+    $Settings = @{}
+    if ($BacklogIteration) {
+      $Settings.backlogIteration = $BacklogIteration
+    }
+    if ($BugsBehavior) {
+      $Settings.bugsBehavior = $BugsBehavior
+    }
+    if ($WorkingDays) {
+      $Settings.workingDays = $WorkingDays
+    }
+
+    $SettingsParams = @{
+      uri     = "$CollectionUri/$ProjectName/$TeamName/_apis/work/teamSettings"
+      method  = 'PATCH'
+      version = '7.1-preview.1'
+      body    = $Settings
+    }
+
+    try {
+      Write-Verbose "Setting team settings for team '$TeamName' in project '$ProjectName'."
+      $SettingsResult = Invoke-AzDoRestMethod @SettingsParams
+    } catch {
+      $PSCmdlet.ThrowTerminatingError((Write-AzdoError -Message "Error setting team settings for team '$teamName' Error: $_"))
+    }
+
+    # Set the area path
+    if ($AreaPath) {
+      $AreaParams = @{
+        uri     = "$CollectionUri/$ProjectName/$TeamName/_apis/work/teamsettings/teamfieldvalues"
         method  = 'PATCH'
         version = '7.1-preview.1'
-        body    = $Settings
+        body    = @{
+          defaultValue = "$ProjectName\\$AreaPath"
+          values       = @(
+            @{
+              includeChildren = $IncludeAreaChildren
+              value           = "$ProjectName\\$AreaPath"
+            }
+          )
+        }
       }
       try {
-        Write-Verbose "Setting team settings for team '$TeamName' in project '$ProjectName'."
-        $SettingsResult = Invoke-AzDoRestMethod @SettingsParams
+        Write-Verbose "Setting area path for team '$TeamName' in project '$ProjectName'."
+        $AreaResult = Invoke-AzDoRestMethod @AreaParams
       } catch {
-        Write-AzdoError -Message $_
+        $PSCmdlet.ThrowTerminatingError((Write-AzdoError -Message "Error setting the area path for team '$teamName' in project '$projectName' Error: $_"))
       }
-
-      # Set the area path
-      if ($AreaPath) {
-        $AreaParams = @{
-          uri     = "$CollectionUri/$ProjectName/$TeamName/_apis/work/teamsettings/teamfieldvalues"
-          method  = 'PATCH'
-          version = '7.1-preview.1'
-          body    = @{
-            defaultValue = "$ProjectName\\$AreaPath"
-            values       = @(
-              @{
-                includeChildren = $IncludeAreaChildren
-                value           = "$ProjectName\\$AreaPath"
-              }
-            )
-          }
-        }
-        try {
-          Write-Verbose "Setting area path for team '$TeamName' in project '$ProjectName'."
-          $AreaResult = Invoke-AzDoRestMethod @AreaParams
-        } catch {
-          Write-AzdoError -Message $_
-        }
-      }
-
-      # Set the iteration paths
-      $IterationResult = @()
-      foreach ($Iteration in $Iterations) {
-        $IterationParams = @{
-          uri     = "$CollectionUri/$ProjectName/$TeamName/_apis/work/teamsettings/iterations"
-          method  = 'POST'
-          version = '7.1-preview.1'
-          body    = @{ id = $Iteration }
-        }
-        try {
-          Write-Verbose "Setting iteration paths for team '$TeamName' in project '$ProjectName'."
-          $IterationResult += Invoke-AzDoRestMethod @IterationParams
-        } catch {
-          Write-AzdoError -Message $_
-        }
-      }
-
-      $result += [PSCustomObject]@{
-        CollectionUri       = $CollectionUri
-        ProjectName         = $ProjectName
-        TeamName            = $TeamName
-        BacklogIteration    = $SettingsResult.backlogIteration
-        BugsBehavior        = $SettingsResult.bugsBehavior
-        WorkingDays         = $SettingsResult.workingDays
-        AreaPath            = $AreaResult.defaultValue
-        IncludeAreaChildren = $AreaResult.values.includeChildren
-        Iterations          = $IterationResult
-      }
-    } else {
-      Write-Host "Team '$TeamName' not found in project '$ProjectName', skipping."
     }
-  }
 
-  end {
-    if ($result) {
-      $result
+    # Set the iteration paths
+    $IterationResult = @()
+    foreach ($Iteration in $Iterations) {
+      $IterationParams = @{
+        uri     = "$CollectionUri/$ProjectName/$TeamName/_apis/work/teamsettings/iterations"
+        method  = 'POST'
+        version = '7.1-preview.1'
+        body    = @{ id = $Iteration }
+      }
+      try {
+        Write-Verbose "Setting iteration paths for team '$TeamName' in project '$ProjectName'."
+        $IterationResult += Invoke-AzDoRestMethod @IterationParams
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzdoError -Message "Error setting the iteration path for team '$teamName' in project '$projectName' Error: $_"))
+      }
+    }
+
+    [PSCustomObject]@{
+      CollectionUri       = $CollectionUri
+      ProjectName         = $ProjectName
+      TeamName            = $TeamName
+      BacklogIteration    = $SettingsResult.backlogIteration
+      BugsBehavior        = $SettingsResult.bugsBehavior
+      WorkingDays         = $SettingsResult.workingDays
+      AreaPath            = $AreaResult.defaultValue
+      IncludeAreaChildren = $AreaResult.values.includeChildren
+      Iterations          = $IterationResult
     }
     Write-Verbose "Ending function: Set-AzDoTeamSettings"
   }

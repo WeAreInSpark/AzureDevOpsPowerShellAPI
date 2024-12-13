@@ -8,7 +8,7 @@ function Get-AzDoTeamSettings {
     $Params = @{
       CollectionUri  = "https://dev.azure.com/cantoso"
       ProjectName    = "Playground"
-      TeamName           = "Team1"
+      TeamName       = "Team1"
     }
 
     Get-AzDoTeamSettings @Params
@@ -36,15 +36,10 @@ function Get-AzDoTeamSettings {
     [string[]]
     $TeamName
   )
-
-  begin {
+  process {
     Write-Verbose "Starting function: Get-AzDoTeamSettings"
     $CollectionUri = $CollectionUri.TrimEnd('/')
-    # create dynamic array to store the results
-    $result = New-Object System.Collections.Generic.List[System.Object]
-  }
 
-  process {
     foreach ($Name in $TeamName) {
       $params = @{
         uri     = "$CollectionUri/$ProjectName/$Name/_apis/work/teamSettings"
@@ -54,29 +49,26 @@ function Get-AzDoTeamSettings {
 
       if ($PSCmdlet.ShouldProcess("Get team settings for team '$Name' in project '$ProjectName'")) {
         try {
-          $result += Invoke-AzDoRestMethod @params
+          Invoke-AzDoRestMethod @params | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionUri         = $CollectionUri
+              ProjectName           = $ProjectName
+              TeamName              = $Name
+              TeamId                = ($_.url -split '/')[-4]
+              BacklogIteration      = $_.backlogIteration
+              BacklogVisibilities   = $_.backlogVisibilities
+              DefualtIteration      = $_.defaultIteration
+              DefaultIterationMacro = $_.defaultIterationMacro
+              WorkingDays           = $_.workingDays
+              BugsBehavior          = $_.bugsBehavior
+              Url                   = $_.url
+            }
+          }
         } catch {
-          Write-AzdoError -Message $_
+          $PSCmdlet.ThrowTerminatingError((Write-AzdoError -Message "Failed to get settings for team '$name' in $projectName Error: $_"))
         }
       } else {
         Write-Verbose "Skipping team settings for team '$Name' in project '$ProjectName'."
-      }
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          TeamId                = ($_.url -split '/')[-4]
-          BacklogIteration      = $_.backlogIteration
-          BacklogVisibilities   = $_.backlogVisibilities
-          DefualtIteration      = $_.defaultIteration
-          DefaultIterationMacro = $_.defaultIterationMacro
-          WorkingDays           = $_.workingDays
-          BugsBehavior          = $_.bugsBehavior
-          Url                   = $_.url
-        }
       }
     }
   }

@@ -72,35 +72,41 @@ function New-AzDoRepo {
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create repo named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         try {
-          $result += ($body | Invoke-AzDoRestMethod @params)
+          ($body | Invoke-AzDoRestMethod @params) | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionUri = $CollectionUri
+              ProjectName   = $ProjectName
+              RepoName      = $_.name
+              RepoId        = $_.id
+              RepoURL       = $_.url
+              WebUrl        = $_.webUrl
+              RemoteUrl     = $_.remoteUrl
+              SshUrl        = $_.sshUrl
+            }
+          }
         } catch {
           if ($_ -match 'TF400948') {
             Write-Warning "Repo $name already exists, trying to get it"
             $params.Method = 'GET'
-            $result += (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name }
+            (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name } | ForEach-Object {
+              [PSCustomObject]@{
+                CollectionUri = $CollectionUri
+                ProjectName   = $ProjectName
+                RepoName      = $_.name
+                RepoId        = $_.id
+                RepoURL       = $_.url
+                WebUrl        = $_.webUrl
+                RemoteUrl     = $_.remoteUrl
+                SshUrl        = $_.sshUrl
+              }
+            }
           } else {
-            Write-AzDoError -message $_
+            Write-Error -Message "Error creating repo $name in $projectID Error: $_"
+            continue
           }
         }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-      }
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri = $CollectionUri
-          ProjectName   = $ProjectName
-          RepoName      = $_.name
-          RepoId        = $_.id
-          RepoURL       = $_.url
-          WebUrl        = $_.webUrl
-          RemoteUrl     = $_.remoteUrl
-          SshUrl        = $_.sshUrl
-        }
       }
     }
   }

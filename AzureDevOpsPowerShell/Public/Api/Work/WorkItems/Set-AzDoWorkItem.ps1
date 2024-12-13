@@ -19,6 +19,18 @@ function Set-AzDoWorkItem {
     }
   }
   Set-AzDoWorkItem @params
+
+  .NOTES
+    # Work item object (could be a hashtable or a custom object)
+    # template: @{
+    #   WorkItemId    = 1 (required)
+    #   Title         = "Test Work Item 2" (optional)
+    #   Description   = "This is a test work item." (optional)
+    #   AreaPath      = "DevOps Automation" (optional)
+    #   IterationPath = "DevOps Automation" (optional)
+    #   TeamProject   = "DevOps Automation" (optional)
+    #   ParentId      = 3 (optional)
+    # }
   .OUTPUTS
   [PSCustomObject]@{
     Id   = 1
@@ -39,27 +51,13 @@ function Set-AzDoWorkItem {
     [string]
     $ProjectName,
 
-    # Work item object (could be a hashtable or a custom object)
-    # template: @{
-    #   WorkItemId    = 1 (required)
-    #   Title         = "Test Work Item 2" (optional)
-    #   Description   = "This is a test work item." (optional)
-    #   AreaPath      = "DevOps Automation" (optional)
-    #   IterationPath = "DevOps Automation" (optional)
-    #   TeamProject   = "DevOps Automation" (optional)
-    #   ParentId      = 3 (optional)
-    # }
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [object[]]
     $WorkItem
   )
-
-  begin {
-    Write-Verbose "Starting 'Set-AzDoWorkItem' function."
-    $result = New-Object System.Collections.Generic.List[System.Object]
-  }
-
   process {
+    Write-Verbose "Starting 'Set-AzDoWorkItem' function."
+
     $WorkItem | ForEach-Object {
       $body = @(
         @{
@@ -130,21 +128,19 @@ function Set-AzDoWorkItem {
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Setting work item: $($PSStyle.Bold)$($_.WorkItemId)$($PSStyle.Reset)")) {
         try {
-          $result += Invoke-AzDoRestMethod @params
+          Invoke-AzDoRestMethod @params | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionUri = $CollectionUri
+              ProjectName   = $ProjectName
+              Id            = $_.id
+              Name          = $_.fields.'System.Title'
+              Url           = $_.url
+            }
+          }
         } catch {
-          Write-AzDoError -message $_.Exception.Message
-        }
-      }
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          Id   = $_.id
-          Name = $_.fields.'System.Title'
-          Url  = $_.url
+          Write-Error "Error setting work item $($_.WorkItemId) in project '$projectname' Error: $_"
+          # return in a foreach-object loop will act as a continue
+          return
         }
       }
     }

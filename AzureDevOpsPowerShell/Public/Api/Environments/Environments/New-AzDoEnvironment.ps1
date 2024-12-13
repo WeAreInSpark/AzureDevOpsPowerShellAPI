@@ -78,31 +78,33 @@ function New-AzDoEnvironment {
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create environment named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         try {
-          $result += ($body | Invoke-AzDoRestMethod @params)
+          ($body | Invoke-AzDoRestMethod @params) | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionUri   = $CollectionUri
+              ProjectName     = $ProjectName
+              EnvironmentName = $_.name
+              Id              = $_.id
+            }
+          }
         } catch {
           if ($_ -match 'exists in current project') {
             Write-Warning "Environment $name already exists, trying to get it"
             $params.Method = 'GET'
-            $result += (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name }
+            $result += (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name } | ForEach-Object {
+              [PSCustomObject]@{
+                CollectionUri   = $CollectionUri
+                ProjectName     = $ProjectName
+                EnvironmentName = $_.name
+                Id              = $_.id
+              }
+            }
           } else {
-            Write-AzDoError -message $_
+            Write-Error "Failed to create Environment $name in project '$ProjectName'. Error: $_"
+            continue
           }
         }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-      }
-    }
-  }
-
-  End {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri   = $CollectionUri
-          ProjectName     = $ProjectName
-          EnvironmentName = $_.name
-          Id              = $_.id
-        }
       }
     }
   }

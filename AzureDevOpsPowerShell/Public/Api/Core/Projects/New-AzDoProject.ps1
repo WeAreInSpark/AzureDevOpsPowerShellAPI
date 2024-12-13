@@ -160,7 +160,7 @@ function New-AzDoProject {
           if ($_ -match 'TF200019') {
             Write-Warning "Project $name already exists, trying to get it"
           } else {
-            Write-AzDoError -message $_
+            $PSCmdlet.ThrowTerminatingError((Write-AzDoError -message "Failed to create project: $name Error: $_"))
           }
         }
 

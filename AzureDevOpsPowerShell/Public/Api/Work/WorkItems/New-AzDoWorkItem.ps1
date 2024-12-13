@@ -48,11 +48,7 @@ function New-AzDoWorkItem {
   New-AzDoWorkItem @params
 
   .OUTPUTS
-  [PSCustomObject]@{
-    Id   = 1
-    Name = "Test Work Item 1"
-    Url  = "https://dev.azure.com/organization/ProjectName/_apis/wit/workitems/1"
-  }
+  PSCustomObject
   #>
   [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
@@ -67,17 +63,15 @@ function New-AzDoWorkItem {
     [string]
     $ProjectName,
 
+    # Work item object (could be a hashtable or a custom object)
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [object[]]
     $WorkItem
   )
 
-  begin {
-    Write-Verbose "Starting 'New-AzDoWorkItem' function."
-    $result = New-Object System.Collections.Generic.List[System.Object]
-  }
-
   process {
+    Write-Verbose "Starting 'New-AzDoWorkItem' function."
+
     $WorkItem | ForEach-Object {
       $body = @(
         @{
@@ -145,21 +139,19 @@ function New-AzDoWorkItem {
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create work item named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         try {
-          $result += Invoke-AzDoRestMethod @params
+          Invoke-AzDoRestMethod @params | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionUri = $CollectionUri
+              ProjectName   = $ProjectName
+              Id            = $_.id
+              Name          = $_.fields.'System.Title'
+              Url           = $_.url
+            }
+          }
         } catch {
-          Write-AzDoError -message $_.Exception.Message
-        }
-      }
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          Id   = $_.id
-          Name = $_.fields.'System.Title'
-          Url  = $_.url
+          Write-Error "Error creating work item in $ProjectName Error: $_"
+          # return in a foreach-object loop will act as a continue
+          return
         }
       }
     }

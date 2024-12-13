@@ -52,14 +52,10 @@ function Get-AzDoWorkItem {
     [int[]]
     $WorkItemId
   )
-
-  begin {
-    Write-Verbose "Starting 'Get-AzDoWorkItem' function."
-    $result = New-Object System.Collections.Generic.List[System.Object]
-    $Uri = "$CollectionUri/$ProjectName/_apis/wit/workitems/{0}"
-  }
-
   process {
+    Write-Verbose "Starting 'Get-AzDoWorkItem' function."
+    $Uri = "$CollectionUri/$ProjectName/_apis/wit/workitems/{0}"
+
     $params = @{
       method  = 'GET'
       version = '7.1-preview.3'
@@ -69,32 +65,30 @@ function Get-AzDoWorkItem {
       $id = [string]$id
       $params.uri = $Uri -f $id
       try {
-        $result += Invoke-AzDoRestMethod @params
-      } catch {
-        Write-AzdoError -Message $_
-      }
-    }
-  }
-
-  end {
-    Write-Verbose "Ending 'Get-AzDoWorkItem' function."
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          Id            = $_.id
-          Title         = $_.fields.'System.Title'
-          AreaPath      = $_.fields.'System.AreaPath'
-          IterationPath = $_.fields.'System.IterationPath'
-          TeamProject   = $_.fields.'System.TeamProject'
-          WorkItemType  = $_.fields.'System.WorkItemType'
-          State         = $_.fields.'System.State'
-          Reason        = $_.fields.'System.Reason'
-          AssignedTo    = $_.fields.'System.AssignedTo'.displayName
-          CreatedDate   = $_.fields.'System.CreatedDate'
-          CreatedBy     = $_.fields.'System.CreatedBy'.displayName
-          Url           = $_.url
+        Invoke-AzDoRestMethod @params | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionUri = $CollectionUri
+            ProjectName   = $ProjectName
+            Id            = $_.id
+            Title         = $_.fields.'System.Title'
+            AreaPath      = $_.fields.'System.AreaPath'
+            IterationPath = $_.fields.'System.IterationPath'
+            TeamProject   = $_.fields.'System.TeamProject'
+            WorkItemType  = $_.fields.'System.WorkItemType'
+            State         = $_.fields.'System.State'
+            Reason        = $_.fields.'System.Reason'
+            AssignedTo    = $_.fields.'System.AssignedTo'.displayName
+            CreatedDate   = $_.fields.'System.CreatedDate'
+            CreatedBy     = $_.fields.'System.CreatedBy'.displayName
+            Url           = $_.url
+          }
         }
+      } catch {
+        Write-Error -Message "Error getting work item $id in project '$projectname' Error: $_"
+        continue
       }
     }
+
+    Write-Verbose "Ending 'Get-AzDoWorkItem' function."
   }
 }

@@ -54,18 +54,15 @@ Additional information about the function.
     $Description
   )
 
-  begin {
+  process {
     Write-Verbose "Starting 'New-AzDoTeam' function."
     $CollectionUri = $CollectionUri.TrimEnd('/')
-    $result = New-Object System.Collections.Generic.List[System.Object]
-  }
 
-  process {
-    $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
-    Write-Host "ProjectId: $ProjectId"
+    $Project = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName)
+    Write-Verbose "ProjectId: $($Project.ProjectId)"
 
     $params = @{
-      uri     = "$CollectionUri/_apis/projects/$ProjectId/teams"
+      uri     = "$CollectionUri/_apis/projects/$($Project.ProjectId)/teams"
       method  = 'POST'
       version = '7.1-preview.3'
       body    = @{}
@@ -84,28 +81,24 @@ Additional information about the function.
         }
       }
 
-      if ($PSCmdlet.ShouldProcess($CollectionUri, "Create team named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+      if ($PSCmdlet.ShouldProcess($CollectionUri, "Create team named: $($PSStyle.Bold)$name$($PSStyle.Reset) in Project $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
         try {
-          $result += Invoke-AzDoRestMethod @params
+          Invoke-AzDoRestMethod @params | ForEach-Object {
+            [PSCustomObject]@{
+              TeamId      = $_.id
+              TeamName    = $_.name
+              ProjectName = $_.projectName
+              Description = $_.description
+              IdentityUrl = $_.identityUrl
+              WebUrl      = $_.url
+            }
+          }
         } catch {
-          Write-AzDoError -message $_
+          Write-Error "Error creating team $name in $ProjectName Error: $_"
+          continue
         }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-      }
-    }
-  }
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          TeamId      = $_.id
-          TeamName    = $_.name
-          ProjectName = $_.projectName
-          Description = $_.description
-          IdentityUrl = $_.identityUrl
-          WebUrl      = $_.url
-        }
       }
     }
     Write-Verbose "Finished executing 'New-AzDoTeam' function."

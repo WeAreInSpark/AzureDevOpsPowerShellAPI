@@ -41,15 +41,12 @@ function Remove-AzDoTeam {
     [string[]]
     $TeamId
   )
-
-  begin {
-    Write-Verbose "Starting function: Remove-AzDoTeam"
-  }
-
   process {
+    Write-Verbose "Starting function: Remove-AzDoTeam"
+
     if ($TeamName) {
       $TeamId = foreach ($Name in $TeamName) {
-        Get-AzDoTeam -CollectionUri $CollectionUri -ProjectName $ProjectName -TeamName $Name -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Id
+        Get-AzDoTeam -CollectionUri $CollectionUri -ProjectName $ProjectName -TeamName $Name | Select-Object -ExpandProperty Id
       }
     }
 
@@ -64,15 +61,13 @@ function Remove-AzDoTeam {
         try {
           Invoke-AzDoRestMethod @params
         } catch {
-          Write-AzdoError -Message $_
+          Write-Error "Error Deleting team $id in $projectname Error: $_"
+          continue
         }
       } else {
-        Write-Verbose "Skipping team '$Id' in project '$ProjectName'."
+        Write-Verbose "To be deleted teams in project '$ProjectName'."
       }
     }
-
-  }
-  end {
     Write-Verbose "Ending function: Remove-AzDoTeam"
   }
 }
