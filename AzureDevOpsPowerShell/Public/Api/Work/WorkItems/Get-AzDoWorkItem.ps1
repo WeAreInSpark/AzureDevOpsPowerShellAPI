@@ -57,8 +57,8 @@ function Get-AzDoWorkItem {
     $Uri = "$CollectionUri/$ProjectName/_apis/wit/workitems/{0}"
 
     $params = @{
-      method  = 'GET'
-      version = '7.1-preview.3'
+      method          = 'GET'
+      version         = '7.2-preview.3'
     }
 
     foreach ($id in $WorkItemId) {
@@ -80,6 +80,7 @@ function Get-AzDoWorkItem {
             AssignedTo    = $_.fields.'System.AssignedTo'.displayName
             CreatedDate   = $_.fields.'System.CreatedDate'
             CreatedBy     = $_.fields.'System.CreatedBy'.displayName
+            Tags          = $_.fields.'System.Tags'
             Url           = $_.url
           }
         }
