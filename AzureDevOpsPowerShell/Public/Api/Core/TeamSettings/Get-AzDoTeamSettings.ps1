@@ -41,6 +41,17 @@ function Get-AzDoTeamSettings {
     $CollectionUri = $CollectionUri.TrimEnd('/')
 
     foreach ($Name in $TeamName) {
+      try {
+        $team = Get-AzDoTeam -CollectionUri $CollectionUri -ProjectName $ProjectName -TeamName $Name
+        if (-not $team) {
+          Write-Error "Team '$Name' not found in project '$ProjectName'."
+          continue
+        }
+      } catch {
+        Write-Error "Failed to get team '$Name' in project '$ProjectName'. Error: $_"
+        continue
+      }
+
       $params = @{
         uri     = "$CollectionUri/$ProjectName/$Name/_apis/work/teamSettings"
         method  = 'GET'
@@ -65,7 +76,8 @@ function Get-AzDoTeamSettings {
             }
           }
         } catch {
-          $PSCmdlet.ThrowTerminatingError((Write-AzdoError -Message "Failed to get settings for team '$name' in $projectName Error: $_"))
+          Write-Error "Failed to get settings for team '$name' in $projectName Error: $_"
+          continue
         }
       } else {
         Write-Verbose "Skipping team settings for team '$Name' in project '$ProjectName'."
