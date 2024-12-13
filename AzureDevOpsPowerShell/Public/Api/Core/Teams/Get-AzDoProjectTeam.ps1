@@ -51,9 +51,12 @@ function Get-AzDoProjectTeam {
       version = "7.1-preview.3"
       method  = 'GET'
     }
-
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get teams from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $teams = (Invoke-AzDoRestMethod @params).value
+      try {
+        $teams = (Invoke-AzDoRestMethod @params).value
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -message "Failed to get teams for project '$ProjectName'. Error: $_"))
+      }
       if ($TeamName) {
         $teams | Where-Object { $_.name -eq $TeamName } | ForEach-Object {
           [PSCustomObject]@{
