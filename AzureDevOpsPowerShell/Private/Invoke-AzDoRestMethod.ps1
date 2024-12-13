@@ -100,7 +100,7 @@ function Invoke-AzDoRestMethod {
       try {
         Invoke-RestMethod @params
       } catch {
-        Write-AzdoError -Message ($_ | ConvertFrom-Json).message
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message ($_ | ConvertFrom-Json).message))
       }
     }
   }

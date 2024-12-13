@@ -49,7 +49,7 @@ function Add-FilesToRepo {
   process {
 
     $changes = @()
-    $files = Get-ChildItem -Path $Path -Recurse -File -Force | Where-Object {$_.FullName -notmatch ".git"}
+    $files = Get-ChildItem -Path $Path -Recurse -File -Force | Where-Object { $_.FullName -notmatch ".git" }
     foreach ($file in $files) {
 
       if (($file.Extension -in '.png', '.svg, .jpg', '.jpeg')) {
@@ -107,7 +107,7 @@ function Add-FilesToRepo {
         if ($_ -match 'TF401028') {
           Write-Warning "Repo is already initialized, skip uploading files"
         } else {
-          Write-AzDoError -message $_
+          $PSCmdlet.ThrowTerminatingError((Write-AzDoError -message $_))
         }
       }
     } else {

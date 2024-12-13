@@ -54,7 +54,7 @@ function Update-AzDoTeams {
   }
 
   process {
-    # Get the team ID using the Get-AzDoProjectTeams function
+    # Get the team ID using the Get-AzDoProjectTeam function
     $teamParams = @{
       CollectionUri = $CollectionUri
       ProjectName   = $ProjectName
@@ -62,7 +62,7 @@ function Update-AzDoTeams {
     }
 
     try {
-      $team = Get-AzDoProjectTeams @teamParams | Where-Object { $_.TeamName -eq $TeamName }
+      $team = Get-AzDoProjectTeam @teamParams | Where-Object { $_.TeamName -eq $TeamName }
       if (-not $team) {
         Write-Error "Team '$TeamName' not found in project '$ProjectName'."
         return

@@ -50,13 +50,13 @@ function Get-AzDoTeamMember {
     try {
       $team = Get-AzDoProjectTeam @teamParams | Where-Object { $_.TeamName -eq $TeamName }
       if (-not $team) {
-        Write-AzDoError "Team '$TeamName' not found in project '$ProjectName'."
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError "Team '$TeamName' not found in project '$ProjectName'."))
       }
 
       $teamId = $team.TeamId
       Write-Verbose "Retrieved Team ID: $teamId"
     } catch {
-      Write-AzDoError "Error retrieving team details: $_"
+      $PSCmdlet.ThrowTerminatingError((Write-AzDoError "Error retrieving team details: $_"))
     }
 
     $params = @{
@@ -86,7 +86,7 @@ function Get-AzDoTeamMember {
           }
         }
       } catch {
-        Write-AzDoError "Error retrieving team members: $_"
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError "Error retrieving team members: $_"))
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params | ConvertTo-Json -Depth 10)"

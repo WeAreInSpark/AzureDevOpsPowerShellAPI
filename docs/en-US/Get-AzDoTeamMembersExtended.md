@@ -5,45 +5,35 @@ online version:
 schema: 2.0.0
 ---
 
-# New-AzDoPipeline
+# Get-AzDoTeamMembersExtended
 
 ## SYNOPSIS
-Creates an Azure Pipeline
+This script gets team members with extended properties in a given project and team.
 
 ## SYNTAX
 
 ```
-New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [-PipelineName] <String>
- [-RepoName] <Object> [[-PipelineFolderPath] <Object>] [[-Path] <String>] [-ProgressAction <ActionPreference>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-AzDoTeamMembersExtended [-CollectionUri] <String> [-ProjectName] <String> [-TeamName] <String>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates an Azure Pipeline in a given Azure Project based on a repo
+This script gets team members with extended properties in a given project and team.
+When used in a pipeline, you can use the pre-defined CollectionUri, ProjectName, and AccessToken (PAT) variables.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$newAzDoPipelineSplat = @{
-    CollectionUri = "https://dev.azure.com/contoso"
-    PipelineName = "Pipeline 1"
-    RepoName = "Repo 1"
-    ProjectName = "Project 1"
+$params = @{
+    CollectionUri = 'https://dev.azure.com/contos0'
+    ProjectName = 'Project 1'
+    TeamName = 'testteam'
 }
-New-AzDoPipeline @newAzDoPipelineSplat
+Get-AzDoTeamMembersExtended @params
 ```
 
-This example creates a new Azure Pipeline using the PowerShell pipeline
-
-### EXAMPLE 2
-```
-Get-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT $PAT |
-    Get-AzDoRepo -RepoName 'Repo 1' -PAT $PAT |
-        New-AzDoPipeline -PipelineName "Pipeline 1" -PAT $PAT
-```
-
-This example creates a new Azure Pipeline
+This example gets the team members with extended properties in 'testteam' within 'Project 1'.
 
 ## PARAMETERS
 
@@ -63,7 +53,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProjectName
-Project where the pipeline will be created.
+the projectName
 
 ```yaml
 Type: String
@@ -77,8 +67,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -PipelineName
-Name of the Pipeline
+### -TeamName
+Team name of the team
 
 ```yaml
 Type: String
@@ -88,51 +78,6 @@ Aliases:
 Required: True
 Position: 3
 Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -RepoName
-Name of the Repository containing the YAML-sourcecode
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -PipelineFolderPath
-Folder to put Azure Devops Pipeline in
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Path
-Path of the YAML-sourcecode in the Repository
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: /main.yaml
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -190,7 +135,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PSobject. An object containing the name, the folder and the URI of the pipeline
+### PSObject
 ## NOTES
 
 ## RELATED LINKS

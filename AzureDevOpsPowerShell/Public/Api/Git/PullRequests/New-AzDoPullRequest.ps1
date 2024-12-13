@@ -126,7 +126,7 @@ function New-AzDoPullRequest {
             }
             $result += (Invoke-AzDoRestMethod @getParams).value | Where-Object { $_.sourceRefName -eq $prSourceRefName -and $_.targetRefName -eq $prTargetRefName }
           } else {
-            Write-AzDoError -message $_
+            $PSCmdlet.ThrowTerminatingError((Write-AzDoError -message $_))
           }
         }
       } else {

@@ -5,45 +5,82 @@ online version:
 schema: 2.0.0
 ---
 
-# New-AzDoPipeline
+# Remove-AzDoClassificationNode
 
 ## SYNOPSIS
-Creates an Azure Pipeline
+Delete a Classification Node in Azure DevOps.
 
 ## SYNTAX
 
 ```
-New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [-PipelineName] <String>
- [-RepoName] <Object> [[-PipelineFolderPath] <Object>] [[-Path] <String>] [-ProgressAction <ActionPreference>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-AzDoClassificationNode [-CollectionUri] <String> [-ProjectName] <String> [-StructureGroup] <String>
+ [[-Path] <String>] [-Name] <String> [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates an Azure Pipeline in a given Azure Project based on a repo
+Delete a Classification Node in Azure DevOps.
+This could be an area or an iteration.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$newAzDoPipelineSplat = @{
-    CollectionUri = "https://dev.azure.com/contoso"
-    PipelineName = "Pipeline 1"
-    RepoName = "Repo 1"
-    ProjectName = "Project 1"
+$Params = @{
+  CollectionUri  = "https://dev.azure.com/cantoso"
+  ProjectName    = "Playground"
+  StructureGroup = "areas"
+  Name           = "Area1"
 }
-New-AzDoPipeline @newAzDoPipelineSplat
 ```
 
-This example creates a new Azure Pipeline using the PowerShell pipeline
+Remove-AzDoClassificationNode @Params
+
+This example removes a Classification Node of the type 'areas' within the Project.
 
 ### EXAMPLE 2
 ```
-Get-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT $PAT |
-    Get-AzDoRepo -RepoName 'Repo 1' -PAT $PAT |
-        New-AzDoPipeline -PipelineName "Pipeline 1" -PAT $PAT
+$Params = @{
+  CollectionUri  = "https://dev.azure.com/cantoso"
+  ProjectName    = "Playground"
+  StructureGroup = "areas"
+  Name           = "Area1"
+  Path           = "Path1"
+}
 ```
 
-This example creates a new Azure Pipeline
+Remove-AzDoClassificationNode @Params
+
+This example removes a Classification Node of the type 'areas' within the specified path.
+
+### EXAMPLE 3
+```
+$Params = @{
+  CollectionUri  = "https://dev.azure.com/cantoso"
+  ProjectName    = "Playground"
+  StructureGroup = "iterations"
+  Name           = "Iteration1"
+}
+```
+
+Remove-AzDoClassificationNode @Params
+
+This example removes a Classification Node of the type 'iterations' within the specified path.
+
+### EXAMPLE 4
+```
+$Params = @{
+  CollectionUri  = "https://dev.azure.com/cantoso"
+  ProjectName    = "Playground"
+  StructureGroup = "iterations"
+  Name           = "Iteration1"
+  Path           = "Path1"
+}
+```
+
+Remove-AzDoClassificationNode @Params
+
+This example removes a Classification Node of the type 'iterations' within the specified path.
 
 ## PARAMETERS
 
@@ -63,7 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProjectName
-Project where the pipeline will be created.
+Name of the project where the new repository has to be created
 
 ```yaml
 Type: String
@@ -77,8 +114,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -PipelineName
-Name of the Pipeline
+### -StructureGroup
+Name of the project where the new repository has to be created
 
 ```yaml
 Type: String
@@ -92,38 +129,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -RepoName
-Name of the Repository containing the YAML-sourcecode
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -PipelineFolderPath
-Folder to put Azure Devops Pipeline in
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -Path
-Path of the YAML-sourcecode in the Repository
+Path of the classification node (optional)
 
 ```yaml
 Type: String
@@ -131,8 +138,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
-Default value: /main.yaml
+Position: 4
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the classification node
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 5
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -190,7 +212,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PSobject. An object containing the name, the folder and the URI of the pipeline
 ## NOTES
 
 ## RELATED LINKS

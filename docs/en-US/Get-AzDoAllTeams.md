@@ -5,50 +5,41 @@ online version:
 schema: 2.0.0
 ---
 
-# New-AzDoPipeline
+# Get-AzDoAllTeams
 
 ## SYNOPSIS
-Creates an Azure Pipeline
+This script gets all teams within an organization.
 
 ## SYNTAX
 
 ```
-New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [-PipelineName] <String>
- [-RepoName] <Object> [[-PipelineFolderPath] <Object>] [[-Path] <String>] [-ProgressAction <ActionPreference>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-AzDoAllTeams [-CollectionUri] <String> [-ExpandIdentity] [-Mine] [[-Skip] <Int32>] [[-Top] <Int32>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates an Azure Pipeline in a given Azure Project based on a repo
+This script retrieves all teams within an organization using the Azure DevOps REST API.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$newAzDoPipelineSplat = @{
-    CollectionUri = "https://dev.azure.com/contoso"
-    PipelineName = "Pipeline 1"
-    RepoName = "Repo 1"
-    ProjectName = "Project 1"
+$params = @{
+    CollectionUri = 'https://dev.azure.com/contoso/'
+    ExpandIdentity = $true
+    Mine = $true
 }
-New-AzDoPipeline @newAzDoPipelineSplat
+Get-AzDoAllTeams @params
 ```
 
-This example creates a new Azure Pipeline using the PowerShell pipeline
-
-### EXAMPLE 2
-```
-Get-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT $PAT |
-    Get-AzDoRepo -RepoName 'Repo 1' -PAT $PAT |
-        New-AzDoPipeline -PipelineName "Pipeline 1" -PAT $PAT
-```
-
-This example creates a new Azure Pipeline
+This example gets all teams within 'contoso' where the requesting user is a member.
 
 ## PARAMETERS
 
 ### -CollectionUri
-Collection Uri of the organization
+Collection URI.
+e.g.
+https://dev.azure.com/contoso.
 
 ```yaml
 Type: String
@@ -62,77 +53,62 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ProjectName
-Project where the pipeline will be created.
+### -ExpandIdentity
+whether or not to return detailed identity info
 
 ```yaml
-Type: String
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Mine
+filter only teams I'm member of
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Skip
+skip number N of results
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: 2
-Default value: None
+Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -PipelineName
-Name of the Pipeline
+### -Top
+show only top N results
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 3
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -RepoName
-Name of the Repository containing the YAML-sourcecode
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -PipelineFolderPath
-Folder to put Azure Devops Pipeline in
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Path
-Path of the YAML-sourcecode in the Repository
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: /main.yaml
+Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -190,7 +166,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PSobject. An object containing the name, the folder and the URI of the pipeline
+### PSObject
 ## NOTES
 
 ## RELATED LINKS

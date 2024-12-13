@@ -13,7 +13,8 @@ Creates a pull request in Azure DevOps.
 ## SYNTAX
 
 ```
-New-AzDoPullRequest [-CollectionUri] <String> [-RepoName] <String> [-ProjectName] <String> [-Title] <String> [-Description] <String> [-SourceRefName] <String> [-TargetRefName] <String>
+New-AzDoPullRequest [-CollectionUri] <String> [-RepoName] <String> [-ProjectName] <String> [-Title] <String[]>
+ [[-Description] <String[]>] [-SourceRefName] <String[]> [-TargetRefName] <String[]>
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -53,6 +54,7 @@ $params = @{
 
     This example creates a new Azure DevOps Pull Request with pipeline parameters
 ```
+
 ## PARAMETERS
 
 ### -CollectionUri
@@ -66,7 +68,7 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -74,14 +76,14 @@ Accept wildcard characters: False
 Name of the repo
 
 ```yaml
-Type: String[]
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: 2
 Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -96,7 +98,7 @@ Aliases:
 Required: True
 Position: 3
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -104,7 +106,7 @@ Accept wildcard characters: False
 The title of the new pull request
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
@@ -119,11 +121,11 @@ Accept wildcard characters: False
 The description of the new pull request
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 5
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -134,7 +136,7 @@ Accept wildcard characters: False
 The source branch path of the pull request
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
@@ -149,7 +151,7 @@ Accept wildcard characters: False
 The target branch path of the pull request
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
@@ -214,12 +216,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### [PSCustomObject]@{
-###     CollectionUri  = $CollectionUri
-###     ProjectName    = $ProjectName
-###     RepoId         = $RepoId
-###     PullRequestId  = $res.pullRequestId
-###     PullRequestURL = $res.url
-###   }
+### CollectionUri  = $CollectionUri
+### ProjectName    = $ProjectName
+### RepoId         = $RepoId
+### PullRequestId  = $res.pullRequestId
+### PullRequestURL = $res.url
+### }
 ## NOTES
 
 ## RELATED LINKS

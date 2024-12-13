@@ -79,7 +79,7 @@ function New-AzDoRepo {
             $params.Method = 'GET'
             $result += (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name }
           } else {
-            Write-AzDoError -message $_
+            $PSCmdlet.ThrowTerminatingError((Write-AzDoError -message $_))
           }
         }
       } else {

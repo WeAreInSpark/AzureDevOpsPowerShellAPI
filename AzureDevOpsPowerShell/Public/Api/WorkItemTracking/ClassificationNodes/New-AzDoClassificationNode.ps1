@@ -177,7 +177,7 @@ function New-AzDoClassificationNode {
             }
           }
         } else {
-          Write-AzDoError -message $_
+          $PSCmdlet.ThrowTerminatingError((Write-AzDoError -message $_))
         }
       }
     }
