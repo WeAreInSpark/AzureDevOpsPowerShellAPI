@@ -1,4 +1,4 @@
-function New-AzDoTeams {
+function New-AzDoTeam {
   <#
   .SYNOPSIS
       Function to create an Azure DevOps team.
@@ -38,25 +38,29 @@ function New-AzDoTeams {
 
     # Description of the team.
     [Parameter()]
-    [string]$Description = "Team for $TeamName"
+    [string]$Description
   )
 
-  begin {
-    Write-Verbose "Starting function: New-AzDoTeam"
-  }
-
   process {
+    Write-Verbose "Starting function: New-AzDoTeam"
+
     # Get the project ID
+    try {
+      $project = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName)
+    } catch {
+      $PSCmdlet.ThrowTerminatingError((Write-AzDoError "Failed to get project ID for project '$ProjectName'. Error: $_"))
+    }
 
     try {
-      $projectid = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
+      if (Get-AzDoProjectTeam -CollectionUri $CollectionUri -ProjectName $ProjectName -TeamName $TeamName) {
+        throw "Team '$TeamName' already exists in project '$ProjectName'."
+      }
     } catch {
-      Write-Error "Failed to get project ID for project '$ProjectName'. Error: $_"
-      return
+      $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message $_))
     }
 
     $params = @{
-      Uri     = "$CollectionUri/_apis/projects/$projectId/teams"
+      Uri     = "$CollectionUri/_apis/projects/$($project.Projectid)/teams"
       Version = "7.2-preview.3"
       Method  = 'POST'
     }
@@ -65,18 +69,16 @@ function New-AzDoTeams {
       name        = $TeamName
       description = $Description
       visibility  = $true
-
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Create team named: $($PSStyle.Bold)$TeamName$($PSStyle.Reset) in project: $($PSStyle.Bold)$Project$($PSStyle.Reset)")) {
       try {
         $response = $body | Invoke-AzDoRestMethod @params
         if ($response -is [System.Management.Automation.PSObject]) {
-          #Write-Output "Team '$TeamName' created successfully in project '$Project'."
-          $output = [PSCustomObject]@{
+          [PSCustomObject]@{
             CollectionUri = $CollectionUri
             ProjectName   = $ProjectName
-            projectId     = $projectId
+            projectId     = $project.projectId
             Name          = $TeamName
             Description   = $Description
             TeamId        = $response.id
@@ -84,19 +86,15 @@ function New-AzDoTeams {
             IdentityUrl   = $response.IdentityUrl
             Identity      = $response.Identity
           }
-          return $output
         } else {
-          Write-AzDoError -Message "Unexpected response format: $($response | Out-String)"
+          $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Unexpected response format: $($response | Out-String)"))
         }
       } catch {
-        Write-AzDoError -Message "Failed to create team '$TeamName'. Error: $_"
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to create team '$TeamName'. Error: $_"))
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params | ConvertTo-Json -Depth 10)"
     }
-  }
-
-  end {
     Write-Verbose "Ending function: New-AzDoTeam"
   }
 }
