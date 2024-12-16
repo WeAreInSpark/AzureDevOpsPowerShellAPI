@@ -41,13 +41,8 @@ function Test-AzDoServiceConnection {
     [string]
     $ServiceConnectionName
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoServiceConnection"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoServiceConnection"
 
     $getAzDoServiceConnectionSplat = @{
       CollectionUri         = $CollectionUri
