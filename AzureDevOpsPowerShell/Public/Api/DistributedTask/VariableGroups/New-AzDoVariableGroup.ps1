@@ -64,13 +64,8 @@ function New-AzDoVariableGroup {
     [string]
     $Description
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: New-AzDoVariableGroupVariable"
-  }
-
   process {
+    Write-Verbose "Starting function: New-AzDoVariableGroupVariable"
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
@@ -100,25 +95,24 @@ function New-AzDoVariableGroup {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        $result += ($body | Invoke-AzDoRestMethod @params)
+        try {
+        ($body | Invoke-AzDoRestMethod @params) | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionURI     = $CollectionUri
+              ProjectName       = $ProjectName
+              VariableGroupName = $_.name
+              VariableGroupId   = $_.id
+              Variables         = $_.variables
+              CreatedOn         = $_.createdOn
+              IsShared          = $_.isShared
+            }
+          }
+        } catch {
+          Write-Error "Failed to create variable group $name in project $ProjectName with error: $_"
+          continue
+        }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-      }
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionURI     = $CollectionUri
-          ProjectName       = $ProjectName
-          VariableGroupName = $_.name
-          VariableGroupId   = $_.id
-          Variables         = $_.variables
-          CreatedOn         = $_.createdOn
-          IsShared          = $_.isShared
-        }
       }
     }
   }
