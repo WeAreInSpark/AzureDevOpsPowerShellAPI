@@ -60,13 +60,17 @@ function Get-AzDoPipeline {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      try {
       (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PipelineName -or $_.Name -in $PipelineName } | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri = $CollectionUri
-          ProjectName   = $ProjectName
-          Id            = $_.id
-          PipelineName  = $_.name
+          [PSCustomObject]@{
+            CollectionUri = $CollectionUri
+            ProjectName   = $ProjectName
+            Id            = $_.id
+            PipelineName  = $_.name
+          }
         }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get pipelines from $ProjectName in $CollectionUri Error: $_" ))
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
