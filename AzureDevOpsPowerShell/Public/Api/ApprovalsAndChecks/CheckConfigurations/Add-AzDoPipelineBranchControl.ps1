@@ -139,12 +139,16 @@ function Add-AzDoPipelineBranchControl {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create build-validation policy named: $($PSStyle.Bold)$PolicyName$($PSStyle.Reset)")) {
-        Invoke-AzDoRestMethod @params | ForEach-Object {
-          [PSCustomObject]@{
-            CollectionUri = $CollectionUri
-            ProjectName   = $ProjectName
-            CheckId       = $_.id
+        try {
+          Invoke-AzDoRestMethod @params | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionUri = $CollectionUri
+              ProjectName   = $ProjectName
+              CheckId       = $_.id
+            }
           }
+        } catch {
+          Write-Error "Failed to create build-validation policy named: $($PolicyName) on $($ResourceType) named: $($name) in project: $($ProjectName) in collection: $($CollectionUri). Error: $_"
         }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
