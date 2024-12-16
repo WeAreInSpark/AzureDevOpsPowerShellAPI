@@ -66,15 +66,7 @@ function Get-AzDoPipeline {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PipelineName -or $_.Name -in $PipelineName }
-    } else {
-      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
+      (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PipelineName -or $_.Name -in $PipelineName } | ForEach-Object {
         [PSCustomObject]@{
           CollectionUri = $CollectionUri
           ProjectName   = $ProjectName
@@ -82,6 +74,8 @@ function Get-AzDoPipeline {
           PipelineName  = $_.name
         }
       }
+    } else {
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }
