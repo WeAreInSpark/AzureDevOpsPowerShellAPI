@@ -60,13 +60,9 @@ function Add-AzDoVariableGroupVariable {
     [hashtable]
     $Variables
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Add-AzDoVariableGroupVariable"
-  }
-
   process {
+    Write-Verbose "Starting function: Add-AzDoVariableGroupVariable"
+
     Write-Information "Starting function: Add-AzDoVariableGroupVariable"
     $groups = Get-AzDoVariableGroup -CollectionUri $CollectionUri -ProjectName $ProjectName
 
@@ -93,15 +89,7 @@ function Add-AzDoVariableGroupVariable {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Add Variables to Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-      $result += Invoke-AzDoRestMethod @params
-    } else {
-      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
+      Invoke-AzDoRestMethod @params | ForEach-Object {
         [PSCustomObject]@{
           CollectionURI     = $CollectionUri
           ProjectName       = $ProjectName
@@ -112,6 +100,8 @@ function Add-AzDoVariableGroupVariable {
           IsShared          = $_.isShared
         }
       }
+    } else {
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }
