@@ -41,12 +41,8 @@ function Add-FilesToRepo {
     [string]
     $Path
   )
-
-  begin {
-    Write-Verbose "Starting function: Add-FilesToRepo"
-  }
-
   process {
+    Write-Verbose "Starting function: Add-FilesToRepo"
 
     $changes = @()
     $files = Get-ChildItem -Path $Path -Recurse -File -Force | Where-Object { $_.FullName -notmatch ".git" }
