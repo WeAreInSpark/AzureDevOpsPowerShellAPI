@@ -89,7 +89,6 @@ function Get-AzDoServiceConnection {
   process {
     Write-Verbose "Starting function: Get-AzDoServiceConnection"
 
-    $result = @()
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints"
       version = "7.2-preview.4"
