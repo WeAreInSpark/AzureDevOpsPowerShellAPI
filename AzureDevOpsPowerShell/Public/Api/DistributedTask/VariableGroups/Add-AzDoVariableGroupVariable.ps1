@@ -89,16 +89,20 @@ function Add-AzDoVariableGroupVariable {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Add Variables to Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-      Invoke-AzDoRestMethod @params | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionURI     = $CollectionUri
-          ProjectName       = $ProjectName
-          VariableGroupName = $_.name
-          VariableGroupId   = $_.id
-          Variables         = $_.variables
-          CreatedOn         = $_.createdOn
-          IsShared          = $_.isShared
+      try {
+        Invoke-AzDoRestMethod @params | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionURI     = $CollectionUri
+            ProjectName       = $ProjectName
+            VariableGroupName = $_.name
+            VariableGroupId   = $_.id
+            Variables         = $_.variables
+            CreatedOn         = $_.createdOn
+            IsShared          = $_.isShared
+          }
         }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError "Error adding variables to variable group '$VariableGroupName' in project '$ProjectName' in collectionURI '$CollectionUri' Error: $_"))
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
