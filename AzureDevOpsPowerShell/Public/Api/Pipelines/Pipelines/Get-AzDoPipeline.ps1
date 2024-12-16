@@ -51,12 +51,6 @@ function Get-AzDoPipeline {
     [string[]]
     $PipelineName
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoPipeline"
-  }
-
   process {
 
     $params = @{
