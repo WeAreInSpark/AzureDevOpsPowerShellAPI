@@ -5,45 +5,41 @@ online version:
 schema: 2.0.0
 ---
 
-# New-AzDoPipeline
+# Get-PipelineRun
 
 ## SYNOPSIS
-Creates an Azure Pipeline
+Retrieves pipeline run information from Azure DevOps for a specified pipeline within a project.
 
 ## SYNTAX
 
 ```
-New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [-PipelineName] <String>
- [-RepoName] <Object> [[-PipelineFolderPath] <Object>] [[-Path] <String>] [-ProgressAction <ActionPreference>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-PipelineRun [-CollectionUri] <String> [-ProjectName] <String> [-PipelineId] <Int32> [[-RunId] <Int32[]>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates an Azure Pipeline in a given Azure Project based on a repo
+The \`Get-PipelineRun\` function fetches details about one or more pipeline runs from an Azure DevOps project.
+It requires the collection URI, project name, and pipeline ID.
+Optionally, specific run IDs can be provided
+to filter the results.
+The function uses the \`Invoke-AzDoRestMethod\` cmdlet to make the REST API call to
+Azure DevOps and returns the run details.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$newAzDoPipelineSplat = @{
-    CollectionUri = "https://dev.azure.com/contoso"
-    PipelineName = "Pipeline 1"
-    RepoName = "Repo 1"
-    ProjectName = "Project 1"
-}
-New-AzDoPipeline @newAzDoPipelineSplat
+Get-PipelineRun -CollectionUri "https://dev.azure.com/YourOrg" -ProjectName "YourProject" -PipelineId 123
 ```
 
-This example creates a new Azure Pipeline using the PowerShell pipeline
+Retrieves all runs for the specified pipeline in the given project.
 
 ### EXAMPLE 2
 ```
-Get-AzDoProject -CollectionUri "https://dev.azure.com/contoso" -PAT $PAT |
-    Get-AzDoRepo -RepoName 'Repo 1' -PAT $PAT |
-        New-AzDoPipeline -PipelineName "Pipeline 1" -PAT $PAT
+Get-PipelineRun -CollectionUri "https://dev.azure.com/YourOrg" -ProjectName "YourProject" -PipelineId 123 -RunId 456
 ```
 
-This example creates a new Azure Pipeline
+Retrieves the details of the specified run (with ID 456) for the given pipeline.
 
 ## PARAMETERS
 
@@ -63,7 +59,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProjectName
-Project where the pipeline will be created.
+The name of the project containing the pipeline
 
 ```yaml
 Type: String
@@ -77,62 +73,33 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -PipelineName
-Name of the Pipeline
+### -PipelineId
+The ID of the pipeline to retrieve the run for
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: 3
-Default value: None
+Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -RepoName
-Name of the Repository containing the YAML-sourcecode
+### -RunId
+The ID of the run to retrieve.
+If not provided, all runs for the pipeline are returned.
 
 ```yaml
-Type: Object
+Type: Int32[]
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 4
 Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -PipelineFolderPath
-Folder to put Azure Devops Pipeline in
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Path
-Path of the YAML-sourcecode in the Repository
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: /main.yaml
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -190,7 +157,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PSobject. An object containing the name, the folder and the URI of the pipeline
+### Returns an array of pipeline run objects. If specific run IDs are provided, only the matching runs are returned.
 ## NOTES
 
 ## RELATED LINKS

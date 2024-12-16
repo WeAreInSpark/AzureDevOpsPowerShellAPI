@@ -13,9 +13,8 @@ Creates a new work item in Azure DevOps.
 ## SYNTAX
 
 ```
-New-AzDoWorkItem [-CollectionUri] <String> [-ProjectName] <String> [-WorkItemType] <String>
-[-Title] <String> [-Description] <String> [-AssignedTo] <String> [-AreaPath] <String> [-IterationPath] <String>
-[-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-AzDoWorkItem [-CollectionUri] <String> [-ProjectName] <String> [-WorkItem] <Object[]>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -37,6 +36,7 @@ $Params = @{
 }
 New-AzDoWorkItem @Params
 ```
+
 This command creates a new work item of type "Bug" with the specified details in the specified project.
 
 ## PARAMETERS
@@ -50,9 +50,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -65,114 +65,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -WorkItemType
-The type of the work item to be created (e.g., Bug, Task, User Story).
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -Title
-The title of the work item.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -Description
-The description of the work item.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -AssignedTo
-The user to whom the work item is assigned.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -AreaPath
-The area path of the work item.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -IterationPath
-The iteration path of the work item.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -ProgressAction
-Determines how the cmdlet responds to progress updates.
-
-```yaml
-Type: ActionPreference
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WorkItem
+{{ Fill WorkItem Description }}
+
+```yaml
+Type: Object[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 3
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -206,8 +116,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### <CommonParameters>
-This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVariable`, `-InformationAction`, `-InformationVariable`, `-OutVariable`, `-OutBuffer`, `-PipelineVariable`, `-Verbose`, `-WarningAction`, and `-WarningVariable`. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+### -ProgressAction
+Determines how the cmdlet responds to progress updates.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -216,3 +141,6 @@ This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVar
 ## OUTPUTS
 
 ### System.Object
+## NOTES
+
+## RELATED LINKS

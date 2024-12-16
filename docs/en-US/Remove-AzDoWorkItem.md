@@ -13,8 +13,8 @@ Updates an existing work item in Azure DevOps.
 ## SYNTAX
 
 ```
-Set-AzDoWorkItem [-CollectionUri] <String> [-ProjectName] <String> [-WorkItemId] <Int32>
-[-Fields] <Hashtable> [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-AzDoWorkItem [-CollectionUri] <String> [-ProjectName] <String> [-WorkItem] <Object[]>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,6 +35,7 @@ $Params = @{
 }
 Set-AzDoWorkItem @Params
 ```
+
 This command updates the title and description of the work item with ID 1 in the specified project.
 
 ## PARAMETERS
@@ -48,7 +49,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -63,54 +64,33 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -WorkItemId
-The ID of the work item to update.
+### -WorkItem
+Work item object (could be a hashtable or a custom object)
+template: @{
+  WorkItemId    = 1 (required)
+  Title         = "Test Work Item 2" (optional)
+  Description   = "This is a test work item." (optional)
+  AreaPath      = "DevOps Automation" (optional)
+  IterationPath = "DevOps Automation" (optional)
+  TeamProject   = "DevOps Automation" (optional)
+  ParentId      = 3 (optional)
+}
 
 ```yaml
-Type: Int32
+Type: Object[]
 Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 3
 Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -Fields
-A hashtable containing the fields to be updated in the work item.
-
-```yaml
-Type: Hashtable
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -ProgressAction
-Determines how the cmdlet responds to progress updates.
-
-```yaml
-Type: ActionPreference
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -144,8 +124,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### <CommonParameters>
-This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVariable`, `-InformationAction`, `-InformationVariable`, `-OutVariable`, `-OutBuffer`, `-PipelineVariable`, `-Verbose`, `-WarningAction`, and `-WarningVariable`. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+### -ProgressAction
+Determines how the cmdlet responds to progress updates.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -154,3 +149,6 @@ This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVar
 ## OUTPUTS
 
 ### System.Object
+## NOTES
+
+## RELATED LINKS

@@ -13,8 +13,8 @@ Gets information about work items in Azure DevOps.
 ## SYNTAX
 
 ```
-Get-AzDoWorkItem [-CollectionUri] <String> [-ProjectName] <String> [-WorkItemIds] <Int32[]>
-[-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-AzDoWorkItem [-CollectionUri] <String> [-ProjectName] <String> [-WorkItemId] <Int32[]>
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,6 +31,7 @@ $Params = @{
 }
 Get-AzDoWorkItem @Params
 ```
+
 This command retrieves information about the work items with IDs 1, 2, and 3 in the specified project.
 
 ## PARAMETERS
@@ -44,7 +45,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -59,14 +60,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -WorkItemIds
-The IDs of the work items to retrieve.
+### -WorkItemId
+WorkItem Id to get
 
 ```yaml
 Type: Int32[]
@@ -74,24 +75,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 3
 Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
-### -ProgressAction
-Determines how the cmdlet responds to progress updates.
-
-```yaml
-Type: ActionPreference
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -125,8 +111,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### <CommonParameters>
-This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVariable`, `-InformationAction`, `-InformationVariable`, `-OutVariable`, `-OutBuffer`, `-PipelineVariable`, `-Verbose`, `-WarningAction`, and `-WarningVariable`. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+### -ProgressAction
+Determines how the cmdlet responds to progress updates.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -135,3 +136,6 @@ This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVar
 ## OUTPUTS
 
 ### System.Object
+## NOTES
+
+## RELATED LINKS

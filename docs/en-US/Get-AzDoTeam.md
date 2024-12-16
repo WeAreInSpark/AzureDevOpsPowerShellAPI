@@ -13,8 +13,8 @@ Gets information about teams in Azure DevOps.
 ## SYNTAX
 
 ```
-Get-AzDoTeam [-CollectionUri] <String> [-ProjectName] <String> [[-TeamName] <String[]>] [[-TeamId] <String>]
-[-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-AzDoTeam [-CollectionUri] <String> [[-ProjectName] <String>] [[-TeamName] <String[]>] [[-TeamId] <String>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,6 +31,7 @@ $Params = @{
 }
 Get-AzDoTeam @Params
 ```
+
 This command retrieves all teams in the specified project.
 
 ### EXAMPLE 2
@@ -42,6 +43,7 @@ $Params = @{
 }
 Get-AzDoTeam @Params
 ```
+
 This command retrieves the team named "Team1" in the specified project.
 
 ### EXAMPLE 3
@@ -53,6 +55,7 @@ $Params = @{
 }
 Get-AzDoTeam @Params
 ```
+
 This command retrieves the team with the specified ID in the specified project.
 
 ## PARAMETERS
@@ -66,9 +69,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -80,8 +83,8 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: Named
+Required: False
+Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -96,9 +99,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 3
 Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -111,24 +114,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -ProgressAction
-Determines how the cmdlet responds to progress updates.
-
-```yaml
-Type: ActionPreference
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -162,8 +150,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### <CommonParameters>
-This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVariable`, `-InformationAction`, `-InformationVariable`, `-OutVariable`, `-OutBuffer`, `-PipelineVariable`, `-Verbose`, `-WarningAction`, and `-WarningVariable`. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+### -ProgressAction
+Determines how the cmdlet responds to progress updates.
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -172,3 +175,6 @@ This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVar
 ## OUTPUTS
 
 ### System.Object
+## NOTES
+
+## RELATED LINKS
