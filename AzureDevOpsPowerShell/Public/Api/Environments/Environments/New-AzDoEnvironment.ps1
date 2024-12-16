@@ -56,13 +56,8 @@ function New-AzDoEnvironment {
     [string]
     $Description
   )
-
-  Begin {
-    $result = @()
-    Write-Verbose "Starting function: New-AzDoEnvironment"
-  }
-
   Process {
+    Write-Verbose "Starting function: New-AzDoEnvironment"
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"
@@ -90,7 +85,7 @@ function New-AzDoEnvironment {
           if ($_ -match 'exists in current project') {
             Write-Warning "Environment $name already exists, trying to get it"
             $params.Method = 'GET'
-            $result += (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name } | ForEach-Object {
+            (Invoke-AzDoRestMethod @params).value | Where-Object { $_.name -eq $name } | ForEach-Object {
               [PSCustomObject]@{
                 CollectionUri   = $CollectionUri
                 ProjectName     = $ProjectName
