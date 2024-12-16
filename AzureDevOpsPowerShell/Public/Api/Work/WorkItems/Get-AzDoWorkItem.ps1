@@ -37,13 +37,13 @@ function Get-AzDoWorkItem {
   [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
     # Name of the project where the team is located
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
@@ -57,8 +57,8 @@ function Get-AzDoWorkItem {
     $Uri = "$CollectionUri/$ProjectName/_apis/wit/workitems/{0}"
 
     $params = @{
-      method          = 'GET'
-      version         = '7.2-preview.3'
+      method  = 'GET'
+      version = '7.2-preview.3'
     }
 
     foreach ($id in $WorkItemId) {
@@ -82,6 +82,13 @@ function Get-AzDoWorkItem {
             CreatedBy     = $_.fields.'System.CreatedBy'.displayName
             Tags          = $_.fields.'System.Tags'
             Url           = $_.url
+            WorkItem      = [PSCustomObject]@{
+              WorkItemId    = $_.id
+              Title         = $_.fields.'System.Title'
+              AreaPath      = $_.fields.'System.AreaPath'
+              IterationPath = $_.fields.'System.IterationPath'
+              TeamProject   = $_.fields.'System.TeamProject'
+            }
           }
         }
       } catch {
