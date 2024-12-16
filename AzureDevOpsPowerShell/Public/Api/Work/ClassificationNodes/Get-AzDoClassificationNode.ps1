@@ -108,20 +108,24 @@ function Get-AzDoClassificationNode {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Get Classification Node named: $($PSStyle.Bold)$Name$($PSStyle.Reset)")) {
-      Invoke-AzDoRestMethod @params | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri = $CollectionUri
-          ProjectName   = $ProjectName
-          Id            = $_.id
-          Identifier    = $_.identifier
-          Name          = $_.name
-          StructureType = $_.structureType
-          HasChildren   = $_.hasChildren
-          Children      = $_.children
-          Path          = $_.path
-          Links         = $_._links
-          Url           = $_.url
+      try {
+        Invoke-AzDoRestMethod @params | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionUri = $CollectionUri
+            ProjectName   = $ProjectName
+            Id            = $_.id
+            Identifier    = $_.identifier
+            Name          = $_.name
+            StructureType = $_.structureType
+            HasChildren   = $_.hasChildren
+            Children      = $_.children
+            Path          = $_.path
+            Links         = $_._links
+            Url           = $_.url
+          }
         }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get Classification Node $Name in project '$ProjectName'. Error: $_" ))
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
