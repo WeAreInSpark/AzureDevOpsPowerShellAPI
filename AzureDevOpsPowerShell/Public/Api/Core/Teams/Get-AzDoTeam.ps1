@@ -62,12 +62,9 @@ function Get-AzDoTeam {
     [string]
     $TeamId
   )
-
-  begin {
-    Write-Verbose "Starting function: Get-AzDoTeam"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoTeam"
+
     $params = @{
       uri     = "$CollectionUri/_apis/teams"
       version = "7.1-preview.3"
@@ -75,7 +72,11 @@ function Get-AzDoTeam {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Teams from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $teams = (Invoke-AzDoRestMethod @params).value
+      try {
+        $teams = (Invoke-AzDoRestMethod @params).value
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -message "Failed to get team '$TeamName' from project '$ProjectName' in collection '$CollectionUri' Error: $_" ))
+      }
 
       # Filter the teams if the parameters are filled in
       if ($TeamName) {
@@ -87,24 +88,20 @@ function Get-AzDoTeam {
       if ($TeamId) {
         $teams = $teams | Where-Object { $_.id -eq $TeamId }
       }
-      $result = $teams
-    } else {
-      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionURI = $CollectionUri
-          ProjectName   = $ProjectName
-          TeamName      = $_.name
-          TeamId        = $_.id
+      if ($teams) {
+        $teams | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionURI = $CollectionUri
+            ProjectName   = $ProjectName
+            TeamName      = $_.name
+            TeamId        = $_.id
+          }
         }
+      } else {
+        Write-Host "No teams found"
       }
     } else {
-      Write-Host "No teams found"
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }
