@@ -49,7 +49,11 @@ function Get-PipelineRun {
     }
 
     if ($PSCmdlet.ShouldProcess("Pipeline Id: $PipelineId", "Get run")) {
-      $response = Invoke-AzDoRestMethod @params
+      try {
+        $response = Invoke-AzDoRestMethod @params
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get runs for pipeline $PipelineId in $ProjectName in $CollectionUri Error: $_" ))
+      }
       $runs = $response.value
 
       if (-not $RunId) {
