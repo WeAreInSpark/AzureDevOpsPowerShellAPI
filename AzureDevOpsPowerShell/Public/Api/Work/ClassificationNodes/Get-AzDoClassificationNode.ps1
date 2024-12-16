@@ -89,13 +89,9 @@ function Get-AzDoClassificationNode {
     [string]
     $Depth = '2'
   )
-
-  begin {
-    Write-Verbose "Starting function: Get-AzDoClassificationNode"
-    $result = @()
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoClassificationNode"
+
     $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
 
     if ($Path) {
@@ -112,7 +108,7 @@ function Get-AzDoClassificationNode {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Get Classification Node named: $($PSStyle.Bold)$Name$($PSStyle.Reset)")) {
-      $result += Invoke-AzDoRestMethod @params | ForEach-Object {
+      Invoke-AzDoRestMethod @params | ForEach-Object {
         [PSCustomObject]@{
           CollectionUri = $CollectionUri
           ProjectName   = $ProjectName
@@ -129,12 +125,6 @@ function Get-AzDoClassificationNode {
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result
     }
   }
 }
