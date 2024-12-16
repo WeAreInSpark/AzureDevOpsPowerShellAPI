@@ -25,13 +25,13 @@ function Remove-AzDoWorkItem {
   [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
     # Name of the project where the team is located
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
@@ -40,30 +40,30 @@ function Remove-AzDoWorkItem {
     [int[]]
     $WorkItemId
   )
-
-  begin {
+  process {
     Write-Verbose "Starting 'Remove-AzDoWorkItem' function."
     $Uri = "$CollectionUri/$ProjectName/_apis/wit/workitems/{0}"
-  }
 
-  process {
     $params = @{
       method  = 'DELETE'
-      version = '7.1-preview.3'
+      version = '7.2-preview.3'
     }
 
     foreach ($id in $WorkItemId) {
       $id = [string]$id
       $params.uri = $Uri -f $id
       try {
-        Invoke-AzDoRestMethod @params
-        Write-Verbose "Work item $id deleted successfully."
-        [PSCustomObject]@{
-          CollectionUri = $CollectionUri
-          ProjectName   = $ProjectName
-          WorkItemId    = $id
-          DeletedItem   = $true
+        Invoke-AzDoRestMethod @params | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionUri = $CollectionUri
+            ProjectName   = $ProjectName
+            WorkItemId    = $id
+            DeletedItem   = $true
+            DeletedDate   = $_.deletedDate
+            DeletedBy     = $_.deletedBy
+          }
         }
+        Write-Verbose "Work item $id deleted successfully from project $projectName."
       } catch {
         Write-Error "Error deleting work item $id in project '$projectname' Error: $_"
         continue
