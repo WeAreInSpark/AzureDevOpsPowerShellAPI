@@ -45,13 +45,8 @@ function Get-AzDoVariableGroup {
     [string[]]
     $VariableGroupName
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoVariableGroupVariable"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoVariableGroupVariable"
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
