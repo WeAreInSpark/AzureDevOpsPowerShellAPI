@@ -86,13 +86,9 @@ function Get-AzDoServiceConnection {
     [string[]]
     $ServiceConnectionName
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoServiceConnection"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoServiceConnection"
+
     $result = @()
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints"
@@ -100,25 +96,21 @@ function Get-AzDoServiceConnection {
       method  = 'GET'
     }
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Service Connections from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ServiceConnectionName -or $_.Name -in $ServiceConnectionName }
-
-      if ($result) {
-        $result | ForEach-Object {
-          [PSCustomObject]@{
-            CollectionUri                                     = $CollectionUri
-            ProjectName                                       = $ProjectName
-            ServiceConnectionName                             = $_.name
-            ServiceConnectionId                               = $_.id
-            ServiceConnectionType                             = $_.type
-            ServiceConnectionUrl                              = $_.url
-            ServiceConnectionDescription                      = $_.description
-            ServiceConnectionCreatedBy                        = $_.createdBy.displayName
-            ServiceConnectionAuthorization                    = $_.authorization
-            ServiceConnectionData                             = $_.data
-            ServiceConnectionIsShared                         = $_.isShared
-            ServiceConnectionOwner                            = $_.owner
-            ServiceConnectionServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
-          }
+      (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ServiceConnectionName -or $_.Name -in $ServiceConnectionName } | ForEach-Object {
+        [PSCustomObject]@{
+          CollectionUri                                     = $CollectionUri
+          ProjectName                                       = $ProjectName
+          ServiceConnectionName                             = $_.name
+          ServiceConnectionId                               = $_.id
+          ServiceConnectionType                             = $_.type
+          ServiceConnectionUrl                              = $_.url
+          ServiceConnectionDescription                      = $_.description
+          ServiceConnectionCreatedBy                        = $_.createdBy.displayName
+          ServiceConnectionAuthorization                    = $_.authorization
+          ServiceConnectionData                             = $_.data
+          ServiceConnectionIsShared                         = $_.isShared
+          ServiceConnectionOwner                            = $_.owner
+          ServiceConnectionServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
         }
       }
     } else {
