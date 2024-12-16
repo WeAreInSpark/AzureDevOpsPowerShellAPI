@@ -44,7 +44,11 @@ function Get-AzDoBranchPolicy {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Get Policy ID from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      try {
       (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PolicyName -or $_.Name -in $PolicyName }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get policy from $ProjectName in $CollectionUri Error: $_" ))
+      }
 
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
