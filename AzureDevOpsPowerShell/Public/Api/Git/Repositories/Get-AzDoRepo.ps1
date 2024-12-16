@@ -63,7 +63,11 @@ function Get-AzDoRepo {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $repos = (Invoke-AzDoRestMethod @params).value
+      try {
+        $repos = (Invoke-AzDoRestMethod @params).value
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get repos from $ProjectName in $CollectionUri Error: $_" ))
+      }
 
       if ($RepoName) {
         foreach ($name in $RepoName) {
