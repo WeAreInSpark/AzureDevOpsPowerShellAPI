@@ -108,17 +108,21 @@ function Set-AzDoBranchPolicyCommentResolution {
         }
 
         $existingPolicy = Get-AzDoBranchPolicy @getAzDoBranchPolicySplat |
-          Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) }
+        Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) }
 
         if ($null -eq $existingPolicy) {
+          try {
           ($body | Invoke-AzDoRestMethod @params) | ForEach-Object {
-            [PSCustomObject]@{
-              CollectionUri = $CollectionUri
-              ProjectName   = $ProjectName
-              RepoName      = $RepoName
-              PolicyId      = $_.id
-              Url           = $_.url
+              [PSCustomObject]@{
+                CollectionUri = $CollectionUri
+                ProjectName   = $ProjectName
+                RepoName      = $RepoName
+                PolicyId      = $_.id
+                Url           = $_.url
+              }
             }
+          } catch {
+            Write-Error "Failed to create policy on $name/$branch in repo $name in project $ProjectName Error: $_"
           }
         } else {
           Write-Warning "Policy on $name/$branch already exists. It is not possible to update policies"
