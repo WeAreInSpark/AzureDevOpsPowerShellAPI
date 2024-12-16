@@ -79,14 +79,10 @@ function New-AzDoPullRequest {
     [string[]]
     $TargetRefName
   )
-
-  begin {
+  process {
     Write-Verbose "Starting function: New-AzDoPullRequest"
     $CollectionUri = $CollectionUri.TrimEnd('/')
-    $result = New-Object System.Collections.Generic.List[System.Object]
-  }
 
-  process {
     foreach ($pr in $Title) {
       $prTitle = $pr
       $prDescription = $Description[$Title.IndexOf($pr)]
