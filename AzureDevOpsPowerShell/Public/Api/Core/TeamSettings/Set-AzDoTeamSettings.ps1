@@ -75,12 +75,9 @@ function Set-AzDoTeamSettings {
     [bool]
     $IncludeAreaChildren = $true
   )
-
-  begin {
-    Write-Verbose "Starting function: Set-AzDoTeamSettings"
-  }
-
   process {
+    Write-Verbose "Starting function: Set-AzDoTeamSettings"
+
     try {
       $getAzDoTeamSplat = @{
         CollectionUri = $CollectionUri
