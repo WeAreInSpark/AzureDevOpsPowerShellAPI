@@ -48,12 +48,9 @@ function New-AzDoRepo {
     [string]
     $ProjectName
   )
-
-  begin {
-    Write-Verbose "Starting function: New-AzDoRepo"
-  }
-
   process {
+    Write-Verbose "Starting function: New-AzDoRepo"
+
     $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
 
     $params = @{
