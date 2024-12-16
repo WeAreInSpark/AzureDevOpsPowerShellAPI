@@ -139,13 +139,9 @@ function New-AzDoServiceConnection {
     [string]
     $CertName
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: New-AzDoServiceConnection"
-  }
-
   process {
+    Write-Verbose "Starting function: New-AzDoServiceConnection"
+
     if ($Force -and -not $Confirm) {
       $ConfirmPreference = 'None'
     }
