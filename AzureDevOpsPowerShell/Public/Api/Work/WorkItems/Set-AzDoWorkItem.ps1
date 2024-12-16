@@ -41,13 +41,13 @@ function Set-AzDoWorkItem {
   [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
     # Name of the project where the team is located
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
@@ -135,6 +135,14 @@ function Set-AzDoWorkItem {
               Id            = $_.id
               Name          = $_.fields.'System.Title'
               Url           = $_.url
+              WorkItem      = [PSCustomObject]@{
+                WorkItemId    = $_.id
+                Title         = $_.fields.'System.Title'
+                AreaPath      = $_.fields.'System.AreaPath'
+                IterationPath = $_.fields.'System.IterationPath'
+                TeamProject   = $_.fields.'System.TeamProject'
+              }
+
             }
           }
         } catch {
