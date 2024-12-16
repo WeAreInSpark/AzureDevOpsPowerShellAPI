@@ -60,33 +60,40 @@ function Get-AzDoVariableGroup {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Variable groups from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $variableGroups = (Invoke-AzDoRestMethod @params).value
+      try {
+        $variableGroups = (Invoke-AzDoRestMethod @params).value
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get variable groups from $ProjectName in $CollectionUri Error: $_" ))
+      }
       if ($VariableGroupName) {
         foreach ($name in $VariableGroupName) {
-          $result += $variableGroups | Where-Object { -not $name -or $_.Name -in $name }
+          $variableGroups | Where-Object { -not $name -or $_.Name -in $name } | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionURI   = $CollectionUri
+              ProjectName     = $ProjectName
+              Name            = $_.name
+              VariableGroupId = $_.id
+              Variables       = $_.variables
+              CreatedOn       = $_.createdOn
+              IsShared        = $_.isShared
+            }
+          }
         }
       } else {
-        $result += $variableGroups
-      }
-
-    } else {
-      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionURI   = $CollectionUri
-          ProjectName     = $ProjectName
-          Name            = $_.name
-          VariableGroupId = $_.id
-          Variables       = $_.variables
-          CreatedOn       = $_.createdOn
-          IsShared        = $_.isShared
+        $variableGroups | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionURI   = $CollectionUri
+            ProjectName     = $ProjectName
+            Name            = $_.name
+            VariableGroupId = $_.id
+            Variables       = $_.variables
+            CreatedOn       = $_.createdOn
+            IsShared        = $_.isShared
+          }
         }
       }
+    } else {
+      Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }
