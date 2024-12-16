@@ -80,13 +80,9 @@ function Remove-AzDoClassificationNode {
     [string]
     $Name
   )
-
-  begin {
-    Write-Verbose "Starting function: Remove-AzDoClassificationNode"
-    $result = @()
-  }
-
   process {
+    Write-Verbose "Starting function: Remove-AzDoClassificationNode"
+
     $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
 
     if ($Path) {
@@ -102,15 +98,13 @@ function Remove-AzDoClassificationNode {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Delete Classification Node named: $($PSStyle.Bold)$Name$($PSStyle.Reset)")) {
-      $result += Invoke-AzDoRestMethod @params
+      try {
+        Invoke-AzDoRestMethod @params
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Unable to delete Classification Node named: $Name in $ProjectName Error: $_"))
+      }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result
     }
   }
 }
