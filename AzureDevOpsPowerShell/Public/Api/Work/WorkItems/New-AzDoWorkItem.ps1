@@ -137,15 +137,22 @@ function New-AzDoWorkItem {
         contentType = 'application/json-patch+json'
       }
 
-      if ($PSCmdlet.ShouldProcess($CollectionUri, "Create work item named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
+      if ($PSCmdlet.ShouldProcess($CollectionUri, "Create work item named: $($PSStyle.Bold)$($_.Title)$($PSStyle.Reset)")) {
         try {
           Invoke-AzDoRestMethod @params | ForEach-Object {
             [PSCustomObject]@{
               CollectionUri = $CollectionUri
               ProjectName   = $ProjectName
-              Id            = $_.id
+              WorkItemId    = $_.id
               Name          = $_.fields.'System.Title'
               Url           = $_.url
+              WorkItem      = [PSCustomObject]@{
+                WorkItemId    = $_.id
+                Title         = $_.fields.'System.Title'
+                AreaPath      = $_.fields.'System.AreaPath'
+                IterationPath = $_.fields.'System.IterationPath'
+                TeamProject   = $_.fields.'System.TeamProject'
+              }
             }
           }
         } catch {
