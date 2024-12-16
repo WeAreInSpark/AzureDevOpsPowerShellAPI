@@ -84,12 +84,8 @@ function Add-AzDoPipelineBranchControl {
     [int]
     $Timeout = 1440
   )
-
-  begin {
-    Write-Verbose "Starting function: Add-AzDoPipelineBranchControl"
-  }
-
   process {
+    Write-Verbose "Starting function: Add-AzDoPipelineBranchControl"
 
     foreach ($name in $ResourceName) {
 
@@ -147,7 +143,7 @@ function Add-AzDoPipelineBranchControl {
           [PSCustomObject]@{
             CollectionUri = $CollectionUri
             ProjectName   = $ProjectName
-            CheckId            = $_.id
+            CheckId       = $_.id
           }
         }
       } else {
