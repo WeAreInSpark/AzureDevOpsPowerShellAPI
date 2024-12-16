@@ -95,22 +95,26 @@ function Get-AzDoServiceConnection {
       method  = 'GET'
     }
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Service Connections from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
+      try {
       (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ServiceConnectionName -or $_.Name -in $ServiceConnectionName } | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri                                     = $CollectionUri
-          ProjectName                                       = $ProjectName
-          ServiceConnectionName                             = $_.name
-          ServiceConnectionId                               = $_.id
-          ServiceConnectionType                             = $_.type
-          ServiceConnectionUrl                              = $_.url
-          ServiceConnectionDescription                      = $_.description
-          ServiceConnectionCreatedBy                        = $_.createdBy.displayName
-          ServiceConnectionAuthorization                    = $_.authorization
-          ServiceConnectionData                             = $_.data
-          ServiceConnectionIsShared                         = $_.isShared
-          ServiceConnectionOwner                            = $_.owner
-          ServiceConnectionServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
+          [PSCustomObject]@{
+            CollectionUri                                     = $CollectionUri
+            ProjectName                                       = $ProjectName
+            ServiceConnectionName                             = $_.name
+            ServiceConnectionId                               = $_.id
+            ServiceConnectionType                             = $_.type
+            ServiceConnectionUrl                              = $_.url
+            ServiceConnectionDescription                      = $_.description
+            ServiceConnectionCreatedBy                        = $_.createdBy.displayName
+            ServiceConnectionAuthorization                    = $_.authorization
+            ServiceConnectionData                             = $_.data
+            ServiceConnectionIsShared                         = $_.isShared
+            ServiceConnectionOwner                            = $_.owner
+            ServiceConnectionServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
+          }
         }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get service connections from $ProjectName in $CollectionUri Error: $_" ))
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
