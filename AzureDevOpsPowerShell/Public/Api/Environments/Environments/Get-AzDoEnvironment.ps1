@@ -52,12 +52,8 @@ function Get-AzDoEnvironment {
     $EnvironmentName
   )
 
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoEnvironment"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoEnvironment"
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"
