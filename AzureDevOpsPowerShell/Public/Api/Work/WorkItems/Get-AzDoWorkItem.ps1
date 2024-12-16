@@ -70,6 +70,7 @@ function Get-AzDoWorkItem {
             CollectionUri = $CollectionUri
             ProjectName   = $ProjectName
             Id            = $_.id
+            WorkItemId    = $_.id
             Title         = $_.fields.'System.Title'
             AreaPath      = $_.fields.'System.AreaPath'
             IterationPath = $_.fields.'System.IterationPath'
