@@ -34,12 +34,9 @@ function Get-AzDoBranchPolicy {
     [string[]]
     $PolicyName
   )
-
-  begin {
-    Write-Verbose "Starting function: Get-AzDoBranchPolicy"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoBranchPolicy"
+
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/policy/configurations"
       version = "7.2-preview.1"
