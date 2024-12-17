@@ -45,27 +45,43 @@ function Remove-AzDoTeam {
     Write-Verbose "Starting function: Remove-AzDoTeam"
 
     if ($TeamName) {
-      $TeamId = foreach ($Name in $TeamName) {
-        Get-AzDoTeam -CollectionUri $CollectionUri -ProjectName $ProjectName -TeamName $Name | Select-Object -ExpandProperty Id
-      }
+      Get-AzDoTeam -CollectionUri $CollectionUri -ProjectName $ProjectName -TeamName $TeamName
+    } elseif ($TeamId) {
+      Get-AzDoTeam -CollectionUri $CollectionUri -ProjectName $ProjectName -TeamId $TeamId
+    } else {
+      Write-Warning "No team name(s) or team id provided."
+      return
     }
 
-    foreach ($Id in $TeamId) {
+    foreach ($Team in $Teams) {
       $params = @{
-        uri     = "$CollectionUri/_apis/projects/$ProjectName/teams/$Id"
+        uri     = "$CollectionUri/_apis/projects/$ProjectName/teams/$($Team.TeamId)"
         method  = 'DELETE'
         version = '7.1-preview.3'
       }
 
-      if ($PSCmdlet.ShouldProcess("Delete team '$Id' in project '$ProjectName'")) {
+      if ($PSCmdlet.ShouldProcess($CollectionUri, "Delete team '$($team.TeamName)' in project '$ProjectName'")) {
         try {
-          Invoke-AzDoRestMethod @params
+          Invoke-AzDoRestMethod @params | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionURI = $CollectionUri
+              ProjectName   = $ProjectName
+              TeamName      = $team.TeamName
+              Removed       = $true
+            }
+          }
         } catch {
-          Write-Error "Error Deleting team $id in $projectname Error: $_"
+          Write-Error "Error Deleting team '$($team.TeamName)' in project '$projectname' Error: $_"
+          [PSCustomObject]@{
+            CollectionURI = $CollectionUri
+            ProjectName   = $ProjectName
+            TeamName      = $team.TeamName
+            Removed       = $false
+          }
           continue
         }
       } else {
-        Write-Verbose "To be deleted teams in project '$ProjectName'."
+        Write-Verbose "To be deleted team '$($team.TeamName)' in project '$ProjectName'."
       }
     }
     Write-Verbose "Ending function: Remove-AzDoTeam"
