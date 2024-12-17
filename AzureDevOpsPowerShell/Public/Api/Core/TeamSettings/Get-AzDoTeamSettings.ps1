@@ -68,7 +68,7 @@ function Get-AzDoTeamSettings {
               TeamId                = ($_.url -split '/')[-4]
               BacklogIteration      = $_.backlogIteration
               BacklogVisibilities   = $_.backlogVisibilities
-              DefualtIteration      = $_.defaultIteration
+              DefaultIteration      = $_.defaultIteration
               DefaultIterationMacro = $_.defaultIterationMacro
               WorkingDays           = $_.workingDays
               BugsBehavior          = $_.bugsBehavior
