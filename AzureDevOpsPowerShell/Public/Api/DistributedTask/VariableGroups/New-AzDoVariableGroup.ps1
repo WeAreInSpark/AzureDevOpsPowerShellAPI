@@ -10,7 +10,7 @@ function New-AzDoVariableGroup {
             Collectionuri = 'https://dev.azure.com/weareinspark/'
             ProjectName = 'Project 1'
             VariableGroupName = 'VariableGroup1'
-            Variables = @{ test = @{ value = 'test' } }
+            Variables = @{ test = 'test' }
             Description = 'This is a test'
         }
         New-AzDoVariableGroup @params
@@ -21,9 +21,8 @@ function New-AzDoVariableGroup {
         $params = @{
             Collectionuri = 'https://dev.azure.com/ChristianPiet0452/'
             ProjectName = 'Ditproject'
-            Variables = @{ test = @{ value = 'test' } }
+            Variables = @{ test = 'test' }
             Description = 'This is a test'
-            PAT = $PAT
         }
         @(
             'dev-group'
@@ -39,13 +38,13 @@ function New-AzDoVariableGroup {
   [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
     # Project where the variable group has to be created
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
@@ -55,21 +54,22 @@ function New-AzDoVariableGroup {
     $VariableGroupName,
 
     # Variable names and values
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [hashtable]
     $Variables,
 
     # Description of the variable group
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName)]
     [string]
     $Description
   )
   process {
     Write-Verbose "Starting function: New-AzDoVariableGroupVariable"
+    $CollectionUri = $CollectionUri.TrimEnd('/')
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
-      version = "7.2-preview.2"
+      version = "7.1"
       method  = 'POST'
     }
 
