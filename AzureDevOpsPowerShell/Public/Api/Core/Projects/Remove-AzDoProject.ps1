@@ -60,9 +60,22 @@ function Remove-AzDoProject {
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Delete project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         try {
-          Invoke-AzDoRestMethod @params
+          Invoke-AzDoRestMethod @params | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionURI = $CollectionUri
+              ProjectName   = $name
+              ProjectID     = $_.id
+              Removed       = $true
+            }
+          }
         } catch {
           Write-Error "Error Deleting project '$projectname' in collectionURI '$CollectionUri' Error: $_"
+          [PSCustomObject]@{
+            CollectionURI = $CollectionUri
+            ProjectName   = $name
+            ProjectID     = $projectId
+            Removed       = $false
+          }
           continue
         }
       } else {
@@ -71,3 +84,4 @@ function Remove-AzDoProject {
     }
   }
 }
+
