@@ -60,31 +60,22 @@ function Get-AzDoVariableGroup {
       } catch {
         $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get variable groups from $ProjectName in $CollectionUri Error: $_" ))
       }
-      if ($VariableGroupName) {
-        foreach ($name in $VariableGroupName) {
-          $variableGroups | Where-Object { -not $name -or $_.Name -in $name } | ForEach-Object {
-            [PSCustomObject]@{
-              CollectionURI   = $CollectionUri
-              ProjectName     = $ProjectName
-              Name            = $_.name
-              VariableGroupId = $_.id
-              Variables       = $_.variables
-              CreatedOn       = $_.createdOn
-              IsShared        = $_.isShared
-            }
-          }
+      $variableGroups | Where-Object { -not $VariableGroupName -or $_.Name -in $VariableGroupName } | ForEach-Object {
+        $variablesObject = $_.variables | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashtable -Depth 10
+
+        $variablesOutput = @{}
+        foreach ($item in $variablesObject.GetEnumerator()) {
+          $variablesOutput[$item.Key] = $item.value.value
         }
-      } else {
-        $variableGroups | ForEach-Object {
-          [PSCustomObject]@{
-            CollectionURI   = $CollectionUri
-            ProjectName     = $ProjectName
-            Name            = $_.name
-            VariableGroupId = $_.id
-            Variables       = $_.variables
-            CreatedOn       = $_.createdOn
-            IsShared        = $_.isShared
-          }
+
+        [PSCustomObject]@{
+          CollectionURI     = $CollectionUri
+          ProjectName       = $ProjectName
+          VariableGroupName = $_.name
+          VariableGroupId   = $_.id
+          Variables         = $variablesOutput
+          CreatedOn         = $_.createdOn
+          IsShared          = $_.isShared
         }
       }
     } else {
