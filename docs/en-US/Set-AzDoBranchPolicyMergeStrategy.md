@@ -219,14 +219,14 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### [PSCustomObject]@{
-###   CollectionUri      = $CollectionUri
-###   ProjectName        = $ProjectName
-###   RepoName           = $RepoName
-###   id                 = $res.id
-###   allowSquash        = $res.settings.allowSquash
-###   allowNoFastForward = $res.settings.allowNoFastForward
-###   allowRebase        = $res.settings.allowRebase
-###   allowRebaseMerge   = $res.settings.allowRebaseMerge
+### CollectionUri      = $CollectionUri
+### ProjectName        = $ProjectName
+### RepoName           = $RepoName
+### id                 = $res.id
+### allowSquash        = $res.settings.allowSquash
+### allowNoFastForward = $res.settings.allowNoFastForward
+### allowRebase        = $res.settings.allowRebase
+### allowRebaseMerge   = $res.settings.allowRebaseMerge
 ### }
 ## NOTES
 

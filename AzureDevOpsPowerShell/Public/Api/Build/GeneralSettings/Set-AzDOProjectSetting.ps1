@@ -131,12 +131,8 @@ function Set-AzDoProjectSetting {
     [switch]
     $StatusBadgesArePrivate
   )
-
-begin {
-  Write-Verbose "Starting function: Set-AzDOProjectSetting"
-}
-
   process {
+    Write-Verbose "Starting function: Set-AzDOProjectSetting"
 
     $body = @{
       buildsEnabledForForks                             = [bool]$BuildsEnabledForForks

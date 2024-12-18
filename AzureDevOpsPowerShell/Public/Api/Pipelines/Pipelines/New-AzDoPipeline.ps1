@@ -57,12 +57,9 @@ function New-AzDoPipeline {
     [string]
     $Path = '/main.yaml'
   )
-
-  begin {
-    Write-Verbose "Starting function: New-AzDoPipeline"
-  }
-
   process {
+    Write-Verbose "Starting function: New-AzDoPipeline"
+
     $getAzDoRepoSplat = @{
       CollectionUri = $CollectionUri
       ProjectName   = $ProjectName
@@ -120,7 +117,7 @@ function New-AzDoPipeline {
             }
           }
         } else {
-          Write-AzDoError -message $_
+          $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to create pipeline '$PipelineName' in project '$ProjectName'. Error: $_"))
         }
       }
 
