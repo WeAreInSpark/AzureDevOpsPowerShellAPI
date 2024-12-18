@@ -97,12 +97,18 @@ function New-AzDoVariableGroup {
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
         try {
         ($body | Invoke-AzDoRestMethod @params) | ForEach-Object {
+            $variablesObject = $_.variables | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashtable -Depth 10
+
+            $variablesOutput = @{}
+            foreach ($item in $variablesObject.GetEnumerator()) {
+              $variablesOutput[$item.Key] = $item.value.value
+            }
             [PSCustomObject]@{
               CollectionURI     = $CollectionUri
               ProjectName       = $ProjectName
               VariableGroupName = $_.name
               VariableGroupId   = $_.id
-              Variables         = $_.variables
+              Variables         = $variablesOutput
               CreatedOn         = $_.createdOn
               IsShared          = $_.isShared
             }
