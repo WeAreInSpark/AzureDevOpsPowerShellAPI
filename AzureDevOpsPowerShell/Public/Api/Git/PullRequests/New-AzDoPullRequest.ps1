@@ -79,14 +79,10 @@ function New-AzDoPullRequest {
     [string[]]
     $TargetRefName
   )
-
-  begin {
+  process {
     Write-Verbose "Starting function: New-AzDoPullRequest"
     $CollectionUri = $CollectionUri.TrimEnd('/')
-    $result = New-Object System.Collections.Generic.List[System.Object]
-  }
 
-  process {
     foreach ($pr in $Title) {
       $prTitle = $pr
       $prDescription = $Description[$Title.IndexOf($pr)]
@@ -115,7 +111,18 @@ function New-AzDoPullRequest {
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Create pull request named: $($PSStyle.Bold)$prTitle$($PSStyle.Reset)")) {
         try {
-          $result += Invoke-AzDoRestMethod @params
+          Invoke-AzDoRestMethod @params | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionUri     = $CollectionUri
+              ProjectName       = $ProjectName
+              RepoName          = $RepoName
+              PullRequestTitle  = $_.title
+              PullRequestId     = $_.pullRequestId
+              PullRequestURL    = $_.url
+              PullRequestWebUrl = "$CollectionUri/$ProjectName/_git/$RepoName/pullrequest/$($_.pullRequestId)"
+              PullRequestStatus = $_.status
+            }
+          }
         } catch {
           if ($_ -match 'TF401179') {
             Write-Warning "Pull request between those branches already exists, trying to get it"
@@ -124,30 +131,25 @@ function New-AzDoPullRequest {
               version = '7.1-preview.1'
               method  = 'GET'
             }
-            $result += (Invoke-AzDoRestMethod @getParams).value | Where-Object { $_.sourceRefName -eq $prSourceRefName -and $_.targetRefName -eq $prTargetRefName }
+            (Invoke-AzDoRestMethod @getParams).value | Where-Object { $_.sourceRefName -eq $prSourceRefName -and $_.targetRefName -eq $prTargetRefName } | ForEach-Object {
+              [PSCustomObject]@{
+                CollectionUri     = $CollectionUri
+                ProjectName       = $ProjectName
+                RepoName          = $RepoName
+                PullRequestTitle  = $_.title
+                PullRequestId     = $_.pullRequestId
+                PullRequestURL    = $_.url
+                PullRequestWebUrl = "$CollectionUri/$ProjectName/_git/$RepoName/pullrequest/$($_.pullRequestId)"
+                PullRequestStatus = $_.status
+              }
+            }
           } else {
-            Write-AzDoError -message $_
+            Write-Error "Failed to create pull request: $prTitle in repo $repoName in project $projectName Error: $_"
+            continue
           }
         }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-      }
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri     = $CollectionUri
-          ProjectName       = $ProjectName
-          RepoName          = $RepoName
-          PullRequestTitle  = $_.title
-          PullRequestId     = $_.pullRequestId
-          PullRequestURL    = $_.url
-          PullRequestWebUrl = "$CollectionUri/$ProjectName/_git/$RepoName/pullrequest/$($_.pullRequestId)"
-          PullRequestStatus = $_.status
-        }
       }
     }
   }

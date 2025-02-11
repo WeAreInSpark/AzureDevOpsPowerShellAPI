@@ -45,13 +45,8 @@ function Remove-AzDoProject {
     [string[]]
     $ProjectName
   )
-
-  begin {
-    Write-Verbose "Starting function: Remove-AzDoProject"
-    $result = @()
-  }
-
   Process {
+    Write-Verbose "Starting function: Remove-AzDoProject"
 
     foreach ($name in $ProjectName) {
 
@@ -64,16 +59,29 @@ function Remove-AzDoProject {
       }
 
       if ($PSCmdlet.ShouldProcess($CollectionUri, "Delete project named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        $result += Invoke-AzDoRestMethod @params
+        try {
+          Invoke-AzDoRestMethod @params | ForEach-Object {
+            [PSCustomObject]@{
+              CollectionURI = $CollectionUri
+              ProjectName   = $name
+              ProjectID     = $_.id
+              Removed       = $true
+            }
+          }
+        } catch {
+          Write-Error "Error Deleting project '$projectname' in collectionURI '$CollectionUri' Error: $_"
+          [PSCustomObject]@{
+            CollectionURI = $CollectionUri
+            ProjectName   = $name
+            ProjectID     = $projectId
+            Removed       = $false
+          }
+          continue
+        }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
     }
   }
-
-  end {
-    if ($result) {
-      $result
-    }
-  }
 }
+

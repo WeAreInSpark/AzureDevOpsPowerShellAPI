@@ -189,18 +189,18 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### [PSCustomObject]@{
-###   CollectionUri               = $CollectionUri
-###   ProjectName                 = $ProjectName
-###   RepoName                    = $RepoName
-###   id                          = $res.id
-###   minimumApproverCount        = $res.settings.minimumApproverCount
-###   creatorVoteCounts           = $res.settings.creatorVoteCounts
-###   allowDownvotes              = $res.settings.allowDownvotes
-###   resetOnSourcePush           = $res.settings.resetOnSourcePush
-###   requireVoteOnLastIteration  = $res.settings.requireVoteOnLastIteration
-###   resetRejectionsOnSourcePush = $res.settings.resetRejectionsOnSourcePush
-###   blockLastPusherVote         = $res.settings.blockLastPusherVote
-###   requireVoteOnEachIteration  = $res.settings.requireVoteOnEachIteration
+### CollectionUri               = $CollectionUri
+### ProjectName                 = $ProjectName
+### RepoName                    = $RepoName
+### id                          = $res.id
+### minimumApproverCount        = $res.settings.minimumApproverCount
+### creatorVoteCounts           = $res.settings.creatorVoteCounts
+### allowDownvotes              = $res.settings.allowDownvotes
+### resetOnSourcePush           = $res.settings.resetOnSourcePush
+### requireVoteOnLastIteration  = $res.settings.requireVoteOnLastIteration
+### resetRejectionsOnSourcePush = $res.settings.resetRejectionsOnSourcePush
+### blockLastPusherVote         = $res.settings.blockLastPusherVote
+### requireVoteOnEachIteration  = $res.settings.requireVoteOnEachIteration
 ### }
 ## NOTES
 

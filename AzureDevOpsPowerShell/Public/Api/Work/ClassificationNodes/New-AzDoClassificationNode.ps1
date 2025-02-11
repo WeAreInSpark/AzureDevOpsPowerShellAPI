@@ -105,13 +105,8 @@ function New-AzDoClassificationNode {
     [string]
     $finishDate
   )
-
-  begin {
-    Write-Verbose "Starting function: New-AzDoClassificationNode"
-  }
-
   process {
-    $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
+    Write-Verbose "Starting function: New-AzDoClassificationNode"
 
     if ($Path) {
       $uri = "$CollectionUri/$ProjectName/_apis/wit/classificationnodes/$StructureGroup/$Path"
@@ -177,7 +172,7 @@ function New-AzDoClassificationNode {
             }
           }
         } else {
-          Write-AzDoError -message $_
+          $PSCmdlet.ThrowTerminatingError((Write-AzDoError -message "Failed to create Classification Node. Error: $_"))
         }
       }
     }

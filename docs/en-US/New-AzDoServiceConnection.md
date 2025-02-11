@@ -15,8 +15,9 @@ Function to create a service connection in Azure DevOps
 ### WorkloadIdentityFederation
 ```
 New-AzDoServiceConnection -CollectionUri <String> -ProjectName <String> -ServiceConnectionName <String>
- [-Description <String>] [-Force] [-AsDraft] [-AuthenticationType <String>] [-TenantId <String>]
- [-ServiceprincipalId <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Description <String>] [-Force] [-AsDraft] [-ScopeLevel <String>] [-AuthenticationType <String>]
+ [-SubscriptionId <String>] [-SubscriptionName <String>] [-TenantId <String>] [-ServiceprincipalId <String>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ServiceprincipalCertificate
@@ -193,6 +194,18 @@ Scope level (Subscription or ManagementGroup).
 
 ```yaml
 Type: String
+Parameter Sets: WorkloadIdentityFederation
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
 Parameter Sets: ServiceprincipalCertificate, ServiceprincipalSecret
 Aliases:
 
@@ -223,6 +236,18 @@ ID of the subscriptionn.
 
 ```yaml
 Type: String
+Parameter Sets: WorkloadIdentityFederation
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
 Parameter Sets: Subscription
 Aliases:
 
@@ -235,6 +260,18 @@ Accept wildcard characters: False
 
 ### -SubscriptionName
 Name of the subscription.
+
+```yaml
+Type: String
+Parameter Sets: WorkloadIdentityFederation
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
 
 ```yaml
 Type: String

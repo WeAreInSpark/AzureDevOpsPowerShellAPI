@@ -1,19 +1,18 @@
-function Get-AzDoClassificationNode {
+function Remove-AzDoClassificationNode {
   <#
 .SYNOPSIS
-    Get a Classification Node in Azure DevOps.
+    Delete a Classification Node in Azure DevOps.
 .DESCRIPTION
-    Get a Classification Node in Azure DevOps. This could be an area or an iteration.
+    Delete a Classification Node in Azure DevOps. This could be an area or an iteration.
 .EXAMPLE
     $Params = @{
       CollectionUri  = "https://dev.azure.com/cantoso"
       ProjectName    = "Playground"
       StructureGroup = "areas"
       Name           = "Area1"
-      Depth          = '2'
     }
 
-    Get-AzDoClassificationNode @Params
+    Remove-AzDoClassificationNode @Params
 
     This example removes a Classification Node of the type 'areas' within the Project.
 .EXAMPLE
@@ -23,10 +22,9 @@ function Get-AzDoClassificationNode {
       StructureGroup = "areas"
       Name           = "Area1"
       Path           = "Path1"
-      Depth          = '2'
     }
 
-    Get-AzDoClassificationNode @Params
+    Remove-AzDoClassificationNode @Params
 
     This example removes a Classification Node of the type 'areas' within the specified path.
 .EXAMPLE
@@ -35,10 +33,9 @@ function Get-AzDoClassificationNode {
       ProjectName    = "Playground"
       StructureGroup = "iterations"
       Name           = "Iteration1"
-      Depth          = '2'
     }
 
-    Get-AzDoClassificationNode @Params
+    Remove-AzDoClassificationNode @Params
 
     This example removes a Classification Node of the type 'iterations' within the specified path.
 
@@ -49,10 +46,9 @@ function Get-AzDoClassificationNode {
       StructureGroup = "iterations"
       Name           = "Iteration1"
       Path           = "Path1"
-      Depth          = '2'
     }
 
-    Get-AzDoClassificationNode @Params
+    Remove-AzDoClassificationNode @Params
 
     This example removes a Classification Node of the type 'iterations' within the specified path.
 #>
@@ -82,20 +78,11 @@ function Get-AzDoClassificationNode {
     # Name of the classification node
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
-    $Name,
-
-    # Optional parameter to specify the depth of child nodes to retrieve
-    [Parameter(ValueFromPipelineByPropertyName)]
-    [string]
-    $Depth = '2'
+    $Name
   )
-
-  begin {
-    Write-Verbose "Starting function: Get-AzDoClassificationNode"
-    $result = @()
-  }
-
   process {
+    Write-Verbose "Starting function: Remove-AzDoClassificationNode"
+
     $ProjectId = (Get-AzDoProject -CollectionUri $CollectionUri -ProjectName $ProjectName).Projectid
 
     if ($Path) {
@@ -105,36 +92,19 @@ function Get-AzDoClassificationNode {
     }
 
     $params = @{
-      uri             = $uri
-      version         = "7.2-preview.2"
-      QueryParameters = "`$depth=$depth"
-      Method          = 'GET'
+      uri     = $uri
+      version = "7.2-preview.2"
+      Method  = 'DELETE'
     }
 
-    if ($PSCmdlet.ShouldProcess($ProjectName, "Get Classification Node named: $($PSStyle.Bold)$Name$($PSStyle.Reset)")) {
-      $result += Invoke-AzDoRestMethod @params | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri = $CollectionUri
-          ProjectName   = $ProjectName
-          Id            = $_.id
-          Identifier    = $_.identifier
-          Name          = $_.name
-          StructureType = $_.structureType
-          HasChildren   = $_.hasChildren
-          Children      = $_.children
-          Path          = $_.path
-          Links         = $_._links
-          Url           = $_.url
-        }
+    if ($PSCmdlet.ShouldProcess($ProjectName, "Delete Classification Node named: $($PSStyle.Bold)$Name$($PSStyle.Reset)")) {
+      try {
+        Invoke-AzDoRestMethod @params
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Unable to delete Classification Node named: $Name in $ProjectName Error: $_"))
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result
     }
   }
 }

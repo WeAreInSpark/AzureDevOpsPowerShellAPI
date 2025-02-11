@@ -124,12 +124,9 @@ function New-AzDoProject {
     [string]
     $Visibility = 'private'
   )
-
-  begin {
-    Write-Verbose "Starting function: New-AzDoProject"
-  }
-
   process {
+    Write-Verbose "Starting function: New-AzDoProject"
+
 
     $params = @{
       uri     = "$CollectionUri/_apis/projects"
@@ -160,7 +157,7 @@ function New-AzDoProject {
           if ($_ -match 'TF200019') {
             Write-Warning "Project $name already exists, trying to get it"
           } else {
-            Write-AzDoError -message $_
+            $PSCmdlet.ThrowTerminatingError((Write-AzDoError -message "Failed to create project: $name Error: $_"))
           }
         }
 
@@ -176,16 +173,10 @@ function New-AzDoProject {
         } while (
           $response.State -ne 'wellFormed'
         )
-        $result += ($response)
+        $response
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
       }
-    }
-  }
-
-  end {
-    if ($result) {
-      $result
     }
   }
 }

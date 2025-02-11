@@ -52,12 +52,8 @@ function Get-AzDoEnvironment {
     $EnvironmentName
   )
 
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoEnvironment"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoEnvironment"
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/pipelines/environments"
@@ -66,22 +62,21 @@ function Get-AzDoEnvironment {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $EnvironmentName -or $_.Name -in $EnvironmentName }
+      try {
+        (Invoke-AzDoRestMethod @params).value | Where-Object { -not $EnvironmentName -or $_.Name -in $EnvironmentName } | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionUri   = $CollectionUri
+            ProjectName     = $ProjectName
+            EnvironmentId   = $_.id
+            EnvironmentName = $_.name
+          }
+        }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get environments from $ProjectName in $CollectionUri Error: $_" ))
+      }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri   = $CollectionUri
-          ProjectName     = $ProjectName
-          EnvironmentId   = $_.id
-          EnvironmentName = $_.name
-        }
-      }
-    }
-  }
 }

@@ -142,15 +142,15 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### [PSCustomObject]@{
-###     CollectionUri = $CollectionUri
-###     ProjectName   = $ProjectName
-###     RepoName      = $res.name
-###     RepoId        = $res.id
-###     RepoURL       = $res.url
-###     WebUrl        = $res.webUrl
-###     HttpsUrl      = $res.remoteUrl
-###     SshUrl        = $res.sshUrl
-###   }
+### CollectionUri = $CollectionUri
+### ProjectName   = $ProjectName
+### RepoName      = $res.name
+### RepoId        = $res.id
+### RepoURL       = $res.url
+### WebUrl        = $res.webUrl
+### HttpsUrl      = $res.remoteUrl
+### SshUrl        = $res.sshUrl
+### }
 ## NOTES
 
 ## RELATED LINKS

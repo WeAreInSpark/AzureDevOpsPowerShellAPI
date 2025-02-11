@@ -27,7 +27,7 @@ function Invoke-AzDoRestMethod {
     $QueryParameters,
 
     [Parameter(Mandatory)]
-    [ValidateSet('GET', 'POST', 'PATCH', 'DELETE')]
+    [ValidateSet('GET', 'POST', 'PATCH', 'DELETE', "PUT")]
     [string]
     $Method,
 
@@ -92,7 +92,7 @@ function Invoke-AzDoRestMethod {
   }
 
   process {
-    if ($Method -eq 'POST' -or ($Method -eq 'PATCH')) {
+    if ($Method -in @('POST', 'PATCH', "PUT")) {
       Write-Verbose "Body: $($Body | ConvertTo-Json -Depth 10)"
       $params.Body = $Body | ConvertTo-Json -Depth 10
     }
@@ -100,7 +100,7 @@ function Invoke-AzDoRestMethod {
       try {
         Invoke-RestMethod @params
       } catch {
-        Write-AzdoError -Message ($_ | ConvertFrom-Json).message
+        $PSCmdlet.ThrowTerminatingError((Write-AzdoError -Message ($_ | ConvertFrom-Json).message))
       }
     }
   }

@@ -8,13 +8,11 @@ function Write-AzDoError {
 
 
   process {
-    $errorRec = [System.Management.Automation.ErrorRecord]::new(
+    [System.Management.Automation.ErrorRecord]::new(
       [Exception]::new($Message),
       'ErrorID',
       [System.Management.Automation.ErrorCategory]::OperationStopped,
       'TargetObject'
     )
-
-    $PScmdlet.ThrowTerminatingError($errorRec)
   }
 }
