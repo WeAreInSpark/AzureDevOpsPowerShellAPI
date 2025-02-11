@@ -82,9 +82,6 @@ function Invoke-AzDoRestMethod {
     }
 
     if ($QueryParameters) {
-      if ($QueryParameters -notlike "?*") {
-        $QueryParameters = "?$QueryParameters"
-      }
       $params.Uri = "$($Uri)?$($QueryParameters)&api-version=$($Version)"
     } else {
       $params.Uri = "$($Uri)?api-version=$($Version)"
