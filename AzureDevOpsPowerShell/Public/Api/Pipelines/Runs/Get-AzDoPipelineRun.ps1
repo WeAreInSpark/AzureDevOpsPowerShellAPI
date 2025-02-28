@@ -1,12 +1,14 @@
-function Get-PipelineRun {
+function Get-AzDoPipelineRun {
   <#
 .SYNOPSIS
   Retrieves pipeline run information from Azure DevOps for a specified pipeline within a project.
+
 .DESCRIPTION
-  The `Get-PipelineRun` function fetches details about one or more pipeline runs from an Azure DevOps project.
+  The `Get-AzDoPipelineRun` function fetches details about one or more pipeline runs from an Azure DevOps project.
   It requires the collection URI, project name, and pipeline ID. Optionally, specific run IDs can be provided
   to filter the results. The function uses the `Invoke-AzDoRestMethod` cmdlet to make the REST API call to
   Azure DevOps and returns the run details.
+
 .EXAMPLE
   $getPipelineRunSplat = @{
       CollectionUri = "https://dev.azure.com/YourOrg"
@@ -14,8 +16,10 @@ function Get-PipelineRun {
       PipelineId = 123
   }
 
-  Get-PipelineRun @getPipelineRunSplat
+  Get-AzDoPipelineRun @getPipelineRunSplat
+
   Retrieves all runs for the specified pipeline in the given project.
+
 .EXAMPLE
   $getPipelineRunSplat = @{
       CollectionUri = "https://dev.azure.com/YourOrg"
@@ -24,11 +28,13 @@ function Get-PipelineRun {
       RunId = 456
   }
 
-  Get-PipelineRun @getPipelineRunSplat
+  Get-AzDoPipelineRun @getPipelineRunSplat
 
   Retrieves the details of the specified run (with ID 456) for the given pipeline.
+
 .OUTPUTS
   System.Management.Automation.PSCustomObject
+
 #>
   [CmdletBinding(SupportsShouldProcess)]
   param (

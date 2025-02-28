@@ -1,11 +1,13 @@
-function New-PipelineRun {
+function New-AzDoPipelineRun {
   <#
 .SYNOPSIS
   Initiates a new run of an Azure DevOps pipeline.
+
 .DESCRIPTION
-  The New-PipelineRun function starts a new run for a specified Azure DevOps pipeline.
+  The New-AzDoPipelineRun function starts a new run for a specified Azure DevOps pipeline.
   It supports various parameters to customize the pipeline run, including the collection URI, project name, pipeline ID, branch, parameters, preview run flag, and stages to skip.
   This function leverages the Azure DevOps REST API to trigger the pipeline run.
+
 .EXAMPLE
   $newPipelineRunSplat = @{
     CollectionUri = "https://dev.azure.com/organization"
@@ -14,8 +16,9 @@ function New-PipelineRun {
     StagesToSkip = @("Stage1", "Stage2")
   }
 
-  New-PipelineRun @newPipelineRunSplat
+  New-AzDoPipelineRun @newPipelineRunSplat
   This command initiates a new run of the pipeline with ID 123 in the "SampleProject" project.
+
 .EXAMPLE
   $newPipelineRunSplat = @{
       CollectionUri = "https://dev.azure.com/organization"
@@ -25,13 +28,13 @@ function New-PipelineRun {
       Parameters = @{param1 = "value1"; param2 = "value2"}
   }
 
-  New-PipelineRun @newPipelineRunSplat
+  New-AzDoPipelineRun @newPipelineRunSplat
   This command initiates a new run of the pipeline with ID 123 in the "SampleProject" project, targeting the "dev" branch.
+
 .OUTPUTS
   System.Management.Automation.PSCustomObject
 
   Returns the response from the Azure DevOps REST API, which includes details of the pipeline run.
-.NOTES
 #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
