@@ -1,145 +1,150 @@
 function Set-AzDoPullRequest {
   <#
 .SYNOPSIS
-  Retrieves pull request information from Azure DevOps.
+  Updates pull request details in Azure DevOps.
 
 .DESCRIPTION
-  This function fetches pull request details using Azure DevOps REST API.
-
-.PARAMETER CollectionUri
-  The base URL of the Azure DevOps organization (e.g., https://dev.azure.com/my-org).
-
-.PARAMETER ProjectName
-  The name of the Azure DevOps project.
-
-.PARAMETER RepositoryName
-  The name of the repository (optional for project-wide pull request queries).
-
-.PARAMETER PullRequestId
-  The ID of a specific pull request (optional for listing all pull requests).
-
-.PARAMETER Status
-  The new status of the pull request. Allowed values: active, abandoned, completed.
-
-.PARAMETER Title
-  The new title for the pull request (max 256 characters).
-
-.PARAMETER Description
-  The new description for the pull request (max 4000 characters).
-
-.PARAMETER CompletionOptions
-  Specifies how the PR should be completed. Example: @{ deleteSourceBranch = $true; mergeCommitMessage = "Merged PR" }
-
-.PARAMETER MergeOptions
-  Specifies how the PR should be merged. Allowed values: noMerge, squash, rebase, rebaseMerge.
-
-.PARAMETER AutoCompleteSetBy
-  The Azure DevOps user ID who sets the PR to auto-complete.
-
-.PARAMETER TargetRefName
-  The new target branch for the pull request. Example: "main" (automatically prefixed with "refs/heads/").
-  Retargeting a pull request means changing the destination branch where the pull request will be merged.
+  This function updates pull request details using Azure DevOps REST API.
 
 .EXAMPLE
-  # Update only the title and description of a pull request
-  Set-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject" -RepositoryName "Repo" -PullRequestId "123" -Title "Updated PR Title" -Description "New description"
+    $Params = @{
+        CollectionUri = "https://dev.azure.com/my-org"
+        ProjectName   = "MyProject"
+        RepositoryName = "Repo"
+        PullRequestId = "123"
+        Title         = "Updated PR Title"
+        Description   = "New description"
+    }
+    Set-AzDoPullRequest @Params
+
+    This example updates only the title and description of a pull request.
 
 .EXAMPLE
-  # Set auto-complete with completion options
-  $completionOptions = @{
-    deleteSourceBranch = $true
-    mergeCommitMessage = "Auto-merging PR"
-  }
-  Set-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject" -RepositoryName "Repo" -PullRequestId "123" -AutoCompleteSetBy "user-id-123" -CompletionOptions $completionOptions
+    $completionOptions = @{
+        deleteSourceBranch = $true
+        mergeCommitMessage = "Auto-merging PR"
+    }
+    $Params = @{
+        CollectionUri      = "https://dev.azure.com/my-org"
+        ProjectName        = "MyProject"
+        RepositoryName     = "Repo"
+        PullRequestId      = "123"
+        AutoCompleteSetBy  = "user-id-123"
+        CompletionOptions  = $completionOptions
+    }
+    Set-AzDoPullRequest @Params
+
+    This example sets auto-complete for a pull request with completion options.
 
 .EXAMPLE
-  # Change the merge strategy to squash and complete the PR
-  Set-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject" -RepositoryName "Repo" -PullRequestId "123" -MergeOptions "squash" -Status "completed"
+    $Params = @{
+        CollectionUri  = "https://dev.azure.com/my-org"
+        ProjectName    = "MyProject"
+        RepositoryName = "Repo"
+        PullRequestId  = "123"
+        MergeOptions   = "squash"
+        Status         = "completed"
+    }
+    Set-AzDoPullRequest @Params
+
+    This example changes the merge strategy to squash and completes the pull request.
 
 .EXAMPLE
-  # Retarget a pull request to a different branch
-  Set-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject" -RepositoryName "Repo" -PullRequestId "123" -TargetRefName "develop"
+    $Params = @{
+        CollectionUri  = "https://dev.azure.com/my-org"
+        ProjectName    = "MyProject"
+        RepositoryName = "Repo"
+        PullRequestId  = "123"
+        TargetRefName  = "develop"
+    }
+    Set-AzDoPullRequest @Params
+
+    This example retargets a pull request to a different branch.
 
 .EXAMPLE
-  # Set auto-complete for a pull request with a transition work item option
-  $completionOptions = @{
-    transitionWorkItems = $true
-    deleteSourceBranch = $true
-  }
-  Set-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject" -RepositoryName "Repo" -PullRequestId "123" -AutoCompleteSetBy "user-id-123" -CompletionOptions $completionOptions
+    $completionOptions = @{
+        transitionWorkItems = $true
+        deleteSourceBranch  = $true
+    }
+    $Params = @{
+        CollectionUri      = "https://dev.azure.com/my-org"
+        ProjectName        = "MyProject"
+        RepositoryName     = "Repo"
+        PullRequestId      = "123"
+        AutoCompleteSetBy  = "user-id-123"
+        CompletionOptions  = $completionOptions
+    }
+    Set-AzDoPullRequest @Params
 
+    This example sets auto-complete for a pull request with a transition work item option.
 
 .OUTPUTS
   PSCustomObject with pull request details.
 
 .NOTES
   Requires authentication with Azure DevOps REST API.
-
-  I have currently added the 'extra parameters' to the function,  that are registered in the first paragraph on this page:
-  https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/update?view=azure-devops-rest-7.2&tabs=HTTP#request-body
-
-  With the text currently being:
-  These are the properties that can be updated with the API:
-    Status
-    Title
-    Description (up to 4000 characters)
-    CompletionOptions
-    MergeOptions
-    AutoCompleteSetBy.Id
-    TargetRefName (when the PR retargeting feature is enabled) Attempting to update other properties outside of this list will either cause the server to throw an InvalidArgumentValueException, or to silently ignore the update.
-
-.LINK
-  https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/update?view=azure-devops-rest-7.2&tabs=HTTP#request-body
 #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
+    # The base URL of the Azure DevOps organization (e.g., https://dev.azure.com/my-org).
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
+    # The name of the Azure DevOps project.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $ProjectName,
 
+    # The name of the repository (optional for project-wide pull request queries).
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $RepositoryName,
 
+    # The ID of a specific pull request (optional for listing all pull requests).
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $PullRequestId,
 
-    [Parameter( ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    # The new status of the pull request. Allowed values: active, abandoned, completed.
+    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [ValidateSet('active', 'abandoned', 'completed', 'all')]
     [string]
     $Status,
 
-    [Parameter( ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    # The new title for the pull request (max 256 characters).
+    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [ValidateLength(0, 256)]
     [string]
     $Title,
 
-    [Parameter( ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    # The new description for the pull request (max 4000 characters).
+    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [ValidateLength(0, 4000)]
     [string]
     $Description,
 
-    [Parameter( ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    # Specifies how the PR should be completed. Example: @{ deleteSourceBranch = $true; mergeCommitMessage = "Merged PR" }
+    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [ValidateSet('setAutoComplete', 'setAutoCompleteSetBy')]
     [string]
     $CompletionOptions,
 
-    [Parameter( ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    # Specifies how the PR should be merged. Allowed values: noMerge, squash, rebase, rebaseMerge.
+    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [ValidateSet('noMerge', 'squash', 'rebase', 'rebaseMerge')]
     [string]
     $MergeOptions,
 
-    [Parameter( ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    # The Azure DevOps user ID who sets the PR to auto-complete.
+    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $AutoCompleteSetBy,
 
-    [Parameter( ValueFromPipelineByPropertyName, ValueFromPipeline)]
+    # The new target branch for the pull request. Example: "main" (automatically prefixed with "refs/heads/").
+    # Retargeting a pull request means changing the destination branch where the pull request will be merged.
+    [Parameter(ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
     $TargetRefName
   )

@@ -4,24 +4,35 @@ function Get-AzDoEnvironment {
     Creates a Build Validation policy on a branch
 .DESCRIPTION
     Creates a Build Validation policy on a branch
+
 .EXAMPLE
-    $params = @{
+    $Params = @{
         CollectionUri = "https://dev.azure.com/contoso"
-        Name = "Policy 1"
-        RepoName = "Repo 1"
-        ProjectName = "Project 1"
-        Id = 1
+        ProjectName   = "Project 1"
     }
-    Set-AzDoBranchPolicyBuildValidation @params
+    Get-AzDoEnvironment @Params
 
-    This example creates a policy with splatting parameters
+    This example retrieves all environments in the specified project ("Project 1") in Azure DevOps.
 
 .EXAMPLE
-    $env:SYSTEM_ACCESSTOKEN = '***'
-    New-AzDoPipeline -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -Name "Pipeline 1" -RepoName "Repo 1" -Path "main.yml"
-    | Set-AzDoBranchPolicyBuildValidation
+    $Params = @{
+        CollectionUri   = "https://dev.azure.com/contoso"
+        ProjectName     = "Project 1"
+        EnvironmentName = "Environment 1"
+    }
+    Get-AzDoEnvironment @Params
 
-    This example creates a new Azure Pipeline and sets this pipeline as Build Validation policy on the main branch
+    This example retrieves details of the environment named "Environment 1" in the specified project ("Project 1") in Azure DevOps.
+
+.EXAMPLE
+    $Params = @{
+        CollectionUri   = "https://dev.azure.com/contoso"
+        ProjectName     = "Project 1"
+        EnvironmentName = @("Environment 1", "Environment 2")
+    }
+    Get-AzDoEnvironment @Params
+
+    This example retrieves details of multiple environments ("Environment 1" and "Environment 2") in the specified project ("Project 1") in Azure DevOps.
 
 .OUTPUTS
     [PSCustomObject]@{

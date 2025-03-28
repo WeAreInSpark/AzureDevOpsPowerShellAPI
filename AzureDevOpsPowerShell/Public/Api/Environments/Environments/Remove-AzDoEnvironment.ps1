@@ -9,17 +9,27 @@ function Remove-AzDoEnvironment {
     .EXAMPLE
     Remove-AzDoEnvironment -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -EnvironmentName "Environment 1"
 
+    This example removes the environment named "Environment 1" from the specified project in Azure DevOps.
+
     .EXAMPLE
     Remove-AzDoEnvironment -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -EnvironmentName "Environment 1", "Environment 2"
+
+    This example removes multiple environments ("Environment 1" and "Environment 2") from the specified project in Azure DevOps.
 
     .EXAMPLE
     Remove-AzDoEnvironment -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -EnvironmentName 1
 
+    This example removes the environment with the ID 1 from the specified project in Azure DevOps.
+
     .EXAMPLE
     Remove-AzDoEnvironment -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -EnvironmentName 1, 2
 
+    This example removes multiple environments with IDs 1 and 2 from the specified project in Azure DevOps.
+
     .EXAMPLE
     Remove-AzDoEnvironment -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -EnvironmentName "Environment 1", 2
+
+    This example removes a mix of environments by name ("Environment 1") and ID (2) from the specified project in Azure DevOps.
 
     .LINK
     https://learn.microsoft.com/en-us/rest/api/azure/devops/environments/environments/delete?view=azure-devops-rest-7.2

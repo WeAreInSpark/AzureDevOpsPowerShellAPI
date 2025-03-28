@@ -6,38 +6,56 @@ function Get-AzDoPullRequest {
 .DESCRIPTION
   This function fetches pull request details using Azure DevOps REST API.
 
-.PARAMETER CollectionUri
-  The base URL of the Azure DevOps organization (e.g., https://dev.azure.com/my-org).
+.EXAMPLE
+    $Params = @{
+        CollectionUri = "https://dev.azure.com/my-org"
+        ProjectName   = "MyProject"
+    }
+    Get-AzDoPullRequest @Params
 
-.PARAMETER ProjectName
-  The name of the Azure DevOps project.
-
-.PARAMETER RepositoryName
-  The name of the repository (optional for project-wide pull request queries).
-
-.PARAMETER PullRequestId
-  The ID of a specific pull request (optional for listing all pull requests).
-
-.PARAMETER Query
-  A query string to filter the results (optional).
-  Can only be used without PullRequestId:
-  https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests?view=azure-devops-rest-7.2&tabs=HTTP#uri-parameters
-  https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests-by-project?view=azure-devops-rest-7.2&tabs=HTTP#uri-parameters
+    This example retrieves all pull requests for the specified project.
 
 .EXAMPLE
-  Get-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject"
+    $Params = @{
+        CollectionUri = "https://dev.azure.com/my-org"
+        ProjectName   = "MyProject"
+        RepositoryName = "RepositoryName"
+    }
+    Get-AzDoPullRequest @Params
+
+    This example retrieves all pull requests for the specified repository in the project.
 
 .EXAMPLE
-  Get-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject" -RepositoryName "RepositoryName"
+    $Params = @{
+        CollectionUri = "https://dev.azure.com/my-org"
+        ProjectName   = "MyProject"
+        RepositoryName = "RepositoryName"
+        Query         = "searchCriteria.status=completed"
+    }
+    Get-AzDoPullRequest @Params
+
+    This example retrieves all completed pull requests for the specified repository in the project.
 
 .EXAMPLE
-  Get-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject" -RepositoryName "RepositoryName" -Query "searchCriteria.status=completed"
+    $Params = @{
+        CollectionUri = "https://dev.azure.com/my-org"
+        ProjectName   = "MyProject"
+        RepositoryName = "RepositoryName"
+        PullRequestId = "6789"
+    }
+    Get-AzDoPullRequest @Params
+
+    This example retrieves details of a specific pull request by its ID for the specified repository in the project.
 
 .EXAMPLE
-  Get-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject" -RepositoryName "RepositoryName" -PullRequestId "6789"
+    $Params = @{
+        CollectionUri = "https://dev.azure.com/my-org"
+        ProjectName   = "MyProject"
+        PullRequestId = "6789"
+    }
+    Get-AzDoPullRequest @Params
 
-.EXAMPLE
-  Get-AzDoPullRequest -CollectionUri "https://dev.azure.com/my-org" -ProjectName "MyProject" -PullRequestId "6789"
+    This example retrieves details of a specific pull request by its ID for the specified project.
 
 .OUTPUTS
   PSCustomObject with pull request details.
@@ -59,6 +77,7 @@ function Get-AzDoPullRequest {
 #>
   [CmdletBinding(DefaultParameterSetName = "AllProjectPullRequests", SupportsShouldProcess)]
   param (
+    # The base URL of the Azure DevOps organization (e.g., https://dev.azure.com/my-org)
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = "RepoSpecificPullRequest")]
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = "ProjectSpecificPullRequest")]
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = "AllRepoPullRequests")]
@@ -67,6 +86,7 @@ function Get-AzDoPullRequest {
     [string]
     $CollectionUri,
 
+    # The name of the Azure DevOps project.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = "RepoSpecificPullRequest")]
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = "ProjectSpecificPullRequest")]
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = "AllRepoPullRequests")]
@@ -74,21 +94,23 @@ function Get-AzDoPullRequest {
     [string]
     $ProjectName,
 
+    # The name of the repository (optional for project-wide pull request queries).
     [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = "RepoSpecificPullRequest")]
     [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = "AllRepoPullRequests")]
     [string]
     $RepoName,
 
+    # The ID of a specific pull request (optional for listing all pull requests).
     [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = "RepoSpecificPullRequest")]
     [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = "ProjectSpecificPullRequest")]
     [string]
     $PullRequestId,
 
+    # A query string to filter the results (optional).
     [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = "AllRepoPullRequests")]
     [string]
     $Query
   )
-
 
   begin {
     $result = @()

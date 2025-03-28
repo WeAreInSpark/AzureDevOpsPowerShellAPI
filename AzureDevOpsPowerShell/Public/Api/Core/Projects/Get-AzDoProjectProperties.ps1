@@ -1,4 +1,5 @@
-<#
+function Get-AzDoProjectProperties {
+  <#
 .SYNOPSIS
 Retrieves properties of specified Azure DevOps projects.
 
@@ -6,10 +7,21 @@ Retrieves properties of specified Azure DevOps projects.
 The Get-AzDoProjectProperties function retrieves properties of specified Azure DevOps projects within a given collection URI. It supports pipeline input for project names and collection URI.
 
 .EXAMPLE
-PS> Get-AzDoProjectProperties -CollectionUri "https://dev.azure.com/organization" -ProjectName "Project1"
+$Params = @{
+    CollectionUri = "https://dev.azure.com/organization"
+    ProjectName   = "Project1"
+}
+Get-AzDoProjectProperties @Params
+
+This example retrieves properties of the project named "Project1" in the specified Azure DevOps organization.
 
 .EXAMPLE
-PS> "Project1", "Project2" | Get-AzDoProjectProperties -CollectionUri "https://dev.azure.com/organization"
+$Params = @{
+    CollectionUri = "https://dev.azure.com/organization"
+}
+"Project1", "Project2" | Get-AzDoProjectProperties @Params
+
+This example retrieves properties of multiple projects ("Project1" and "Project2") in the specified Azure DevOps organization.
 
 .NOTES
 This function requires the Validate-CollectionUri and Invoke-AzDoRestMethod helper functions to be defined in the scope.
@@ -17,8 +29,6 @@ This function requires the Validate-CollectionUri and Invoke-AzDoRestMethod help
 .LINK
 https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/get-project-properties?view=azure-devops-rest-7.1&tabs=HTTP
 #>
-function Get-AzDoProjectProperties {
-
   [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection Uri of the organization

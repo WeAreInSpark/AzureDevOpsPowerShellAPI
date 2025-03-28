@@ -1,4 +1,5 @@
-<#
+function Get-AzDoPipelineBranchControl {
+  <#
 .SYNOPSIS
 Retrieves branch policy configurations of specified Azure DevOps projects.
 
@@ -7,10 +8,33 @@ The Get-AzDoPipelineBranchControl function retrieves branch policy configuration
 It supports pipeline input for project names and collection URI.
 
 .EXAMPLE
-PS> Get-AzDoPipelineBranchControl -CollectionUri "https://dev.azure.com/organization" -ProjectName "Project1"
+$Params = @{
+    CollectionUri = "https://dev.azure.com/organization"
+    ProjectName   = "Project1"
+}
+Get-AzDoPipelineBranchControl @Params
+
+This example retrieves branch policy configurations for the project named "Project1" in the specified Azure DevOps organization.
 
 .EXAMPLE
-PS> "Project1", "Project2" | Get-AzDoPipelineBranchControl -CollectionUri "https://dev.azure.com/organization"
+$Params = @{
+    CollectionUri = "https://dev.azure.com/organization"
+}
+"Project1", "Project2" | Get-AzDoPipelineBranchControl @Params
+
+This example retrieves branch policy configurations for multiple projects ("Project1" and "Project2") in the specified Azure DevOps organization.
+
+.EXAMPLE
+$Params = @{
+    CollectionUri  = "https://dev.azure.com/organization"
+    ProjectName    = "Project1"
+    RepositoryId   = "12345"
+    RefName        = "refs/heads/main"
+    PolicyType     = "Build"
+}
+Get-AzDoPipelineBranchControl @Params
+
+This example retrieves branch policy configurations for the "main" branch in the repository with ID "12345" in the project "Project1" in the specified Azure DevOps organization, filtered by the "Build" policy type.
 
 .NOTES
 This function requires the Validate-CollectionUri and Invoke-AzDoRestMethod helper functions to be defined in the scope.
@@ -18,8 +42,6 @@ This function requires the Validate-CollectionUri and Invoke-AzDoRestMethod help
 .LINK
 https://learn.microsoft.com/en-us/rest/api/azure/devops/git/policy-configurations/list?view=azure-devops-rest-5.0#policyconfiguration
 #>
-function Get-AzDoPipelineBranchControl {
-
   [CmdletBinding(SupportsShouldProcess)]
   param (
     # Collection URI of the organization
