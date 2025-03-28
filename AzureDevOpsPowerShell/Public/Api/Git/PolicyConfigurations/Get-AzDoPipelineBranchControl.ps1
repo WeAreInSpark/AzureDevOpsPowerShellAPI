@@ -14,6 +14,9 @@ PS> "Project1", "Project2" | Get-AzDoPipelineBranchControl -CollectionUri "https
 
 .NOTES
 This function requires the Validate-CollectionUri and Invoke-AzDoRestMethod helper functions to be defined in the scope.
+
+.LINK
+https://learn.microsoft.com/en-us/rest/api/azure/devops/git/policy-configurations/list?view=azure-devops-rest-5.0#policyconfiguration
 #>
 function Get-AzDoPipelineBranchControl {
 

@@ -20,6 +20,9 @@ function Remove-AzDoEnvironment {
 
     .EXAMPLE
     Remove-AzDoEnvironment -CollectionUri "https://dev.azure.com/contoso" -ProjectName "Project 1" -EnvironmentName "Environment 1", 2
+
+    .LINK
+    https://learn.microsoft.com/en-us/rest/api/azure/devops/environments/environments/delete?view=azure-devops-rest-7.2
     #>
   [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   [OutputType([System.Collections.ArrayList])]
@@ -75,6 +78,7 @@ function Remove-AzDoEnvironment {
         [PSCustomObject]@{
           CollectionUri = $CollectionUri
           ProjectName   = $ProjectName
+          Response      = $_
         }
       }
     }

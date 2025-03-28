@@ -13,6 +13,9 @@ PS> "Project1", "Project2" | Get-AzDoProjectProperties -CollectionUri "https://d
 
 .NOTES
 This function requires the Validate-CollectionUri and Invoke-AzDoRestMethod helper functions to be defined in the scope.
+
+.LINK
+https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/get-project-properties?view=azure-devops-rest-7.1&tabs=HTTP
 #>
 function Get-AzDoProjectProperties {
 
