@@ -100,7 +100,7 @@ function Set-AzDoPullRequest {
     # The name of the repository (optional for project-wide pull request queries).
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
     [string]
-    $RepositoryName,
+    $RepoName,
 
     # The ID of a specific pull request (optional for listing all pull requests).
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ValueFromPipeline)]
