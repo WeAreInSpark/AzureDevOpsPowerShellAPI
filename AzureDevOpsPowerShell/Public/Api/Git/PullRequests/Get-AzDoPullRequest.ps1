@@ -47,8 +47,14 @@ function Get-AzDoPullRequest {
 
 .LINK
   https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.2
+
+.LINK
   https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request-by-id?view=azure-devops-rest-7.2
+
+.LINK
   https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests?view=azure-devops-rest-7.2
+
+.LINK
   https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests-by-project?view=azure-devops-rest-7.2
 #>
   [CmdletBinding(DefaultParameterSetName = "AllProjectPullRequests", SupportsShouldProcess)]
