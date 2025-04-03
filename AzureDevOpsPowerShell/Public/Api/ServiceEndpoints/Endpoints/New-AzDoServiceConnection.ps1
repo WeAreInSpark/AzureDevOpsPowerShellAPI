@@ -102,11 +102,13 @@ function New-AzDoServiceConnection {
 
     # ID of the Management group.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ManagementGroup')]
+    [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'WorkloadIdentityFederation')]
     [string]
     $ManagementGroupId,
 
     # Name of the Management group.
     [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'ManagementGroup')]
+    [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'WorkloadIdentityFederation')]
     [string]
     $ManagementGroupName,
 
