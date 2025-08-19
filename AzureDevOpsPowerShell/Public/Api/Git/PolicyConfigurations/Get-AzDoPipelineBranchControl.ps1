@@ -93,34 +93,33 @@ https://learn.microsoft.com/en-us/rest/api/azure/devops/git/policy-configuration
 
     $params = @{
       Uri     = "$CollectionUri/$ProjectId/_apis/git/policy/configurations"
-      Version = "5.0-preview.1"
+      Version = "7.1"
       Method  = 'GET'
     }
     if (-not([string]::IsNullOrEmpty(($queryString)))) {
       $params.QueryParameters = $queryString
     }
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get branch policies for project $ProjectName")) {
-      $response = Invoke-AzDoRestMethod @params
+      $result = (Invoke-AzDoRestMethod @params).value
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params | ConvertTo-Json -Depth 10)"
     }
-    if ($response) {
-      $List = [System.Collections.Generic.List[Object]]::new()
-      foreach ($property in $response.Value) {
-        $Property | Add-Member -MemberType NoteProperty -Name "ProjectName" -Value $ProjectName
-        $Property | Add-Member -MemberType NoteProperty -Name "CollectionURI" -Value $CollectionUri
-        if ($RepositoryId) {
-          $Property | Add-Member -MemberType NoteProperty -Name "RepositoryId" -Value $RepositoryId
+    if ($result) {
+
+      $result | ForEach-Object {
+        [PSCustomObject]@{
+          CollectionUri = $CollectionUri
+          ProjectName   = $ProjectName
+          IsEnabled     = $_.isEnabled
+          IsBlocking    = $_.isBlocking
+          Settings      = $_.settings
+          PolicyId      = $_.id
+          PolicyUrl     = $_.url
+          PolicyType    = $_.PolicyTypeRef
+          CreatedBy     = $_.createdBy
+          CreatedDate   = $_.createdDate
         }
-        if ($RefName) {
-          $Property | Add-Member -MemberType NoteProperty -Name "RefName" -Value $RefName
-        }
-        if ($PolicyType) {
-          $Property | Add-Member -MemberType NoteProperty -Name "PolicyType" -Value $PolicyType
-        }
-        $List.Add($Property)
       }
-      $List
     }
   }
 }

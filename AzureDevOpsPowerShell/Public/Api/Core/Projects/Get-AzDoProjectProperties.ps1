@@ -57,20 +57,17 @@ https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/get-projec
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get project $ProjectName properties")) {
-      $result = Invoke-AzDoRestMethod @params
+      $result = (Invoke-AzDoRestMethod @params).value
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
 
     if ($result) {
-      $HashTable = @{
+      [PSCustomObject]@{
         CollectionURI = $CollectionUri
         ProjectName   = $ProjectName
+        Properties    = $result
       }
-      foreach ($property in $result.value) {
-        $HashTable[$property.Name] = $property.Value
-      }
-      [PSCustomObject]$HashTable
     }
   }
 }

@@ -195,7 +195,21 @@ function Set-AzDoPullRequest {
             CollectionUri = $CollectionUri
             ProjectName   = $ProjectName
             RepoName      = $RepoName
-            PullRequest   = $PSItem
+            PullRequestTitle       = $_.Title
+            PullRequestDescription = $_.Description
+            CreatedDate            = $_.CreatedDate
+            PullRequestStatus      = $_.Status
+            SourceRefName          = $_.sourceRefName
+            TargetRefName          = $_.targetRefName
+            Reviewers              = $_.reviewers | ForEach-Object {
+              [PSCustomObject]@{
+                Id         = $_.id
+                Name       = $_.name
+                Vote       = $_.vote
+                IsRequired = $_.isRequired
+              }
+            }
+            PullRequestUrl         = $_.url
           }
         }
       }

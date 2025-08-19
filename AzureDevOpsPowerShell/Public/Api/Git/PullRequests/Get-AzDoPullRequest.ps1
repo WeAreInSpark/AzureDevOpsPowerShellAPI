@@ -157,10 +157,24 @@ function Get-AzDoPullRequest {
       if ($result) {
         $result | ForEach-Object {
           [PSCustomObject]@{
-            CollectionUri = $CollectionUri
-            ProjectName   = $ProjectName
-            RepoName      = $RepoName
-            PullRequest   = $PSItem
+            CollectionUri          = $CollectionUri
+            ProjectName            = $ProjectName
+            RepoName               = $RepoName
+            PullRequestTitle       = $_.Title
+            PullRequestDescription = $_.Description
+            CreatedDate            = $_.CreatedDate
+            PullRequestStatus      = $_.Status
+            SourceRefName          = $_.sourceRefName
+            TargetRefName          = $_.targetRefName
+            Reviewers              = $_.reviewers | ForEach-Object {
+              [PSCustomObject]@{
+                Id         = $_.id
+                Name       = $_.name
+                Vote       = $_.vote
+                IsRequired = $_.isRequired
+              }
+            }
+            PullRequestUrl         = $_.url
           }
         }
       }
