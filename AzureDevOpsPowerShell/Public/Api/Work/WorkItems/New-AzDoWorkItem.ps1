@@ -21,6 +21,7 @@ function New-AzDoWorkItem {
   }
   New-AzDoWorkItem @params
 
+  This example creates a new work item in Azure DevOps with the specified fields.
   .EXAMPLE
   $params = @{
     CollectionUri = 'https://dev.azure.com/organization'
@@ -46,6 +47,8 @@ function New-AzDoWorkItem {
     )
   }
   New-AzDoWorkItem @params
+
+  This example creates a new work item in Azure DevOps with the specified fields.
 
   .OUTPUTS
   PSCustomObject

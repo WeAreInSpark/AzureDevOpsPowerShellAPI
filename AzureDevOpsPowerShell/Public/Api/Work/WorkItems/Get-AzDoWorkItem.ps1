@@ -11,6 +11,9 @@ function Get-AzDoWorkItem {
     WorkItemId     = 1
   }
   Get-AzDoWorkItem @params
+
+  This example retrieves a work item from Azure DevOps.
+
   .EXAMPLE
   $params = @{
     CollectionUri = 'https://dev.azure.com/organization'
@@ -18,6 +21,9 @@ function Get-AzDoWorkItem {
     WorkItemId     = 1, 2, 3
   }
   Get-AzDoWorkItem @params
+
+  This example retrieves multiple work items from Azure DevOps.
+
   .OUTPUTS
   [PSCustomObject]@{
     Id            = 1

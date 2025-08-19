@@ -14,6 +14,8 @@ function Remove-AzDoWorkItem {
     }
     Remove-AzDoWorkItem @params
 
+    This example removes a work item from Azure DevOps.
+
     .EXAMPLE
     $params = @{
       CollectionUri = 'https://dev.azure.com/organization'
@@ -21,6 +23,8 @@ function Remove-AzDoWorkItem {
       WorkItemId     = 1, 2, 3
     }
     Remove-AzDoWorkItem @params
+
+    This cmdlet removes work items from Azure DevOps.
   #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
