@@ -10,7 +10,7 @@ function New-AzDoVariableGroup {
             Collectionuri = 'https://dev.azure.com/weareinspark/'
             ProjectName = 'Project 1'
             VariableGroupName = 'VariableGroup1'
-            Variables = @{ test = @{ value = 'test' } }
+            Variables = @{ test = 'test' }
             Description = 'This is a test'
         }
         New-AzDoVariableGroup @params
@@ -21,9 +21,8 @@ function New-AzDoVariableGroup {
         $params = @{
             Collectionuri = 'https://dev.azure.com/ChristianPiet0452/'
             ProjectName = 'Ditproject'
-            Variables = @{ test = @{ value = 'test' } }
+            Variables = @{ test = 'test' }
             Description = 'This is a test'
-            PAT = $PAT
         }
         @(
             'dev-group'
@@ -39,13 +38,13 @@ function New-AzDoVariableGroup {
   [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
   param (
     # Collection Uri of the organization
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [ValidateScript({ Validate-CollectionUri -CollectionUri $_ })]
     [string]
     $CollectionUri,
 
     # Project where the variable group has to be created
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [string]
     $ProjectName,
 
@@ -55,26 +54,22 @@ function New-AzDoVariableGroup {
     $VariableGroupName,
 
     # Variable names and values
-    [Parameter(Mandatory)]
+    [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [hashtable]
     $Variables,
 
     # Description of the variable group
-    [Parameter()]
+    [Parameter(ValueFromPipelineByPropertyName)]
     [string]
     $Description
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: New-AzDoVariableGroupVariable"
-  }
-
   process {
+    Write-Verbose "Starting function: New-AzDoVariableGroupVariable"
+    $CollectionUri = $CollectionUri.TrimEnd('/')
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
-      version = "7.2-preview.2"
+      version = "7.1"
       method  = 'POST'
     }
 
@@ -100,25 +95,30 @@ function New-AzDoVariableGroup {
       }
 
       if ($PSCmdlet.ShouldProcess($ProjectName, "Create Variable Group named: $($PSStyle.Bold)$name$($PSStyle.Reset)")) {
-        $result += ($body | Invoke-AzDoRestMethod @params)
+        try {
+        ($body | Invoke-AzDoRestMethod @params) | ForEach-Object {
+            $variablesObject = $_.variables | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashtable -Depth 10
+
+            $variablesOutput = @{}
+            foreach ($item in $variablesObject.GetEnumerator()) {
+              $variablesOutput[$item.Key] = $item.value.value
+            }
+            [PSCustomObject]@{
+              CollectionURI     = $CollectionUri
+              ProjectName       = $ProjectName
+              VariableGroupName = $_.name
+              VariableGroupId   = $_.id
+              Variables         = $variablesOutput
+              CreatedOn         = $_.createdOn
+              IsShared          = $_.isShared
+            }
+          }
+        } catch {
+          Write-Error "Failed to create variable group $name in project $ProjectName with error: $_"
+          continue
+        }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-      }
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionURI     = $CollectionUri
-          ProjectName       = $ProjectName
-          VariableGroupName = $_.name
-          VariableGroupId   = $_.id
-          Variables         = $_.variables
-          CreatedOn         = $_.createdOn
-          IsShared          = $_.isShared
-        }
       }
     }
   }

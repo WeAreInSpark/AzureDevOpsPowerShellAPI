@@ -240,11 +240,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### [PSCustomObject]@{
-###   CollectionUri = $CollectionUri
-###   ProjectName   = $ProjectName
-###   RepoName      = $RepoName
-###   Id            = $result.id
-###   Url           = $result.url
+### CollectionUri = $CollectionUri
+### ProjectName   = $ProjectName
+### RepoName      = $RepoName
+### Id            = $result.id
+### Url           = $result.url
 ### }
 ## NOTES
 

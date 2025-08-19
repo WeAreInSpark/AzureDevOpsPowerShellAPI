@@ -52,13 +52,9 @@ function Get-AzDoBranchPolicyType {
       'Work item linking')]
     $PolicyType
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoBranchPolicyType"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoBranchPolicyType"
+
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/policy/types"
       version = "7.2-preview.1"
@@ -66,23 +62,21 @@ function Get-AzDoBranchPolicyType {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Get Branch Policies from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PolicyType -or $_.displayName -in $PolicyType }
+      try {
+      (Invoke-AzDoRestMethod @params).value | Where-Object { -not $PolicyType -or $_.displayName -in $PolicyType } | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionUri = $CollectionUri
+            ProjectName   = $ProjectName
+            PolicyName    = $_.displayName
+            PolicyId      = $_.id
+            PolicyURL     = $_.url
+          }
+        }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError "Failed to get branch policy types from $ProjectName. Error: $_"))
+      }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri = $CollectionUri
-          ProjectName   = $ProjectName
-          PolicyName    = $_.displayName
-          PolicyId      = $_.id
-          PolicyURL     = $_.url
-        }
-      }
     }
   }
 }

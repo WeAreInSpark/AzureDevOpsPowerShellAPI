@@ -83,12 +83,8 @@ function Set-AzDoBranchPolicyBuildValidation {
     [int]
     $validDuration = 720
   )
-
-  begin {
-    Write-Debug "Starting function: Set-AzDoBranchPolicyBuildValidation"
-  }
-
   process {
+    Write-Verbose "Starting function: Set-AzDoBranchPolicyBuildValidation"
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/policy/configurations"
@@ -144,29 +140,27 @@ function Set-AzDoBranchPolicyBuildValidation {
         }
 
         $existingPolicy = Get-AzDoBranchPolicy @getAzDoBranchPolicySplat |
-          Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) -and ($_.settings.displayName -eq $name) }
+        Where-Object { ($_.type.id -eq $policyId) -and ($_.settings.scope.refName -eq "refs/heads/$branch") -and ($_.settings.scope.repositoryId -eq $repoId) -and ($_.settings.displayName -eq $name) }
 
         if ($null -eq $existingPolicy) {
-          $result += ($body | Invoke-AzDoRestMethod @params)
+          try {
+          ($body | Invoke-AzDoRestMethod @params) | ForEach-Object {
+              [PSCustomObject]@{
+                CollectionUri = $CollectionUri
+                ProjectName   = $ProjectName
+                RepoName      = $RepoName
+                PolicyId      = $_.id
+                Url           = $_.url
+              }
+            }
+          } catch {
+            Write-Error "Failed to create policy on $name/$branch in repo '$name' in project '$projectName' Error: $_"
+          }
         } else {
           Write-Warning "Policy on $name/$branch already exists. It is not possible to update policies"
         }
       } else {
         Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-      }
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionUri = $CollectionUri
-          ProjectName   = $ProjectName
-          RepoName      = $RepoName
-          PolicyId      = $_.id
-          Url           = $_.url
-        }
       }
     }
   }

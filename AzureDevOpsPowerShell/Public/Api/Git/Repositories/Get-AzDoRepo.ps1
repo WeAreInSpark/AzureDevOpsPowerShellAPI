@@ -53,11 +53,8 @@ function Get-AzDoRepo {
     $RepoName
   )
 
-  begin {
-    Write-Verbose "Starting function: Get-AzDoRepo"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoRepo"
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/git/repositories"
@@ -66,7 +63,11 @@ function Get-AzDoRepo {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Environments from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $repos = (Invoke-AzDoRestMethod @params).value
+      try {
+        $repos = (Invoke-AzDoRestMethod @params).value
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get repos from $ProjectName in $CollectionUri Error: $_" ))
+      }
 
       if ($RepoName) {
         foreach ($name in $RepoName) {
@@ -75,34 +76,41 @@ function Get-AzDoRepo {
             Write-Error "Repo $name not found"
             continue
           } else {
-            $result += $repo
+            $repo | ForEach-Object {
+              [PSCustomObject]@{
+                CollectionURI = $CollectionUri
+                ProjectName   = $ProjectName
+                RepoName      = $_.name
+                RepoId        = $_.id
+                URL           = $_.url
+                DefaultBranch = $_.defaultBranch
+                WebUrl        = $_.webUrl
+                RemoteUrl     = $_.remoteUrl
+                SshUrl        = $_.sshUrl
+                IsDisabled    = $_.IsDisabled
+              }
+            }
           }
         }
       } else {
-        $result += $repos
+        $repos | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionURI = $CollectionUri
+            ProjectName   = $ProjectName
+            RepoName      = $_.name
+            RepoId        = $_.id
+            URL           = $_.url
+            DefaultBranch = $_.defaultBranch
+            WebUrl        = $_.webUrl
+            RemoteUrl     = $_.remoteUrl
+            SshUrl        = $_.sshUrl
+            IsDisabled    = $_.IsDisabled
+          }
+        }
       }
 
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionURI = $CollectionUri
-          ProjectName   = $ProjectName
-          RepoName      = $_.name
-          RepoId        = $_.id
-          URL           = $_.url
-          DefaultBranch = $_.defaultBranch
-          WebUrl        = $_.webUrl
-          RemoteUrl     = $_.remoteUrl
-          SshUrl        = $_.sshUrl
-          IsDisabled    = $_.IsDisabled
-        }
-      }
     }
   }
 }

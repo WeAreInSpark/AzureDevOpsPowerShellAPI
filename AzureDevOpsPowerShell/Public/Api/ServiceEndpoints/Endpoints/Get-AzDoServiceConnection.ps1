@@ -86,24 +86,17 @@ function Get-AzDoServiceConnection {
     [string[]]
     $ServiceConnectionName
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoServiceConnection"
-  }
-
   process {
-    $result = @()
+    Write-Verbose "Starting function: Get-AzDoServiceConnection"
+
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/serviceendpoint/endpoints"
       version = "7.2-preview.4"
       method  = 'GET'
     }
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Service Connections from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $result += (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ServiceConnectionName -or $_.Name -in $ServiceConnectionName }
-
-      if ($result) {
-        $result | ForEach-Object {
+      try {
+      (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ServiceConnectionName -or $_.Name -in $ServiceConnectionName } | ForEach-Object {
           [PSCustomObject]@{
             CollectionUri                                     = $CollectionUri
             ProjectName                                       = $ProjectName
@@ -120,6 +113,8 @@ function Get-AzDoServiceConnection {
             ServiceConnectionServiceEndpointProjectReferences = $_.serviceEndpointProjectReferences
           }
         }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get service connections from $ProjectName in $CollectionUri Error: $_" ))
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"

@@ -141,13 +141,9 @@ function New-AzDoServiceConnection {
     [string]
     $CertName
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: New-AzDoServiceConnection"
-  }
-
   process {
+    Write-Verbose "Starting function: New-AzDoServiceConnection"
+
     if ($Force -and -not $Confirm) {
       $ConfirmPreference = 'None'
     }
@@ -271,15 +267,19 @@ function New-AzDoServiceConnection {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Create Service Connection named: $($PSStyle.Bold)$serviceconnectionname$($PSStyle.Reset)")) {
-      Invoke-AzDoRestMethod @params | ForEach-Object {
-        [PSCustomObject]@{
-          Name                              = $_.name
-          Type                              = $_.Type
-          SubscriptionName                  = $_.data.subscriptionName
-          SubscriptionId                    = $_.data.subscriptionId
-          workloadIdentityFederationSubject = $_.authorization.parameters.workloadIdentityFederationSubject
-          workloadIdentityFederationIssuer  = $_.authorization.parameters.workloadIdentityFederationIssuer
+      try {
+        Invoke-AzDoRestMethod @params | ForEach-Object {
+          [PSCustomObject]@{
+            Name                              = $_.name
+            Type                              = $_.Type
+            SubscriptionName                  = $_.data.subscriptionName
+            SubscriptionId                    = $_.data.subscriptionId
+            workloadIdentityFederationSubject = $_.authorization.parameters.workloadIdentityFederationSubject
+            workloadIdentityFederationIssuer  = $_.authorization.parameters.workloadIdentityFederationIssuer
+          }
         }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to create service connection '$ServiceConnectionName' in project '$ProjectName'. Error: $_"))
       }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"

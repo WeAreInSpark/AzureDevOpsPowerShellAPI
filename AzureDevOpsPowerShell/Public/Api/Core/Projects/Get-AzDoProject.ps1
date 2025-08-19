@@ -59,12 +59,8 @@ function Get-AzDoProject {
     [string[]]
     $ProjectName
   )
-
-  begin {
-    Write-Verbose "Starting function: Get-AzDoProject"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoProject"
 
     $params = @{
       uri     = "$CollectionUri/_apis/projects"
@@ -73,23 +69,22 @@ function Get-AzDoProject {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Project(s)")) {
-      $result = (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ProjectName -or $_.Name -in $ProjectName }
+      try {
+      (Invoke-AzDoRestMethod @params).value | Where-Object { -not $ProjectName -or $_.Name -in $ProjectName } | ForEach-Object {
+          [PSCustomObject]@{
+            CollectionURI     = $CollectionUri
+            ProjectName       = $_.name
+            ProjectID         = $_.id
+            ProjectURL        = $_.url
+            ProjectVisibility = $_.visibility
+            State             = $_.state
+          }
+        }
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get projects in collection '$CollectionURI' Error: $_" ))
+      }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionURI     = $CollectionUri
-          ProjectName       = $_.name
-          ProjectID         = $_.id
-          ProjectURL        = $_.url
-          ProjectVisibility = $_.visibility
-          State             = $_.state
-        }
-      }
     }
   }
 }

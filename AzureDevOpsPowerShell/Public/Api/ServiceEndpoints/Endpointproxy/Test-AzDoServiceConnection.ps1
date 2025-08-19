@@ -41,13 +41,8 @@ function Test-AzDoServiceConnection {
     [string]
     $ServiceConnectionName
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoServiceConnection"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoServiceConnection"
 
     $getAzDoServiceConnectionSplat = @{
       CollectionUri         = $CollectionUri
@@ -73,7 +68,11 @@ function Test-AzDoServiceConnection {
     }
 
     if ($PSCmdlet.ShouldProcess($ProjectName, "Test service connection on: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $result = Invoke-AzDoRestMethod @params
+      try {
+        $result = Invoke-AzDoRestMethod @params
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to test service connection on $ProjectName in $CollectionUri Error: $_" ))
+      }
       if ($result.statusCode -eq 'badRequest') {
         Write-Error "Connection $($connectioninfo.ServiceConnectionName) is not working: error $($result.errorMessage)"
       } else {

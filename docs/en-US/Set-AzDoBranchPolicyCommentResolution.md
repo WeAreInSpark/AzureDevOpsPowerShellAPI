@@ -174,10 +174,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### [PSCustomObject]@{
-###   CollectionUri = $CollectionUri
-###   ProjectName   = $ProjectName
-###   RepoName      = $RepoName
-###   id            = $res.id
+### CollectionUri = $CollectionUri
+### ProjectName   = $ProjectName
+### RepoName      = $RepoName
+### id            = $res.id
 ### }
 ## NOTES
 

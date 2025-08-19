@@ -14,8 +14,8 @@ Creates an Azure Pipeline
 
 ```
 New-AzDoPipeline [-CollectionUri] <String> [-ProjectName] <String> [-PipelineName] <String>
- [-RepoName] <Object> [[-Path] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-RepoName] <Object> [[-PipelineFolderPath] <Object>] [[-Path] <String>] [-ProgressAction <ActionPreference>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -107,6 +107,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -PipelineFolderPath
+Folder to put Azure Devops Pipeline in
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Path
 Path of the YAML-sourcecode in the Repository
 
@@ -116,7 +131,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: /main.yaml
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

@@ -45,13 +45,8 @@ function Get-AzDoVariableGroup {
     [string[]]
     $VariableGroupName
   )
-
-  begin {
-    $result = @()
-    Write-Verbose "Starting function: Get-AzDoVariableGroupVariable"
-  }
-
   process {
+    Write-Verbose "Starting function: Get-AzDoVariableGroup"
 
     $params = @{
       uri     = "$CollectionUri/$ProjectName/_apis/distributedtask/variablegroups"
@@ -60,33 +55,37 @@ function Get-AzDoVariableGroup {
     }
 
     if ($PSCmdlet.ShouldProcess($CollectionUri, "Get Variable groups from: $($PSStyle.Bold)$ProjectName$($PSStyle.Reset)")) {
-      $variableGroups = (Invoke-AzDoRestMethod @params).value
-      if ($VariableGroupName) {
-        foreach ($name in $VariableGroupName) {
-          $result += $variableGroups | Where-Object { -not $name -or $_.Name -in $name }
-        }
+      try {
+        $variableGroups = (Invoke-AzDoRestMethod @params).value
+      } catch {
+        $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get variable groups from $ProjectName in $CollectionUri Error: $_" ))
+      }
+      $filteredGroups = if ($VariableGroupName) {
+        $variableGroups | Where-Object { $_.Name -in $VariableGroupName }
       } else {
-        $result += $variableGroups
+        $variableGroups
       }
 
+      $filteredGroups | ForEach-Object {
+        $variablesObject = $_.variables | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashtable -Depth 10
+
+        $variablesOutput = @{}
+        foreach ($item in $variablesObject.GetEnumerator()) {
+          $variablesOutput[$item.Key] = $item.value.value
+        }
+
+        [PSCustomObject]@{
+          CollectionURI     = $CollectionUri
+          ProjectName       = $ProjectName
+          VariableGroupName = $_.Name
+          VariableGroupId   = $_.Id
+          Variables         = $variablesOutput
+          CreatedOn         = $_.CreatedOn
+          IsShared          = $_.IsShared
+        }
+      }
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
-    }
-  }
-
-  end {
-    if ($result) {
-      $result | ForEach-Object {
-        [PSCustomObject]@{
-          CollectionURI   = $CollectionUri
-          ProjectName     = $ProjectName
-          Name            = $_.name
-          VariableGroupId = $_.id
-          Variables       = $_.variables
-          CreatedOn       = $_.createdOn
-          IsShared        = $_.isShared
-        }
-      }
     }
   }
 }
