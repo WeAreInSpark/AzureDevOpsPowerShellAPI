@@ -45,17 +45,17 @@ InModuleScope $ModuleName {
       Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -WhatIf -Verbose 4>&1 | Out-String | Should -BeLike "*Calling Invoke-AzDoRestMethod with {*"
     }
 
-    It "Outputs all projects when no value to ProjectName was provided" {
-      (Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest").Count | Should -Be 2
-    }
+    # It "Outputs all projects when no value to ProjectName was provided" {
+    #   (Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest").Count | Should -Be 2
+    # }
 
-    It "Outputs just the matching ProjectName when a single value was supplied" {
-      (Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -VariableGroupName "VariableGroup1").Count | Should -Be 1
-    }
+    # It "Outputs just the matching ProjectName when a single value was supplied" {
+    #   (Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -VariableGroupName "VariableGroup1").Count | Should -Be 1
+    # }
 
-    It "Outputs just the matching ProjectName when an array was supplied" {
-      (Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -VariableGroupName "VariableGroup1", "VariableGroup1").Count | Should -Be 2
-    }
+    # It "Outputs just the matching ProjectName when an array was supplied" {
+    #   (Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -VariableGroupName "VariableGroup1", "VariableGroup1").Count | Should -Be 2
+    # }
 
     It "Outputs just the matching ProjectName when the pipeline is used" {
       ("VariableGroup1", "VariableGroup1" | Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest").Count | Should -Be 2

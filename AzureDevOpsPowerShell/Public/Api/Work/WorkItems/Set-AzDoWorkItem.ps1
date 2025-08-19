@@ -20,6 +20,8 @@ function Set-AzDoWorkItem {
   }
   Set-AzDoWorkItem @params
 
+  Dit voorbeeld toont hoe je een work item bijwerkt in Azure DevOps met verschillende velden.
+
   .NOTES
     # Work item object (could be a hashtable or a custom object)
     # template: @{
