@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../Get-AzDoProject/">
+        <link rel="prev" href="../New-AzDoEnvironment/">
       
       
-        <link rel="next" href="../Get-AzDoRepo/">
+        <link rel="next" href="../New-AzDoPipeline/">
       
       
       <link rel="icon" href="../assets/inspark-logo-semi.svg">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Get AzDoPullRequest - InfrastuctureAsCode</title>
+        <title>New-AzDoExtension - InfrastuctureAsCode</title>
       
     
     
@@ -69,7 +69,7 @@
   <!-- Open graph meta tags -->
   <meta property="og:site_name" content="InfrastuctureAsCode" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="InfrastuctureAsCode - Get AzDoPullRequest" />
+  <meta property="og:title" content="InfrastuctureAsCode - New-AzDoExtension" />
   <meta property="og:description" content="None" />
   <meta property="og:url" content="None" />
   <meta property="og:image" content="https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654" />
@@ -81,7 +81,7 @@
   <!-- Twitter meta tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@github" />
-  <meta name="twitter:title" content="InfrastuctureAsCode - Get AzDoPullRequest" />
+  <meta name="twitter:title" content="InfrastuctureAsCode - New-AzDoExtension" />
   <meta name="twitter:description" content="None" />
   <meta name="twitter:image" content="https://repository-images.githubusercontent.com/184154668/58818c00-d496-11eb-9b77-016145022654" />
 
@@ -98,7 +98,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#get-azdopullrequest" class="md-skip">
+        <a href="#new-azdoextension" class="md-skip">
           Skip to content
         </a>
       
@@ -135,7 +135,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Get AzDoPullRequest
+              New-AzDoExtension
             
           </span>
         </div>
@@ -2094,48 +2094,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="SYNTAX">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#allprojectpullrequests-default" class="md-nav__link">
-    <span class="md-ellipsis">
-      AllProjectPullRequests (Default)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#allrepopullrequests" class="md-nav__link">
-    <span class="md-ellipsis">
-      AllRepoPullRequests
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#projectspecificpullrequest" class="md-nav__link">
-    <span class="md-ellipsis">
-      ProjectSpecificPullRequest
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#repospecificpullrequest" class="md-nav__link">
-    <span class="md-ellipsis">
-      RepoSpecificPullRequest
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2175,33 +2133,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#example-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      EXAMPLE 3
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-4" class="md-nav__link">
-    <span class="md-ellipsis">
-      EXAMPLE 4
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-5" class="md-nav__link">
-    <span class="md-ellipsis">
-      EXAMPLE 5
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2227,36 +2158,27 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-projectname" class="md-nav__link">
+  <a href="#-extensionid" class="md-nav__link">
     <span class="md-ellipsis">
-      -ProjectName
+      -ExtensionId
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#-reponame" class="md-nav__link">
+  <a href="#-extensionpublisherid" class="md-nav__link">
     <span class="md-ellipsis">
-      -RepoName
+      -ExtensionPublisherId
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#-pullrequestid" class="md-nav__link">
+  <a href="#-extensionversion" class="md-nav__link">
     <span class="md-ellipsis">
-      -PullRequestId
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#-query" class="md-nav__link">
-    <span class="md-ellipsis">
-      -Query
+      -ExtensionVersion
     </span>
   </a>
   
@@ -2319,21 +2241,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="OUTPUTS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pscustomobject-with-pull-request-details" class="md-nav__link">
-    <span class="md-ellipsis">
-      PSCustomObject with pull request details.
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2373,114 +2280,73 @@
   
 
 
-<p>external help file: AzureDevOpsPowerShell-help.xml
-Module Name: AzureDevOpsPowerShell
-online version: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request-by-id?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests-by-project?view=azure-devops-rest-7.2
-schema: 2.0.0</p>
-<hr />
-<h1 id="get-azdopullrequest">Get-AzDoPullRequest<a class="headerlink" href="#get-azdopullrequest" title="Permanent link">#</a></h1>
+<h1 id="new-azdoextension">New-AzDoExtension<a class="headerlink" href="#new-azdoextension" title="Permanent link">#</a></h1>
 <h2 id="synopsis">SYNOPSIS<a class="headerlink" href="#synopsis" title="Permanent link">#</a></h2>
-<p>Retrieves pull request information from Azure DevOps.</p>
+<p>Installs an Azure DevOps extension in the specified organization.</p>
 <h2 id="syntax">SYNTAX<a class="headerlink" href="#syntax" title="Permanent link">#</a></h2>
-<h3 id="allprojectpullrequests-default">AllProjectPullRequests (Default)<a class="headerlink" href="#allprojectpullrequests-default" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoPullRequest -CollectionUri &lt;String&gt; -ProjectName &lt;String&gt; [-ProgressAction &lt;ActionPreference&gt;]
- [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
-</code></pre></div>
-<h3 id="allrepopullrequests">AllRepoPullRequests<a class="headerlink" href="#allrepopullrequests" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoPullRequest -CollectionUri &lt;String&gt; -ProjectName &lt;String&gt; -RepoName &lt;String&gt; [-Query &lt;String&gt;]
- [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
-</code></pre></div>
-<h3 id="projectspecificpullrequest">ProjectSpecificPullRequest<a class="headerlink" href="#projectspecificpullrequest" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoPullRequest -CollectionUri &lt;String&gt; -ProjectName &lt;String&gt; -PullRequestId &lt;String&gt;
- [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
-</code></pre></div>
-<h3 id="repospecificpullrequest">RepoSpecificPullRequest<a class="headerlink" href="#repospecificpullrequest" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoPullRequest -CollectionUri &lt;String&gt; -ProjectName &lt;String&gt; -RepoName &lt;String&gt; -PullRequestId &lt;String&gt;
- [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+<div class="highlight"><pre><span></span><code>New-AzDoExtension [-CollectionUri] &lt;String&gt; [-ExtensionId] &lt;String&gt; [-ExtensionPublisherId] &lt;String&gt;
+ [[-ExtensionVersion] &lt;String&gt;] [-ProgressAction &lt;ActionPreference&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre></div>
 <h2 id="description">DESCRIPTION<a class="headerlink" href="#description" title="Permanent link">#</a></h2>
-<p>This function fetches pull request details using Azure DevOps REST API.</p>
+<p>The New-AzDoExtension cmdlet installs an Azure DevOps extension in the specified organization.
+It uses the Azure DevOps REST API to perform the installation.</p>
 <h2 id="examples">EXAMPLES<a class="headerlink" href="#examples" title="Permanent link">#</a></h2>
 <h3 id="example-1">EXAMPLE 1<a class="headerlink" href="#example-1" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoPullRequest -CollectionUri &quot;https://dev.azure.com/my-org&quot; -ProjectName &quot;MyProject&quot;
+<div class="highlight"><pre><span></span><code>New-AzDoExtension -CollectionUri &quot;https://dev.azure.com/yourorganization&quot; -ExtensionId &quot;extensionId&quot; -ExtensionPublisherId &quot;publisherId&quot;
 </code></pre></div>
+<p>This command installs the specified extension in the given Azure DevOps organization.</p>
 <h3 id="example-2">EXAMPLE 2<a class="headerlink" href="#example-2" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoPullRequest -CollectionUri &quot;https://dev.azure.com/my-org&quot; -ProjectName &quot;MyProject&quot; -RepositoryName &quot;RepositoryName&quot;
+<div class="highlight"><pre><span></span><code>New-AzDoExtension -CollectionUri &quot;https://dev.azure.com/yourorganization&quot; -ExtensionId &quot;extensionId&quot; -ExtensionPublisherId &quot;publisherId&quot; -ExtensionVersion &quot;1.0.0&quot;
 </code></pre></div>
-<h3 id="example-3">EXAMPLE 3<a class="headerlink" href="#example-3" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoPullRequest -CollectionUri &quot;https://dev.azure.com/my-org&quot; -ProjectName &quot;MyProject&quot; -RepositoryName &quot;RepositoryName&quot; -Query &quot;searchCriteria.status=completed&quot;
-</code></pre></div>
-<h3 id="example-4">EXAMPLE 4<a class="headerlink" href="#example-4" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoPullRequest -CollectionUri &quot;https://dev.azure.com/my-org&quot; -ProjectName &quot;MyProject&quot; -RepositoryName &quot;RepositoryName&quot; -PullRequestId &quot;6789&quot;
-</code></pre></div>
-<h3 id="example-5">EXAMPLE 5<a class="headerlink" href="#example-5" title="Permanent link">#</a></h3>
-<div class="highlight"><pre><span></span><code>Get-AzDoPullRequest -CollectionUri &quot;https://dev.azure.com/my-org&quot; -ProjectName &quot;MyProject&quot; -PullRequestId &quot;6789&quot;
-</code></pre></div>
+<p>This command installs version 1.0.0 of the specified extension in the given Azure DevOps organization.</p>
 <h2 id="parameters">PARAMETERS<a class="headerlink" href="#parameters" title="Permanent link">#</a></h2>
 <h3 id="-collectionuri">-CollectionUri<a class="headerlink" href="#-collectionuri" title="Permanent link">#</a></h3>
-<p>The base URL of the Azure DevOps organization (e.g., https://dev.azure.com/my-org).</p>
+<p>The URI of the Azure DevOps organization.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
 <span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
 <span class="nt">Aliases</span><span class="p">:</span>
 
 <span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
+<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
 <span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
-<h3 id="-projectname">-ProjectName<a class="headerlink" href="#-projectname" title="Permanent link">#</a></h3>
-<p>The name of the Azure DevOps project.</p>
+<h3 id="-extensionid">-ExtensionId<a class="headerlink" href="#-extensionid" title="Permanent link">#</a></h3>
+<p>The ID of the extension to install.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
 <span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
 <span class="nt">Aliases</span><span class="p">:</span>
 
 <span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
+<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
+<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName, ByValue)</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
-<h3 id="-reponame">-RepoName<a class="headerlink" href="#-reponame" title="Permanent link">#</a></h3>
-<p>{{ Fill RepoName Description }}</p>
+<h3 id="-extensionpublisherid">-ExtensionPublisherId<a class="headerlink" href="#-extensionpublisherid" title="Permanent link">#</a></h3>
+<p>The publisher ID of the extension to install.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllRepoPullRequests, RepoSpecificPullRequest</span>
+<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
 <span class="nt">Aliases</span><span class="p">:</span>
 
 <span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
+<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByValue)</span>
+<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName, ByValue)</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
-<h3 id="-pullrequestid">-PullRequestId<a class="headerlink" href="#-pullrequestid" title="Permanent link">#</a></h3>
-<p>The ID of a specific pull request (optional for listing all pull requests).</p>
+<h3 id="-extensionversion">-ExtensionVersion<a class="headerlink" href="#-extensionversion" title="Permanent link">#</a></h3>
+<p>The version of the extension to install.
+If not specified, the latest version will be installed.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ProjectSpecificPullRequest, RepoSpecificPullRequest</span>
-<span class="nt">Aliases</span><span class="p">:</span>
-
-<span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
-<span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByValue)</span>
-<span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-</code></pre></div>
-<h3 id="-query">-Query<a class="headerlink" href="#-query" title="Permanent link">#</a></h3>
-<p>A query string to filter the results (optional).
-Can only be used without PullRequestId:
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests?view=azure-devops-rest-7.2&amp;tabs=HTTP#uri-parameters
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests-by-project?view=azure-devops-rest-7.2&amp;tabs=HTTP#uri-parameters</p>
-<div class="highlight"><pre><span></span><code><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">String</span>
-<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllRepoPullRequests</span>
+<span class="nt">Parameter Sets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(All)</span>
 <span class="nt">Aliases</span><span class="p">:</span>
 
 <span class="nt">Required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
-<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Named</span>
+<span class="nt">Position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
 <span class="nt">Default value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span>
-<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName)</span>
+<span class="nt">Accept pipeline input</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True (ByPropertyName, ByValue)</span>
 <span class="nt">Accept wildcard characters</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
 </code></pre></div>
 <h3 id="-whatif">-WhatIf<a class="headerlink" href="#-whatif" title="Permanent link">#</a></h3>
@@ -2524,21 +2390,10 @@ The cmdlet is not run.</p>
 <p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="inputs">INPUTS<a class="headerlink" href="#inputs" title="Permanent link">#</a></h2>
 <h2 id="outputs">OUTPUTS<a class="headerlink" href="#outputs" title="Permanent link">#</a></h2>
-<h3 id="pscustomobject-with-pull-request-details">PSCustomObject with pull request details.<a class="headerlink" href="#pscustomobject-with-pull-request-details" title="Permanent link">#</a></h3>
 <h2 id="notes">NOTES<a class="headerlink" href="#notes" title="Permanent link">#</a></h2>
-<p>Requires authentication with Azure DevOps REST API.</p>
+<p>This cmdlet requires the Azure DevOps REST API and appropriate permissions to install extensions.</p>
 <h2 id="related-links">RELATED LINKS<a class="headerlink" href="#related-links" title="Permanent link">#</a></h2>
-<p><a href="https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request-by-id?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests-by-project?view=azure-devops-rest-7.2">https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request-by-id?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests-by-project?view=azure-devops-rest-7.2</a></p>
-<p><a href="">https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-request-by-id?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests?view=azure-devops-rest-7.2
-https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pull-requests-by-project?view=azure-devops-rest-7.2</a></p>
+<p><a href="https://learn.microsoft.com/en-us/rest/api/azure/devops/extensionmanagement/installed-extensions/get?view=azure-devops-rest-7.1&amp;tabs=HTTP">https://learn.microsoft.com/en-us/rest/api/azure/devops/extensionmanagement/installed-extensions/get?view=azure-devops-rest-7.1&amp;tabs=HTTP</a></p>
 
 
 
@@ -2559,7 +2414,7 @@ https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-requests/get-pu
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    2025-02-07
+    2025-08-19
   </span>
 
     
