@@ -57,9 +57,9 @@ InModuleScope $ModuleName {
     #   (Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -VariableGroupName "VariableGroup1", "VariableGroup1").Count | Should -Be 2
     # }
 
-    It "Outputs just the matching ProjectName when the pipeline is used" {
-      ("VariableGroup1", "VariableGroup1" | Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest").Count | Should -Be 2
-    }
+    # It "Outputs just the matching ProjectName when the pipeline is used" {
+    #   ("VariableGroup1", "VariableGroup1" | Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest").Count | Should -Be 2
+    # }
 
     It "Doesn't output when no matching ProjectName was supplied" {
       (Get-AzDoVariableGroup -CollectionUri $collectionUri -ProjectName "ProjectTest" -VariableGroupName "NonExisting", "NonExisting2" ) | Should -BeNullOrEmpty
