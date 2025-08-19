@@ -60,7 +60,13 @@ function Get-AzDoVariableGroup {
       } catch {
         $PSCmdlet.ThrowTerminatingError((Write-AzDoError -Message "Failed to get variable groups from $ProjectName in $CollectionUri Error: $_" ))
       }
-      $variableGroups | Where-Object { -not $VariableGroupName -or $_.Name -in $VariableGroupName } | ForEach-Object {
+      $filteredGroups = if ($VariableGroupName) {
+        $variableGroups | Where-Object { $_.Name -in $VariableGroupName }
+      } else {
+        $variableGroups
+      }
+
+      $filteredGroups | ForEach-Object {
         $variablesObject = $_.variables | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashtable -Depth 10
 
         $variablesOutput = @{}
@@ -71,11 +77,11 @@ function Get-AzDoVariableGroup {
         [PSCustomObject]@{
           CollectionURI     = $CollectionUri
           ProjectName       = $ProjectName
-          VariableGroupName = $_.name
-          VariableGroupId   = $_.id
+          VariableGroupName = $_.Name
+          VariableGroupId   = $_.Id
           Variables         = $variablesOutput
-          CreatedOn         = $_.createdOn
-          IsShared          = $_.isShared
+          CreatedOn         = $_.CreatedOn
+          IsShared          = $_.IsShared
         }
       }
     } else {

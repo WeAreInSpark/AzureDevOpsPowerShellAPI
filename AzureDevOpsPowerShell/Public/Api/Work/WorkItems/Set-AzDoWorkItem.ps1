@@ -51,6 +51,7 @@ function Set-AzDoWorkItem {
     [string]
     $ProjectName,
 
+    # Work item to update
     [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
     [object[]]
     $WorkItem
