@@ -1,3 +1,4 @@
 # Don't check in the Output dir
 Output/
 site/
+.vs

@@ -1,23 +1,40 @@
-function Get-PipelineRun {
+function Get-AzDoPipelineRun {
   <#
 .SYNOPSIS
   Retrieves pipeline run information from Azure DevOps for a specified pipeline within a project.
+
 .DESCRIPTION
-  The `Get-PipelineRun` function fetches details about one or more pipeline runs from an Azure DevOps project.
+  The `Get-AzDoPipelineRun` function fetches details about one or more pipeline runs from an Azure DevOps project.
   It requires the collection URI, project name, and pipeline ID. Optionally, specific run IDs can be provided
   to filter the results. The function uses the `Invoke-AzDoRestMethod` cmdlet to make the REST API call to
   Azure DevOps and returns the run details.
+
 .EXAMPLE
-  Get-PipelineRun -CollectionUri "https://dev.azure.com/YourOrg" -ProjectName "YourProject" -PipelineId 123
+  $getPipelineRunSplat = @{
+      CollectionUri = "https://dev.azure.com/YourOrg"
+      ProjectName = "YourProject"
+      PipelineId = 123
+  }
+
+  Get-AzDoPipelineRun @getPipelineRunSplat
 
   Retrieves all runs for the specified pipeline in the given project.
+
 .EXAMPLE
-  Get-PipelineRun -CollectionUri "https://dev.azure.com/YourOrg" -ProjectName "YourProject" -PipelineId 123 -RunId 456
+  $getPipelineRunSplat = @{
+      CollectionUri = "https://dev.azure.com/YourOrg"
+      ProjectName = "YourProject"
+      PipelineId = 123
+      RunId = 456
+  }
+
+  Get-AzDoPipelineRun @getPipelineRunSplat
 
   Retrieves the details of the specified run (with ID 456) for the given pipeline.
+
 .OUTPUTS
-  Returns an array of pipeline run objects. If specific run IDs are provided, only the matching runs are returned.
-.NOTES
+  System.Management.Automation.PSCustomObject
+
 #>
   [CmdletBinding(SupportsShouldProcess)]
   param (
@@ -53,13 +70,40 @@ function Get-PipelineRun {
       $runs = $response.value
 
       if (-not $RunId) {
-        return $runs
+        $runs | ForEach-Object {
+          [PSCustomObject]@{
+            PipelineId    = $_.pipeline.id
+            RunId         = $_.id
+            RunName       = $_.name
+            Result        = $_.result
+            State         = $_.state
+            CreatedAt     = $_.createdDate
+            FinishedAt    = $_.finishedDate
+            ProjectName   = $ProjectName
+            CollectionUri = $CollectionUri
+            URL           = $_.url
+          }
+        }
+        return
       }
 
-      $runs | Where-Object { $_.id -in $RunId }
+      @($runs | Where-Object { $_.id -in $RunId } | ForEach-Object {
+          [PSCustomObject]@{
+            PipelineId    = $_.pipeline.id
+            RunId         = $_.id
+            RunName       = $_.name
+            Result        = $_.result
+            State         = $_.state
+            CreatedAt     = $_.createdDate
+            FinishedAt    = $_.finishedDate
+            ProjectName   = $ProjectName
+            CollectionUri = $CollectionUri
+            URL           = $_.url
+          }
+        }
+      )
     } else {
       Write-Verbose "Calling Invoke-AzDoRestMethod with $($params| ConvertTo-Json -Depth 10)"
     }
   }
 }
-
